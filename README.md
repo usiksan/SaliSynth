@@ -1,0 +1,2 @@
+# SaliSynth
+Software music synthesizer
