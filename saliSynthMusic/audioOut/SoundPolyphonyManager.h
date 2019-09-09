@@ -11,10 +11,11 @@
 #include "synthConfig.h"
 #include "SoundPolyphonyChannel.h"
 
+#include <QObject>
+
 class SoundPolyphonyManager
   {
   public:
-    SoundPolyphonyManager();
 
     static SoundPolyphonyChannel mSoundPolyphony[POLYPHONY_COUNT];
   };

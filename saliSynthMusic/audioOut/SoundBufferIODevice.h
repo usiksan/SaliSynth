@@ -14,12 +14,10 @@
 #include <QIODevice>
 #include <QTime>
 
+
 class SoundBufferIODevice : public QIODevice
   {
     Q_OBJECT
-
-    //qint16 mBuffer[SAMPLES_PER_20MS+2];
-//    QTime  mTime;
   public:
     SoundBufferIODevice();
 

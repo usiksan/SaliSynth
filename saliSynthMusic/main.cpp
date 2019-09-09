@@ -9,15 +9,20 @@
 #include "synthConfig.h"
 #include "audioOut/SoundBufferIODevice.h"
 #include "audioOut/SoundPolyphonyManager.h"
+#include "audioOut/SoundMidiOut.h"
+
+#include "midiInput/MidiInput.h"
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QThread>
 #include <QDebug>
 
 #include <QAudioFormat>
 #include <QAudioDeviceInfo>
 #include <QAudioOutput>
 
+extern QAudioOutput *audio;
 QAudioOutput *audio;
 
 int main(int argc, char *argv[])
@@ -36,6 +41,7 @@ int main(int argc, char *argv[])
   engine.load(url);
 
 
+  //Create audio device for output synthesed audio stream
   QAudioFormat format;
   // Set up the format, eg.
   format.setSampleRate(SAMPLES_PER_SECOND);
@@ -52,13 +58,14 @@ int main(int argc, char *argv[])
     }
 
   audio = new QAudioOutput(format, nullptr);
+  //Sound buffer - is audio stream source
   SoundBufferIODevice *device = new SoundBufferIODevice();
   device->open( QIODevice::ReadOnly );
   audio->setNotifyInterval(5);
   audio->setBufferSize(4096);
 
-  SoundPolyphonyManager::mSoundPolyphony[10].setPeriod(88);
-  SoundPolyphonyManager::mSoundPolyphony[50].setPeriod(130);
+  //SoundPolyphonyManager::mSoundPolyphony[10].setPeriod(88);
+  //SoundPolyphonyManager::mSoundPolyphony[50].setPeriod(130);
 
   qDebug() << "buffer size" << audio->bufferSize() << "notify interval" << audio->notifyInterval() << " period size" << audio->periodSize()
            << " bytes free" << audio->bytesFree();
@@ -66,6 +73,16 @@ int main(int argc, char *argv[])
 
   qDebug() << "buffer size" << audio->bufferSize() << "notify interval" << audio->notifyInterval() << " period size" << audio->periodSize()
            << " bytes free" << audio->bytesFree();
+
+  //Start midi synthesator
+  SoundMidiOut *midiOut = new SoundMidiOut();
+
+
+  //Start midi keyboard
+  QThread *midiThread = new QThread();
+  MidiInput *midiInput = new MidiInput( midiThread );
+  midiInput->connect( midiInput, &MidiInput::midi, midiOut, &SoundMidiOut::midi );
+  midiThread->start();
 
   return app.exec();
   }

@@ -14,9 +14,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         audioOut/SoundBufferIODevice.cpp \
+        audioOut/SoundMidiChannel.cpp \
+        audioOut/SoundMidiOut.cpp \
         audioOut/SoundPolyphonyChannel.cpp \
         audioOut/SoundPolyphonyManager.cpp \
-        main.cpp
+        main.cpp \
+        midiInput/MidiInput.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,6 +36,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
   audioOut/SoundBufferIODevice.h \
+  audioOut/SoundMidiChannel.h \
+  audioOut/SoundMidiOut.h \
   audioOut/SoundPolyphonyChannel.h \
   audioOut/SoundPolyphonyManager.h \
+  midiInput/MidiInput.h \
   synthConfig.h

@@ -6,8 +6,9 @@
    SaliLab.com
  Description
 */
-#include "SoundPolyphonyManager.h"
+#include "SoundMidiChannel.h"
 
-SoundPolyphonyChannel SoundPolyphonyManager::mSoundPolyphony[POLYPHONY_COUNT];
+SoundMidiChannel::SoundMidiChannel()
+  {
 
-
+  }

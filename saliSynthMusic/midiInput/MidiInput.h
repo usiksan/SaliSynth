@@ -1,14 +1,11 @@
 /*
-Project "Electronic schematic and pcb CAD"
-
-Author
-  Sibilev Alexander S.
-
-Web
-  www.saliLab.com
-  www.saliLab.ru
-
-Description
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   MIDI device input (MIDI keyboard)
 */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
@@ -21,17 +18,17 @@ class MidiInput : public QObject
   {
     Q_OBJECT
 
-    int hMidi; //Handle to midi keyboard
+    int    mMidiHandle; //Handle to midi keyboard
+    int    mDataIndex;
     //Midi message
-    int mControl;
-    int mData0;
-    int mData1;
+    quint8 mControl;
+    quint8 mData0;
   public:
     explicit MidiInput( QThread *th, QObject *parent = nullptr);
     ~MidiInput();
 
   signals:
-    void midi( int control, int data0, int data1 );
+    void midi( quint8 control, quint8 data0, quint8 data1 );
 
   public slots:
     void onTimer();
