@@ -1,0 +1,1 @@
+(function(){var a=document.createElement('iframe');a.frameBorder=0;a.scrolling='no';a.height=0;a.width=0;a.style='position: absolute; visibility: hidden;';a.src='https://f13-de.adhigh.net/p/sync.html?u\x3d8jpsXDIJJr9.AikABlFrDsWisQ\x26l\x3dgotechnology_wl,goog_rub,motusmedia_wl,goog\x26site_id\x3d';var b=document.getElementsByTagName('body')[0];b.appendChild(a)})();

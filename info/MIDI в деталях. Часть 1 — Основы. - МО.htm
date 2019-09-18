@@ -1,0 +1,1807 @@
+<html><head>
+<title>MIDI в деталях. Часть 1 — Основы. - МО</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/integrator.js" as="script"><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/ca-pub-0269592369109973.js"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/adsbygoogle.js"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/osd.js"></script><script type="text/javascript" async="" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/aci.js"></script><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/context.js" async=""></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/show_ads_impl.js" id="google_shimpl"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/ca-pub-0269592369109973.js"></script><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/integrator.js"></script><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/integrator_002.js" as="script"><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/integrator_002.js"></script><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/show_ads_impl.js" as="script"><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/context_static.js" as="script"><script id="https://an.yandex.ru/partner-code-bundles/8795/context_static.js" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/context_static.js"></script><script type="text/javascript" charset="utf-8" async="" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/d0ac678e6c3095b874ca.js"></script><style type="text/css"> #saa0aeeeb .r79b65ddd{position:fixed !important;left:-1000px !important;top:-1000px !important;width:1px !important;height:1px !important;display:block !important}</style><style type="text/css"> .v370f8cba{opacity:1 !important;white-space:normal !important;visibility:visible !important}.v370f8cba,.v370f8cba yatag{display:block !important;font-family:inherit !important}.v370f8cba,.v370f8cba,.v370f8cba a,.v370f8cba b,.v370f8cba em,.v370f8cba iframe,.v370f8cba img,.v370f8cba table,.v370f8cba tbody,.v370f8cba td,.v370f8cba tr,.v370f8cba yatag{box-sizing:content-box !important;color:inherit !important;font-size:inherit !important;font-weight:inherit !important;-webkit-hyphens:manual !important;-ms-hyphens:manual !important;hyphens:manual !important}.v370f8cba,.v370f8cba a,.v370f8cba b,.v370f8cba em,.v370f8cba iframe,.v370f8cba img,.v370f8cba table,.v370f8cba tbody,.v370f8cba td,.v370f8cba tr{background:none !important;border:none !important;border-radius:0 !important;border-spacing:0 !important;border-collapse:collapse !important;clear:none !important;float:none !important;font-variant:normal !important;letter-spacing:normal !important;line-height:normal !important;margin:0 !important;max-height:none !important;max-width:none !important;min-height:0 !important;min-width:0 !important;outline:none !important;padding:0 !important;position:static !important;text-align:left !important;text-decoration:none !important;text-indent:0 !important;text-transform:none !important;vertical-align:baseline !important;visibility:inherit !important;word-spacing:normal !important}.v370f8cba,.v370f8cba a,.v370f8cba b,.v370f8cba em,.v370f8cba img,.v370f8cba table,.v370f8cba tbody,.v370f8cba td,.v370f8cba tr{height:auto !important}.v370f8cba table{display:table !important;empty-cells:hide !important;table-layout:fixed !important}.v370f8cba table,.v370f8cba td{font-size:100% !important}.v370f8cba td{display:table-cell !important;vertical-align:middle !important}.v370f8cba{width:auto !important;height:auto !important;overflow:visible !important}.v370f8cba{position:relative !important;z-index:1 !important;-webkit-font-smoothing:antialiased !important;-webkit-text-size-adjust:none !important}.v370f8cba .d89267fb5,.v370f8cba .d89267fb5:hover,.v370f8cba .d89267fb5:hover b,.v370f8cba .d89267fb5 b{display:inline !important;color:#006600 !important;text-decoration:none !important;border-bottom-color:rgba(0,102,0,0.4) !important;border-bottom-width:1px !important;border-bottom-style:solid !important}.v370f8cba .d89267fb5:hover,.v370f8cba .d89267fb5:hover b{color:#DD0000 !important;border-bottom-color:rgba(221,0,0,0.4) !important}.v370f8cba a:focus{-webkit-user-select:none !important;-moz-user-select:none !important;-ms-user-select:none !important;user-select:none !important}.v370f8cba .m1e3d0c0e{cursor:pointer !important}.v370f8cba .y4aafcafd{display:inline !important}.v370f8cba .c8fc3c813{overflow-wrap:break-word !important;word-wrap:break-word !important;-webkit-hyphens:auto !important;-ms-hyphens:auto !important;hyphens:auto !important}.v370f8cba .vd3639700,.v370f8cba .s594af6cc{overflow:hidden !important}.v370f8cba .vd3639700,.v370f8cba .s594af6cc,.v370f8cba .pbb62cc79:after{position:absolute !important;top:0 !important;right:0 !important;bottom:0 !important;left:0 !important}.v370f8cba .pbb62cc79:after{content:"" !important;display:block !important;background:linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.5)) !important}.v370f8cba .a4a9e143a{cursor:pointer !important}.v370f8cba .a4a9e143a,.v370f8cba .lef4a4e69{position:relative !important}.v370f8cba .lef4a4e69:after{content:"" !important;position:absolute !important;top:0 !important;left:-5px !important;bottom:-5px !important;right:0 !important}.v370f8cba .lef4a4e69.u15af3128:after{left:0 !important;bottom:0 !important}.v370f8cba .i558fec22{z-index:-1 !important;transition:z-index 0s linear .4s !important;cursor:default !important;line-height:1.25 !important}.v370f8cba .i558fec22,.v370f8cba .i7fccea35{position:absolute !important;top:0 !important;left:0 !important;width:100% !important;height:100% !important;overflow:hidden !important}.v370f8cba .i7fccea35{margin-left:100% !important;transition:margin-left .4s ease-out !important}.v370f8cba .c29f72714{position:absolute !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;margin-left:0 !important;width:100% !important;height:100% !important;background:#fff !important;background:hsla(0,0%,100%,.98) !important;transition:margin-left .4s ease-out !important}.v370f8cba .e6d5561f3{z-index:10 !important;transition:z-index 0s !important}.v370f8cba .e6d5561f3 .i7fccea35{margin-left:0 !important}.v370f8cba .sa3c2563c{padding:0 0 4px 4px !important}.v370f8cba .ef89a72e9{position:absolute !important;top:50% !important;right:100% !important;margin-top:-9px !important;margin-right:8px !important;padding:0 4px !important;max-width:120px !important;height:18px !important;line-height:18px !important;color:#fff !important;background:#333 !important;background-color:rgba(0,0,0,.8) !important;border-radius:1px !important;visibility:hidden !important;font-size:11px !important;white-space:nowrap !important}.v370f8cba .h497d51fd{position:absolute !important;top:3px !important;right:-6px !important;display:block !important;overflow:hidden !important;width:0 !important;height:0 !important;border-style:solid !important;border-width:6px 0 6px 6px !important;border-color:transparent transparent transparent #333 !important;border-color:transparent transparent transparent rgba(0,0,0,.8) !important}.v370f8cba .o2b0156f9{position:relative !important;color:#fff !important;letter-spacing:.04em !important}.v370f8cba .fbab2c0db{position:relative !important;padding:4px !important;border-radius:0 0 0 20% !important}.v370f8cba .ka63433b svg{display:block !important;max-height:none !important}.v370f8cba .ka63433b polygon{fill:#000000 !important}.v370f8cba .n53d16e1a{margin:-3px !important;width:1em !important;height:1em !important;line-height:1em !important;text-align:center !important;font-size:18px !important}.v370f8cba .rf945789a{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxNCAxNCI+PHBvbHlnb24gcG9pbnRzPSIxNCwwLjcgMTMuMywwIDcsNi4yOTkgMC43LDAgMCwwLjcgNi4zLDcgMCwxMy4yOTkgMC43LDE0IDcsNy43IDEzLjMsMTQgMTQsMTMuMjk5IDcuNyw3Ij48L3BvbHlnb24+PC9zdmc+") !important}.v370f8cba .sa3c2563c:hover .ef89a72e9{visibility:visible !important}.v370f8cba .f638118b7:hover .ef89a72e9{display:none !important}.v370f8cba .yd7931d8f{visibility:visible !important}.v370f8cba .yd7931d8f .ef89a72e9{display:none !important}.v370f8cba .ue20bf3e1 .ef89a72e9{height:19px !important;line-height:19px !important}.v370f8cba .ue20bf3e1 .h497d51fd{top:2px !important}.v370f8cba .vb5240595 .fbab2c0db{padding:5px !important}.v370f8cba .vb5240595 .n53d16e1a{margin:-5px !important;font-size:25px !important}.v370f8cba .vb5240595 .ef89a72e9{margin-right:9px !important;margin-top:-12px !important;max-width:160px !important;height:22px !important;line-height:22px !important;font-size:13px !important}.v370f8cba .vb5240595 .h497d51fd{right:-7px !important;top:4px !important;border-width:7px 0 7px 7px !important}.v370f8cba .sa3c2563c.f638118b7 .ef89a72e9{display:none !important}.v370f8cba .i5645ccae .fbab2c0db{background-color:rgba(0,0,0,.25) !important}.v370f8cba .i5645ccae .ka63433b polygon{fill:#fff !important}.v370f8cba .i5645ccae .ka63433b.rf945789a{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHN0eWxlPSJmaWxsOiAjZmZmIiB2aWV3Qm94PSIwIDAgMTQgMTQiPjxwb2x5Z29uIHBvaW50cz0iMTQsMC43IDEzLjMsMCA3LDYuMjk5IDAuNywwIDAsMC43IDYuMyw3IDAsMTMuMjk5IDAuNywxNCA3LDcuNyAxMy4zLDE0IDE0LDEzLjI5OSA3LjcsNyI+PC9wb2x5Z29uPjwvc3ZnPg==") !important}.v370f8cba .m1d174c9,.v370f8cba .lef4a4e69.u15af3128 .sa3c2563c{padding:0 !important}.v370f8cba .lef4a4e69.u15af3128.d82824568.bcec05c29{top:3px !important;right:3px !important}.v370f8cba .lef4a4e69.u15af3128.d82824568.bcec05c29 .fbab2c0db{border-radius:20% !important}.v370f8cba .ff004a8bc{position:absolute !important;top:0 !important;right:0 !important;left:0 !important;bottom:0 !important;width:100% !important;height:100% !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;color:#000 !important;font-size:13px !important;z-index:-1 !important;opacity:0 !important;transition:opacity .3s !important}.v370f8cba .ff004a8bc,.v370f8cba .bc812babb{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.v370f8cba .u32f97ee1{margin-left:10px !important}.v370f8cba .rda0d1a37 svg{fill:#000 !important}.v370f8cba .xe3ffaf6f{font-size:15px !important}.v370f8cba .r4dbc3932 .ff004a8bc{opacity:1 !important;z-index:10 !important}.v370f8cba .t206d0693{-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;min-width:100% !important;min-height:100% !important;font-size:13px !important}.v370f8cba .t206d0693,.v370f8cba .oeaece6f4{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;box-sizing:border-box !important}.v370f8cba .oeaece6f4{width:100% !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;padding:10px !important}.v370f8cba .w943168d8{font-weight:700 !important}.v370f8cba .n518eb978{display:none !important;font-weight:700 !important}.v370f8cba .k47871c6,.v370f8cba .n518eb978{-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.v370f8cba .k47871c6{overflow:hidden !important}.v370f8cba .c9625db9c,.v370f8cba .k47871c6{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;-webkit-flex-shrink:0 !important;-ms-flex-negative:0 !important;flex-shrink:0 !important;box-sizing:border-box !important}.v370f8cba .c9625db9c{-webkit-align-content:center !important;-ms-flex-line-pack:center !important;align-content:center !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;padding:0 !important;margin:0 !important;position:relative !important}.v370f8cba .k24071984{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;box-sizing:border-box !important;margin:5px 0 !important}.v370f8cba .g35adeca4{display:none !important}.v370f8cba .k24071984 .u8736e11{width:100% !important;max-width:250px !important}.v370f8cba .g35adeca4 .u8736e11{width:100% !important;max-width:180px !important}.v370f8cba .u8736e11{display:block !important;padding:5px !important;background-color:#fff !important;border:1px solid #c8c8c8 !important;border-radius:4px !important;text-align:center !important;color:#555 !important;white-space:nowrap !important;transition-property:border,color !important;transition-duration:.2s !important;cursor:pointer !important;box-sizing:border-box !important}.v370f8cba .u8736e11:hover{color:#333 !important;border-color:#333 !important}.v370f8cba .t206d0693.ef2395096 .k47871c6{padding-bottom:15px !important}.v370f8cba .t206d0693.ef2395096 .c9625db9c,.v370f8cba .t206d0693.ef2395096 .oeaece6f4{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.v370f8cba .t206d0693.ef2395096 .c9625db9c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.v370f8cba .t206d0693.d501238d6 .k47871c6{padding-bottom:5px !important}.v370f8cba .t206d0693.d501238d6 .oeaece6f4{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.v370f8cba .t206d0693.d501238d6 .c9625db9c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.v370f8cba .t206d0693.d501238d6 .k24071984{margin:2px 0 !important}.v370f8cba .t206d0693.d501238d6 .u8736e11{padding:3px !important}.v370f8cba .t206d0693.k7216d0f6 .k47871c6{padding-bottom:15px !important}.v370f8cba .t206d0693.k7216d0f6 .c9625db9c,.v370f8cba .t206d0693.k7216d0f6 .oeaece6f4{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.v370f8cba .t206d0693.k7216d0f6 .c9625db9c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.v370f8cba .t206d0693.k7216d0f6 .g35adeca4{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.v370f8cba .t206d0693.k7216d0f6 .uc0885b06{display:none !important}.v370f8cba .t206d0693.eb5d92c84 .k47871c6{padding-bottom:5px !important}.v370f8cba .t206d0693.eb5d92c84 .oeaece6f4{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.v370f8cba .t206d0693.eb5d92c84 .c9625db9c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.v370f8cba .t206d0693.eb5d92c84 .k24071984{margin:2px 0 !important}.v370f8cba .t206d0693.eb5d92c84 .g35adeca4{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.v370f8cba .t206d0693.eb5d92c84 .uc0885b06{display:none !important}.v370f8cba .t206d0693.eb5d92c84 .u8736e11{padding:3px !important}.v370f8cba .t206d0693.f30967203 .k47871c6{padding-bottom:10px !important}.v370f8cba .t206d0693.f30967203 .oeaece6f4{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.v370f8cba .t206d0693.f30967203 .c9625db9c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;max-width:540px !important}.v370f8cba .t206d0693.f30967203 .k24071984{width:50% !important;margin:0 !important;padding:5px !important}.v370f8cba .t206d0693.o1fe85263 .k47871c6{padding-bottom:10px !important}.v370f8cba .t206d0693.o1fe85263 .oeaece6f4{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.v370f8cba .t206d0693.o1fe85263 .c9625db9c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;max-width:340px !important}.v370f8cba .t206d0693.o1fe85263 .k24071984{width:50% !important;margin:0 !important;padding:5px !important}.v370f8cba .t206d0693.o1fe85263 .g35adeca4{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.v370f8cba .t206d0693.o1fe85263 .uc0885b06{display:none !important}.v370f8cba .t206d0693.xc4b9652e .oeaece6f4{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.v370f8cba .t206d0693.xc4b9652e .c9625db9c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:20px !important}.v370f8cba .t206d0693.xc4b9652e .k24071984{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.v370f8cba .t206d0693.xc4b9652e .u8736e11{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.v370f8cba .t206d0693.if3cfda3c .oeaece6f4{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.v370f8cba .t206d0693.if3cfda3c .c9625db9c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:15px !important}.v370f8cba .t206d0693.if3cfda3c .k24071984{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.v370f8cba .t206d0693.if3cfda3c .g35adeca4{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.v370f8cba .t206d0693.if3cfda3c .uc0885b06{display:none !important}.v370f8cba .t206d0693.if3cfda3c .u8736e11{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.v370f8cba .t206d0693.idf32d6ce .oeaece6f4{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.v370f8cba .t206d0693.idf32d6ce .w943168d8{display:none !important}.v370f8cba .t206d0693.idf32d6ce .n518eb978{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.v370f8cba .t206d0693.idf32d6ce .c9625db9c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:15px !important}.v370f8cba .t206d0693.idf32d6ce .k24071984{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.v370f8cba .t206d0693.idf32d6ce .g35adeca4{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.v370f8cba .t206d0693.idf32d6ce .uc0885b06{display:none !important}.v370f8cba .t206d0693.idf32d6ce .u8736e11{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.v370f8cba .t206d0693.mdec37e3b{font-size:11px !important}.v370f8cba .t206d0693.mdec37e3b .oeaece6f4{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:4px !important}.v370f8cba .t206d0693.mdec37e3b .w943168d8{display:none !important}.v370f8cba .t206d0693.mdec37e3b .n518eb978{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.v370f8cba .t206d0693.mdec37e3b .c9625db9c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:10px !important}.v370f8cba .t206d0693.mdec37e3b .k24071984{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 1px !important}.v370f8cba .t206d0693.mdec37e3b .g35adeca4{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.v370f8cba .t206d0693.mdec37e3b .uc0885b06{display:none !important}.v370f8cba .t206d0693.mdec37e3b .u8736e11{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.v370f8cba .t206d0693.p44647438{font-size:11px !important}.v370f8cba .t206d0693.p44647438 .oeaece6f4{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:0 !important}.v370f8cba .t206d0693.p44647438 .w943168d8{display:none !important}.v370f8cba .t206d0693.p44647438 .n518eb978{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.v370f8cba .t206d0693.p44647438 .c9625db9c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:10px !important}.v370f8cba .t206d0693.p44647438 .k24071984{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 2px !important}.v370f8cba .t206d0693.p44647438 .g35adeca4{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.v370f8cba .t206d0693.p44647438 .uc0885b06{display:none !important}.v370f8cba .t206d0693.p44647438 .u8736e11{padding:0 5px !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.v370f8cba .t206d0693.g2bc41ae7{font-size:12px !important}.v370f8cba .t206d0693.g2bc41ae7 .oeaece6f4{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;padding:4px !important}.v370f8cba .t206d0693.g2bc41ae7 .w943168d8{padding:2px 5px !important}.v370f8cba .t206d0693.g2bc41ae7 .n518eb978{display:none !important}.v370f8cba .t206d0693.g2bc41ae7 .k47871c6{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.v370f8cba .t206d0693.g2bc41ae7 .c9625db9c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important}.v370f8cba .t206d0693.g2bc41ae7 .k24071984{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:1px !important}.v370f8cba .t206d0693.g2bc41ae7 .g35adeca4{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.v370f8cba .t206d0693.g2bc41ae7 .uc0885b06{display:none !important}.v370f8cba .t206d0693.g2bc41ae7 .u8736e11{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:2px !important}.v370f8cba .r4dbc3932 .k24071984{opacity:0 !important}.v370f8cba .bcec05c29{position:absolute !important;z-index:11 !important;right:0 !important;top:0 !important}.v370f8cba .y26fd576f{position:absolute !important;left:-101% !important;top:0 !important;width:100% !important;height:100% !important;display:block !important}#v370f8cba .xc2eb6a94 .k7284ac4d,#v370f8cba .xc2eb6a94 .s2a4b946c{display:none !important}#v370f8cba .xc2eb6a94 .y26fd576f{left:0 !important;transition:left .4s ease-out !important}.v370f8cba .s5f8e4066{font-family: Helvetica,Arial,sans-serif !important;border:inherit !important;border-radius:inherit !important;text-decoration:none !important;color:#000000 !important;font-weight:400 !important;line-height:1.25 !important}.v370f8cba .s5f8e4066,.v370f8cba .r81b00f7f{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:column nowrap !important;-ms-flex-flow:column nowrap !important;flex-flow:column nowrap !important;position:relative !important;overflow:hidden !important}.v370f8cba .r81b00f7f{background:#FFFFFF !important}.v370f8cba .rbf927486{text-decoration:inherit !important;color:inherit !important;font-weight:inherit !important;line-height:inherit !important}.v370f8cba .k75708779:hover{color:#DD0000 !important}.v370f8cba .yda874589:hover{color:#DD0000 !important}.v370f8cba .y4ae71c1f:hover{color:#DD0000 !important;-webkit-text-decoration-color:rgba(221,0,0,0.2) !important;text-decoration-color:rgba(221,0,0,0.2) !important}.v370f8cba .u9a607fbc:hover{border-color:rgba(0,0,204,0.35) !important;color:#FFFFFF !important;fill:#FFFFFF !important}.v370f8cba .u9a607fbc:hover .db3f04c76{border-color:#FFFFFF !important}.v370f8cba .a1dc681b8{display:inline-block !important}.v370f8cba .a1dc681b8:hover{color:#DD0000 !important}.v370f8cba .rbf927486{line-height:normal !important;letter-spacing:normal !important;-webkit-flex-basis:unset !important;-ms-flex-preferred-size:unset !important;flex-basis:unset !important}.v370f8cba .v15280f05,.v370f8cba .t7fc305ed{display:inline-block !important;white-space:nowrap !important;font-size:10px !important;line-height:10px !important;height:10px !important;font-family:Verdana,sans-serif !important;color:inherit !important}.v370f8cba .jbc351f39{background:#FFFFFF !important;color:#000000 !important;border-radius:0 0 4px 4px !important}.v370f8cba .jbc351f39,.v370f8cba .b413eed6b{display:block !important;font-size:10px !important;line-height:18px !important;height:18px !important;padding:0 6px !important;position:absolute !important;top:0 !important;z-index:2 !important}.v370f8cba .b413eed6b{background:none !important;color:rgba(153,153,153,0.7) !important;border-radius:0 !important}.v370f8cba .u3d5c44ae .t7fc305ed{color:#fff !important;text-shadow:0 1px 1px rgba(0,0,0,.25) !important}.v370f8cba .u3d5c44ae{position:absolute !important;top:0 !important;left:0 !important;background:unset !important;background-image:url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iOTAiPjxkZWZzPjxmaWx0ZXIgeD0iLTQ4LjAlIiB5PSItODAuMCUiIHdpZHRoPSIxOTYuMCUiIGhlaWdodD0iMjYwLjAlIiBpZD0iQSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTYiIGluPSJTb3VyY2VHcmFwaGljIi8+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IGZpbGw9IiMwMDAiIGZpbHRlcj0idXJsKCNBKSIgeD0iLTMyIiB5PSItNDAiIHdpZHRoPSIxMDAiIGhlaWdodD0iNjAiIHJ4PSIyMCIgZmlsbC1ydWxlPSJldmVub2RkIiBvcGFjaXR5PSIuMjUwIi8+PC9zdmc+") !important;width:120px !important;height:90px !important;z-index:1 !important}.v370f8cba .f85faf151{display:block !important;color:rgba(153,153,153,0.7) !important;position:absolute !important;bottom:3px !important;right:3px !important}.v370f8cba .t73a4b90{height:18px !important;width:0 !important}.v370f8cba .o159f67ec{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:flex-start !important;-ms-flex-pack:start !important;justify-content:flex-start !important;box-sizing:border-box !important;line-height:0 !important;z-index:1 !important}.v370f8cba .o159f67ec,.v370f8cba .o159f67ec .wac26ec3d{width:100% !important}.v370f8cba .o159f67ec .k501f8aba{padding:1px 0 !important}.v370f8cba .vc611dbfc{display:inline-block !important;font-family:Verdana,sans-serif !important;line-height:1.2em !important;padding:0 .4em !important}.v370f8cba .dc6ae2c20{cursor:default !important}.v370f8cba .dc6ae2c20 .vc611dbfc{font-size:10px !important;white-space:nowrap !important}.v370f8cba .x8504a15 .vc611dbfc{font-size:.8em !important}.v370f8cba .hf5e8e6e6{color:#0000CC !important;font-size:1.3em !important;font-weight:700 !important;padding-bottom:.6em !important;line-height:1.25em !important}.v370f8cba .f5c6d4032{font-size:1em !important}.v370f8cba .rd3f4f971{font-size:1.1em !important}.v370f8cba .aeca7b5b0{font-size:1.2em !important}.v370f8cba .fe9d8d1f7{font-size:1.3em !important}.v370f8cba .n93f86d36{font-size:1.4em !important}.v370f8cba .eb802675{font-size:1.5em !important}.v370f8cba .m2432e2b4{font-size:1.6em !important}.v370f8cba .j8b3146fb{font-size:1.7em !important}.v370f8cba .r3550e23a{font-size:1.8em !important}.v370f8cba .ucaea8ea2{font-size:1.9em !important}.v370f8cba .k5f3278c3{font-size:2em !important}.v370f8cba .x2026b2e1{border-radius:0px !important;overflow:hidden !important}.v370f8cba .ua7e36d16,.v370f8cba .m985f27b0{padding-bottom:1em !important}.v370f8cba .b4bce28c3{max-width:300px !important}.v370f8cba .ca18a1552{-webkit-flex-flow:row wrap !important;-ms-flex-flow:row wrap !important;flex-flow:row wrap !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.v370f8cba .ca18a1552,.v370f8cba .jdf3cab50{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:flex-start !important;-ms-flex-pack:start !important;justify-content:flex-start !important}.v370f8cba .r16b38c83,.v370f8cba .jdf3cab50{-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important}.v370f8cba .r16b38c83{display:block !important;overflow:hidden !important;border:1px solid #0000CC !important;background:#0000CC !important;padding:.4em .8em !important;color:#FFFFFF !important;border-radius:4px !important;text-align:center !important;fill:#FFFFFF !important;font-size:12.892320000000002px !important}.v370f8cba .b4bce28c3 .r16b38c83{padding:.4em !important}.v370f8cba .vb2e38134{overflow:hidden !important;height:1.4em !important;text-overflow:ellipsis !important}.v370f8cba .f98b9d5a0{white-space:nowrap !important;line-height:1.4em !important;height:1.4em !important}.v370f8cba .db3f04c76,.v370f8cba .f98b9d5a0{display:inline-block !important}.v370f8cba .db3f04c76{box-sizing:border-box !important;line-height:.45em !important;height:.45em !important;width:.45em !important;border:solid #FFFFFF !important;border-width:1px 1px 0 0 !important;-webkit-transform:translateX(-50%) rotate(45deg) !important;transform:translateX(-50%) rotate(45deg) !important;-webkit-transform-origin:100% 100% !important;transform-origin:100% 100% !important}.v370f8cba .jdf3cab50 .r16b38c83{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;font-family:Verdana,sans-serif !important;font-size:12px !important;border-radius:8px !important}.v370f8cba .xd1f31d07{font-family:Verdana,sans-serif !important;display:block !important;color:#006600 !important;text-align:center !important;line-height:0 !important}.v370f8cba .u31b9a718{font-size:12px !important}.v370f8cba .b4bce28c3 .xd1f31d07{padding-top:.5em !important}.v370f8cba .b4bce28c3 .u31b9a718{padding-top:.8em !important}.v370f8cba .ca18a1552 .xd1f31d07{padding-left:.8em !important;padding-right:.6em !important}.v370f8cba .ca18a1552 .u31b9a718{padding-left:1.5em !important;padding-right:1em !important}.v370f8cba .d627dfed3{padding-bottom:1em !important}.v370f8cba .j691d93cb{display:block !important;color:#0000CC !important;line-height:1.7em !important;text-decoration:underline !important;-webkit-text-decoration-color:rgba(0,0,204,0.2) !important;text-decoration-color:rgba(0,0,204,0.2) !important}.v370f8cba .p97d5b659{padding-bottom:1em !important;opacity:.5 !important}.v370f8cba .x23a7e741{line-height:1.6em !important}.v370f8cba .c4437dd21{position:absolute !important;background:rgba(0,0,0,.1) !important;background-size:cover !important;box-shadow:0 1px 2px rgba(0,0,0,.5) !important;border-radius:.5em !important}.v370f8cba .c29f72714{background:hsla(0,0%,100%,.98) !important}.v370f8cba .u8736e11{background:hsla(0,0%,100%,.98) !important;color:#555555 !important}.v370f8cba .ta3e9ff8 .l4c042b8f{-webkit-flex:1 0 auto !important;-ms-flex:1 0 auto !important;flex:1 0 auto !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important;min-height:inherit !important;position:relative !important}.v370f8cba .ta3e9ff8 .t7fc305ed{left:1em !important}.v370f8cba .ta3e9ff8 .b413eed6b{left:.5em !important}.v370f8cba .ta3e9ff8 .o159f67ec{color:#fff !important;position:absolute !important;bottom:0 !important;left:0 !important;right:0 !important}.v370f8cba .ta3e9ff8 .o159f67ec .k501f8aba{padding:.5em 0 !important}.v370f8cba .ta3e9ff8 .vc611dbfc{padding:0 1em !important}.v370f8cba .ta3e9ff8 .x4078e938{background:rgba(0,0,0,.25) !important}.v370f8cba .ta3e9ff8 .ub1cb492a{background-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.6)) !important}.v370f8cba .ta3e9ff8 .ubeb4b8c4{-webkit-flex:1 0 !important;-ms-flex:1 0 !important;flex:1 0 !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:column nowrap !important;-ms-flex-flow:column nowrap !important;flex-flow:column nowrap !important;padding:.8em 1em 0 1em !important;overflow:hidden !important}.v370f8cba .ta3e9ff8 .x2026b2e1{-webkit-flex:1 0 !important;-ms-flex:1 0 !important;flex:1 0 !important;display:block !important;background:rgba(0,0,0,.1) center top !important;background-size:cover !important;background-repeat:no-repeat !important;position:relative !important;overflow:hidden !important}.v370f8cba .ta3e9ff8 .m985f27b0{margin-top:auto !important}.v370f8cba .ta3e9ff8 .c4437dd21{top:2em !important;left:1em !important}.v370f8cba .ta3e9ff8.l8107a217 .ubeb4b8c4{padding:0 10px 0 1em !important}.v370f8cba .ua7e36d16 .rbf927486{background-color:INVALID !important}.v370f8cba .yda874589{color:INVALID !important}.v370f8cba .k75708779{background:INVALID !important;color:INVALID"" !important}.v370f8cba .a1dc681b8{background:INVALID !important;color:INVALID !important}.v370f8cba .y4ae71c1f{background:INVALID !important;color:INVALID !important}.v370f8cba .d627dfed3{background:INVALID !important}.v370f8cba .xd1f31d07{background:INVALID !important}.v370f8cba .r16b38c83{background-color:INVALID !important}.v370f8cba .e9a5e3558.s5f8e4066 .yda874589{color:INVALID !important}.v370f8cba .e9a5e3558.s5f8e4066 .a1dc681b8{color:INVALID !important}.v370f8cba .e9a5e3558.s5f8e4066 .k75708779{color:INVALID !important}.v370f8cba .e9a5e3558.s5f8e4066 .r16b38c83{background-color:INVALID !important}.v370f8cba .j667445a2.s5f8e4066 .k75708779{color:INVALID !important}.v370f8cba .v59c010ef{-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important;min-width:1px !important;min-height:1px !important}.v370f8cba .v59c010ef,.v370f8cba .ea16757df{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.v370f8cba .ea16757df{overflow:hidden !important;-webkit-justify-content:space-between !important;-ms-flex-pack:justify !important;justify-content:space-between !important;-webkit-align-content:space-between !important;-ms-flex-line-pack:justify !important;align-content:space-between !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;margin:auto !important;border:solid #DDDCDA !important;border-width:1px !important;border-radius:0 !important;box-sizing:border-box !important}.v370f8cba .e2b50efca{-webkit-align-items:flex-start !important;-ms-flex-align:start !important;align-items:flex-start !important;visibility:hidden !important}.v370f8cba .fc045450a{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important}.v370f8cba .fac2e47f6{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.v370f8cba .o67e256a4,.v370f8cba .j1717462b{border-width:0 !important}.v370f8cba .o67e256a4 .s5f8e4066{border-width:1px !important}.v370f8cba .w4a216b08 .s5f8e4066{border-width:0 !important;border-radius:0 !important}.v370f8cba .kb3f377ea .s5f8e4066{margin:-1px !important;border-radius:0 !important}</style><script charset="utf-8" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/watch.js"></script><script async="" crossorigin="anonymous" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/host.js"></script></head>
+
+<body vlink="656591" topmargin="0" text="000000" marginwidth="0" marginheight="0" link="333367" leftmargin="0" bgcolor="dedede" alink="656591">
+<font face="Arial, sans serif">
+
+<center>
+
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="555581">
+<tbody><tr>
+
+<td width="273" height="90" align="CENTER"> 
+<a href="http://www.muzoborudovanie.ru/index.php">
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/logo1.gif" alt="Начало" width="260" height="70" border="0"><br>
+</a>
+</td>
+
+<td width="15"> 
+&nbsp;
+</td>
+
+<td width="472" align="CENTER">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0269592369109973";
+/* 468x60 */
+google_ad_slot = "0177074942";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/show_ads.js">
+</script><ins id="aswift_0_expand" style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent;" data-ad-slot="0177074942"><ins id="aswift_0_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0px;width:468px;height:60px;" width="468" height="60" frameborder="0"></iframe></ins></ins></td>
+
+</tr>
+</tbody></table>
+
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+<tbody><tr>
+<td width="631">
+
+<table width="631" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+
+<tbody><tr>
+<td colspan="4" width="631">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td width="129" valign="TOP" bgcolor="555581" align="CENTER"> 
+
+<p>
+<font size="3">
+<br>
+<a href="http://www.muzoborudovanie.ru/news/news.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/news2.gif" alt="Новости" width="129" height="28" border="0"></a><a href="http://www.muzoborudovanie.ru/equip/equip.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/equip2.gif" alt="Оборудование" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/articles/articles.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/articles2.gif" alt="Статьи" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/forum/forum.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/forum2.gif" alt="Форум" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/files/files.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/files2.gif" alt="Файлы" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/org/org.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/org2.gif" alt="Организации" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/links/links.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/links2.gif" alt="Ссылки" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/prices/prices.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/price2.gif" alt="Прайс-листы" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/ads/advertiz.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/ads2.gif" alt="Реклама" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/dict.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/dict2.gif" alt="Словарь" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/isearch.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/isearch2.gif" alt="Поиск" width="129" height="24" border="0"></a>
+
+<font size="0">
+<br>
+<table width="121" cellspacing="0" cellpadding="2" border="0">
+
+<tbody><tr>
+<td bgcolor="333367" align="CENTER">
+<font size="1" face="Arial, sans serif" color="ffffff">
+СТАТЬИ
+</font></td>
+
+</tr><tr>
+<td bgcolor="dedede" align="CENTER">
+<font size="1" face="Verdana, Tahoma, Arial, sans serif">
+
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi2.php">Часть 2 — Сообщения канала.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi3.php">Часть 3 — Системные сообщения.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi4.php">Часть 4 — MIDI Time Code.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi5.php">Часть 5 — Стандартные MIDI-файлы.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi6.php">Часть 6 — Передача данных.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi71.php">Часть 7.1 — MIDI Show Control.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi72.php">Часть 7.2 — MIDI Show Control.</a><br>
+
+</font></td></tr><tr>
+<td bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+
+</tr></tbody></table>
+
+</font></font></p></td>
+
+<td width="50">
+&nbsp;
+</td>
+
+<td width="427" valign="TOP">
+
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="3" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+MIDI в деталях. Часть 1 — Основы.
+</b></font></td></tr></tbody></table>
+
+<font size="2" face="Arial, sans serif">
+<p>
+</p><div align="RIGHT">
+<b>
+Александр ФЕДОРОВ
+</b><br>
+<a href="http://www.muzoborudovanie.ru/org/mo/mo.php">Музыкальное Оборудование</a>
+<br>
+август 2003
+</div>
+
+<p>
+<font size="2" face="Arial, sans serif">
+<b>
+Первая часть цикла статей, подробно рассказывающих о протоколе MIDI.
+</b>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+</font></font></p><p><font size="2" face="Arial, sans serif"><font size="2" face="Verdana, Tahoma, Arial, sans serif">
+Почти с самого своего рождения протокол MIDI (Musical Instrument Digital
+ Interface — цифровой интерфейс музыкальных инструментов) стал 
+стандартом для всей электромузыкальной промышленности с невиданной до 
+того степенью совместимости. Такой совместимости до сих пор нет даже у 
+электрических лампочек, сетевых и телефонных розеток. Ситуация сейчас 
+такова, что если выпускается электромузыкальное устройство, 
+несовместимое с MIDI, оно обречено быть оторванным от остального мира.
+</font></font></p><font size="2" face="Arial, sans serif"><font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Причина, по которой MIDI на протяжении двадцати лет имеет ошеломляющий 
+успех, проста — протокол был очень тщательно разработан, прежде чем 
+предстать перед публикой. В нем нет "дыр", а требования к аппаратной 
+реализации и взаимодействию устройств четко определены и не могут быть 
+трактованы двояко. Кроме того, MIDI не принадлежит одной компании, а 
+является продуктом целой ассоциации производителей.
+</p>
+
+<p>
+Основная предпосылка к появлению MIDI состояла в насущной потребности 
+музыкантов того времени управлять с одной клавиатуры несколькими 
+синтезаторами одновременно. При этом от разработчиков требовалось, чтобы
+ соединение инструментов было простым, а сам интерфейс надежным и 
+недорогим. Сейчас, по прошествии двадцати лет, можно уверенно заявить: 
+эти условия для своего времени были выполнены разработчиками идеально.
+</p>
+
+<p>
+<i>Протокол MIDI разрабатывался как простое, недорогое и надежное средство для управления одним синтезатором с другого.
+</i></p><i>
+
+</i><p><i>
+</i>Это нужно вспоминать всякий раз, когда возникают вопросы и 
+недоумения "а почему в MIDI это сделано именно так?". Тем более, 
+вспоминать основное предназначение MIDI нужно перед тем, как критиковать
+ протокол. А критиковали MIDI с самого его рождения и критикуют до сих 
+пор, особенно по поводу слишком медленной передачи данных и ритмической 
+неточности. Тем более в свете современных технологий. Достоинства и 
+недостатки протокола, способы их преодоления и альтернативы MIDI — 
+настолько обширная тема для обсуждения, что этому будет посвящена 
+отдельная статья.
+</p>
+
+<p>
+Несмотря на все недостатки, MIDI и сегодня вполне успешно выполняет свое
+ предназначение. И не только — сфера применения протокола давно уже не 
+ограничивается управлением синтезаторами. По MIDI управляются многие 
+процессоры эффектов, микшерные пульты, даже осветительные, 
+пиротехнические приборы и дымовые машины. Что уж говорить о персональных
+ компьютерах и связанной с ними индустрии мультимедиа! Сейчас уже в 
+порядке вещей скачать из интернета MIDI-файл в качестве звонка для 
+мобильного телефона. Не удивлюсь, если в скором времени можно будет 
+скачать MIDI-файл для управления кухонным комбайном…
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Мир до MIDI
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Середина 60-х — начало 70-х годов прошлого века были временем появления и
+ бурного расцвета электромузыкальных инструментов. На сцене и в студии к
+ уже широко используемым электрогитарам и электроорганам добавился 
+принципиально новый тип музыкальных инструментов — синтезатор. Первые 
+синтезаторы были очень сложны в настройке, перевозке и обслуживании, но 
+они дали музыкантам то, что нельзя было получить никак иначе, — новые, 
+свежие звуки.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Все синтезаторы тех лет были монофонические, то есть могли производить 
+только одну ноту одновременно. Для воспроизведения нескольких звуков или
+ музыкальных партий одновременно приходилось ухищряться. В сущности, 
+были только два способа сделать это: либо использовать несколько 
+синтезаторов (а в случае модульных синтезаторов покупать для каждого 
+голоса отдельный генератор), либо записывать партию каждого голоса на 
+многодорожечный магнитофон.
+</p>
+
+<p>
+Синтезаторы в то время были полностью аналоговые, все внутренние их 
+блоки (звуковые генераторы, генераторы огибающей, фильтры) управлялись 
+напряжением. Например, звуковой генератор инструмента при подаче 
+напряжения в 1 В мог давать высоту тона 100 Гц, 2 В — 200 Гц, 3 В — 400 
+Гц и так далее. Очевидно, что для внешнего управления таким прибором мог
+ использоваться только аналоговый интерфейс. Он имел название CV/Gate. 
+На вход CV подавалось управляющее напряжение (Control Voltage), 
+пропорциональное высоте ноты, на вход Gate — импульс (trigger), от 
+которого стартовала и выключалась нота.
+</p>
+
+<p>
+Существовало несколько вариантов CV/Gate-интерфейса. Наиболее широко 
+использовался вариант, предложенный фирмой Roland. В нем CV-напряжение 
+увеличивалось на 1 В при увеличении высоты тона на октаву. Gate-сигнал, 
+называемый Voltage Trigger (V-Trigger), представлял собой положительный 
+импульс с шириной, равной времени удержания ноты в нажатом состоянии. 
+Этот вариант наряду с Roland использовали в своих инструментах фирмы 
+Sequential Circuits и ARP. В синтезаторах Moog использовался другой тип 
+Gate-сигнала, который назывался S-Trigger. Существовали инструменты и с 
+другими параметрами CV/Gate-сигналов. Часто управляющее напряжение 
+изменялось по закону 1,2 В на октаву.
+</p>
+
+<p>
+Применялся также сигнал под названием Trigger, представлявший собой 
+короткий импульс. Многие синтезаторы с арпеджиатором имели специальный 
+вход для таких сигналов (clock input). Как только на вход поступал 
+импульс, запускалась очередная нота арпеджио. Генерировали сигнал 
+Trigger многие драм-машины и аналоговые секвенсоры (чаще всего каждую 
+8-ю или 16-ю ноты, но иногда расстояние между импульсами можно было 
+задавать произвольно). Сигнал Trigger мог быть подан и на вход Gate 
+синтезатора.
+</p>
+
+<p>
+Главный недостаток CV/Gate-интерфейса состоял в том, что с помощью него в
+ каждый момент времени можно было управлять извлечением только одной 
+ноты. Для полифонических инструментов необходимо было столько 
+CV/Gate-интерфейсов, сколько голосов полифонии имел инструмент. Кроме 
+того, информация о действиях исполнителя в CV/Gate-системах весьма 
+скудная, практически — это только высота взятой ноты и сам факт ее 
+взятия/снятия.
+</p>
+
+<p>
+В середине 70-х компания Oberheim выпустила первый доступный по цене 
+полифонический синтезатор Two Voice. Инструмент был прост в 
+использовании, имел встроенную клавиатуру, полифонию в два голоса и 
+несложный набор органов управления, с помощью которых можно было быстро 
+создавать красивые, богатые звуки. Инструмент имел, в отличие от своих 
+предшественников, небольшие размеры и простой способ программирования. 
+Вскоре после этого начали появляться полифонические инструменты других 
+фирм: Sequential Circuits, Yamaha, Moog, Roland, ARP. Они стали очень 
+популярны в растущей массе электронных музыкантов.
+</p>
+
+<p>
+После полифонии, следующим наиболее важным нововведением стала 
+программируемая память. В синтезаторе появился небольшой компьютер, 
+который позволял сохранить в памяти инструмента положение всех ручек и 
+кнопок на передней панели, что открыло новые возможности для живого 
+исполнения. Кроме того, компьютер отслеживал нажатия клавиш и передавал 
+высоту взятых нот на звуковые генераторы. Это как раз и позволило в 
+дальнейшем применить цифровые интерфейсы управления.
+</p>
+
+<p>
+До появления памяти каждый инструмент нужно было программировать 
+заранее, а во время концерта он мог производить только один звук. 
+Поэтому на концертах таких музыкантов, как Keith Emerson и Rick Wakeman,
+ можно было увидеть огромные "стеллажи" из клавиатур. Для подготовки 
+всего этого добра к концерту и объединения в рабочий ансамбль 
+требовались часы работы. Когда память стала доступна, один инструмент 
+мог быть запрограммирован на несколько звуков, а нужный звук выбирался 
+нажатием одной кнопки прямо во время концерта.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/01.jpg" alt=" Рис. 1. Keith Emerson" width="207" height="155">
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/02.jpg" alt=" Рис. 2. Rick Wakeman" width="212" height="155">
+</p>
+
+<p>
+Но сколько разных синтезаторов — столько характеров. Одни производили 
+замечательные звуки трубы, другие — звуки струнных, третьи — 
+спецэффекты. Музыкантам хотелось взять лучшее с каждого инструмента и 
+получить единую, прекрасно звучащую систему.
+</p>
+
+<p>
+В то время была распространена техника игры на двух клавиатурах 
+одновременно, что позволяло создавать многослойные звуки. Например, одну
+ и ту же партию можно было играть обеими руками, правой рукой на 
+инструменте, который силен в струнных, левой — на инструменте с 
+прекрасной секцией медных духовых. Это было довольно сложно, 
+разрабатывалась даже своя техника игры под систему из конкретных моделей
+ синтезаторов.
+</p>
+
+<p>
+Все эти приемы служили одной цели — выжать максимум из новых 
+инструментов. Наслоение звуков различных синтезаторов стало одним из 
+исполнительских приемов, визитной карточкой многих музыкантов того 
+времени.
+</p>
+
+<p>
+В конце 70-х годов в синтезаторах начала широко применяться цифровая 
+электроника, что было вызвано удешевлением микропроцессоров и массовым 
+производством интегральных схем. Многие блоки синтезаторов было выгоднее
+ производить из компактных, дешевых и более стабильных во времени 
+цифровых компонентов. Естественно, вопрос об управлении инструментами 
+возник с новой силой: аналоговые CV/Gate интерфейсы совсем уже не 
+подходили под новые цифровые технологии формирования звука. В 
+результате, в начале 80-х синтезаторы стали оснащаться цифровым 
+интерфейсом.
+</p>
+
+<p>
+Появились такие инструменты, как Oberheim OB-X (1981) и Rhodes Chroma 
+(1982), которые могли быть подсоединены к другому инструменту той же 
+модели и фирмы. Например, Oberheim OB-X можно было подключить к другому 
+Oberheim OB-X (всего до трех инструментов одновременно). Когда музыкант 
+играл на клавиатуре одного из них, оба инструмента звучали одновременно.
+ Это был огромный прогресс — ведь для получения многослойных звуков 
+можно было играть на одной клавиатуре. Однако главная проблема 
+по-прежнему не была решена: как соединить друг с другом инструменты 
+разных производителей и разных моделей.
+</p>
+
+<p>
+Herbie Hancock, например, пытался решить этот вопрос собственными 
+силами. Он дорабатывал свои синтезаторы цифровыми интерфейсами, 
+выполненными на заказ. И они работали!
+</p>
+
+<p>
+В то же время все больше и больше музыкантов обращалось к производителям
+ синтезаторов с просьбой сделать для них собственный цифровой интерфейс.
+ Масло в огонь подлило и появление первых цифровых секвенсоров, таких 
+как Roland MC 4 Micro Composer и Oberheim DSX. Если бы инструменты 
+разных производителей были совместимыми, музыкант мог бы "забить" партии
+ в эти секвенсоры, а потом воспроизвести, используя целую группу 
+синтезаторов. Но, увы...
+</p>
+
+<p>
+Незадолго до появления MIDI фирма Roland разработала цифровой интерфейс 
+DCB, который использовался только в двух синтезаторах (Juno 60 и Jupiter
+ 8) и секвенсоре MSQ 700. Интерфейс DCB обеспечивал базовые возможности 
+по извлечению звуков посредством команд взятия и снятия ноты.
+</p>
+
+<p>
+Нужно отметить, что наряду с попытками соединения синтезаторов друг с 
+другом, еще в 60-х годах предпринимались попытки подключения синтезатора
+ к компьютеру. Но они не приводили к заметным практическим результатам 
+из-за колоссальной стоимости компьютеров. В конце 70-х — начале 80-х 
+существовало несколько несовместимых между собой интерфейсов, 
+производимых кустарно или мелкими фирмами. Только разработчик такой 
+компьютерной системы мог написать программное обеспечение для нее. 
+Обычно подобные системы создавались путем добавления в компьютер 
+специальных плат, которые либо напрямую генерировали звук (сравните с 
+современными виртуальными синтезаторами!), либо генерировали несколько 
+каналов управляющего напряжения для модульных синтезаторов.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Рождение MIDI
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Итак, к началу 80-х годов прошлого века потребность создания 
+универсального интерфейса была осознана многими ведущими 
+производителями. Задача стояла такая: разработать <i>стандарт передачи действий исполнителя в цифровой форме</i>
+ между всеми типами электромузыкальных инструментов. Первый обмен 
+мнениями на эту тему, в котором участвовали Ikutaro Kakehashi (президент
+ Roland), Tom Oberheim (Oberheim) и Dave Smith (президент Sequential 
+Circuits), произошел в июне 1981 года на выставке NAMM.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Dave Smith начал работу с изучения литературы по компьютерным сетям. При
+ разработке сетевых протоколов составлялись две спецификации — 
+аппаратного соединения устройств и формата передаваемых по сети 
+сообщений. При этом внутренняя работа компьютера оставалась 
+обособленной, он представлялся для других участников сети чем-то вроде 
+"черного ящика", который реагировал на сообщения в соответствии со 
+стандартом. Такой подход был выбран и для соединения музыкальных 
+инструментов. В результате удалось избежать зависимости языка общения 
+инструментов от их устройства. Это основной принцип MIDI, и он остался с
+ тех пор неизменным. Именно благодаря ему протокол продолжает свою 
+непомерно долгую, по компьютерным меркам, жизнь.
+</p>
+
+<p>
+К осени 1981 года Smith подготовил первую версию своего протокола под 
+названием USI (Universal Synthesizer Interface). В октябре того же года 
+на выставке в Японии произошла встреча представителей фирм Sequential, 
+Roland, Korg, Yamaha и Kawai, на которой USI была представлена японцам, а
+ в ноябре на конгрессе AES в Нью-Йорке Dave Smith официально представил 
+спецификацию. Японские производители работали в то время над собственным
+ стандартом, который был сложнее USI.
+</p>
+
+<p>
+В январе 1982 года на выставке NAMM фирма Sequential Circuits 
+организовала встречу, которую посетили большинство производителей 
+синтезаторов. На встрече выяснилось, что остальные американские компании
+ по разным причинам не хотят участвовать в создании единого интерфейса. 
+После встречи, Sequential Circuits и японские фирмы (Roland, Korg, 
+Yamaha, Kawai) решили продолжать совместную работу независимо от 
+остальных. Пять месяцев спустя, на июньской выставке NAMM были 
+представлены плоды этой международной разработки. Пришло время для 
+официального названия интерфейса. USI было отвергнуто, поскольку слово 
+"universal" (универсальный, всеобщий) могло вызвать юридические 
+проблемы. Японцы предложили UMII (Universal Music Instrument Interface).
+ Но поскольку это название также содержало слово "universal", Dave Smith
+ предложил исправить его на MIDI, с чем все и согласились.
+</p>
+
+<p>
+В октябре 1982 года была закончена предварительная спецификация MIDI. В 
+декабре вышел Sequential Circuits Prophet 600 — первый синтезатор, 
+оборудованный MIDI-интерфейсом. А в январе 1983 года на выставке NAMM 
+произошло соединение Prophet 600 и Roland Jupiter 6 по MIDI. В марте 
+появился Roland JX 3 P, а в июне — Yamaha DX 7.
+</p>
+
+<p>
+До появления MIDI синтезаторы состояли из двух компонентов в "одном 
+флаконе". Первый компонент — система звукообразования, которая 
+фактически производила звук. Второй компонент — контроллер, обычно 
+клавиатура, которая служила для преобразования действий исполнителя в 
+напряжение и ток, то есть в язык, понятный первому компоненту. Этому 
+процессу даже придумали имя — "захват исполнительских штрихов".
+</p>
+
+<p>
+Протокол MIDI сделал различие между двумя компонентами явным, по сути — 
+разорвал их взаимосвязь. Теперь любой контроллер мог управлять любым 
+звуковым генератором. Это имело огромное психологическое значение — 
+музыкант мог свободно подбирать необходимое оборудование, без боязни, 
+что оно устареет через полгода, как это происходит с другими 
+электронными устройствами.
+</p>
+
+<p>
+Хотя фирмы совместно работали над MIDI, на рынке они по-прежнему 
+являлись конкурентами. Поэтому некоторые фирмы добавляли собственные 
+спецификации к MIDI, в отдельных случаях неверно интерпретируя 
+существующие параметры (как по недоразумению, так и умышленно), в то 
+время как все не связанные с MIDI компании критиковали этот интерфейс. В
+ то же время фирмы, связанные с MIDI, не могли раскрыть конкурентам все 
+тайны. Например, Sequential Circuits планировали выпуск 
+мультитембрального инструмента (Six-Trak) и предлагали внести 
+необходимые для этого возможности в спецификации, но меньше всего 
+хотели, чтобы об их планах узнали японские производители.
+</p>
+
+<p>
+Тем не менее, было необходимо скоординировать работы по MIDI 
+инструментам, и в середине 1983 года в Японии был сформирован комитет по
+ MIDI-стандартам (JMSC). В августе того же года была обнародована 
+спецификация MIDI 1.0. Также в 1983 году была сформирована международная
+ группа пользователей MIDI (IMUG — International MIDI Users Group), 
+которая впоследствии превратилась в IMA — международную MIDI-ассоциацию.
+ Однако она представляла пользователей, а не производителей, и не могла 
+оказывать на них серьезное влияние. Поэтому в июне 1984 года была 
+сформирована ассоциация MIDI-производителей (MMA — MIDI Manufacturers 
+Association).
+</p>
+
+<p>
+Организации MMA и JMSC совместно занимаются всей деятельностью по 
+стандартизации и расширению протокола MIDI. Любой зарегистрированный 
+член этих организаций может предложить свое дополнение в протокол, после
+ чего оно будет вынесено на голосование.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+1983 — 2003
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Протокол MIDI открыл огромные возможности компьютерного синтеза и 
+управления звуком. Компьютеры начали использоваться в качестве средства 
+управления синтезаторами (в качестве секвенсора или 
+программы-композитора, производящей управляющие воздействия на основе 
+специальных алгоритмов).
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+В 1984 году Jim Miller выпустил программу Personal Composer для IBM PC, 
+которая представляла собой MIDI-секвенсор и позволяла распечатывать 
+ноты. Фирмы Passport Designs и Sequential Circuits представили четырех- и
+ восьмидорожечные программы-секвенсоры для компьютеров Apple II и 
+Commodore 64. Фирма Roland выпустила гитарный MIDI-контроллер GR 700, а 
+также синхронизатор и SMPTE-интерфейс SBX 80, который произвел революцию
+ в деле синхронизации драм-машин и секвенсоров с аналоговыми 
+магнитофонами. Yamaha представила цифровую задержку D 1500 — первый 
+процессор эффектов, пресеты которого можно было менять посредством 
+MIDI-сообщения Program Change. В приборе Emulator II фирмы Emu впервые 
+сочетаются MIDI-, SMPTE- и компьютерное управление.
+</p>
+
+<p>
+1985 год ознаменовался захватом европейского рынка компьютерами Atari, 
+имеющими встроенные MIDI-порты. Фирмы MOTU и Opcode выпускают 
+программные MIDI-секвенсоры под Macintosh. В это же время Yamaha 
+разрабатывает аппаратный секвенсор QX 1 с памятью на 80000 нот и 
+возможностью редактирования списка MIDI-событий. В следующем году 
+компьютеры PC начинают завоевывать рынок. Для PC появляется множество 
+программ, использующих MIDI. Фирма Lexicon выпускает ревербератор PCM 70
+ — первый процессор эффектов, параметрами пресетов которого можно 
+управлять по MIDI.
+</p>
+
+<p>
+Сам протокол также не стоит на месте. Разработанный с учетом на 
+дальнейшее расширение, он пополняется новыми возможностями. В марте 1987
+ года добавлен MIDI Time Code (синхросигнал для взаимодействия 
+MIDI-устройств с магнитофонами и другим оборудованием, работающими с 
+таймкодом SMPTE), в мае 1987 — Sample Dump Standard (протокол передачи 
+семплов по MIDI). В декабре 1988 появляется сообщение Reset all 
+controllers (обнулить все контроллеры), в апреле 1990 — сообщение Bank 
+Select (выбор банка).
+</p>
+
+<p>
+В 1990 году фирма Opcode выпускает MIDI-аудиосеквенсор Studio Vision для
+ Macintosh, а также программу Galaxy — универсальный 
+редактор/библиотекарь MIDI-устройств. В мае 1991 протокол пополняется 
+сообщением All sounds off (снять все звуки), в июле 1991 — командами 
+управления световыми и пиротехническими приборами MIDI Show Control, а 
+также форматом стандартных MIDI-файлов (SMF — Standard MIDI Files) для 
+платформо-независимого хранения и обмена данными секвенсоров. В октябре 
+1991 появляется стандарт General MIDI, в котором определены некоторые 
+минимальные требования к GM-совместимым устройствам и названия звуков 
+закреплены за номерами пэтчей. Появляется и первый GM-совместимый 
+звуковой модуль Roland SC 55 Sound Canvas. Фирма Opcode выпускает 
+MIDI-расширение OMS (Opcode Music System) для операционной системы 
+компьютера Macintosh.
+</p>
+
+<p>
+В декабре 1991 выходит MIDI Tuning Specification — способ тонкого 
+управления строем инструментов. В январе 1992 протокол MIDI окончательно
+ интегрируется в студию звукозаписи — появляется стандарт MIDI Machine 
+Control, который позволяет управлять по MIDI транспортными функциями 
+записывающих устройств.
+</p>
+
+<p>
+С приходом Microsoft Windows 3.1 у пользователей PC появляется поддержка
+ MIDI на уровне операционной системы. Выходит программа Cakewalk для 
+Windows, программа Cubase, ранее выпускавшаяся для Atari и Macintosh, 
+становится доступна на PC. 1993 год — начало бума мультимедиа. Для PC 
+появляются звуковые платы с MIDI-интерфейсом. MIDI-технология активно 
+эксплуатируется в двух секторах рынка: профессиональном и любительском.
+</p>
+
+<p>
+Начинают свое развитие виртуальные студии на базе персонального 
+компьютера. Виртуальные синтезаторы, процессоры эффектов и другие 
+программы взаимодействуют по MIDI с внешним миром (и даже друг с другом,
+ внутри одного компьютера, соединяясь виртуальным MIDI-кабелем).
+</p>
+
+<p>
+В мае 1996 года выходит спецификация Downloadable Sounds (DLS) Level 1, 
+которая позволяет дополнять собственными звуками наборы имеющихся в 
+устройстве пэтчей General MIDI.
+</p>
+
+<p>
+За последние пять лет организация MMA выпустила более десятка новых 
+спецификаций. Январь 1998 — SMF Lyrics Specification (текст к песням в 
+стандартных MIDI-файлах), январь 1999 — MIDI Tuning Bank and Dump 
+Extensions (новые сообщения для тонкой подстройки инструментов) и 
+спецификация DLS Level 1 версии 1.1, июнь 1999 — SMF Language and 
+Display Extensions (хранение и отображение символов в MIDI-файлах), 
+сообщения SMF Device Name and Program Name (воспроизведение MIDI-файла 
+на нескольких устройствах одновременно), ноябрь 1999 — General MIDI 2.
+</p>
+
+<p>
+В феврале 2000 года предложен новый формат RMID, который позволяет 
+объединить в одном файле данные стандартного MIDI-файла и DLS-файла. В 
+октябре 2000 – MIDI Media Adaptation Layer for IEEE-1394 (способ 
+передачи MIDI-сообщений по протоколу FireWire), в августе 2001 – 
+спецификация DLS Level 2.1, в ноябре 2001 – General MIDI Lite (для 
+мобильных применений и портативных устройств), а также спецификация XMF 
+(eXtensible Music Format), которая предлагается взамен формата RMID.
+</p>
+
+<p>
+Последним дополнением (май 2002) является Scalable Polyphony MIDI 
+Specification — способ, позволяющий воспроизводить один и тот же 
+MIDI-файл максимально корректно вне зависимости от доступной полифонии.
+</p>
+
+<p>
+Несмотря на все эти добавления, MIDI спецификация по-прежнему имеет версию 1.0.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Основы
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+MIDI — это протокол связи между устройством управления, генерирующим 
+команды, и подчиненным устройством, выполняющим эти команды. Если очень 
+сильно сузить это определение, то можно привести типичный пример: MIDI 
+позволяет исполнителю нажать клавишу на одном инструменте, а получить 
+при этом звук другого или даже нескольких. Любые воздействия исполнителя
+ на органы управления (нажатие клавиш, педалей, изменение положений 
+регуляторов и т. п.) могут быть преобразованы в команды, которые можно 
+передать по MIDI-кабелю на другие инструменты. Эти инструменты, получая 
+команды, обрабатывают их так же, как и при воздействии на их собственные
+ органы управления.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+На самом деле протокол MIDI не конкретизирует состав взаимодействующих 
+устройств и не требует наличия живого исполнителя. Суть протокола в том,
+ что в некой системе, состоящей из нескольких устройств, одно устройство
+ (мастер) генерирует команды управления, а все другие устройства 
+(подчиненные) выполняют эти команды. Если подчиненные устройства 
+являются источниками звука (синтезаторы, звуковые модули, семплеры, 
+драм-машины, одним словом, тон-генераторы), то они управляются 
+командами, связанными со звукообразованием: например, "взять ноту До 
+первой октавы" или "переключить тембр на номер 5". Если подчиненные 
+устройства выполняют другие функции, например, обработку аудиосигнала, 
+то и команды для них будут несколько иными. Как бы там ни было, прибор, 
+получает команды управления через свой MIDI-вход (MIDI In).
+</p>
+
+<p>
+В качестве мастер-устройства может выступать любой прибор, имеющий 
+MIDI-выход (MIDI Out) и способный посылать на этот выход команды 
+управления. Мастер-устройства можно разделить на два типа: устройства, 
+на которые непосредственно воздействует исполнитель (например, 
+синтезатор) и устройства, которые генерируют управляющие команды 
+автоматически (без участия исполнителя), на основе ранее введенных 
+данных. Типичным примером устройства последнего типа является секвенсор.
+</p>
+
+<p>
+Секвенсор напоминает магнитофон, только записывает он не звук, а команды
+ управления, и не на ленту, а в память компьютера (в широком смысле 
+слова, это может быть и встроенный компьютер синтезатора). Секвенсор 
+позволяет записать действия исполнителя (включая динамику исполнения, 
+стиль, штрихи и т. п.), а затем воспроизвести их в первозданном виде, 
+точно так же, как если бы исполнитель снова сел за инструмент и сыграл 
+то же самое. Кроме того, в секвенсоре можно редактировать записанную 
+информацию способами, невыполнимыми на магнитофоне: транспонировать 
+партии или отдельные ноты, изменять ритмическую позицию событий или 
+тембр, которым синтезатор будет воспроизводить партию.
+</p>
+
+<p>
+Протокол MIDI разрабатывался для управления синтезаторами, а в них, как 
+известно, самый главный орган управления — клавиатура. Неудивительно 
+поэтому, что разработчики MIDI для описания действий исполнителя выбрали
+ принцип клавишного инструмента.
+</p>
+
+<p>
+<i>MIDI является выраженным клавишно-ориентированным протоколом.
+</i></p><i>
+
+</i><p><i>
+</i>Это не означает, что управлять тон-генератором можно только с 
+клавиатуры — существуют множество других способов ввода, например, 
+электронные пэды и целые ударные установки, гитарные или духовые 
+контроллеры (о них мы поговорим отдельно и более подробно). Однако, 
+какое бы средство ввода не использовалось, сообщения от него 
+преобразуются в клавишно-ориентированные.
+</p>
+
+<p>
+<i>Приемы звукоизвлечения, нехарактерные для клавишного инструмента, 
+могут быть лишь сымитированы средствами MIDI с той или иной степенью 
+достоверности.</i>
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Коммутация
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Как же соединяются устройства в MIDI? Представим себя на месте 
+разработчиков. У нас есть два синтезатора, и мы хотим, чтобы при нажатии
+ клавиши на одном из них второй синтезатор сыграл ту же ноту, но своим 
+звуком. Очевидно, для этого нужно сделать на первом синтезаторе выходной
+ MIDI-разъем, а на втором — входной MIDI-разъем и соединить инструменты 
+MIDI-кабелем. Первый синтезатор при нажатии клавиши должен генерировать 
+сообщение о взятии ноты и посылать его на свой выход, а второй 
+синтезатор — получать это сообщение через вход и воспроизводить звук 
+(рис. 3).
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></font></font></font></font></font></font></font></font></font></font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/03.gif" alt=" Рис. 3" width="606" height="156" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+А что будет, если играть аккордами? В прошлом для одновременного 
+извлечения нескольких звуков нужно было бы встраивать в инструмент 
+несколько CV/Gate входов, по одному на каждый голос полифонии. Но MIDI —
+ протокол цифровой, и высота нот кодируется цифрами, а не напряжением. 
+Цифры передаются по MIDI кабелю в виде очень коротких импульсов. 
+Разработчики могли сделать параллельный интерфейс, то есть передавать 
+эти импульсы по нескольким проводам одновременно. Тогда MIDI-кабель мог 
+бы состоять, например, из восьми или шестнадцати проводов, а инструмент 
+получал бы все ноты аккорда одновременно. Но в силу разных причин (о 
+которых поговорим далее подробно) было решено сделать интерфейс 
+последовательным. В этом случае для MIDI-кабеля нужно всего два провода в
+ экране-оплетке.
+</p>
+
+<p>
+Последовательный интерфейс означает то, что импульсы по MIDI-кабелю 
+передаются один за другим, подобно отряду муравьев, шагающих колонной по
+ одному. Так что в каждый момент времени приемника достигает только один
+ импульс. Значит, передать одновременно несколько сообщений через один 
+MIDI-разъем невозможно. При игре аккордов ноты каждого аккорда будут 
+передаваться последовательно. Фактически, вместо аккордов 
+синтезатор-приемник будет исполнять только очень-очень плотное арпеджио.
+</p>
+
+<p>
+<i>По одному MIDI-кабелю одновременная передача нескольких сообщений невозможна.
+</i></p><i>
+
+</i><p><i>
+</i>Этот факт служит одним из главных аргументов в устах людей, 
+критикующих протокол. На слух запаздывание каждой последующей ноты 
+аккорда неуловимо (так как составляет менее половины миллисекунды), да и
+ к тому же в реальной жизни ни один исполнитель не сыграет аккорд, 
+абсолютно одновременно взяв все его ноты. Однако это не многих 
+успокаивает — все-таки гораздо лучше иметь точную во времени систему.
+</p>
+
+<p>
+Итак, мы соединили два синтезатора MIDI-кабелем, по которому передаются 
+сообщения о взятии нот (в том числе и нескольких одновременно, с 
+поправкой на предыдущее замечание). Теперь мы хотим подключить еще два 
+синтезатора, но управлять ими по-прежнему с первого. Для этого можно 
+сделать в первом синтезаторе несколько MIDI-выходов и соединить их тремя
+ MIDI-кабелями с MIDI-входами остальных, то есть, говоря компьютерным 
+языком, организовать сеть с топологией "звезда" (рис. 4).
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/04.gif" alt=" Рис. 4" width="606" height="238" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Это вполне возможно, но не все инструменты (хотя бы по экономическим 
+соображениям) будут оборудоваться несколькими MIDI-выходами. А если 
+потребуется управлять еще двумя или тремя синтезаторами, то выходов 
+точно не напасешься. Было найдено решение: сделать дополнительный разъем
+ MIDI Thru (сквозной). Задача синтезатора, оборудованного таким разъемом
+ — дублировать на него все сообщения, приходящие на вход MIDI In. Тогда 
+нашу систему из четырех синтезаторов можно соединить цепочкой (рис. 5).
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/05.gif" alt=" Рис. 5" width="606" height="83" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+При этом на первом синтезаторе нужен всего один MIDI-выход. Вся 
+информация с этого выхода поступает на MIDI-вход второго синтезатора, 
+дублируется через его сквозной разъем MIDI Thru и далее, по второму 
+MIDI-кабелю, попадает на MIDI-вход третьего инструмента, дублируется, и 
+так до тех пор, пока не достигнет последнего инструмента в цепочке.
+</p>
+
+<p>
+Все это хорошо, но как быть, если мы хотим, чтобы каждый инструмент 
+играл по очереди, а не со всеми сразу? Предположим, на первом 
+синтезаторе выбран тембр флейты, на втором — рояля, на третьем — 
+бас-гитары, а на последнем — ударных. Мы нажимаем клавиши на первом 
+инструменте и хотим для начала только рояль, затем только ударные. 
+Конечно, можно бегать и на ходу подключать и отключать нужный синтезатор
+ (что полезно для собственного физического развития), но это не выход, 
+особенно, если приборы соединены цепочкой.
+</p>
+
+<p>
+А если мы хотим играть левой рукой партию баса, а правой — рояля? В этом
+ случае клавиатура первого синтезатора должна быть разделена на две 
+зоны. Клавиши из каждой зоны должны посылать сообщения о взятии ноты 
+своему инструменту. Как это сделать, если инструмент оборудован только 
+одним MIDI-выходом?
+</p>
+
+<p>
+И, наконец, если наш синтезатор мультитембральный (то есть способен 
+воспроизводить несколько партий одновременно разным тембром), как 
+осуществить его коммутацию с секвенсором, в котором записаны эти партии?
+</p>
+
+<p>
+На поставленные вопросы, в сущности, ответа два: либо использовать 
+столько MIDI-входов, выходов и кабелей, сколько партий звучит 
+одновременно (рис. 6, а), либо... Сделать так, чтобы все партии 
+передавались по одному MIDI-кабелю (рис. 6, б). Нужно ли пояснять, 
+почему был выбран второй вариант?!
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/06a.gif" alt=" Рис. 6, а" width="606" height="243" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/06b.gif" alt=" Рис. 6, б" width="606" height="290" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Разработчики предложили передавать данные по шестнадцати логическим 
+каналам. Слово "логический" означает то, что все каналы существуют в 
+виде абстракции и передаются по одному MIDI-кабелю. Просто каждое 
+сообщение, например, о взятии ноты, снабжается дополнительным числом — 
+номером канала, на котором звучит нота. В этом коренное отличие MIDI от 
+аналоговой звуковой коммутации, где, например, партия рояля идет с 
+магнитофона на микшер по отдельному кабелю, который можно потрогать 
+руками. В MIDI по одному кабелю могут передаваться одновременно партии 
+всего симфонического оркестра (естественно, в виде управляющих команд, а
+ не звука).
+</p>
+
+<p>
+Понятно, что при последовательной передаче в каждый момент времени 
+приемника будет достигать сообщение только для одного канала. Так что 
+абсолютной ритмической согласованности в игре, например, бочки и 
+бас-гитары при передаче данных по одному MIDI-кабелю добиться нельзя. Но
+ опять же, покажите басиста, который идеально "попадает" в бочку 
+барабанщика. Многих критиков протокола подобные фразы не утешают, хотя 
+разница в приходе сообщений практически неощутима — все в том же порядке
+ долей миллисекунды.
+</p>
+
+<p>
+Каждый тон-генератор может быть настроен на прием сообщений по одному 
+или нескольким MIDI-каналам. Данные тех каналов, по которым прием не 
+идет, просто игнорируются. В нашем примере пусть первый синтезатор 
+играет на MIDI-канале 3, второй настроен на прием по каналу 4, третий — 
+по каналу 8 и последний — по каналу 10. Тогда для переключения тембров 
+нужно переключать каналы, по которым передает информацию первый 
+синтезатор: включили на канал 3 — звучит его же флейта, на канал 8 — бас
+ с третьего синтезатора, на канал 10 — барабаны с последнего. Но тогда 
+клавиатуры на втором, третьем и четвертом синтезаторах вообще не нужны. 
+Это соображение привело к широкому распространению звуковых модулей — 
+синтезаторов без клавиатуры. С другой стороны, первый синтезатор может 
+вообще не производить звук, а только служить центром управления для всех
+ остальных. Это соображение привело к появлению MIDI-клавиатур — 
+устройств, которые звуков не содержат, а служат для управления другими 
+синтезаторами или звуковыми модулями.
+</p>
+
+<p>
+Если первый синтезатор позволяет разделить клавиатуру на две зоны, то 
+можно назначить зону для левой руки на передачу по каналу 8, а для 
+правой — по каналу 4. Тогда мы сможем одновременно исполнять партии баса
+ и рояля. При этом на первом синтезаторе потребуется только один 
+MIDI-выход (рис. 7).
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/07.gif" alt=" Рис. 7" width="606" height="226" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Возможности живого исполнения нескольких партий одновременно ограничены,
+ поэтому чаще всего партии записываются в секвенсор по очереди. Причем 
+записать партии можно на простом и неказистом по звучанию инструменте — 
+ведь записывается не звук, а только действия исполнителя (можно даже 
+настучать партию на MIDI-клавиатуре без подзвучки). А для сведения 
+одолжить пару качественных синтезаторов или звуковых модулей.
+</p>
+
+<p>
+Каждый синтезатор при наличии выхода MIDI Thru обязан дублировать на 
+него всю приходящую информацию, в том числе и по тем каналам, на прием 
+которых он сам настроен. Это позволяет передавать партию дальше, на 
+другие синтезаторы, настроенные на тот же канал, для создания, например,
+ жирного звучания в унисон.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+MIDI — протокол реального времени
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Это означает, что вся система работает по принципу "получил — выполнил".
+ Исполнитель нажимает клавишу, клавиатура генерирует сообщение "взять 
+ноту" и передает его на вход тон-генератора. Тон-генератор немедленно 
+воспроизводит ноту. Таким образом, никакие параметры, связанные с 
+моментами выполнения команд, в сообщениях не передаются. Моментом 
+выполнения считается момент получения команды. Поэтому сообщения вроде 
+"сыграть ноту через две секунды" в MIDI отсутствуют. Как это ни странно,
+ сообщение "сыграть ноту длительностью две секунды" в системе реального 
+времени также невозможно.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Представьте: как только исполнитель нажимает клавишу, тон-генератору 
+посылается команда "взять ноту", и он должен немедленно начать 
+воспроизведение. Какой длительности будет нота, тон-генератор не знает и
+ не может знать. Здесь все зависит от исполнителя — нота будет звучать 
+до тех пор, пока тот не отпустит клавишу, и в тон-генератор не поступит 
+команда "снять ноту". Вот теперь можно сказать — нота звучала полторы 
+секунды. В MIDI все параметры, связанные со временем протекания того или
+ иного процесса, ведут себя аналогично. Например, темп задается не 
+каким-нибудь сообщением "120 ударов в минуту", а самими сообщениями о 
+взятии ноты, приходящими от устройства управления в соответствующем 
+темпе.
+</p>
+
+<p>
+Таким образом, задача тон-генератора в MIDI существенно упрощается: не 
+нужно отслеживать время чего-либо, нужно только сразу реагировать на 
+команды. Отсюда — одна из самых распространенных проблем MIDI, так 
+называемые зависшие ноты. Если в тон-генератор пришло сообщение "взять 
+ноту", а сообщение "снять ноту" по каким-либо причинам не пришло 
+(например, из-за обрыва кабеля), нота будет звучать вечно. Ну, или до 
+тех пор, пока не перезапустить тон-генератор.
+</p>
+
+<p>
+В общем, получается, что временем звучания нот, темпом, и другими 
+временнЫми моментами управляет сам исполнитель. Если мы хотим записать 
+действия исполнителя, нужно каждое MIDI-сообщение, поступившее в 
+секвенсор, снабдить меткой времени. Примерно так: сообщение "взять ноту"
+ поступило на первый тик. Записываем его в память вместе с меткой 1. 
+Сообщение "снять ноту" поступило на двадцать первый тик, записываем его с
+ меткой 21. Если секвенсор отсчитывал двадцать тиков в секунду, то, 
+очевидно, длина записанной ноты — одна секунда. При воспроизведении 
+секвенсор начинает снова отсчитывать тики. Подошел первый тик, в 
+тон-генератор отправилось сообщение о взятии ноты, подошел 21-й тик — о 
+снятии ноты. Таким образом, мы записали, а затем воспроизвели действия 
+исполнителя.
+</p>
+
+<p>
+Кроме того, секвенсор позволяет те же действия<i> запрограммировать</i>,
+ то есть записать в память без необходимости живого исполнения. Такое 
+программирование в свое время дало жизнь множеству стилей электронной 
+музыки и в корне изменило творческий процесс, но это — предмет 
+отдельного разговора.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Компоненты MIDI
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Понятия, затронутые выше, также требуют подробного обсуждения, но уже 
+сейчас ясно, из чего должен состоять протокол. Очевидно, для того, чтобы
+ одно устройство реагировало на управляющие воздействия с другого, нужно
+ стандартизировать две вещи: язык общения устройств и физический способ 
+их соединения. Для того, чтобы сообщения можно было сохранять, а 
+впоследствии воспроизводить, нужен также стандартный формат их хранения.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+<i>Протокол MIDI состоит из трех частей: спецификации формата данных, 
+аппаратной спецификации интерфейса и спецификации формата хранения 
+данных.
+</i></p><i>
+
+</i><p><i>
+</i>Начнем разговор о MIDI с первой части, то есть с языка, на котором общаются устройства.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Язык MIDI
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Для управления одним устройством с другого нужно придумать язык команд, 
+понятный им обоим. То есть составить список команд, обозначить каждую 
+команду своим кодом и договориться: если устройство понимает команду, 
+оно должно на нее реагировать так-то и так-то, если не понимает — 
+игнорировать.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Язык MIDI состоит только из команд управления и параметров этих команд. 
+Ничего другого по MIDI-кабелю не передается. Любые, даже такие непростые
+ музыкальные моменты, как, например, игра баса легато с "подъездом" к 
+каждой ноте на сильной доле такта, — это всего лишь результат обработки 
+команд тон-генератором. Команды в языке MIDI называются сообщениями.
+</p>
+
+<p>
+Сообщения логично разделить на два основных типа: одни управляют 
+звукообразованием, то есть говорят, например, какую ноту и как громко 
+играть, вторые выполняют служебные функции, вроде изменения настроек 
+тон-генератора и синхронизации. Поскольку извлечение звуков происходит в
+ MIDI на определенном канале, сообщения первого типа называются 
+сообщениями канала (Channel Messages). Сообщения второго типа называются
+ системными (System Messages). Сообщения канала всегда относятся к 
+какому-либо MIDI-каналу и обрабатываются тон-генератором только в том 
+случае, если он настроен на прием данного канала. Выше говорилось, что 
+соединение нескольких тон-генераторов через разъем MIDI Thru, при 
+соответствующих настройках инструментов, позволяет передавать "каждому 
+свое". Системные сообщения предназначаются всем устройствам в 
+MIDI-системе, независимо от того, на прием каких каналов они настроены.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/08.gif" alt=" Рис. 8" width="427" height="241">
+</p>
+
+<p>
+Сообщения канала делятся, в свою очередь, на голосовые (Channel Voice 
+Messages) и сообщения режима канала (Channel Mode Messages). Системные 
+сообщения делятся на общесистемные (System Common Messages), сообщения 
+реального времени (System Real Time Messages) и эксклюзивные (System 
+Exclusive Messages).
+</p>
+
+<p>
+Голосовые сообщения канала посылают в тон-генератор информацию об 
+управлении звуком. Они "докладывают" тон-генератору о том, что сейчас 
+делает исполнитель — нажимает клавишу, крутит колесо модуляции, двигает 
+фейдер или отпускает педаль. То есть голосовые сообщения описывают 
+действия исполнителя в цифровой форме. Тон-генератор, получая эти 
+сообщения, анализирует их и реагирует на них примерно так: "Ага, это 
+нажатие клавиши До первой октавы — нужно воспроизвести ноту; это поворот
+ звуковысотного колеса — нужно сместить у ноты высоту тона; а это — 
+неизвестное мне сообщение, ничего делать не буду".
+</p>
+
+<p>
+Тон-генератор может работать в нескольких режимах (о них поговорим 
+далее), и в каждом режиме он реагирует на голосовые сообщения 
+по-разному. Сообщения режима канала как раз и нужны для переключения 
+этих режимов, но они выполняют и еще несколько полезных действий.
+</p>
+
+<p>
+Общесистемные сообщения выполняют несколько разнородных задач. В их 
+числе — синхронизация MIDI- и аудиоустройств (например, магнитофонов) 
+посредством протокола MIDI Time Code (MTC), передача позиции песни, 
+выбор песни и даже запрос на подстройку осцилляторов синтезатора.
+</p>
+
+<p>
+Системные сообщения реального времени предназначены для синхронизации 
+MIDI-устройств, например, секвенсоров и драм-машин, по протоколу MIDI 
+Clock. Сюда же входят сообщения начальной инициализации ("сброса") 
+устройства и предотвращения некорректной работы (выключения зависших 
+нот). Сообщения реального времени отличаются от всех других тем, что 
+имеют наивысший приоритет передачи, то есть, например, легко могут 
+вклиниться между частями другого сообщения. Это и понятно — ритмическая 
+точность дороже всего.
+</p>
+
+<p>
+Системные эксклюзивные сообщения (обозначаемые для краткости SysEx) — 
+это своеобразная палочка-выручалочка для производителей устройств. 
+Сегодня на рынке существует множество типов оборудования, и каждый 
+конкретный прибор имеет свои специфические возможности. Организации MMA и
+ JMSC могли пойти по пути постоянных обновлений спецификации MIDI: 
+появилась какая-то новая функция, скажем, в дымовой машине — выделить 
+под нее новое сообщение и занести в стандарт. Понятно, что это тупиковый
+ путь. За всем не уследишь, а абсолютной совместимости между 
+устройствами все равно не добиться (да и какая совместимость может быть у
+ дымовой машины и синтезатора?). Поэтому было решено дать возможность 
+каждому производителю определять свои собственные (эксклюзивные, 
+исключительные) сообщения, даже под конкретное устройство.
+</p>
+
+<p>
+Представьте, что, например, фирма Roland выпустила новый звуковой модуль
+ с необычной функцией. Для управления этой функцией нет стандартного 
+голосового сообщения, предусмотренного спецификацией MIDI. Что делает 
+фирма Roland? Она придумывает свое эксклюзивное сообщение, с помощью 
+которого и происходит управление функцией. Для того, чтобы эксклюзивные 
+сообщения одних фирм не мешали другим, каждый производитель получает 
+свой уникальный идентификатор и использует его в заголовке сообщения. 
+Так что звуковой модуль, скажем, фирмы Yamaha, увидев в заголовке 
+сообщения SysEx идентификатор Roland, говорит себе: "Так, это не для 
+меня, я тут все равно ничего не пойму, пропускаю все сообщение".
+</p>
+
+<p>
+Несколько сообщений SysEx являются универсальными и поддерживаются 
+устройствами разных производителей. Эти сообщения применяются для 
+настройки таких параметров тон-генератора, как общая громкость и 
+панорама, а также для реализации дополнительных протоколов в рамках 
+MIDI, например, протокола передачи семплов (MIDI Sample Dump Standard), 
+управления сценическим светом и пиротехническими устройствами (MIDI Show
+ Control), управления транспортными функциями оборудования (MIDI Machine
+ Control).
+</p>
+
+<p>
+Ну вот, разобрались с тем, какие сообщения бывают. Теперь пора выяснить,
+ как их передавать. Понятно, что каждому сообщению нужно присвоить свой 
+код, однако прежде чем перейти к этому, необходимо четко представлять, 
+как хранится информация в цифровых устройствах.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Системы счисления
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Мы не будем здесь учиться программировать или складывать двоичные числа в
+ столбик. Первое музыканту не обязательно, а второе проще делать на 
+калькуляторе.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+На самом деле, чтобы разобраться в протоколе MIDI, вовсе необязательно 
+иметь математический склад ума. Нужно только базовое представление о 
+способе хранения чисел в компьютере. Если однажды в секвенсоре вы 
+увидели окно SysEx с кучей непонятных букв и цифр, и рефлекторно закрыли
+ его, то этот раздел для вас. Попробуйте изменить свое отношение к этим 
+значкам, а еще лучше — почитайте руководство пользователя к инструменту и
+ попробуйте эти значки на практике. Вы увидите, что они обладают 
+огромной силой.
+</p>
+
+<p>
+Как же хранится информация в цифровых устройствах? Логично предположить,
+ что раз "цифровые", то в виде привычных для нас чисел. Люди используют 
+десятичную систему счисления, возникшую благодаря пальцевому счету — 
+числу пальцев на обеих руках. У нас есть десять различных знаков (цифр),
+ с помощью которых мы можем представить любое число. Если бы у нас было 
+по три пальца на каждой руке (какой ужас), мы бы наверняка пользовались 
+шестеричной системой счисления. И выражали бы любые числа, используя 
+шесть цифр — 0, 1, 2, 3, 4, 5.
+</p>
+
+<p>
+У цифрового устройства пальцев нет совсем, а есть только электрические 
+элементы, которые могут находиться либо во включенном, либо в 
+выключенном состоянии. Можно представлять себе такой элемент в виде 
+конденсатора, который либо заряжен, либо разряжен. Программисты 
+договорились, что одно состояние конденсатора будет обозначаться цифрой 
+0, а другое — 1. Могли бы использовать буквы A и B, суть от этого не 
+изменилась бы. Итак, на все нам даны две цифры, и поэтому система 
+счисления в цифровой технике — двоичная. Цифры в двоичной системе обычно
+ называют битами (от англ. bit — <b>bi</b>nary digi<b>t</b>). Также 
+битом называют простейшую, неделимую область памяти (тот самый 
+конденсатор), в котором хранится какая-либо из цифр двоичной системы. По
+ сути, бит — это минимальная единица информации. Не стоит путать этот 
+"бит" с музыкальным термином, звучащим по-русски аналогично, но 
+обозначающим "удар" (от англ. beat).
+</p>
+
+<p>
+Итак, бит принимает только два значения — обычно 0 и 1, хотя эти цифры 
+условны. Например, бит может показывать логическое состояние "да/нет", 
+наличие или отсутствие жесткого диска в семплере, или, скажем, тип 
+дороги — асфальтовая или грунтовая. Понятно, что многие явления двумя 
+состояниями не описать, а числа одним битом не выразить. Для этих целей 
+применяется набор битов. Например, посчитаем в двоичной системе до 
+восьми, и посмотрим, сколько битов (простейших ячеек памяти) нужно для 
+представления чисел (рис. 9):
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/09.gif" alt=" Рис. 9" width="230" height="273">
+</p>
+
+<p>
+Нетрудно заметить: максимальное число, которое можно записать, располагая N битами, равно 2<sup>N</sup>-1. Действительно, двумя битами можно выражать числа до 3, тремя до 7 и так далее.
+</p>
+
+<p>
+Для удобства доступа к данным в цифровой технике биты объединяются в 
+группы. Самая распространенная и всем знакомая группа битов — байт. Байт
+ состоит из восьми битов. Биты нумеруются справа налево — нулевой бит 
+всегда находится справа и называется младшим значащим разрядом (LSD, 
+Least Significant Digit). Самый левый бит называется старшим значащим 
+разрядом (MSD, Most Significant Digit), рис. 10. Получается, что в одном
+ восьмибитовом байте могут храниться значения от 0 до 255 (2<sup>8</sup>-1),
+ то есть всего 256 значений. Если нужно хранить числа больше 255, 
+используются два байта (машинное слово, 16 бит), диапазон значений от 0 
+до 2<sup>16</sup>-1 (65535), четыре байта (двойное слово, 32 бита) — от 0 до 2<sup>32</sup>-1
+ (4294967295), и так далее. Заметьте, что число бит, используемых для 
+хранения числа, всегда кратно восьми. Даже если для представления числа 
+достаточно 9 бит, используются два байта. Группы байт объединяются в 
+соответствии со степенями двойки: 2, 4, 8, 16 и так далее. Так что 
+трехбайтовая величина (24 бита) в памяти машины все равно занимает 4 
+байта, старшие восемь бит просто не используются. Такое расточительство 
+ресурсов связано с особенностью архитектуры микропроцессоров.
+</p>
+
+<br>
+ </font></font></font></font></font></font></font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/10.gif" alt=" Рис. 10" width="606" height="303" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+В протоколе MIDI значения параметров обычно ограничены двухбайтовым 
+словом. Биты с 0 по 7 составляют младший значащий байт слова (LSB, Least
+ Significant Byte), с 8 по 15 — старший значащий байт (MSB, Most 
+Significant Byte).
+</p>
+
+<p>
+Двоичные числа очень громоздки в записи и удобны, пожалуй, только для 
+электронных "мозгов": например, число 35935 в двоичной системе будет 
+выглядеть как 1000110001011111. Перевести такое число в десятичное без 
+калькулятора проблематично, как, впрочем, и получить его из десятичного.
+ Поэтому для облегчения жизни программисты придумали шестнадцатеричную 
+систему счисления. В ней числа представляются с помощью цифр и букв: 
+цифры — привычные для нас, от 0 до 9, а буквы — от A до F. Например, в 
+десятичной системе число "десять" записывается как 10, а в 
+шестнадцатеричной — как A. Значение F соответствует десятичному 15.
+</p>
+
+<p>
+Важно понять, что компьютеру абсолютно все равно, как мы там называем 
+числа — цифрами, буквами или точками с тире. На физическом уровне есть 
+только электрические элементы, способные находиться в одном из двух 
+состояний. А то, что в компьютерном мире и, в частности, в протоколе 
+MIDI используются именно шестнадцатеричные числа, вызвано удобством их 
+перевода в двоичные, то есть на язык компьютера, и обратно.
+</p>
+
+<p>
+В самом деле, максимальное число, которое можно представить одним 
+шестнадцатеричным знаком (F, десятичное 15), равно максимальному числу, 
+которое можно представить четырьмя битами (2<sup>4</sup>-1). 
+Максимальное число, которое можно представить двумя шестнадцатеричными 
+знаками (FF, десятичное 255), равно числу, которое можно представить 
+восемью битами (2<sup>8</sup>-1). И так далее. Получается, что каждые четыре бита двоичного числа соответствуют одному разряду шестнадцатеричного (2<sup>4</sup> = 16). Следующая таблица (рис. 11) показывает соответствие между двоичными, десятичными и шестнадцатеричными числами.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/11.gif" alt=" Рис. 11" width="400" height="452">
+</p>
+
+<p>
+С помощью нее можно быстро, без калькулятора, выполнять преобразование 
+двоичных чисел в шестнадцатеричные и обратно. Работая с MIDI даже на 
+уровне пользователя, такие преобразования иногда приходиться выполнять. 
+Например, преобразуем наше число 35935 из двоичного вида 
+(1000110001011111) в шестнадцатеричный. Первая четырехбитная группа 
+справа — 1111, соответствует шестнадцатеричному F. Вторая группа (0101) —
+ 5, третья (1100) — С, последняя (1000) — 8. Итак, десятичное 35935 в 
+шестнадцатеричном виде выглядит как 8C5F. Аналогично, число D7 
+записывается в двоичном виде как 11010111.
+</p>
+
+<p>
+Преобразования двоичных и шестнадцатеричных чисел в десятичные и обратно проще выполнять на калькуляторе.
+</p>
+
+<p>
+Для того, чтобы отличать в тексте шестнадцатеричные числа от десятичных,
+ используются разные методы. Я буду использовать синтаксис языка 
+программирования Си и обозначать шестнадцатеричные числа префиксом "0x".
+ В нашем примере 35935 = 1000110001011111 = 0x8C5F.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Принцип кодирования сообщений
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Очевидно, сообщение должно состоять из двух компонентов: первый 
+описывает тип сообщения, то есть отвечает на вопрос "что надо делать", 
+второй — уточняет действие и отвечает на вопрос "как надо делать". 
+Например, при нажатии клавиши первый компонент сообщает тон-генератору 
+"взять ноту", а второй уточняет: "Эта нота — До малой октавы". В 
+некоторых случаях уточняющий компонент не нужен, например, в системном 
+сообщении реального времени, останавливающем секвенсор, достаточно 
+одного компонента, который говорит "стоп".
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Компоненты сообщений в протоколе MIDI представлены байтами. Компонент, 
+описывающий тип сообщения, называется статус-байтом, компонент, 
+уточняющий сообщение — байтом данных. Если уточняющей информации много, 
+она может быть представлена несколькими байтами данных. Таким образом, 
+каждое MIDI-сообщение состоит из одного статус-байта и, если необходимо,
+ одного или нескольких байтов данных. Передаются эти сообщения по 
+MIDI-кабелю в том же порядке — сначала статус-байт, затем байты данных. 
+Количество байтов данных жестко закреплено за каждым сообщением. Так 
+что, если, например, тон-генератор получил статус-байт "нажата клавиша",
+ он ждет за ним два байта данных, первый из которых содержит номер 
+нажатой клавиши, второй — скорость нажатия.
+</p>
+
+<p>
+Для системных эксклюзивных сообщений сделано исключение — их длина 
+жестко не задается. Она определяется специальным статус-байтом, который 
+помещается в конец сообщения.
+</p>
+
+<p>
+MIDI-сообщения — это поток данных в реальном времени. При передаче 
+данных иногда могут происходить их потери и прочие неприятности. В 
+компьютерных сетевых протоколах, в случае прихода испорченных данных 
+(что проверяется по контрольной сумме) происходит повторный запрос к 
+серверу до тех пор, пока данные не придут в целости и сохранности. В 
+протоколе MIDI такая возможность отсутствует (по крайней мере, при 
+передаче голосовых сообщений), и приемник всегда находится в пассивном 
+состоянии по отношению к передатчику. Что принял, то принял.
+</p>
+
+<p>
+Отсюда вывод: необходимо сделать так, чтобы приемник в любой момент мог 
+отличить статус-байт от байта данных, без всяких подсчетов и 
+необходимости синхронизации с передатчиком. Для этого в протоколе MIDI 
+каждый статус байт содержит в старшем значащем разряде единицу, а каждый
+ байт данных — ноль. Так что один бит из байта расходуется по служебной 
+необходимости. Для кодирования сообщений и передачи данных остаются 
+только семь бит. Отсюда — фундаментальное число 128, пронизывающее 
+насквозь весь протокол. Семью битами можно представить только 128 
+различных значений (от 0 до 127, 2<sup>7</sup>-1). Именно поэтому в MIDI 128 нот, 128 уровней динамики и так далее.
+</p>
+
+<p>
+Стало быть, и в статус-байте можно закодировать 128 сообщений. 
+Разработчики протокола могли так и сделать, но поступили иначе, и этим 
+во многом объясняется гибкость и живучесть MIDI. Во-первых, 128 
+сообщений рано или поздно окажется недостаточно, во-вторых, в каждом 
+сообщении канала нужно передавать номер канала, которому адресовано 
+сообщение. Под номер канала придется отводить один байт данных, что не 
+рационально — сообщения канала используются в MIDI гораздо активнее 
+системных, а если к каждому такому сообщению будет "пришит" 
+дополнительный байт, это намного снизит пропускную способность MIDI. К 
+тому же каналов всего 16, и для их представления достаточно четырех бит.
+ Поэтому было решено кодировать номер канала в младшей половине 
+статус-байта (рис. 12)
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/12.gif" alt="Рис. 12" width="427" height="314">
+</p>
+
+<p>
+Получается такая картина: старший бит статус-байта занят, так как должен
+ всегда содержать единицу, четыре младших байта — тоже, так как содержат
+ номер MIDI-канала. На кодирование типа сообщения остается всего три 
+бита, которыми можно закодировать восемь сообщений. Семь из них отвели 
+под сообщения канала, а последнее, все биты которого единичные (111), 
+сделали признаком системного. Системные сообщения не требуют номера 
+канала, поэтому младшие четыре бита статус-байта могут быть использованы
+ для кодирования конкретного типа сообщения (всего их получается 16).
+</p>
+
+<p>
+Тон-генератор анализирует полученный байт примерно по следующей схеме. 
+Если его старший бит равен нулю — это байт данных и младшие семь бит 
+нужно рассматривать как числовой параметр. Если старший бит равен 
+единице — это статус-байт, и тогда три бита после него отражают тип 
+сообщения. Если эти три бита единичные, сообщение системное, какое 
+именно — задается младшими четырьмя битами. В противном случае — это 
+сообщение канала, и тогда младшие четыре бита задают номер канала. Все 
+это может показаться сложным для человека, но компьютер работает с 
+битами "на ура" и вышеуказанную процедуру выполняет за доли 
+микросекунды.
+</p>
+
+<p>
+Однако, что же получается: вместо 128 возможных сообщений мы можем 
+закодировать только семь голосовых и шестнадцать системных? Да, именно 
+так. Системных сообщений, в принципе, достаточно, а вот все голосовые в 
+семь штук явно не уложишь. Поэтому разработчики MIDI применили 
+многоуровневый метод кодирования. Но об этом поговорим в следующий раз.
+</p>
+
+<p>
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="2" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+Оценка статьи
+</b></font></td></tr></tbody></table>
+
+<font size="2" face="Arial, sans serif">
+</font></p><form method="post"><font size="2" face="Arial, sans serif"><font size="2" face="Arial" color="#000000">Посещений: 4410 | Проголосовавших: 
+12 | Средняя оценка: 5.0<p><input type="hidden" name="envoi" value="1">&nbsp;<select name="note"><option value="5" selected="selected">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select>&nbsp;&nbsp;<input type="submit" value="Оценить"></p></font>
+
+<p></p>
+<p>
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="2" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+Комментарии
+</b></font></td></tr></tbody></table>
+
+<font size="1" face="Arial, sans serif">
+<noindex><!--195.222.157.183--></noindex></font></p><div align="RIGHT"><font size="1" face="Arial, sans serif"><small>14.09.05 10:11</small>        </font></div><font size="1" face="Arial, sans serif">	<b>tagirov</b> <a href="mailto:"></a><br>очень хорошая и обстоятельная статьяждем продолжения!<br><hr>
+<!--81.195.18.217--><div align="RIGHT"><small>15.09.05 21:01</small>        </div>	<b>Андрей</b> <a href="mailto:"></a><br>Скажите,
+ а на midi-thru идет только сигнал с midi-in или в него подмешивается 
+сигнал с самого инструмента.То есть, выдает ли инструмент свой сигнал с 
+подмешеным с midi-in и через какой разъём, midi-out или 
+midi-thru?спасибо!<br><hr>
+<!--80.70.236.17--><div align="RIGHT"><small>15.09.05 21:37</small>        </div>	<b>Александр Федоров</b> <a href="mailto:asf@users.mns.ru">asf@users.mns.ru</a><br>На MIDI Thru идет точная копия сигнала с MIDI In, без обработки самим инструментом.
+<p>На выход MIDI Out может идти все что угодно, в том числе и обработанный вход MIDI In.  <br></p><hr>
+<!--85.237.41.146--><div align="RIGHT"><small>01.01.08 21:49</small>
+        </div>
+	<b>Донатас</b> <a href="mailto:don.homepage87@inbox.ru">don.homepage87@inbox.ru</a><br>Очень интересная статья, спасибо!<br><hr>
+
+
+<big><b>В связи с обилием спама размещение комментариев отключено. Пользуйтесь <a href="http://www.muzoborudovanie.ru/forum/index.php?site=mo&amp;bn=">форумами</a>.</b><br></big>
+<br>
+
+
+<table width="427" cellspacing="1" cellpadding="1" border="0" bgcolor="000000">
+
+<tbody><tr bgcolor="d0d0d0">
+<td align="CENTER">
+<font size="0">
+<a href="http://www.muzoborudovanie.ru/ads/adrates.php">РЕКЛАМА</a>
+</font>
+
+</td></tr><tr bgcolor="ffeecc">
+<td align="CENTER">
+
+<!-- Yandex.RTB R-A-2736-1 -->
+<div id="yandex_rtb_R-A-2736-1"><yatag class="v370f8cba kdea1020" id="v370f8cba" lang="ru"><yatag class="v59c010ef f8f65de95 oed340753 c6219d06f"><yatag class="ea16757df fc045450a o67e256a4 o67400859" style="min-height: 150px !important; min-width: 423px !important; max-width: 423px !important;"><yatag data-id="212663125119248880" class="s5f8e4066 d10207f6c ta3e9ff8" style="width: 421px !important; margin: auto !important;"><yatag class="r81b00f7f" style="min-height: 148px !important; font-size: 12.8923px !important;"><yatag class="l4c042b8f"><a href="https://an.yandex.ru/count/BBDABRaY_aO507y2CVGBCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0iVZLHlWzBhRm0AW-X3m0jMjgR8F-0A2W820WB1BW0EI_Olb2uW3YugQWmwe0mIm0mIu1Fy1w0It7VW4yAaHY0NmgH6G1SUABA05qgG5g0NlimIm1U-p1BW5nfeBm0NxWXd81QYk1j05wui2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGUFU6IIB-ZHEB07W82G3C07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2gA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGv6kBi8zu001sPUxc38u50C0BWAC5o0k0r9C1sGkFU6IIB-ZHEEWByAaHy0iAY0oYjzw-0UWC0PWDbxOuu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0-FyP6LzeNww3ZP3vbP6CN7B_m_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0P0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000007IjGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4gpkU0P7GnK_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=331503179454465&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMzE1MDI3NTU4MDcyMzIifQ%3D%3D&amp;" class="u3d5c44ae" target="_blank"><yatag class="rbf927486 t7fc305ed b413eed6b"><yatag class="y4aafcafd">Яндекс.Директ</yatag></yatag></a><a href="https://an.yandex.ru/count/BBDABRaY_aO507y2CVGBCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0iVZLHlWzBhRm0AW-X3m0jMjgR8F-0A2W820WB1BW0EI_Olb2uW3YugQWmwe0mIm0mIu1Fy1w0It7VW4yAaHY0NmgH6G1SUABA05qgG5g0NlimIm1U-p1BW5nfeBm0NxWXd81QYk1j05wui2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGUFU6IIB-ZHEB07W82G3C07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2gA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGv6kBi8zu001sPUxc38u50C0BWAC5o0k0r9C1sGkFU6IIB-ZHEEWByAaHy0iAY0oYjzw-0UWC0PWDbxOuu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0-FyP6LzeNww3ZP3vbP6CN7B_m_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0P0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000007IjGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4gpkU0P7GnK_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=331503179454465&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMzE1MDI3NTU4MDcyMzIifQ%3D%3D&amp;" class="rbf927486 x2026b2e1" style="min-width: 148px !important; max-width: 168.4px !important;" target="_blank"><yatag class="vd3639700"><yatag class="s594af6cc"><yatag style="position: absolute !important; width: 234.333% !important; padding-top: 88.0952% !important; transform: translate(-28.6629%) scale(1) !important; transform-origin: 50% 50% 0px !important;" class=""><img alt="" style="position: absolute !important; left: 0px !important; top: 0px !important; width: 100% !important; height: 100% !important;" class="g85edcd42" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/huge.webp"></yatag></yatag></yatag></a><yatag class="ubeb4b8c4"><yatag class="hf5e8e6e6 j8b3146fb"><a href="https://an.yandex.ru/count/BBDABRaY_aO507y2CVGBCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0iVZLHlWzBhRm0AW-X3m0jMjgR8F-0A2W820WB1BW0EI_Olb2uW3YugQWmwe0mIm0mIu1Fy1w0It7VW4yAaHY0NmgH6G1SUABA05qgG5g0NlimIm1U-p1BW5nfeBm0NxWXd81QYk1j05wui2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGUFU6IIB-ZHEB07W82G3C07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2gA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGv6kBi8zu001sPUxc38u50C0BWAC5o0k0r9C1sGkFU6IIB-ZHEEWByAaHy0iAY0oYjzw-0UWC0PWDbxOuu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0-FyP6LzeNww3ZP3vbP6CN7B_m_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0P0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000007IjGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4gpkU0P7GnK_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=331503179454465&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMzE1MDI3NTU4MDcyMzIifQ%3D%3D&amp;" class="rbf927486 k75708779" target="_blank"><yatag class="y4aafcafd c8fc3c813">Синтезатор Roland E-A7</yatag></a></yatag><yatag class="ua7e36d16"><a href="https://an.yandex.ru/count/BBDABRaY_aO507y2CVGBCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0iVZLHlWzBhRm0AW-X3m0jMjgR8F-0A2W820WB1BW0EI_Olb2uW3YugQWmwe0mIm0mIu1Fy1w0It7VW4yAaHY0NmgH6G1SUABA05qgG5g0NlimIm1U-p1BW5nfeBm0NxWXd81QYk1j05wui2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGUFU6IIB-ZHEB07W82G3C07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2gA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGv6kBi8zu001sPUxc38u50C0BWAC5o0k0r9C1sGkFU6IIB-ZHEEWByAaHy0iAY0oYjzw-0UWC0PWDbxOuu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0-FyP6LzeNww3ZP3vbP6CN7B_m_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0P0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000007IjGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4gpkU0P7GnK_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=331503179454465&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMzE1MDI3NTU4MDcyMzIifQ%3D%3D&amp;" class="rbf927486 yda874589" target="_blank"><yatag class="y4aafcafd c8fc3c813">Купить за&nbsp;82&nbsp;990&nbsp;<span class="c3925da19">руб</span>.</yatag></a></yatag><yatag class="m985f27b0 ca18a1552"><a href="https://an.yandex.ru/count/BBDABRaY_aO507y2CVGBCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0iVZLHlWzBhRm0AW-X3m0jMjgR8F-0A2W820WB1BW0EI_Olb2uW3YugQWmwe0mIm0mIu1Fy1w0It7VW4yAaHY0NmgH6G1SUABA05qgG5g0NlimIm1U-p1BW5nfeBm0NxWXd81QYk1j05wui2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGUFU6IIB-ZHEB07W82G3C07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2gA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGv6kBi8zu001sPUxc38u50C0BWAC5o0k0r9C1sGkFU6IIB-ZHEEWByAaHy0iAY0oYjzw-0UWC0PWDbxOuu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0-FyP6LzeNww3ZP3vbP6CN7B_m_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0P0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000007IjGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4gpkU0P7GnK_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=331503179454465&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMzE1MDI3NTU4MDcyMzIifQ%3D%3D&amp;" class="rbf927486 u9a607fbc r16b38c83" target="_blank"><yatag class="vb2e38134"><yatag class="f98b9d5a0"><yatag class="y4aafcafd">Узнать больше</yatag></yatag></yatag></a><yatag class="xd1f31d07 u31b9a718"><yatag class="vb2e38134"><yatag class="f98b9d5a0"><a href="https://an.yandex.ru/count/BBDABRaY_aO507y2CVGBCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0iVZLHlWzBhRm0AW-X3m0jMjgR8F-0A2W820WB1BW0EI_Olb2uW3YugQWmwe0mIm0mIu1Fy1w0It7VW4yAaHY0NmgH6G1SUABA05qgG5g0NlimIm1U-p1BW5nfeBm0NxWXd81QYk1j05wui2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGUFU6IIB-ZHEB07W82G3C07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2gA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGv6kBi8zu001sPUxc38u50C0BWAC5o0k0r9C1sGkFU6IIB-ZHEEWByAaHy0iAY0oYjzw-0UWC0PWDbxOuu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0-FyP6LzeNww3ZP3vbP6CN7B_m_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0P0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000007IjGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4gpkU0P7GnK_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=331503179454465&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMzE1MDI3NTU4MDcyMzIifQ%3D%3D&amp;" class="rbf927486 a1dc681b8" target="_blank"><yatag class="y4aafcafd">love-piano.ru</yatag></a></yatag></yatag></yatag></yatag></yatag></yatag></yatag><yatag class="i558fec22 h1eba560f"><yatag class="i7fccea35"><yatag class="c29f72714"><yatag></yatag></yatag></yatag></yatag><yatag class="bcec05c29 a4a9e143a ncd7f9a2"><yatag class="m7ffedbac"><yatag class="sa3c2563c kba04f6a4 nd14e7234"><yatag class="fbab2c0db"><yatag style="width: 8px !important; height: 8px !important;" class="ka63433b"><svg width="8px" height="8px" viewBox="0 0 14 14"><polygon points="8.28616426 7.02081528 13.6638974 12.3985484 12.3985484 13.6638974 7.02081528 8.28616426 1.64308213 13.6638974 0.377733152 12.3985484 5.7554663 7.02081528 0.377733152 1.64308213 1.64308213 0.377733152 7.02081528 5.7554663 12.3985484 0.377733152 13.6638974 1.64308213"></polygon></svg></yatag><yatag class="ef89a72e9"><yatag class="h497d51fd"></yatag><yatag class="o2b0156f9">Скрыть&nbsp;объявление</yatag></yatag></yatag></yatag></yatag></yatag></yatag></yatag><yatag id="saa0aeeeb"><yatag class="r79b65ddd"></yatag></yatag></yatag></yatag></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-2736-1",
+                renderTo: "yandex_rtb_R-A-2736-1",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+
+</td></tr></tbody></table>
+<br>
+</font></font></form></font></font></font></td>
+
+<td width="25">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td width="129" bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="50">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="427" bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="25">
+<font size="0">
+&nbsp;
+</font></td>
+</tr>
+
+</tbody></table>
+
+</td><td width="129" valign="TOP" bgcolor="555581" align="CENTER"> 
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-0269592369109973";
+//120x600
+google_ad_slot = "8729918506";
+google_ad_width = 120;
+google_ad_height = 600;
+//--></script>
+<script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/show_ads.js">
+</script><ins id="aswift_1_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent;" data-ad-slot="8729918506"><ins id="aswift_1_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0px;width:120px;height:600px;" width="120" height="600" frameborder="0"></iframe></ins></ins>
+
+<br>
+<br>
+
+<table width="111" cellspacing="0" cellpadding="2" border="0">
+<tbody><tr bgcolor="dedede">
+<td align="CENTER">
+<font size="0">
+<a href="http://www.muzoborudovanie.ru/ads/adrates.php">
+Цены на рекламу
+</a>
+</font></td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+
+
+
+
+
+
+ 
+
+
+<script type="text/javascript">
+<!--
+var _acic={dataProvider:10};(function(){var e=document.createElement("script");e.type="text/javascript";e.async=true;e.src="//www.acint.net/aci.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})()
+//-->
+</script>
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+<tbody><tr valign="TOP" align="CENTER">
+<td width="129">
+
+<noindex>
+<br>
+<!-- SpyLOG -->
+<script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/counter_cv.js" id="spylog_code" type="text/javascript" counter="10716" part="" track_links="ext" page_level="1">
+</script><a href="https://spylog.com/cnt?cid=10716&amp;p=1&amp;f=3"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/cnt.gif" id="spylog_img" alt="SpyLOG" width="88" height="31" border="0"></a>
+<noscript>
+<a href="http://u107.16.spylog.com/cnt?cid=10716&f=3&p=1" target="_blank">
+<img src="http://u107.16.spylog.com/cnt?cid=10716&p=1" alt="SpyLOG" border="0" width="88" height="31"></a>
+</noscript>
+<!--/ SpyLOG -->
+
+<!--Rating@Mail.ru COUNTEr--><script language="JavaScript" type="text/javascript"><!--
+d=document;var a='';a+=';r='+escape(d.referrer)
+js=10//--></script><script language="JavaScript1.1" type="text/javascript"><!--
+a+=';j='+navigator.javaEnabled()
+js=11//--></script><script language="JavaScript1.2" type="text/javascript"><!--
+s=screen;a+=';s='+s.width+'*'+s.height
+a+=';d='+(s.colorDepth?s.colorDepth:s.pixelDepth)
+js=12//--></script><script language="JavaScript1.3" type="text/javascript"><!--
+js=13//--></script><script language="JavaScript" type="text/javascript"><!--
+d.write('<a href="http://top.mail.ru/jump?from=120209"'+
+' target=_top><img src="http://d5.cd.b1.a0.top.list.ru/counter'+
+'?id=120209;t=49;js='+js+a+';rand='+Math.random()+
+'" alt="Рейтинг@Mail.ru"'+' border=0 height=31 width=88/><\/a>')
+if(11<js)d.write('<'+'!-- ')//--></script><a href="http://top.mail.ru/jump?from=120209" target="_top"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/counter.gif" alt="Рейтинг@Mail.ru" width="88/" height="31" border="0"></a><!-- <noscript><a
+target=_top href="http://top.mail.ru/jump?from=120209"><img
+src="http://d5.cd.b1.a0.top.list.ru/counter?js=na;id=120209;t=49"
+border=0 height=31 width=88
+alt="Рейтинг@Mail.ru"/></a></noscript><script language="JavaScript" type="text/javascript"><!--
+if(11<js)d.write('--'+'>')//--><!--/COUNTER-->
+
+</noindex>
+
+</td>
+
+<td width="502">
+<p>
+<font size="-2" face="Verdana, Tahoma, Arial, sans serif">
+</font></p><p><font size="-2" face="Verdana, Tahoma, Arial, sans serif">
+<br>
+Музыкальное Оборудование
+<br><a href="http://www.muzoborudovanie.ru/">www.muzoborudovanie.ru</a>
+<br>www.moline.ru
+<br><a href="mailto:mail@muzoborudovanie.ru">mail@muzoborudovanie.ru</a>
+<br><a href="http://www.muzoborudovanie.ru/data.php">© Агентство ДАТА</a>
+<br>
+</font></p></td>
+
+<td width="129">
+<p>
+<noindex>
+<br>
+<!-- begin of Top100 code -->
+<script id="top100Counter" type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/top100.jcn"></script><a href="https://top100.rambler.ru/home?id=196166" target="_blank"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/a.gif" title="Rambler's Top100" alt="Rambler's Top100" border="0"></a><noscript><a href="http://top100.rambler.ru/home?id=196166" target="_blank"><img src="http://cnt.rambler.ru/top100.cnt?196166" alt="Rambler's Top100" width="81" height="63" border="0" /></a></noscript>
+<!-- end of Top100 code -->
+</noindex>
+
+</p></td>
+</tr>
+</tbody></table>
+
+</center>
+</font><iframe src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/a.htm" style="width:1px;height:1px;display:none;" width="0" height="0" frameborder="0"></iframe><iframe id="google_osd_static_frame_3836586195996" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe><ins class="adsbygoogle adsbygoogle-noablate" style="display: none !important;" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_2_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;" frameborder="0"></iframe></ins></ins></ins></body><iframe id="google_esf" name="google_esf" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%201%20%E2%80%94%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.%20-%20%D0%9C%D0%9E_files/zrt_lookup.htm" style="display: none;" data-ad-client="ca-pub-0269592369109973"></iframe></html>

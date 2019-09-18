@@ -1,0 +1,1992 @@
+<html><head>
+<title>MIDI в деталях. Часть 5 — Стандартные MIDI-файлы. - МО</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/integrator_002.js" as="script"><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/ca-pub-0269592369109973.js"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/adsbygoogle.js"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/osd.js"></script><script type="text/javascript" async="" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/aci.js"></script><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/context.js" async=""></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/show_ads_impl.js" id="google_shimpl"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/ca-pub-0269592369109973.js"></script><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/integrator_002.js"></script><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/integrator.js" as="script"><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/integrator.js"></script><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/show_ads_impl.js" as="script"><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/context_static.js" as="script"><script id="https://an.yandex.ru/partner-code-bundles/8777/context_static.js" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/context_static.js"></script><script type="text/javascript" charset="utf-8" async="" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/d0ac678e6c3095b874ca.js"></script><style type="text/css"> #x9e91744f .i9fd5af79{position:fixed !important;left:-1000px !important;top:-1000px !important;width:1px !important;height:1px !important;display:block !important}</style><style type="text/css"> .qde59565e{opacity:1 !important;white-space:normal !important;visibility:visible !important}.qde59565e,.qde59565e yatag{display:block !important;font-family:inherit !important}.qde59565e,.qde59565e,.qde59565e a,.qde59565e b,.qde59565e em,.qde59565e iframe,.qde59565e img,.qde59565e table,.qde59565e tbody,.qde59565e td,.qde59565e tr,.qde59565e yatag{box-sizing:content-box !important;color:inherit !important;font-size:inherit !important;font-weight:inherit !important;-webkit-hyphens:manual !important;-ms-hyphens:manual !important;hyphens:manual !important}.qde59565e,.qde59565e a,.qde59565e b,.qde59565e em,.qde59565e iframe,.qde59565e img,.qde59565e table,.qde59565e tbody,.qde59565e td,.qde59565e tr{background:none !important;border:none !important;border-radius:0 !important;border-spacing:0 !important;border-collapse:collapse !important;clear:none !important;float:none !important;font-variant:normal !important;letter-spacing:normal !important;line-height:normal !important;margin:0 !important;max-height:none !important;max-width:none !important;min-height:0 !important;min-width:0 !important;outline:none !important;padding:0 !important;position:static !important;text-align:left !important;text-decoration:none !important;text-indent:0 !important;text-transform:none !important;vertical-align:baseline !important;visibility:inherit !important;word-spacing:normal !important}.qde59565e,.qde59565e a,.qde59565e b,.qde59565e em,.qde59565e img,.qde59565e table,.qde59565e tbody,.qde59565e td,.qde59565e tr{height:auto !important}.qde59565e table{display:table !important;empty-cells:hide !important;table-layout:fixed !important}.qde59565e table,.qde59565e td{font-size:100% !important}.qde59565e td{display:table-cell !important;vertical-align:middle !important}.qde59565e{width:auto !important;height:auto !important;overflow:visible !important}.qde59565e{position:relative !important;z-index:1 !important;-webkit-font-smoothing:antialiased !important;-webkit-text-size-adjust:none !important}.qde59565e .me0217891,.qde59565e .me0217891:hover,.qde59565e .me0217891:hover b,.qde59565e .me0217891 b{display:inline !important;color:#006600 !important;text-decoration:none !important;border-bottom-color:rgba(0,102,0,0.4) !important;border-bottom-width:1px !important;border-bottom-style:solid !important}.qde59565e .me0217891:hover,.qde59565e .me0217891:hover b{color:#DD0000 !important;border-bottom-color:rgba(221,0,0,0.4) !important}.qde59565e a:focus{-webkit-user-select:none !important;-moz-user-select:none !important;-ms-user-select:none !important;user-select:none !important}.qde59565e .of520386a{cursor:pointer !important}.qde59565e .r70cac259{display:inline !important}.qde59565e .f9788ad37{overflow-wrap:break-word !important;word-wrap:break-word !important;-webkit-hyphens:auto !important;-ms-hyphens:auto !important;hyphens:auto !important}.qde59565e .cbdd5b964,.qde59565e .a4c3d91a8{overflow:hidden !important}.qde59565e .cbdd5b964,.qde59565e .a4c3d91a8,.qde59565e .x5e7b46dd:after{position:absolute !important;top:0 !important;right:0 !important;bottom:0 !important;left:0 !important}.qde59565e .x5e7b46dd:after{content:"" !important;display:block !important;background:linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.5)) !important}.qde59565e .uf1e7ddde{cursor:pointer !important}.qde59565e .uf1e7ddde,.qde59565e .i4a0144cd{position:relative !important}.qde59565e .i4a0144cd:after{content:"" !important;position:absolute !important;top:0 !important;left:-5px !important;bottom:-5px !important;right:0 !important}.qde59565e .i4a0144cd.rdac7e7cc:after{left:0 !important;bottom:0 !important}.qde59565e .g2f70b3c6{z-index:-1 !important;transition:z-index 0s linear .4s !important;cursor:default !important;line-height:1.25 !important}.qde59565e .g2f70b3c6,.qde59565e .rd6c7e311{position:absolute !important;top:0 !important;left:0 !important;width:100% !important;height:100% !important;overflow:hidden !important}.qde59565e .rd6c7e311{margin-left:100% !important;transition:margin-left .4s ease-out !important}.qde59565e .edfcd4a70{position:absolute !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;margin-left:0 !important;width:100% !important;height:100% !important;background:#fff !important;background:hsla(0,0%,100%,.98) !important;transition:margin-left .4s ease-out !important}.qde59565e .j2535ed57{z-index:10 !important;transition:z-index 0s !important}.qde59565e .j2535ed57 .rd6c7e311{margin-left:0 !important}.qde59565e .t343f0dd8{padding:0 0 4px 4px !important}.qde59565e .b5351694d{position:absolute !important;top:50% !important;right:100% !important;margin-top:-9px !important;margin-right:8px !important;padding:0 4px !important;max-width:120px !important;height:18px !important;line-height:18px !important;color:#fff !important;background:#333 !important;background-color:rgba(0,0,0,.8) !important;border-radius:1px !important;visibility:hidden !important;font-size:11px !important;white-space:nowrap !important}.qde59565e .a6f984959{position:absolute !important;top:3px !important;right:-6px !important;display:block !important;overflow:hidden !important;width:0 !important;height:0 !important;border-style:solid !important;border-width:6px 0 6px 6px !important;border-color:transparent transparent transparent #333 !important;border-color:transparent transparent transparent rgba(0,0,0,.8) !important}.qde59565e .sce19d15d{position:relative !important;color:#fff !important;letter-spacing:.04em !important}.qde59565e .q4cc7a47f{position:relative !important;padding:4px !important;border-radius:0 0 0 20% !important}.qde59565e .n9cf2cc1f svg{display:block !important;max-height:none !important}.qde59565e .n9cf2cc1f polygon{fill:#000000 !important}.qde59565e .qf013a17e{margin:-3px !important;width:1em !important;height:1em !important;line-height:1em !important;text-align:center !important;font-size:18px !important}.qde59565e .y9587abfe{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxNCAxNCI+PHBvbHlnb24gcG9pbnRzPSIxNCwwLjcgMTMuMywwIDcsNi4yOTkgMC43LDAgMCwwLjcgNi4zLDcgMCwxMy4yOTkgMC43LDE0IDcsNy43IDEzLjMsMTQgMTQsMTMuMjk5IDcuNyw3Ij48L3BvbHlnb24+PC9zdmc+") !important}.qde59565e .t343f0dd8:hover .b5351694d{visibility:visible !important}.qde59565e .hf40ba093:hover .b5351694d{display:none !important}.qde59565e .q9f0079ab{visibility:visible !important}.qde59565e .q9f0079ab .b5351694d{display:none !important}.qde59565e .cb7bb6c45 .b5351694d{height:19px !important;line-height:19px !important}.qde59565e .cb7bb6c45 .a6f984959{top:2px !important}.qde59565e .n5b8458b1 .q4cc7a47f{padding:5px !important}.qde59565e .n5b8458b1 .qf013a17e{margin:-5px !important;font-size:25px !important}.qde59565e .n5b8458b1 .b5351694d{margin-right:9px !important;margin-top:-12px !important;max-width:160px !important;height:22px !important;line-height:22px !important;font-size:13px !important}.qde59565e .n5b8458b1 .a6f984959{right:-7px !important;top:4px !important;border-width:7px 0 7px 7px !important}.qde59565e .t343f0dd8.hf40ba093 .b5351694d{display:none !important}.qde59565e .g38308f4a .q4cc7a47f{background-color:rgba(0,0,0,.25) !important}.qde59565e .g38308f4a .n9cf2cc1f polygon{fill:#fff !important}.qde59565e .g38308f4a .n9cf2cc1f.y9587abfe{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHN0eWxlPSJmaWxsOiAjZmZmIiB2aWV3Qm94PSIwIDAgMTQgMTQiPjxwb2x5Z29uIHBvaW50cz0iMTQsMC43IDEzLjMsMCA3LDYuMjk5IDAuNywwIDAsMC43IDYuMyw3IDAsMTMuMjk5IDAuNywxNCA3LDcuNyAxMy4zLDE0IDE0LDEzLjI5OSA3LjcsNyI+PC9wb2x5Z29uPjwvc3ZnPg==") !important}.qde59565e .d5c8cc56d,.qde59565e .i4a0144cd.rdac7e7cc .t343f0dd8{padding:0 !important}.qde59565e .i4a0144cd.rdac7e7cc.tf7bafb8c.adf5ed20d{top:3px !important;right:3px !important}.qde59565e .i4a0144cd.rdac7e7cc.tf7bafb8c.adf5ed20d .q4cc7a47f{border-radius:20% !important}.qde59565e .g80816058{position:absolute !important;top:0 !important;right:0 !important;left:0 !important;bottom:0 !important;width:100% !important;height:100% !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;color:#000 !important;font-size:13px !important;z-index:-1 !important;opacity:0 !important;transition:opacity .3s !important}.qde59565e .g80816058,.qde59565e .i5aa2439f{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.qde59565e .c8a8f745{margin-left:10px !important}.qde59565e .x6a97a213 svg{fill:#000 !important}.qde59565e .r5b88b1cb{font-size:15px !important}.qde59565e .b6ffe84d6 .g80816058{opacity:1 !important;z-index:10 !important}.qde59565e .w2831ebb7{-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;min-width:100% !important;min-height:100% !important;font-size:13px !important}.qde59565e .w2831ebb7,.qde59565e .ta6822010{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;box-sizing:border-box !important}.qde59565e .ta6822010{width:100% !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;padding:10px !important}.qde59565e .f4c830abc{font-weight:700 !important}.qde59565e .tf28f39c{display:none !important;font-weight:700 !important}.qde59565e .h615b9da2,.qde59565e .tf28f39c{-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.qde59565e .h615b9da2{overflow:hidden !important}.qde59565e .td1037cf8,.qde59565e .h615b9da2{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;-webkit-flex-shrink:0 !important;-ms-flex-negative:0 !important;flex-shrink:0 !important;box-sizing:border-box !important}.qde59565e .td1037cf8{-webkit-align-content:center !important;-ms-flex-line-pack:center !important;align-content:center !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;padding:0 !important;margin:0 !important;position:relative !important}.qde59565e .b917bb8e0{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;box-sizing:border-box !important;margin:5px 0 !important}.qde59565e .cf8c1a240{display:none !important}.qde59565e .b917bb8e0 .x2bd14435{width:100% !important;max-width:250px !important}.qde59565e .cf8c1a240 .x2bd14435{width:100% !important;max-width:180px !important}.qde59565e .x2bd14435{display:block !important;padding:5px !important;background-color:#fff !important;border:1px solid #c8c8c8 !important;border-radius:4px !important;text-align:center !important;color:#555 !important;white-space:nowrap !important;transition-property:border,color !important;transition-duration:.2s !important;cursor:pointer !important;box-sizing:border-box !important}.qde59565e .x2bd14435:hover{color:#333 !important;border-color:#333 !important}.qde59565e .w2831ebb7.k8c7682f2 .h615b9da2{padding-bottom:15px !important}.qde59565e .w2831ebb7.k8c7682f2 .td1037cf8,.qde59565e .w2831ebb7.k8c7682f2 .ta6822010{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.qde59565e .w2831ebb7.k8c7682f2 .td1037cf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.qde59565e .w2831ebb7.lf556e8b2 .h615b9da2{padding-bottom:5px !important}.qde59565e .w2831ebb7.lf556e8b2 .ta6822010{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.qde59565e .w2831ebb7.lf556e8b2 .td1037cf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.qde59565e .w2831ebb7.lf556e8b2 .b917bb8e0{margin:2px 0 !important}.qde59565e .w2831ebb7.lf556e8b2 .x2bd14435{padding:3px !important}.qde59565e .w2831ebb7.i673b9912 .h615b9da2{padding-bottom:15px !important}.qde59565e .w2831ebb7.i673b9912 .td1037cf8,.qde59565e .w2831ebb7.i673b9912 .ta6822010{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.qde59565e .w2831ebb7.i673b9912 .td1037cf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.qde59565e .w2831ebb7.i673b9912 .cf8c1a240{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.qde59565e .w2831ebb7.i673b9912 .p12640962{display:none !important}.qde59565e .w2831ebb7.y234dcbe0 .h615b9da2{padding-bottom:5px !important}.qde59565e .w2831ebb7.y234dcbe0 .ta6822010{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.qde59565e .w2831ebb7.y234dcbe0 .td1037cf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.qde59565e .w2831ebb7.y234dcbe0 .b917bb8e0{margin:2px 0 !important}.qde59565e .w2831ebb7.y234dcbe0 .cf8c1a240{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.qde59565e .w2831ebb7.y234dcbe0 .p12640962{display:none !important}.qde59565e .w2831ebb7.y234dcbe0 .x2bd14435{padding:3px !important}.qde59565e .w2831ebb7.seff9d327 .h615b9da2{padding-bottom:10px !important}.qde59565e .w2831ebb7.seff9d327 .ta6822010{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.qde59565e .w2831ebb7.seff9d327 .td1037cf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;max-width:540px !important}.qde59565e .w2831ebb7.seff9d327 .b917bb8e0{width:50% !important;margin:0 !important;padding:5px !important}.qde59565e .w2831ebb7.e8f6759c7 .h615b9da2{padding-bottom:10px !important}.qde59565e .w2831ebb7.e8f6759c7 .ta6822010{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.qde59565e .w2831ebb7.e8f6759c7 .td1037cf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;max-width:340px !important}.qde59565e .w2831ebb7.e8f6759c7 .b917bb8e0{width:50% !important;margin:0 !important;padding:5px !important}.qde59565e .w2831ebb7.e8f6759c7 .cf8c1a240{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.qde59565e .w2831ebb7.e8f6759c7 .p12640962{display:none !important}.qde59565e .w2831ebb7.va6a427ca .ta6822010{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.qde59565e .w2831ebb7.va6a427ca .td1037cf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:20px !important}.qde59565e .w2831ebb7.va6a427ca .b917bb8e0{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.qde59565e .w2831ebb7.va6a427ca .x2bd14435{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.qde59565e .w2831ebb7.j844c91d8 .ta6822010{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.qde59565e .w2831ebb7.j844c91d8 .td1037cf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:15px !important}.qde59565e .w2831ebb7.j844c91d8 .b917bb8e0{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.qde59565e .w2831ebb7.j844c91d8 .cf8c1a240{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.qde59565e .w2831ebb7.j844c91d8 .p12640962{display:none !important}.qde59565e .w2831ebb7.j844c91d8 .x2bd14435{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.qde59565e .w2831ebb7.uc11d80aa .ta6822010{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.qde59565e .w2831ebb7.uc11d80aa .f4c830abc{display:none !important}.qde59565e .w2831ebb7.uc11d80aa .tf28f39c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.qde59565e .w2831ebb7.uc11d80aa .td1037cf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:15px !important}.qde59565e .w2831ebb7.uc11d80aa .b917bb8e0{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.qde59565e .w2831ebb7.uc11d80aa .cf8c1a240{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.qde59565e .w2831ebb7.uc11d80aa .p12640962{display:none !important}.qde59565e .w2831ebb7.uc11d80aa .x2bd14435{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.qde59565e .w2831ebb7.t7153071f{font-size:11px !important}.qde59565e .w2831ebb7.t7153071f .ta6822010{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:4px !important}.qde59565e .w2831ebb7.t7153071f .f4c830abc{display:none !important}.qde59565e .w2831ebb7.t7153071f .tf28f39c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.qde59565e .w2831ebb7.t7153071f .td1037cf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:10px !important}.qde59565e .w2831ebb7.t7153071f .b917bb8e0{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 1px !important}.qde59565e .w2831ebb7.t7153071f .cf8c1a240{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.qde59565e .w2831ebb7.t7153071f .p12640962{display:none !important}.qde59565e .w2831ebb7.t7153071f .x2bd14435{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.qde59565e .w2831ebb7.c51deaedc{font-size:11px !important}.qde59565e .w2831ebb7.c51deaedc .ta6822010{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:0 !important}.qde59565e .w2831ebb7.c51deaedc .f4c830abc{display:none !important}.qde59565e .w2831ebb7.c51deaedc .tf28f39c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.qde59565e .w2831ebb7.c51deaedc .td1037cf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:10px !important}.qde59565e .w2831ebb7.c51deaedc .b917bb8e0{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 2px !important}.qde59565e .w2831ebb7.c51deaedc .cf8c1a240{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.qde59565e .w2831ebb7.c51deaedc .p12640962{display:none !important}.qde59565e .w2831ebb7.c51deaedc .x2bd14435{padding:0 5px !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.qde59565e .w2831ebb7.k1e459f43{font-size:12px !important}.qde59565e .w2831ebb7.k1e459f43 .ta6822010{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;padding:4px !important}.qde59565e .w2831ebb7.k1e459f43 .f4c830abc{padding:2px 5px !important}.qde59565e .w2831ebb7.k1e459f43 .tf28f39c{display:none !important}.qde59565e .w2831ebb7.k1e459f43 .h615b9da2{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.qde59565e .w2831ebb7.k1e459f43 .td1037cf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important}.qde59565e .w2831ebb7.k1e459f43 .b917bb8e0{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:1px !important}.qde59565e .w2831ebb7.k1e459f43 .cf8c1a240{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.qde59565e .w2831ebb7.k1e459f43 .p12640962{display:none !important}.qde59565e .w2831ebb7.k1e459f43 .x2bd14435{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:2px !important}.qde59565e .b6ffe84d6 .b917bb8e0{opacity:0 !important}.qde59565e .adf5ed20d{position:absolute !important;z-index:11 !important;right:0 !important;top:0 !important}.qde59565e .o9e8659cb{position:absolute !important;left:-101% !important;top:0 !important;width:100% !important;height:100% !important;display:block !important}#qde59565e .e78c18df0 .p504279e9,#qde59565e .e78c18df0 .x2286c788{display:none !important}#qde59565e .e78c18df0 .o9e8659cb{left:0 !important;transition:left .4s ease-out !important}.qde59565e .fc518482{font-family: Helvetica,Arial,sans-serif !important;border:inherit !important;border-radius:inherit !important;text-decoration:none !important;color:#000000 !important;font-weight:400 !important;line-height:1.25 !important}.qde59565e .fc518482,.qde59565e .w419a95db{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:column nowrap !important;-ms-flex-flow:column nowrap !important;flex-flow:column nowrap !important;position:relative !important;overflow:hidden !important}.qde59565e .w419a95db{background:#FFFFFF !important}.qde59565e .m116e22e2{text-decoration:inherit !important;color:inherit !important;font-weight:inherit !important;line-height:inherit !important}.qde59565e .s188901dd:hover{color:#DD0000 !important}.qde59565e .g3a8b15ad:hover{color:#DD0000 !important}.qde59565e .c5ab5fc3b:hover{color:#DD0000 !important;-webkit-text-decoration-color:rgba(221,0,0,0.2) !important;text-decoration-color:rgba(221,0,0,0.2) !important}.qde59565e .v2add3758:hover{border-color:rgba(0,0,204,0.35) !important;color:#FFFFFF !important;fill:#FFFFFF !important}.qde59565e .v2add3758:hover .ba9151492{border-color:#FFFFFF !important}.qde59565e .m2b40bc5c{display:inline-block !important}.qde59565e .m2b40bc5c:hover{color:#DD0000 !important}.qde59565e .m116e22e2{line-height:normal !important;letter-spacing:normal !important;-webkit-flex-basis:unset !important;-ms-flex-preferred-size:unset !important;flex-basis:unset !important}.qde59565e .x7326de21,.qde59565e .b5d7c7949{display:inline-block !important;white-space:nowrap !important;font-size:10px !important;line-height:10px !important;height:10px !important;font-family:Verdana,sans-serif !important;color:inherit !important}.qde59565e .x1535191d{background:#FFFFFF !important;color:#000000 !important;border-radius:0 0 4px 4px !important}.qde59565e .x1535191d,.qde59565e .g35c572cf{display:block !important;font-size:10px !important;line-height:18px !important;height:18px !important;padding:0 6px !important;position:absolute !important;top:0 !important;z-index:2 !important}.qde59565e .g35c572cf{background:none !important;color:rgba(153,153,153,0.7) !important;border-radius:0 !important}.qde59565e .s1f47074a .b5d7c7949{color:#fff !important;text-shadow:0 1px 1px rgba(0,0,0,.25) !important}.qde59565e .s1f47074a{position:absolute !important;top:0 !important;left:0 !important;background:unset !important;background-image:url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iOTAiPjxkZWZzPjxmaWx0ZXIgeD0iLTQ4LjAlIiB5PSItODAuMCUiIHdpZHRoPSIxOTYuMCUiIGhlaWdodD0iMjYwLjAlIiBpZD0iQSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTYiIGluPSJTb3VyY2VHcmFwaGljIi8+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IGZpbGw9IiMwMDAiIGZpbHRlcj0idXJsKCNBKSIgeD0iLTMyIiB5PSItNDAiIHdpZHRoPSIxMDAiIGhlaWdodD0iNjAiIHJ4PSIyMCIgZmlsbC1ydWxlPSJldmVub2RkIiBvcGFjaXR5PSIuMjUwIi8+PC9zdmc+") !important;width:120px !important;height:90px !important;z-index:1 !important}.qde59565e .va41047f5{display:block !important;color:rgba(153,153,153,0.7) !important;position:absolute !important;bottom:3px !important;right:3px !important}.qde59565e .l3a0df1f4{height:18px !important;width:0 !important}.qde59565e .tdda9b08{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:flex-start !important;-ms-flex-pack:start !important;justify-content:flex-start !important;box-sizing:border-box !important;line-height:0 !important;z-index:1 !important}.qde59565e .tdda9b08,.qde59565e .tdda9b08 .v88296319{width:100% !important}.qde59565e .tdda9b08 .ff769545e{padding:1px 0 !important}.qde59565e .q6ae9318{display:inline-block !important;font-family:Verdana,sans-serif !important;line-height:1.2em !important;padding:0 .4em !important}.qde59565e .s6bf64c4{cursor:default !important}.qde59565e .s6bf64c4 .q6ae9318{font-size:10px !important;white-space:nowrap !important}.qde59565e .laeb09d31 .q6ae9318{font-size:.8em !important}.qde59565e .ta2ac2b02{color:#0000CC !important;font-size:1.3em !important;font-weight:700 !important;padding-bottom:.6em !important;line-height:1.25em !important}.qde59565e .o7eaf8bd6{font-size:1em !important}.qde59565e .kf205f5d5{font-size:1.1em !important}.qde59565e .b751a7254{font-size:1.2em !important}.qde59565e .y24bbda53{font-size:1.3em !important}.qde59565e .l393d35d2{font-size:1.4em !important}.qde59565e .hac939fd1{font-size:1.5em !important}.qde59565e .x2fa81c50{font-size:1.6em !important}.qde59565e .ac819505f{font-size:1.7em !important}.qde59565e .mdc9aabde{font-size:1.8em !important}.qde59565e .sa4cb5646{font-size:1.9em !important}.qde59565e .u23de5a67{font-size:2em !important}.qde59565e .bf5d62b45{border-radius:0px !important;overflow:hidden !important}.qde59565e .b42209f72,.qde59565e .n20d1e454{padding-bottom:1em !important}.qde59565e .l107a0a67{max-width:300px !important}.qde59565e .ac3cc4836{-webkit-flex-flow:row wrap !important;-ms-flex-flow:row wrap !important;flex-flow:row wrap !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.qde59565e .ac3cc4836,.qde59565e .g1286cf34{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:flex-start !important;-ms-flex-pack:start !important;justify-content:flex-start !important}.qde59565e .fd616eda7,.qde59565e .g1286cf34{-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important}.qde59565e .fd616eda7{display:block !important;overflow:hidden !important;border:1px solid #0000CC !important;background:#0000CC !important;padding:.4em .8em !important;color:#FFFFFF !important;border-radius:4px !important;text-align:center !important;fill:#FFFFFF !important;font-size:12.892320000000002px !important}.qde59565e .l107a0a67 .fd616eda7{padding:.4em !important}.qde59565e .hbe58bad0{overflow:hidden !important;height:1.4em !important;text-overflow:ellipsis !important}.qde59565e .qd8cb0e44{white-space:nowrap !important;line-height:1.4em !important;height:1.4em !important}.qde59565e .ba9151492,.qde59565e .qd8cb0e44{display:inline-block !important}.qde59565e .ba9151492{box-sizing:border-box !important;line-height:.45em !important;height:.45em !important;width:.45em !important;border:solid #FFFFFF !important;border-width:1px 1px 0 0 !important;-webkit-transform:translateX(-50%) rotate(45deg) !important;transform:translateX(-50%) rotate(45deg) !important;-webkit-transform-origin:100% 100% !important;transform-origin:100% 100% !important}.qde59565e .g1286cf34 .fd616eda7{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;font-family:Verdana,sans-serif !important;font-size:12px !important;border-radius:8px !important}.qde59565e .e1458fb23{font-family:Verdana,sans-serif !important;display:block !important;color:#006600 !important;text-align:center !important;line-height:0 !important}.qde59565e .xe994cb7c{font-size:12px !important}.qde59565e .l107a0a67 .e1458fb23{padding-top:.5em !important}.qde59565e .l107a0a67 .xe994cb7c{padding-top:.8em !important}.qde59565e .ac3cc4836 .e1458fb23{padding-left:.8em !important;padding-right:.6em !important}.qde59565e .ac3cc4836 .xe994cb7c{padding-left:1.5em !important;padding-right:1em !important}.qde59565e .y6f8b6477{padding-bottom:1em !important}.qde59565e .fb2d0f36f{display:block !important;color:#0000CC !important;line-height:1.7em !important;text-decoration:underline !important;-webkit-text-decoration-color:rgba(0,0,204,0.2) !important;text-decoration-color:rgba(0,0,204,0.2) !important}.qde59565e .v3af28afd{padding-bottom:1em !important;opacity:.5 !important}.qde59565e .yf95bb9e5{line-height:1.6em !important}.qde59565e .lcfced505{position:absolute !important;background:rgba(0,0,0,.1) !important;background-size:cover !important;box-shadow:0 1px 2px rgba(0,0,0,.5) !important;border-radius:.5em !important}.qde59565e .edfcd4a70{background:hsla(0,0%,100%,.98) !important}.qde59565e .x2bd14435{background:hsla(0,0%,100%,.98) !important;color:#555555 !important}.qde59565e .vc7d8da1c .d137187ab{-webkit-flex:1 0 auto !important;-ms-flex:1 0 auto !important;flex:1 0 auto !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important;min-height:inherit !important;position:relative !important}.qde59565e .vc7d8da1c .b5d7c7949{left:1em !important}.qde59565e .vc7d8da1c .g35c572cf{left:.5em !important}.qde59565e .vc7d8da1c .tdda9b08{color:#fff !important;position:absolute !important;bottom:0 !important;left:0 !important;right:0 !important}.qde59565e .vc7d8da1c .tdda9b08 .ff769545e{padding:.5em 0 !important}.qde59565e .vc7d8da1c .q6ae9318{padding:0 1em !important}.qde59565e .vc7d8da1c .k4df323dc{background:rgba(0,0,0,.25) !important}.qde59565e .vc7d8da1c .i10b38ece{background-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.6)) !important}.qde59565e .vc7d8da1c .q2c9fd5a0{-webkit-flex:1 0 !important;-ms-flex:1 0 !important;flex:1 0 !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:column nowrap !important;-ms-flex-flow:column nowrap !important;flex-flow:column nowrap !important;padding:.8em 1em 0 1em !important;overflow:hidden !important}.qde59565e .vc7d8da1c .bf5d62b45{-webkit-flex:1 0 !important;-ms-flex:1 0 !important;flex:1 0 !important;display:block !important;background:rgba(0,0,0,.1) center top !important;background-size:cover !important;background-repeat:no-repeat !important;position:relative !important;overflow:hidden !important}.qde59565e .vc7d8da1c .n20d1e454{margin-top:auto !important}.qde59565e .vc7d8da1c .lcfced505{top:2em !important;left:1em !important}.qde59565e .vc7d8da1c.dbcf0433 .q2c9fd5a0{padding:0 10px 0 1em !important}.qde59565e .b42209f72 .m116e22e2{background-color:INVALID !important}.qde59565e .g3a8b15ad{color:INVALID !important}.qde59565e .s188901dd{background:INVALID !important;color:INVALID"" !important}.qde59565e .m2b40bc5c{background:INVALID !important;color:INVALID !important}.qde59565e .c5ab5fc3b{background:INVALID !important;color:INVALID !important}.qde59565e .y6f8b6477{background:INVALID !important}.qde59565e .e1458fb23{background:INVALID !important}.qde59565e .fd616eda7{background-color:INVALID !important}.qde59565e .m52afd73c.fc518482 .g3a8b15ad{color:INVALID !important}.qde59565e .m52afd73c.fc518482 .m2b40bc5c{color:INVALID !important}.qde59565e .m52afd73c.fc518482 .s188901dd{color:INVALID !important}.qde59565e .m52afd73c.fc518482 .fd616eda7{background-color:INVALID !important}.qde59565e .h40550d46.fc518482 .s188901dd{color:INVALID !important}.qde59565e .ld149134b{-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important;min-width:1px !important;min-height:1px !important}.qde59565e .ld149134b,.qde59565e .ab67eb87b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.qde59565e .ab67eb87b{overflow:hidden !important;-webkit-justify-content:space-between !important;-ms-flex-pack:justify !important;justify-content:space-between !important;-webkit-align-content:space-between !important;-ms-flex-line-pack:justify !important;align-content:space-between !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;margin:auto !important;border:solid #DDDCDA !important;border-width:1px !important;border-radius:0 !important;box-sizing:border-box !important}.qde59565e .c8a391cae{-webkit-align-items:flex-start !important;-ms-flex-align:start !important;align-items:flex-start !important;visibility:hidden !important}.qde59565e .b1425f46e{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important}.qde59565e .da1531012{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.qde59565e .o2af60c40,.qde59565e .b61454b0f{border-width:0 !important}.qde59565e .o2af60c40 .fc518482{border-width:1px !important}.qde59565e .ob99b0b6c .fc518482{border-width:0 !important;border-radius:0 !important}.qde59565e .x62bbbd0e .fc518482{margin:-1px !important;border-radius:0 !important}</style><script charset="utf-8" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/watch.js"></script><script async="" crossorigin="anonymous" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/host.js"></script></head>
+
+<body vlink="656591" topmargin="0" text="000000" marginwidth="0" marginheight="0" link="333367" leftmargin="0" bgcolor="dedede" alink="656591">
+<font face="Arial, sans serif">
+
+<center>
+
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="555581">
+<tbody><tr>
+
+<td width="273" height="90" align="CENTER"> 
+<a href="http://www.muzoborudovanie.ru/index.php">
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/logo1.gif" alt="Начало" width="260" height="70" border="0"><br>
+</a>
+</td>
+
+<td width="15"> 
+&nbsp;
+</td>
+
+<td width="472" align="CENTER">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0269592369109973";
+/* 468x60 */
+google_ad_slot = "0177074942";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/show_ads.js">
+</script><ins id="aswift_0_expand" style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent;" data-ad-slot="0177074942"><ins id="aswift_0_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0px;width:468px;height:60px;" width="468" height="60" frameborder="0"></iframe></ins></ins></td>
+
+</tr>
+</tbody></table>
+
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+<tbody><tr>
+<td width="631">
+
+<table width="631" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+
+<tbody><tr>
+<td colspan="4" width="631">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td width="129" valign="TOP" bgcolor="555581" align="CENTER"> 
+
+<p>
+<font size="3">
+<br>
+<a href="http://www.muzoborudovanie.ru/news/news.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/news2.gif" alt="Новости" width="129" height="28" border="0"></a><a href="http://www.muzoborudovanie.ru/equip/equip.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/equip2.gif" alt="Оборудование" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/articles/articles.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/articles2.gif" alt="Статьи" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/forum/forum.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/forum2.gif" alt="Форум" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/files/files.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/files2.gif" alt="Файлы" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/org/org.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/org2.gif" alt="Организации" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/links/links.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/links2.gif" alt="Ссылки" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/prices/prices.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/price2.gif" alt="Прайс-листы" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/ads/advertiz.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/ads2.gif" alt="Реклама" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/dict.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/dict2.gif" alt="Словарь" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/isearch.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/isearch2.gif" alt="Поиск" width="129" height="24" border="0"></a>
+
+<font size="0">
+<br>
+<table width="121" cellspacing="0" cellpadding="2" border="0">
+
+<tbody><tr>
+<td bgcolor="333367" align="CENTER">
+<font size="1" face="Arial, sans serif" color="ffffff">
+СТАТЬИ
+</font></td>
+
+</tr><tr>
+<td bgcolor="dedede" align="CENTER">
+<font size="1" face="Verdana, Tahoma, Arial, sans serif">
+
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi1.php">Часть 1 — Основы.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi2.php">Часть 2 — Сообщения канала.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi3.php">Часть 3 — Системные сообщения.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi4.php">Часть 4 — MIDI Time Code.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi6.php">Часть 6 — Передача данных.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi71.php">Часть 7.1 — MIDI Show Control.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi72.php">Часть 7.2 — MIDI Show Control.</a><br>
+
+</font></td></tr><tr>
+<td bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+
+</tr></tbody></table>
+
+</font></font></p></td>
+
+<td width="50">
+&nbsp;
+</td>
+
+<td width="427" valign="TOP">
+
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="3" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+MIDI в деталях. Часть 5 — Стандартные MIDI-файлы.
+</b></font></td></tr></tbody></table>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<font size="2" face="Arial, sans serif">
+<p>
+</p><div align="RIGHT">
+<b>
+Александр ФЕДОРОВ
+</b><br>
+<a href="http://www.muzoborudovanie.ru/org/mo/mo.php">Музыкальное Оборудование</a>
+<br>
+апрель 2004
+</div>
+
+<p>
+<font size="2" face="Arial, sans serif">
+<b>
+Пятая часть цикла статей, подробно рассказывающих о протоколе MIDI.
+</b>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+
+</font></font></p><p><font size="2" face="Arial, sans serif"><font size="2" face="Verdana, Tahoma, Arial, sans serif">
+Одной из трех составляющих протокола MIDI является спецификация формата 
+хранения данных (напомню, что две другие составляющие — это формат 
+сообщений и аппаратная спецификация интерфейса). Формат сообщений был 
+рассмотрен в трех первых статьях цикла, сейчас настало время формата 
+хранения. Он был предложен организацией MMA в конце 1987 года и получил 
+название "Стандартные MIDI-файлы" (Standard MIDI Files, SMF).
+</font></font></p><font size="2" face="Arial, sans serif"><font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Цель MIDI-файлов — обеспечить обмен событиями (то есть MIDI-сообщениями,
+ имеющими метку времени) между различными устройствами и программами. До
+ появления стандартных MIDI-файлов аранжировку, подготовленную в одном 
+секвенсоре, невозможно было загрузить в другой из-за несовместимости 
+форматов. Нельзя сказать, что с появлением SMF все производители 
+секвенсоров перешли на этот формат. Тому есть несколько причин, и о них 
+мы также сегодня поговорим.
+</p>
+
+<p>
+Поскольку хранение информации непосредственно связано с устройством 
+секвенсоров, остановимся на этом деле подробнее, но лишь в той мере, 
+какая необходима для понимания SMF. А секвенсорам, несомненно, посвятим 
+одну из следующих статей цикла.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+События
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Сообщение MIDI, снабженное меткой времени, называется <i>событием</i>. 
+Для указания времени могут использоваться разные единицы — тики, 
+внутренние импульсы, время в формате SMPTE и т. п. Важно понять 
+принципиальное отличие события от сообщения. Сообщение "живет" долю 
+миллисекунды реального времени — от момента, когда генерируется 
+источником, до момента, когда поступает к исполнению в приемник. Его 
+можно отловить в процессе передачи по MIDI-кабелю в виде набора 
+импульсов. Событие — это несколько байт информации, записанной в память 
+устройства, на основании которой в будущем, в назначенное время, будет 
+сгенерировано сообщение.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Например, в памяти секвенсора может храниться событие "взять ноту" с 
+меткой времени 100 мс от начала воспроизведения. Вы можете редактировать
+ это событие в двух измерениях: во-первых, изменять параметры самого 
+MIDI-сообщения (в данном случае, высоту или динамику ноты), а во-вторых —
+ перемещать ноту по дорожке, то есть изменять время исполнения 
+сообщения.
+</p>
+
+<p>
+События появляются в памяти секвенсора в процессе записи MIDI-сообщений.
+ При нажатии кнопки Record секвенсор включает аппаратный генератор 
+импульсов (тиков) и начинает "слушать" заданный MIDI-вход. Например, при
+ нажатии клавиши на вход поступает сообщение "взять ноту". Секвенсор 
+смотрит — ага, сообщение пришло на 20-й тик, и записывает его в память с
+ меткой 20. Через пару секунд отпустили клавишу — пришло сообщение 
+"снять ноту", внутренний генератор в этот момент радостно отмахал 
+секвенсору 64 тика. Секвенсор сохраняет сообщение с меткой 64. Вот 
+теперь мы имеем дело с двумя событиями — Note On и Note Off. При 
+воспроизведении снова включается генератор импульсов. Когда подходит 
+20-й тик, на MIDI-выход секвенсора отправляется сообщение Note On, 64-й 
+тик — Note Off. Мы записали, а затем воспроизвели действия исполнителя!
+</p>
+
+<p>
+Очевидно, то же самое можно сделать и в "офлайне", то есть без 
+необходимости живого исполнения. Щелкнув мышью в нужном месте дорожки (и
+ заранее выбрав длительность ноты), мы построим в памяти секвенсора 
+точь-в-точь предыдущую картину.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Типы памяти
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Теперь самое время применить два пугающих компьютерных термина: 
+первичная и вторичная память. Первичная (или внутренняя) память — это 
+память секвенсора, куда записываются сообщения и где хранятся события в 
+течение всего сеанса работы. Содержимое этой памяти сбрасывается при 
+выключении питания. Такая трактовка больше подходит для аппаратных 
+секвенсоров. В программных секвенсорах первичная память — это 
+просто-напросто оперативная память компьютера. Чтобы сохранить 
+содержимое первичной памяти на длительный срок, используется вторичная 
+память, или, иначе, носители данных. Это может быть дискета, жесткий 
+диск, смарт-карта и тому подобное.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Объем первичной памяти в аппаратных секвенсорах и рабочих станциях 
+(напомню, рабочая станция — это тон-генератор и секвенсор в одной 
+коробке) обычно выражается в количестве хранимых нот (например, 200 
+тыс.). Иногда объем выражается в событиях, в этом случае нужно быть 
+настороже — одна нота требует для хранения два события (нажатие и 
+отпускание клавиши), а поворот звуковысотного колеса или послекасание 
+могут порождать до 100 и более событий. Случается, объем памяти 
+секвенсора выражают в родных компьютерных единицах — килобайтах. Но это 
+также не очень удобно — одно событие может занимать разное количество 
+байт (от пяти до нескольких десятков).
+</p>
+
+<p>
+В современных программных секвенсорах объем первичной памяти мало кого 
+волнует — даже на машине со 128 Мбайт ОЗУ про какие-либо ограничения при
+ работе с MIDI-данными можно забыть. Кроме того, есть секвенсоры, 
+которые могут воспроизводить аранжировку непосредственно с диска, без 
+загрузки в первичную память (и, кстати, записывать тоже), что вообще 
+стирает различие между двумя видами памяти.
+</p>
+
+<p>
+Во вторичной памяти данные, как правило, записываются в файл. Формат 
+этого файла у большинства секвенсоров свой, закрытый, что затрудняет 
+обмен аранжировками, созданными в разных устройствах или программах. 
+Ранее говорилось, что это и послужило основной причиной создания SMF.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Измерение времени
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+На самом деле, внутри секвенсора никаких "тиков" нет. Есть аппаратный 
+таймер, который генерирует импульсы со строго постоянной частотой 
+(например, каждую микросекунду). Заставлять музыкантов измерять время в 
+микросекундах было бы чудовищным издевательством, как, впрочем, и в 
+других единицах реального времени (секундах, минутах). Музыканты 
+привыкли мыслить в тактах и долях, а время выражать в относительных 
+единицах (длительностях нот), зависящих от текущего темпа.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+"Нет проблем, — ответили производители, — пусть меряют так, как им 
+удобнее". Только минимальной единицей измерения будет не какая-нибудь 
+32-я длительность, а условно взятый тик (единица еще мельче, так, что, 
+например, в одной тридцать второй может содержаться 48 тиков). Поскольку
+ еще с классической эпохи темп измеряется количеством четвертей в минуту
+ (BPM, beats per minute), то за основную длительность решили взять 
+четверть и указывать количество тиков, приходящихся на четверть — PPQN 
+(Pulse Per Quarter Note). Чем больше PPQN, тем лучше разрешение 
+секвенсора и тем точнее по времени он может фиксировать сообщения при 
+записи и выдавать их на MIDI-выход при воспроизведении. Большинство 
+секвенсоров позволяют задавать PPQN произвольно — например, от 32 до 
+1536 тиков на четверть (современные секвенсоры — до 15360 PPQN).
+</p>
+
+<p>
+Тик — темпозависимая единица: чем быстрее темп, тем короче интервал 
+между тиками в единицах реального времени. Этот интервал можно найти по 
+формуле на рис. 1. 
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/501.gif" alt="Рис. 1" width="250" height="68">
+</p>
+
+<p>
+Например, при темпе 120 BPM и разрешении 96 PPQN тики будут следовать 
+через каждые 5,208 миллисекунды. При том же разрешении и темпе 180 BPM 
+интервал между тиками сократится до 3,472 мс. Как же секвенсор 
+отсчитывает тики, если его внутренний таймер выдает импульсы каждую 
+микросекунду? Да очень просто: на основании текущего темпа и разрешения в
+ четверти, точно по указанной формуле. Так как в одной миллисекунде 
+содержится 1000 микросекунд, то в последнем примере секвенсор 
+сгенерирует очередной тик тогда, когда получит от таймера 3472 импульса.
+</p>
+
+<p>
+<table cellspacing="0" cellpadding="5" border="0" bgcolor="333367">
+<tbody><tr>
+<td>
+
+<p>
+<font size="2" face="Arial, sans serif" color="ffffff">
+
+</font></p><p><font size="2" face="Arial, sans serif" color="ffffff">
+<font face="Arial, sans serif">
+<big>
+<b>
+Когда высокое разрешение не имеет смысла
+</b>
+</big>
+<br>
+
+Если секвенсор и тон-генератор находятся "под одной крышей" (рабочая 
+станция или компьютер с программным секвенсором и синтезатором на 
+звуковой плате, либо виртуальным синтезатором), то внутреннее разрешение
+ такой системы может быть сколь угодно большим (число 15360 PPQN 
+впечатляет). Это позволяет осуществить синхронизацию MIDI- и аудиоданных
+ с точностью до семпла. Но как только мы соединяем секвенсор и 
+тон-генератор MIDI-кабелем посредством MIDI-интерфейса, высокое 
+разрешение утрачивает актуальность.
+</font></font></p><font size="2" face="Arial, sans serif" color="ffffff"><font face="Arial, sans serif">
+
+<p>
+Почему? Напомню, что один байт передается по MIDI-интерфейсу в течение 
+320 микросекунд. А это значит, что, например, сообщение о взятии ноты 
+(состоящее из трех байт) будет передаваться 960 мкс или почти целую 
+миллисекунду. Теперь представим, что в секвенсоре при темпе 120 BPM и 
+разрешении 2048 PPQN запрограммированы две ноты с интервалом два тика 
+между собой. В единицах реального времени это составляет 488 
+микросекунд. Так вот: тон-генератор не сможет получить вторую ноту через
+ 488 микросекунд после первой, а реально — только через 960 мкс. Так что
+ исполнит он ее спустя не два тика, а почти четыре.
+</p>
+
+<p>
+Отсюда вывод: при работе через MIDI-интерфейс (когда секвенсор и 
+тон-генератор разнесены) разрешение секвенсора более одного тика на 960 
+микросекунд не имеет смысла. Чтобы узнать, сколько это будет в PPQN, 
+можно воспользоваться формулой на рис. 2.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/502.gif" alt="Рис. 2" width="250" height="54">
+</p>
+
+<p>
+В таблице на рис. 3 для разного темпа показаны значения PPQN, превышать которые бессмысленно.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/503.gif" alt="Рис. 3" width="150" height="248">
+</p>
+
+</font></font></td>
+</tr>
+</tbody></table>
+
+</p><p>
+Положение события на линейке времени задается в секвенсоре, как правило,
+ в формате "такты : доли : тики", например, 22:3:152. То есть: двадцать 
+второй такт, третья доля, 152-й тик от начала третьей доли. Подобный 
+принцип отсчета времени (англоязычный термин — Timebase) называется 
+музыкальным (musical), поскольку он привычен и удобен для музыкантов. 
+Обратите внимание, что для работы в таком формате необходимо знать 
+текущий музыкальный размер. То есть, какое количество долей содержит 
+такт и чему равна каждая доля.
+</p>
+
+<p>
+Так, при размере 4/4 доля равна четверти, а такт содержит четыре доли. 
+При разрешении 384 PPQN в одной доле будет 384 тика, а в каждом такте 
+соответственно 1536 тиков (384 x 4). При размере 6/8 и том же разрешении
+ в одной доле будет 192 тика (восьмая в два раза короче четверти), а в 
+такте — шесть долей или 1152 тика (192 x 6). Таким образом, запись 
+22:3:152 в первом случае означает 35096 тиков от начала песни (22 x 1536
+ + 3 x 384 + 152), а во втором — 26072 тика (22 x 1152 + 3 x 192 + 152).
+</p>
+
+<p>
+Итак, для определения положения события в единицах реального времени на 
+основе формата "такты : доли : тики", необходимо знать три параметра: 
+текущий темп, музыкальный размер и разрешение в тиках на четверть 
+(PPQN).
+</p>
+
+<p>
+Существует и другая возможность отсчета времени, когда положение события
+ на дорожке выражается в абсолютных единицах, не зависящих от темпа, 
+чаще всего в формате времени SMPTE — "часы : минуты : секунды : кадры". 
+Такой принцип отсчета времени называется "time-code-based" (основанный 
+на таймкоде, абсолютный). Необходимость в нем возникает при совместной 
+работе секвенсора с магнитофоном или кино/видеооборудованием. Монтажные 
+операции с кино-, видео- и аудиоматериалом, указание позиций начала и 
+окончания записи удобнее производить, привязываясь к абсолютной шкале, а
+ не к тактам и долям.
+</p>
+
+<p>
+В этом случае координата события на линейке времени зависит от текущего 
+темпа. Так при темпе 120 BPM первая доля второго такта может иметь 
+SMPTE-время 00:00:02:00, а при темпе 60 BPM — 00:00:04:00. При положении
+ события внутри кадра (между секундами), его координата будет отличаться
+ также и при разном формате кадра (числе кадров в секунду). Подробнее о 
+SMPTE и MIDI Time Code можно прочитать в <a href="http://www.muzoborudovanie.ru/articles/midi/midi4.php">предыдущей статье цикла</a>.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Величины переменной длины
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Хватит лирических отступлений, сейчас наша задача — разобраться в 
+формате хранения данных. И первая трудность, с которой столкнулись 
+разработчики SMF, — как сохранять время наступления события.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Здесь есть два варианта: хранить для каждого события время от начала 
+песни, либо от последнего события перед ним (на том же канале). Однако 
+первый вариант не рационален, ведь чаще всего интервал между событиями 
+невелик, соседние события имеют близкое друг к другу время исполнения. 
+Так, в пассаже из трех нот, первая может иметь время, скажем, 22:3:152, 
+вторая — 22:3:244, третья — 22:3:288. Для сохранения этих чисел 
+(переведенных в тики от начала песни) нужно зарезервировать как минимум 
+четыре байта на каждое. Если же пойти по второму пути, то вместо трех 
+больших чисел можно сохранить одно большое стартовое (22:3:152), а за 
+ним — два маленьких, разницу в тиках между первой и второй, и второй и 
+третьей нотами (в данном случае, 92 и 44), для них достаточно одного 
+байта. Но все равно проблема остается: в зависимости от события нужно 
+отводить разное число байт для сохранения времени.
+</p>
+
+<p>
+Если бы SMF разрабатывался в настоящее время (да еще фирмой Microsoft, 
+которая вообще мало заботится о размере своих файлов и потребной 
+памяти), на эту проблему закрыли бы глаза. Выделили под сохранение 
+времени фиксированное поле, скажем, 8 байт на событие, и не мучались. 
+Однако в 1988 году первичная (оперативная) память стоила очень дорого, 
+на счету был каждый байт, да и вторичная (дисковые носители) имела очень
+ скромный объем. Поэтому разработчики SMF хотели получить максимально 
+компактный формат.
+</p>
+
+<p>
+Было решено сохранять <i>дельта-время</i>, то есть разницу в тиках между
+ данным событием и предыдущим (либо началом песни). Например, если 
+первое событие — взятие ноты До первой октавы — произошло в момент 40 
+тиков от начала песни, то его дельта-время будет равно 40. Если спустя 
+четыре тика будет взята нота Фа, то ее дельта-время будет равно 4. Если 
+два события происходят одновременно, то одному из них назначается 
+дельта-время, равное нулю. Если событие происходит точно в начале песни,
+ оно также имеет нулевое дельта-время. Однако следующее событие может 
+случиться и через полтора часа (то есть, через несколько миллионов 
+тиков). Как быть в этом случае? Ведь память нужно экономить, а отводить 
+под дельта-время фиксированное поле размером в несколько байт 
+нежелательно.
+</p>
+
+<p>
+На помощь приходят так называемые<i> величины переменной длины</i>. Они 
+представляют удобный способ записи целых чисел — от самых малых до самых
+ больших, без необходимости отводить под число фиксированное количество 
+байт. Биты исходного числа упаковываются в один или более байтов: в 
+каждый байт по семь бит (справа, биты с 0 по 6-й). Старший бит в байте 
+является служебным; все байты в серии, кроме последнего, должны 
+содержать в нем единицу, последний — ноль. Несколько примеров упаковки 
+показаны на рис. 4.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/504.gif" alt="Рис. 4" width="427" height="241">
+</p>
+
+<p>
+Например, нужно упаковать в формат переменной длины число 64 
+(шестнадцатеричное 0x40). В двоичном виде это число записывается как 
+0100 0000. Здесь как раз семь значащих бит, поэтому упаковывается это 
+число в один байт без изменений — 0100 0000 (он же является и последним 
+байтом серии), старший бит равен 0.
+</p>
+
+<p>
+Теперь число 128 (0x80). В двоичном виде записывается как 1000 0000. 
+Здесь восемь значащих бит, поэтому в один байт все не влезет, нужно 
+разбивать на два. Первый байт должен иметь в старшем бите единицу, 
+второй (как завершающий байт серии) — ноль. Во второй байт помещаем семь
+ младших битов исходного числа, получается 0 000 0000. Оставшийся один 
+бит (единицу) помещаем в правую часть первого байта — получается 1000 
+0001. В итоге, число 0x80 записывается в виде двух байт: 0x81 0x00. 
+Распаковка происходит очень просто. Мы не знаем заранее, сколько байт 
+содержится в серии. Считываем первый байт — 1000 0001. Старший служебный
+ бит (1) говорит о том, что это не последний байт серии, есть еще байты.
+ Служебную единицу отбрасываем, остается семь бит — 000 0001. Считываем 
+второй байт — 0000 0000. Старший служебный бит (0) говорит о том, что 
+это завершающий байт серии (то есть в серии всего два байта). Служебный 
+бит отбрасываем. Остаются также семь бит — 000 0000. Дописываем к ним 
+слева семь бит, выделенных из первого байта, получаем 000 0001 000 0000.
+ Отбросив первые шесть нулей, получаем искомое число 1000 0000 (0x80).
+</p>
+
+<p>
+Итак, метод величин переменной длины позволяет под разные числа отводить
+ разное количество байт: для чисел в диапазоне от 0 до 127 — один байт, 
+от 128 до 16383 — два байта и так далее. Максимальное число, 
+представляемое таким способом, в принципе, не ограничено. Однако в SMF 
+длина серии ограничивается четырьмя байтами (три с установленным старшим
+ битом и один завершающий, с нулевым). В результате максимальное 
+дельта-время может составлять 0x0FFFFFFF (или 268&nbsp;435&nbsp;455 
+тиков), что при темпе 500 BPM и разрешении 96 PPQN составляет около 
+четырех суток. Более чем достаточно!
+</p>
+
+<p>
+В форме величин переменной длины в SMF указывается не только дельта-время, но и длина некоторых событий.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Interchange File Format (IFF)
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Структура стандартного MIDI-файла почти полностью заимствована из 
+формата IFF (Interchange File Format), разработанного в 1985 году 
+компанией Electronic Arts. Это формат хранения и обмена данными, который
+ уже почти двадцать лет облегчает жизнь как пользователям, так и 
+разработчикам программного обеспечения. Компания Electronic Arts не 
+только предоставила открытую документацию, но также исходный код на 
+языке C для считывания и записи IFF-файлов.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Формат IFF является обратно совместимым и расширяемым. Первое означает, 
+что новая версия программы может без проблем читать файлы, созданные 
+предыдущей версией. Второе — для хранения дополнительной информации не 
+нужно придумывать новый формат, достаточно ввести собственное расширение
+ в IFF. Структура формата позволяет обмениваться данными программам 
+разных производителей, не имеющих между собой соответствующих 
+бизнес-соглашений. Все это радует и пользователей — сохранив данные в 
+формате IFF, они больше не прикованы к закрытому формату своей системы и
+ могут использовать данные в любой IFF-совместимой программно-аппаратной
+ среде.
+</p>
+
+<p>
+Файл формата IFF представляет собой набор данных, организованных таким 
+образом, что различные, не связанные друг с другом программы могут их 
+прочитать. С другой стороны, программа может сохранить в IFF 
+специфическую информацию, которая имеет смысл только для нее самой. 
+Структура IFF позволяет легко это сделать. Другие программы, которые не 
+знают, как обращаться с такой информацией, могут ее проигнорировать без 
+ущерба для чтения основного содержимого.
+</p>
+
+<p>
+Существует несколько типов файлов IFF. Например, файлы ILBM и GIFF 
+содержат в себе графическую информацию, файлы SMUS — нотную запись, 
+файлы AIFF и WAVE — цифровой звук.
+</p>
+
+<p>
+Файл IFF состоит из однотипных элементов, называемых блоками (chunks). 
+Блок — это структура данных, состоящая из буквенного идентификатора 
+(четыре ASCII-символа), размера блока (четыре байта) и самих данных 
+(рис. 5). Блок удобно представлять как оболочку, в которую "завернуты" 
+данные. Сами данные могут содержать что угодно: графику, текст, 
+анимацию, звук, набор 3D-объектов и так далее.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/505.gif" alt="Рис. 5" width="349" height="77">
+</p>
+
+<p>
+Блоки в IFF-файле могут быть вложенными, рис. 6. Фактически, IFF-файл — 
+это не что иное, как блок верхнего уровня, содержащий внутри себя один 
+или несколько других блоков. Такой принцип хранения данных позволяет 
+"заворачивать" в файл несколько разнородных данных, в том числе и 
+несколько файлов IFF, что напоминает уже файловую систему внутри файла. 
+Правда, при вложенной организации данных есть один недостаток — файл 
+становится сложно интерпретировать, вычленять из него блоки.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/506.gif" alt="Рис. 6" width="121" height="144">
+</p>
+
+<p>
+Большинство IFF-файлов содержат блок верхнего уровня с идентификатором 
+"FORM". В него входят другие блоки (рис. 7). Единственными данными блока
+ FORM являются четыре байта, описывающие тип файла (например, "ILBM", 
+InterLeaved Bit Map). Непосредственно за ними размещаются вложенные 
+блоки, например, "BMHD" (заголовок изображения), "CMAP" (палитра) и 
+"BODY" (сами пиксели). Названия блоков и формат данных придумывает 
+разработчик конкретного типа файла. Другие программы, если встречают 
+блок с незнакомым названием, могут спокойно пропустить его, ориентируясь
+ по полю, содержащему длину блока.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/507.gif" alt="Рис. 7" width="91" height="106">
+</p>
+
+<p>
+Все числовые данные в файлах IFF хранятся в порядке big-endian, то есть 
+сначала хранится старший байт числа (MSB), затем — младший. Подробнее об
+ этом рассказано во врезке. Блоки внутри файла всегда должны начинаться с
+ четного байта. Если предыдущий блок содержит нечетное число байт, он 
+дополняется нулевым байтом до четного.
+</p>
+
+<p>
+<table cellspacing="0" cellpadding="5" border="0" bgcolor="333367">
+<tbody><tr>
+<td>
+
+<p>
+<font size="2" face="Arial, sans serif" color="ffffff">
+
+</font></p><p><font size="2" face="Arial, sans serif" color="ffffff">
+<font face="Arial, sans serif">
+<big>
+<b>
+С какого конца сохранять?
+</b>
+</big>
+<br>
+
+Компьютерная память состоит из ячеек, в каждую из которых помещается 
+ровно один байт. Чтобы обратиться к ячейке (записать или считать байт), 
+процессор использует так называемый <i>адрес </i>в памяти. Это просто 
+целое число, присвоенное ячейке операционной системой (да простят меня 
+компьютерные специалисты за такое упрощение). В реальной жизни одного 
+байта, как правило, недостаточно. Даже для хранения целых чисел 
+применяются слова, то есть группы из двух байт, двойные или четверные 
+слова (соответственно, четыре или восемь байт, подробнее см. первую 
+часть цикла). То есть число хранится в нескольких соседних байтах.
+</font></font></p><font size="2" face="Arial, sans serif" color="ffffff"><font face="Arial, sans serif">
+
+<p>
+На рис. 8 показаны два возможных способа размещения их в памяти, на 
+примере двойного слова. Первый способ — байты сохраняются в памяти 
+последовательно, старший байт по наименьшему адресу. То есть, по адресу N
+ хранится MSB старшего слова, затем LSB старшего слова (N + 1), MSB 
+младшего слова (N + 2), LSB младшего слова (N + 3). Такой способ принято
+ называть <b>big-endian</b> (или "прямое размещение байтов"). Во втором 
+способе — все с точностью до наоборот, старший байт хранится по 
+наибольшему адресу: LSB младшего слова (N), MSB младшего слова (N + 1), 
+LSB старшего слова (N + 2), MSB старшего слова (N + 3). Этот способ 
+принято называть <b>little-endian</b> — "обратное размещение байтов".
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/508.gif" alt="Рис. 8" width="364" height="164">
+</p>
+
+<p>
+То есть различие состоит в том, "с какого конца" (end) сохраняется 
+многобайтовое значение. Термины "big-endian" и "little-endian" были 
+предложены в одной из статей по данному вопросу со ссылкой на книгу 
+Джонатана Свифта "Приключения Гулливера". Как известно, в Лилипутии 
+возникло движение Тупоконечников (Big-Endians), не желавших выполнять 
+указ императора, предписывающий разбивать вареные яйца только с острого 
+конца. В компьютерном мире противостояние big/little-endian выглядит 
+очень похоже.
+</p>
+
+<p>
+Сторонники обратного размещения (little-endian) утверждают, что 
+переставленный порядок байтов в памяти упрощает выполнение 
+арифметических операций с многобайтовыми значениями, так как суммируемые
+ первыми младшие значащие байты хранятся в младших адресах.
+</p>
+
+<p>
+Схема little-endian используется в Intel-совместимых процессорах, 
+начиная от Intel 8080 и заканчивая Intel Pentium IV. Прямое размещение 
+(big-endian) — в процессорах Sun Spark, Motorola 68000 (ранняя линейка 
+компьютеров Apple) и многих RISC-процессорах. А вот процессоры PowerPC и
+ Intel Itanium понимают сразу оба формата данных (их иногда называют 
+"bi-endian").
+</p>
+
+<p>
+Однако существенным является не столько то, как компьютер хранит данные 
+"внутри себя", а как сохраняет их "снаружи", в файлах. Это с 
+практической точки зрения гораздо важнее. Например, если слово "UNIX" 
+сохранено в файл big-endian системой (в виде двух двухбайтовых слов), то
+ little-endian система прочитает его как "NUXI". В компьютерном жаргоне 
+это так и называется — "проблема NUXI". Аналогичные трудности могут 
+возникать при сохранении графических изображений, поскольку цвета 
+кодируются многобайтовыми числами. Например, файлы программы Adobe 
+Photoshop и формат JPEG используют схему big-endian, а файлы формата GIF
+ и BPM — little-endian.
+</p>
+
+<p>
+Во "внеплатформенном" формате стандартных MIDI-файлов (SMF) используется
+ способ big-endian, то есть старший значащий байт слова (MSB) 
+сохраняется первым.
+</p>
+
+</font></font></td>
+</tr>
+</tbody></table>
+
+</p><p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Структура SMF
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Стандартные MIDI-файлы, так же, как и IFF-файлы, состоят из блоков 
+(Chunks). Всего есть два типа блоков: блок заголовка (Header Chunk) и 
+блок трека (Track Chunk). В файле SMF может быть только один блок 
+заголовка и один или более блоков трека. Блок имеет типичную 
+IFF-структуру: первые четыре байта — идентификатор, следующие четыре 
+байта — длина блока в байтах, исключая восемь байт тип/длина. 
+Идентификатор блока заголовка — это четыре символа "MThd", блока трека —
+ четыре символа "MTrk". Такая структура позволит в будущем определять 
+новые типы блоков, а незнакомый блок может быть легко проигнорирован на 
+основе его длины. Спецификация SMF предупреждает: "Программы должны быть
+ готовы, встретив блоки неизвестных им типов, игнорировать их".
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Блок заголовка содержит общую информацию о файле, блок трека — поток 
+MIDI-сообщений с метками времени. Кроме того, в MIDI-файле сохраняется 
+дополнительная информация, необходимая секвенсорам: темп, размер, 
+тональность, настройки метронома и тому подобное. Эта информация по 
+MIDI-интерфейсу не передается, а образующие ее события называются 
+мета-событиями.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/509.gif" alt="Рис. 9" width="91" height="126" align="RIGHT">
+MIDI-файл всегда начинается с блока заголовка, за которым следуют один 
+или более блоков трека (рис. 9). То есть, любой стандартный MIDI-файл 
+начинается с четырех букв "M", "T", "h", "d". А это означает, что 
+MIDI-файл не удовлетворяет спецификации IFF (которая требует, чтобы 
+каждый IFF-совместимый файл начинался с блока верхнего уровня одного из 
+трех типов — "FORM", "CAT" или "LIST"). Есть и другие отличия: SMF не 
+может содержать вложенных блоков, а длина блока не обязательно должна 
+быть четной. Однако преобразование SMF в IFF-совместимый файл 
+выполняется просто. Достаточно дополнить нулевым байтом нечетные по 
+длине блоки (если таковые есть) и поместить все содержимое в FORM-блок. 
+Подобная операция используется в формате RMID, предложенном Microsoft 
+(см. врезку).
+</p>
+
+<p>
+</p>
+
+<br>
+</font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></td>
+
+<td width="25">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td colspan="3" width="606" bgcolor="333367">
+<table cellpadding="5">
+<tbody><tr>
+<td>
+
+<font size="2" face="Arial, sans serif" color="ffffff">
+
+<p>
+<font size="2" face="Arial, sans serif" color="ffffff">
+<big>
+<b>
+Microsoft RIFF
+</b>
+</big>
+<br>
+
+Формат IFF оказался очень привлекательным в качестве каркаса для 
+хранения данных любого типа, особенно мультимедийных (сочетающих в себе 
+звук, изображение, текст и т. п.). В 1991 году, когда оболочка Windows 
+начала "набирать обороты", фирма Microsoft, не мудрствуя лукаво, решила 
+приспособить формат IFF в качестве универсального мультимедиа-формата 
+для Windows. Была только небольшая проблема: стандарт IFF требует 
+сохранения числовых величин по способу big-endian, а для всего 
+Intel-совместимого парка процессоров, на котором работала Windows, 
+родным форматом является little-endian. Что сделала Microsoft? Просто 
+заменила идентификатор блока верхнего уровня "FORM" на "RIFF" (Resource 
+Interchange File Format), а числовые данные стала хранить в родном для 
+Intel формате little-endian.
+</font></p><font size="2" face="Arial, sans serif" color="ffffff">
+
+<p>
+В формате RIFF и по сей день хранятся знакомые всем файлы AVI и WAVE. 
+Пользователи об этом не догадываются, поскольку привыкли определять тип 
+файла по его расширению. А программисты знают, что каждый WAVE- или 
+AVI-файл начинается с четырех букв "RIFF", затем, как и положено для 
+файла IFF, идет четырехбайтовое поле длины файла, затем — как в блоке 
+FORM, тип файла, также четыре символа ("WAVE" или "AVI").
+</p>
+
+<p>
+Кроме цифрового звука и видеоклипов, Microsoft на основе RIFF предложила
+ формат для хранения изображений RDIB (Device Independent Bitmap, 
+расширение RDI), а также формат-файловую систему из нескольких 
+RIFF-файлов в одном (Bundle, расширение BND). Учитывая то, что 
+стандартные MIDI-файлы не удовлетворяют в полной мере формату IFF, 
+Microsoft предложила "заворачивать" их в блок с именем "data" внутри 
+файла RIFF. В результате родился гибрид под названием RMID (расширение 
+RMI). По сути, это все тот же стандартный MIDI-файл, только с 
+приписанной к началу файла шапкой из двадцати байт (рис. 10).
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/510.gif" alt="Рис. 10" width="596" height="93" align="middle">
+
+</p><p>
+В таком виде польза от RMID небольшая. Однако, как и всякий файл IFF, он
+ позволяет включать дополнительные блоки. Этим, в свою очередь, 
+воспользовалась организация MMA, предложив в 2000 году объединять в 
+файле RMID стандартный MIDI-файл и файл DLS (Downloadable Sounds) c 
+семплами. Деталей этого процесса мы коснемся в одной из следующих статей
+ цикла.
+</p>
+
+</font></font></td>
+</tr>
+</tbody></table>
+</td>
+
+<td width="25">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td width="129" bgcolor="555581">
+&nbsp;
+</td>
+<td width="50">
+&nbsp;
+</td>
+<td width="427">
+<br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Числовые величины хранятся в MIDI-файле в соответствии с требованиями 
+IFF — в формате big-endian (MSB идет первым). Например, если длина блока
+ равна восьми байтам, то она будет храниться как 0x00 0x00 0x00 0x08.
+</p>
+
+<p>
+В любой файловой системе MIDI-файл — это просто последовательность 
+восьмибитных байтов. На компьютерах Macintosh этот байтовый поток 
+хранится в ветви данных файла (и имеет тип "Midi") или в буфере обмена 
+(тип данных — "Midi"), см. врезку.
+</p>
+
+<p>
+<table cellspacing="0" cellpadding="5" border="0" bgcolor="333367">
+<tbody><tr>
+<td>
+
+<p>
+<font size="2" face="Arial, sans serif" color="ffffff">
+
+</font></p><p><font size="2" face="Arial, sans serif" color="ffffff">
+<font face="Arial, sans serif">
+<big>
+<b>
+Файлы Macintosh
+</b>
+</big>
+<br>
+
+В большинстве файловых форматов файл представляет собой один 
+восьмибитный поток данных, который считывается и записывается прикладной
+ программой "как есть". Однако встречаются и хитрости, такие, как 
+несколько потоков данных в одном файле. Например, файл Macintosh на 
+самом деле состоит из двух файлов (частей), связанных с одной и той же 
+записью каталога.
+</font></font></p><font size="2" face="Arial, sans serif" color="ffffff"><font face="Arial, sans serif">
+
+<p>
+Первая часть (data fork, ветвь данных) предназначена для прикладных 
+программ — они туда сохраняют и оттуда считывают данные. Вторая часть 
+(resource fork, ветвь ресурсов) предназначена для операционной системы. 
+Там хранится информация, необходимая средству Finder: иконки файла, 
+используемые окна, раскладки клавиатуры, настройки шрифта и тому 
+подобное.
+</p>
+
+</font></font></td>
+</tr>
+</tbody></table>
+
+</p><p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Форматы SMF
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Обычно секвенсоры используют свой собственный формат хранения 
+аранжировок. Это вызвано тем, что структура данных, разработанная под 
+возможности конкретной программы, гораздо эффективнее, с ней 
+просто-напросто легче работать. В свой формат можно записывать 
+дополнительные данные, например, по настройке пользовательского 
+интерфейса (положение и размер окна, шрифт и так далее). Кроме того, 
+компактность стандартных MIDI-файлов (в частности, величины переменной 
+длины для хранения времени наступления событий) оборачивается 
+неудобством: для работы с аранжировкой все дельта-времена в файле нужно 
+"распаковать", а при сохранении файла снова "запаковать".
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+С другой стороны, SMF — это переносимый межплатформенный формат, в нем 
+можно определять любые дополнительные блоки для хранения специфических 
+данных. Например, один секвенсор может сохранить в блоке с именем "Mtr" 
+состояние метронома — включен или выключен. Другому секвенсору этот блок
+ не помеха, он может определить в том же файле и несколько своих 
+специфических блоков. Так что часть секвенсоров использует формат SMF 
+напрямую, он является для них "родным". Другие позволяют импортировать и
+ экспортировать MIDI-файлы при необходимости.
+</p>
+
+<p>
+Для поддержки разных типов секвенсоров и другого оборудования 
+стандартные MIDI-файлы подразделяются на три разновидности или формата: 
+0, 1 и 2.
+</p>
+
+<p>
+Файл формата 0 содержит один трек, в который помещаются события со всех 
+шестнадцати MIDI-каналов. Это наиболее простой формат для обмена 
+данными, так как в нем не учитывается исходная структура треков в 
+секвенсоре (какой трек на какой MIDI-канал назначен). Файл формата 0 
+более приспособлен для переноса данных на такие устройства, как микшеры и
+ процессоры эффектов, чем для сохранения аранжировок. При записи файла в
+ формате 0 секвенсор просто сливает все сообщения со всех MIDI-каналов в
+ один трек. Соответственно, при загрузке файла мы получаем одну дорожку,
+ редактировать события на которой проблематично, поскольку события для 
+разных каналов перемежаются друг с другом. Большинство секвенсоров имеют
+ функцию разделения подобного "микса" по отдельным трекам, на каждый из 
+которых помещаются события для одного MIDI-канала.
+</p>
+
+<p>
+Файл формата 1 содержит отдельный трек для каждого MIDI-канала, что 
+отражает привычную структуру аранжировки в секвенсоре. Файл формата 2 
+содержит в себе несколько независимых произведений (или законченных 
+паттернов), каждый паттерн состоит из одного трека, содержащего 
+сообщения по всем 16-ти каналам. Этот формат предполагалось использовать
+ в тех секвенсорах, которые могут работать с независимыми паттернами, 
+исполняемыми несколькими инструментами одновременно. Однако формат 2 был
+ повсеместно проигнорирован и в настоящее время рассматривается в 
+спецификации как "не предназначенный для секвенсоров".
+</p>
+
+<p>
+Одним из главных отличий формата 0 и 1 является способ размещения 
+мета-событий. В формате 0 мета-события темпа и размера (так называемая 
+карта темпа) перемешиваются с другими MIDI-сообщениями. Кроме того, 
+названия треков в этом формате не сохраняются. В формате 1 первый трек в
+ файле отводится исключительно под карту темпа и другие мета-события, 
+такие как Sequence/Track Name, Sequence Number, Marker, SMPTE Offset 
+(см. далее).
+</p>
+
+<p>
+В случае отсутствия в файле карты темпа, темп принимается равным 120 BPM, а размер — 4/4.
+</p>
+
+<p>
+Организация MMA в будущем может разработать другие форматы SMF для поддержки новых структур данных в секвенсорах.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Блок заголовка ("MThd")
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Блок заголовка содержит базовую информацию о файле. Структура блока 
+показана на рис. 11. В поле длины всегда содержится число 6 — по числу 
+байт данных заголовка, следующих за этим полем. Данные заголовка 
+представляют собой три 16-битных слова. Первое слово (format) — формат 
+SMF, может принимать одно из трех значений — 0, 1 и 2. Второе слово 
+(ntrks) — число блоков треков (то есть самих треков) в файле. Для файла 
+формата 0 оно будет всегда равно единице.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></font></font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/511.gif" alt="Рис. 11" width="606" height="159" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Последнее слово блока заголовка (division) задает способ измерения 
+времени (timebase). Как говорилось ранее, существуют два способа: 
+музыкальный (такты/доли) и абсолютный (time-code-based), основанный на 
+абсолютном времени в формате SMPTE. В любом случае дельта-время в файле 
+SMF измеряется тиками: при музыкальном способе задается количество 
+тиков, приходящихся на четверть (то есть, PPQN), при абсолютном — 
+количество тиков в одном SMPTE-кадре. Если старший (15-й) бит поля 
+division сброшен в ноль, то используется музыкальный способ, а 
+оставшиеся 15 бит содержат PPQN (до 32767), рис. 12. Если старший бит 
+установлен в единицу, то используется абсолютный способ. В младшем байте
+ (биты с 0 по 7) хранится число тиков на кадр, в старшем (биты с 8 по 
+15) — формат кадра SMPTE, выраженный отрицательными значениями (-24, 
+-25, -29, -30). При этом число -29 соответствует формату 30 fps Drop 
+Frame (см. <a href="http://www.muzoborudovanie.ru/articles/midi/midi4.php">предыдущую статью цикла</a>).
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/512.gif" alt="Рис. 12" width="411" height="111">
+</p>
+
+<p>
+Отрицательные числа выбраны потому, что записываются в виде двоичного 
+дополнения (см. предыдущую статью), то есть содержат в старшем бите 
+единицу. А эта единица как раз и является признаком абсолютного способа 
+отсчета времени. Число тиков на кадр хранится в положительном варианте и
+ обычно принимает одно из следующих значений: 4 (разрешение как в MIDI 
+Time Code, когда на кадр приходятся четыре сообщения Quarter Frame), 8, 
+10, 80 (разрешение одного бита в кадре SMPTE) или 100.
+</p>
+
+<p>
+Такая система позволяет указывать абсолютное время наступления события с
+ точностью до 1/128 кадра. Кроме того, если задать формат кадра 25 fps и
+ разрешение 40 тиков на кадр, то каждый тик будет соответствовать одной 
+миллисекунде. Поле division в этом случае будет иметь значение 0xE728, 
+байт 0xE7 — это запись числа -25 в дополнительном коде, а 0x28 — это 
+число 40 в шестнадцатеричном представлении.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Блок трека ("MTrk")
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+В блоке трека хранятся сами события, то есть MIDI-сообщения, снабженные 
+меткой времени. В блоке должно присутствовать хотя бы одно событие. 
+Структура блока трека одинакова для MIDI-файлов любого формата (0, 1 и 
+2), рис. 13.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/513.gif" alt="Рис. 13" width="606" height="143" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Событие состоит из дельта-времени и самого сообщения MIDI, рис. 14. 
+Напомню, что дельта-время хранится как величина переменной длины.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/514.gif" alt="Рис. 14" width="427" height="77">
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Типы событий
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+В отличие от сообщений MIDI, для событий в SMF принята несколько иная 
+классификация. События делятся на три типа: MIDI-события, SysEx-события и
+ мета-события. Первые представляют собой обычные сообщения канала. Они 
+могут быть сохранены (так же, как и при передаче) методом Running Status
+ (то есть, один статус-байт на все однотипные сообщения серии, подробнее
+ см. <a href="http://www.muzoborudovanie.ru/articles/midi/midi3.php">третью статью цикла</a>). Первое событие в блоке трека должно всегда начинаться со статус-байта.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+SysEx-события выделены в особую категорию, поскольку эксклюзивные 
+сообщения имеют произвольную длину. Чтобы не заставлять программу искать
+ окончание сообщения по байту 0xF7 (EOX), спецификация SMF требует 
+сохранять SysEx-сообщения с явным указанием их длины. Сначала 
+сохраняется статус-байт 0xF0 (признак начала SysEx), затем — длина 
+сообщения в формате величины переменной длины (то есть число байтов, 
+следующих за 0xF0, кроме самих байт, содержащих длину), затем — тело 
+сообщения вместе с байтом EOX, рис. 15. Например, сообщение 0xF0 0x41 
+0x14 0x00 0x07 0xF7 будет сохранено в SMF как 0xF0 0x05 0x41 0x14 0x00 
+0x07 0xF7.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/515.gif" alt="Рис. 15" width="302" height="56">
+</p>
+
+<p>
+К сожалению, попадаются MIDI-устройства, которые в нарушение 
+спецификации MIDI передают сообщения SysEx маленькими порциями. Этот 
+способ не имеет ничего общего с пакетной передачей данных, затронутой в 
+третьей статье цикла. Например, синтезаторы Casio серии CZ при сбросе 
+дампа с настройками пэтчей ведут себя очень "некультурно": начинают 
+посылку SysEx (со статус-байта 0xF0), передают несколько байт, затем 
+делают паузу, затем передают следующую небольшую порцию (без 
+опознавательных знаков), затем еще пауза, следующая порция и т. п. 
+Только в конце последней порции передается байт EOX. Самое смешное, 
+подобные устройства требуют загрузки дампа точно таким же способом, с 
+теми же временными интервалами между порциями.
+</p>
+
+<p>
+Бедный секвенсор не знает, что делать — получается, что каждому 
+принятому кусочку нужно назначить свое дельта-время, хотя кусочек этот 
+не является самостоятельным сообщением MIDI, а только частью большой 
+синтаксической конструкции. Но выход нашли, поощрив тем самым нерадивых 
+разработчиков устройств. Первая порция имеет статус-байт 0xF0, она 
+сохраняется как обычное событие. В начало второй порции (и всех 
+остальных) дописывается статус-байт 0xF7 (EOX), чтобы сделать порцию 
+полноценным сообщением с собственным статус-байтом. Хоть этот байт и 
+зарезервирован как признак конца SysEx, в данном случае секвенсор 
+понимает, что он отмечает начало очередной порции. Байт EOX в конце 
+последней порции завершает сообщение SysEx. Между порциями не должно 
+храниться никаких других MIDI-событий.
+</p>
+
+<p>
+Вот пример хранения многопакетного сообщения SysEx. Предположим, были 
+переданы байты 0xF0 0x41 0x12 0x00, затем последовала задержка в 200 
+тиков, затем последовали байты 0x36 0x15 0x03 0x51 0x20 0x00, затем — 
+задержка в 100 тиков, затем — байты 0x41 0x02 0x00 0xF7. В MIDI-файле 
+это будет сохранено так, как показано на рис. 16.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/516.gif" alt="Рис. 16" width="427" height="152">
+</p>
+
+<p>
+Вся эта история с пакетами порождает интересное следствие. Если 
+статус-байт 0xF7 использовать вне контекста передачи сообщений SysEx (то
+ есть без предшествующего 0xF0), то вслед за ним можно сохранять такие 
+сообщения, которые вообще-то сохранению в SMF не подлежат (общесистемные
+ сообщения и сообщения реального времени: MTC Quarter Frame, MIDI Clock,
+ Song Position Pointer, Song Select и т. д.). Если байт 0xF7 
+используется подобным образом, то вся конструкция (рис. 17) называется 
+ESCAPE-событием.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/517.gif" alt="Рис. 17" width="214" height="59">
+</p>
+
+<p>
+Например, сообщение остановки ритм-машины и последующего запуска 
+воспроизведения через 48 тиков может храниться в SMF в виде следующего 
+набора байт (рис. 18).
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/518.gif" alt="Рис. 18" width="401" height="59">
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Мета-события
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Мета-события, как говорилось ранее, предназначены для хранения 
+дополнительной информации (необходимой секвенсорам и проигрывателям 
+файлов), которая не передается по MIDI-интерфейсу. Мета-событие 
+начинается со статус-байта 0xFF (который в протоколе MIDI означает 
+команду сброса, System Reset; таким образом, в SMF он переопределен). 
+Затем идет тип мета-события (один байт, так что всего возможно до 128 
+мета-событий), затем — длина данных, выраженная в форме величины 
+переменной длины, затем — сами данные (рис. 19). Метасобытия, 
+происходящие в одно и то же время, могут выполняться в любом порядке.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/519.gif" alt="Рис. 19" width="406" height="84">
+</p>
+
+<p>
+На сегодняшний день определены 17 мета-событий. Так же, как и с блоками,
+ в будущем могут быть определены их новые типы, которые не будут 
+узнаваться старыми программами. Секвенсор или другая программа не 
+обязаны поддерживать все мета-события, определенные спецификацией.
+</p>
+
+<p>
+<b>Sequence Number </b>(0x00). Это необязательное мета-событие имеет 
+структуру, показанную на рис. 20. Оно задает номер секвенции (паттерна),
+ на который можно ссылаться в дальнейшем при помощи сообщений MIDI 
+Cueing. В таком виде это мета-событие имеет смысл только для формата 2, 
+поскольку в файлах формата 0 и 1 есть только одна секвенция (то есть 
+целая композиция). Событие должно располагаться в начале трека, перед 
+любым событием с ненулевым дельта-временем, и перед любым другим 
+MIDI-событием. Если номер секвенции опущен, то считается, что секвенции 
+(паттерны) следуют в порядке расположения блоков трека в файле. Если 
+необходимо сохранить несколько многотрековых композиций в виде группы 
+файлов формата 0 или 1, то событие Sequence Number может использоваться в
+ качестве номера файла.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/520.gif" alt="Рис. 20" width="246" height="58">
+</p>
+
+<p>
+<b>Text Event </b>(0x01). Событие задает любое количество текста, 
+описывающего все, что угодно. Структура события показана на рис. 21. 
+Длина текста задается переменным способом (то есть в виде величины 
+переменной длины). Текстовые мета-события могут располагаться в любом 
+месте трека и использоваться в качестве "подстрочника" (то есть, слов 
+песни, lyrics) или описания опорных точек (маркеров). Текст должен 
+представлять собой печатные ASCII-символы. Допускаются символы за 
+пределами этого набора (верхние 128, там, где обычно располагаются 
+национальные кодировки). Программы, которые не поддерживают расширенный 
+набор, должны игнорировать такие символы (на деле многие секвенсоры 
+вместо русских букв выводят "кракозяблы").
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/521.gif" alt="Рис. 21" width="247" height="58">
+</p>
+
+<p>
+К текстовым событиям относятся еще несколько (до типа 0x0F). Ко всем им 
+применимо сказанное ранее, только служат эти события разным целям.
+</p>
+
+<p>
+<b>Copyright Notice </b>(0x02). Содержит заметку об авторских правах. 
+Заметка должна содержать символы "(", "C" и ")", год и владельца 
+авторских прав. Если в одном файле содержатся несколько произведений, 
+все заметки об авторских правах должны быть размещены в начале файла. 
+Заметка должна быть первым событием в первом блоке трека в момент 
+времени 0.
+</p>
+
+<p>
+<b>Sequence/Track Name </b>(0x03). Содержит название произведения (если 
+находится в файле формата 0 или в первом блоке трека в файле формата 1),
+ в остальных случаях — название трека.
+</p>
+
+<p>
+<b>Instrument Name </b>(0x04). Содержит название инструмента, которым должен исполняться трек.
+</p>
+
+<p>
+<b>Lyric </b>(0x05). Задает слова песни, которые должны быть исполнены в
+ указанное время. Обычно каждый слог представлен отдельным событием 
+Lyric, то есть для каждого слога четко задано время исполнения. В 1997 
+году организация MMA расширила это событие, добавив команды 
+форматирования при выводе текста на экран, поддержку многобайтовой 
+кодировки символов и Unicode, а также информацию о произведении 
+(название, композитор, исполнитель). Расширенное мета-событие Lyric 
+предложено называть Lyric/Display Meta Event.
+</p>
+
+<p>
+<b>Marker </b>(0x06). Событие располагается обычно на первом блоке трека
+ в файле формата 1 (или на единственном треке формата 0). Определяет 
+позицию внутри произведения и одновременно задает ее имя.
+</p>
+
+<p>
+<b>Cue Point </b>(0x07). Задает точку привязки партитуры к моменту 
+кино-, видео- или сценического действия и одновременно описание момента 
+(например, "Машина въехала в дерево", "Герой получил пощечину").
+</p>
+
+<p>
+<b>Program Name </b>(0x08). Это мета-событие служит для визуальной 
+ориентировки и информирования пользователя об используемом имени пэтча 
+на данном канале. Непосредственно за этим событием должны следовать 
+события Bank Select и Program Change, посредством которым реально 
+выбирается пэтч. Если на протяжении звучания трека на том же MIDI-канале
+ изменяется пэтч, событие Program Name может встречаться перед каждым 
+таким изменением.
+</p>
+
+<p>
+<b>Device Name </b>(0x09). Это мета-событие позволяет в одном MIDI-файле
+ задать несколько устройств воспроизведения (тон-генераторов), то есть 
+реализовать более 16 MIDI-каналов. Например, в аранжировке могут быть 
+задействованы два тон-генератора, первый подключен к порту "MIDI Out 3" 
+интерфейса, второй — к порту "MIDI Out 4" (такое имя портам присвоила 
+операционная система). Выход одного трека направлен на пятый MIDI-канал 
+порта "MIDI Out 3", выход другого — также на пятый MIDI-канал, но порта 
+"MIDI Out 4". Тогда в SMF формата 1 будут сохранены два блока треков, в 
+каждом из которых события будут происходить на пятом канале, но у треков
+ будет разное мета-событие Device Name ("MIDI Out 3" и "MIDI Out 4" 
+соответственно).
+</p>
+
+<p>
+Имя устройства можно задавать произвольно, ориентируясь на текущее 
+оборудование и способ его подключения. При работе на одном компьютере с 
+одним набором и способом коммутации внешних устройств событие Device 
+Name со своей задачей справляется прекрасно. Но стоит загрузить 
+полученный MIDI-файл на компьютер, оснащенный другими устройствами, 
+названия устройств из файла окажутся бесполезными (остается только 
+рассчитывать на интеллектуальные способности секвенсора, который по 
+названию устройств сможет "догадаться" о том, на какой синтезатор лучше 
+направить выход с трека).
+</p>
+
+<p>
+Событие Device Name должно присутствовать только один раз, в самом 
+начале трека, перед любыми MIDI-событиями. Таким образом, файл формата 0
+ может иметь только одно устройство воспроизведения.
+</p>
+
+<p>
+<b>MIDI Channel Prefix </b>(0x20). Структура события показана на рис. 
+22. Поскольку SysEx-события и мета-события не содержат в статус-байте 
+номер MIDI-канала, нужен способ привязки этих событий к MIDI-каналу. 
+Событие MIDI Channel Prefix содержит номер MIDI-канала, с которым 
+ассоциируются все последующие SysEx- и мета-события. Канал, заданный 
+таким образом, остается действительным до следующего нормального 
+MIDI-события (которое содержит номер канала) или до следующего 
+мета-события MIDI Channel Prefix.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/522.gif" alt="Рис. 22" width="230" height="59">
+</p>
+
+<p>
+Если каждый трек в секвенсоре соответствует одному MIDI-каналу, то при 
+записи аранжировки в формате 0 это мета-событие помогает сохранить связь
+ мета-событий с конкретным треком. Подобная возможность предусмотрена и в
+ формате файлов Yamaha ESEQ.
+</p>
+
+<p>
+<b>End of Track</b>. (0x2F). Это обязательное мета-событие (рис. 23) 
+указывает момент окончания трека. Должно быть последним событием внутри 
+блока трека. Точный момент окончания трека необходим секвенсорам для 
+возможности воспроизведения трека в цикле или стыковки его с другим 
+треком.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/523.gif" alt="Рис. 23" width="156" height="58">
+</p>
+
+<p>
+<b>Set Tempo </b>(0x51). Задает текущий темп в необычном измерении — 
+микросекунды на четверть (структура события показана на рис. 24). 
+Представление темпа в виде "время на четверть" вместо "четверть за 
+время" позволяет осуществить точную долговременную синхронизацию при 
+работе по протоколу MTC или SMPTE. В этом случае конец четырехминутной 
+композиции при темпе 120 BPM будет определяться с точностью не хуже 500 
+микросекунд. Например, при темпе 120 BPM в одной четверти содержится 
+500000 микросекунд (три байта данных события равны 0x07A120).
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/524.gif" alt="Рис. 24" width="289" height="58">
+</p>
+
+<p>
+<table cellspacing="0" cellpadding="5" border="0" bgcolor="333367">
+<tbody><tr>
+<td>
+
+<p>
+<font size="2" face="Arial, sans serif" color="ffffff">
+
+</font></p><p><font size="2" face="Arial, sans serif" color="ffffff">
+<font face="Arial, sans serif">
+<big>
+<b>
+Преобразование дельта-времени в миллисекунды
+</b>
+</big>
+<br>
+
+Для преобразования дельта-времени в миллисекунды необходимы два блока 
+информации: количество тиков в четверти и текущий темп (обычно задан 
+соответствующим мета-событием в треке темпа/размера). Темп выражается в 
+микросекундах на четверть (т. е. 500000 мкс соответствуют темпу 120 BPM,
+ так как 120 BPM — это одна четверть в 0,5 с). Для преобразования 
+дельта-времени в миллисекунды используется следующая формула:
+</font></font></p><font size="2" face="Arial, sans serif" color="ffffff"><font face="Arial, sans serif">
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/525.gif" alt="Рис. 25" width="250" height="99">
+</p>
+
+<p>
+Так, если число тиков 3240, темп 120 BPM (500000 мкс на четверть), 96 
+тиков в четверти (96 PPQN), время в миллисекундах равно 3240 x 
+(500000/96) / 1000 = 16875 мс (или 16,875 с).
+</p>
+
+<p>
+В реальной жизни SMF может содержать изменения темпа и размера, так что 
+поиск расчетного времени для каждого тика оказывается непростой задачей.
+</p>
+
+</font></font></td>
+</tr>
+</tbody></table>
+
+</p><p>
+<b>SMPTE Offset </b>(0x54). Структура показана на рис. 26. Это 
+необязательное мета-событие задает время SMPTE, с которого начинается 
+трек. Событие должно располагаться в начале трека, перед любым другим 
+событием с ненулевым дельта-временем, и перед любым MIDI-событием. В 
+файле формата 1 смещение SMPTE должно храниться с картой темпа на первом
+ треке. Поле ff содержит сотые доли кадра, даже в том случае, если в 
+блоке заголовка определено другое количество тиков на кадр.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/526.gif" alt="Рис. 26" width="379" height="58">
+</p>
+
+<p>
+<b>Time Signature </b>(0x58). Событие задает музыкальный размер, 
+структура показана на рис. 27. Поля nn и dd — числитель и знаменатель 
+размера, при этом знаменатель является степенью числа 2. Поле cc задает 
+число сообщений MIDI Clock, приходящихся на один удар метронома. 
+Параметр bb — это число тридцать вторых нот, приходящихся на 24 
+сообщения MIDI Clock (то есть на четверть). Зачем он нужен, если в 
+четверти всегда восемь тридцать вторых? Дело в том, что некоторые 
+секвенсоры позволяют задавать для нотации четверть произвольного размера
+ (например, равную 48-ми сообщениям MIDI Clock). В этом случае на 24 
+сообщения MIDI Clock будет приходить не восемь, а четыре тридцать 
+вторых. Событие Time Signature при размере 6/8, клике метронома на 
+каждые три восьмых и 24-х MIDI Clock в четверти будет выглядеть как 0xFF
+ 0x58 0x04 0x06 0x03 0x24 0x08.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/527.gif" alt="Рис. 27" width="355" height="58">
+</p>
+
+<p>
+<b>Key Signature </b>(0x59). Событие задает текущую тональность (точнее,
+ ладотональность — высоту и наклонение лада, мажор/минор), рис. 28. Поле
+ sf содержит количество ключевых знаков в тональности (от -7 до +7, 
+отрицательные значения — бемоли, положительные — диезы, нулевое значение
+ — тональность До мажор или Ля минор). Поле mi уточняет наклонение: 0 
+(мажор), 1 (минор).
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/528.gif" alt="Рис. 28" width="270" height="58">
+</p>
+
+<p>
+<b>Sequencer-Specific Meta-Event </b>(0x7F). Это событие (рис. 29) 
+применяется аналогично системным эксклюзивным сообщениями в протоколе 
+MIDI. То есть, позволяет записывать в MIDI-файл информацию, специфичную 
+для конкретного секвенсора. Длина события выражается переменным 
+способом. Первый байт данных (или три байта) содержат ID производителя. 
+Остальной формат события определяется конкретным производителем под 
+конкретную программу или семейство программ. Так же, как и с SysEx, 
+производителям рекомендуется публиковать формат событий 
+Sequencer-Specific, чтобы другие могли знать, как их использовать.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/529.gif" alt="Рис. 29" width="270" height="57">
+</p>
+
+<p>
+<table cellspacing="0" cellpadding="5" border="0" bgcolor="333367">
+<tbody><tr>
+<td>
+
+<p>
+<font size="2" face="Arial, sans serif" color="ffffff">
+
+</font></p><p><font size="2" face="Arial, sans serif" color="ffffff">
+<font face="Arial, sans serif">
+<big>
+<b>
+Файлы для караоке
+</b>
+</big>
+<br>
+
+Появление стандартных MIDI-файлов привело к развитию целой индустрии 
+караоке — специальных программ-проигрывателей, отображающих тексты песен
+ синхронно с инструментальной версией композиции, воспроизводимой 
+синтезатором звуковой платы. В большинстве своем файлы для караоке имеют
+ расширение KAR и представляют собой самые обыкновенные MIDI-файлы с 
+добавленным "подстрочником". Это означает, что если вы наткнулись на 
+подобный файл, но в системе не установлен караоке-плеер, достаточно 
+изменить расширение KAR на MID, и вы получите стандартный MIDI-файл.
+</font></font></p><font size="2" face="Arial, sans serif" color="ffffff"><font face="Arial, sans serif">
+
+<p>
+Расширение KAR впервые применила известная компания Tune 1000 Corp (<a href="http://www.tune1000.co.uk/"><font color="ffffff">www.tune1000.co.uk</font></a><font color="ffffff">),
+ которая сегодня является признанным лидером в индустрии караоке и 
+продает десятки тысяч файлов любителям "попеть в микрофон". Особенность 
+файлов KAR — слова песни в них хранятся не в мета-событиях Lyric, а в 
+текстовых событиях общего назначения (Text Meta Event).
+</font></p><font color="ffffff">
+
+<p>
+Существуют и другие караоке-форматы, такие как TXK, CRT, ST3, TAB. Они 
+содержат, наряду со звуком и текстом, графику и даже гитарные 
+табулатуры. Естественно, ни о какой совместимости с SMF в этом случае 
+речи не идет, хотя внутри себя такие файлы могут скрывать SMF в чистом 
+виде.
+</p>
+
+</font></font></font></td>
+</tr>
+</tbody></table>
+
+</p><p>
+<font face="Arial, sans serif">
+<big>
+<b>
+MIDI-файл своими руками
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+То, что описано в этом разделе, не рекомендуется повторять слабонервным.
+ Мы изучили формат SMF и теперь без всякого секвенсора можем руками 
+забить MIDI-файл в шестнадцатеричном редакторе. Хороших редакторов 
+много, но для данного примера я использовал бесплатный XVI32 2.51 (его 
+можно скачать по адресу <a href="http://www.handshake.de/user/chmaas/delphi/download/xvi32.zip">www.handshake.de</a>, архив занимает около 500 Кбайт).
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Главное окно программы (рис. 30) устроено очень просто — в левой части 
+расположены ячейки для ввода шестнадцатеричных чисел, в правой — 
+контрольная панель, в которой отображаются ASCII-символы, 
+соответствующие шестнадцатеричным кодам левой части. Коды, которым не 
+соответствуют печатные символы, выглядят всякими значками. Лучше 
+настроить размер окна так, чтобы в одной строке левой панели 
+располагалось 16 ячеек (то есть 16 байт). Смещение от начала файла 
+(адрес начала строки) показано в крайнем левом столбце. На рисунке для 
+примера открыт типичный MIDI-файл.
+</p>
+
+<br>
+ </font></font></font></font></font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/530.jpg" alt="Рис. 30" width="600" height="674" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Поскольку забивать MIDI-файл кодами — это все же извращение, пример 
+будет чрезвычайно простой: три трека, последовательно содержащие ноты 
+До-мажорного аккорда в широком расположении (рис. 31). На первом 
+MIDI-канале используется пэтч номер 3, на втором — номер 17, на третьем —
+ номер 47. Забив этот пример, вы, что называется, телом прочувствуете 
+формат SMF.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/531.gif" alt="Рис. 31" width="350" height="334">
+</p>
+
+<p>
+В таблице на рис. 32 показаны коды для SMF формата 0, на рис. 33 — коды 
+для формата 1. Для удобства приведены короткие комментарии.
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/532.gif" alt="Рис. 32" width="606" height="404" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/533.gif" alt="Рис. 33" width="450" height="358" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+В окне программы XVI32 файл формата 1 будет выглядеть так, как показано 
+на рис. 34. После того, как файл набит, его нужно сохранить (File — Save
+ As), присвоив произвольное имя и расширение MID. Остается рискнуть и 
+воспроизвести! Двойной щелчок в проводнике Windows — и, если при наборе 
+не было допущено ошибок, вы услышите желанный аккорд.
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/534.jpg" alt="Рис. 34" width="600" height="427" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+
+
+
+
+
+<p>
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="2" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+Оценка статьи
+</b></font></td></tr></tbody></table>
+
+<font size="2" face="Arial, sans serif">
+</font></p><form method="post"><font size="2" face="Arial, sans serif"><font size="2" face="Arial" color="#000000">Посещений: 15128 | Проголосовавших: 
+28 | Средняя оценка: 5.0<p><input type="hidden" name="envoi" value="1">&nbsp;<select name="note"><option value="5" selected="selected">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select>&nbsp;&nbsp;<input type="submit" value="Оценить"></p></font>
+
+<p></p>
+
+<p>
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="2" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+Комментарии
+</b></font></td></tr></tbody></table>
+
+<font size="1" face="Arial, sans serif">
+<noindex><!--84.42.10.30--></noindex></font></p><div align="RIGHT"><font size="1" face="Arial, sans serif"><small>15.12.08 15:14</small>
+        </font></div><font size="1" face="Arial, sans serif">
+	<b>Lex</b> <a href="mailto:"></a><br>Классная статья. Просто супер. Столько нового про MIDI...<br><hr>
+<!--84.42.10.30--><div align="RIGHT"><small>15.12.08 16:33</small>
+        </div>
+	<b>Lex</b> <a href="mailto:"></a><br>Можно же свой секвенсор написать!!!<br><hr>
+
+
+<big><b>В связи с обилием спама размещение комментариев отключено. Пользуйтесь <a href="http://www.muzoborudovanie.ru/forum/index.php?site=mo&amp;bn=">форумами</a>.</b><br></big>
+<br>
+
+
+<table width="427" cellspacing="1" cellpadding="1" border="0" bgcolor="000000">
+
+<tbody><tr bgcolor="d0d0d0">
+<td align="CENTER">
+<font size="0">
+<a href="http://www.muzoborudovanie.ru/ads/adrates.php">РЕКЛАМА</a>
+</font>
+
+</td></tr><tr bgcolor="ffeecc">
+<td align="CENTER">
+
+<!-- Yandex.RTB R-A-2736-1 -->
+<div id="yandex_rtb_R-A-2736-1"><yatag class="qde59565e v4dfb48c4" id="qde59565e" lang="ru"><yatag class="ld149134b w35c631b1 kfa416cf7 rd9a2d2cb"><yatag class="ab67eb87b b1425f46e o2af60c40 ua5cdcfd" style="min-height: 150px !important; min-width: 423px !important; max-width: 423px !important;"><yatag data-id="212663125119248880" class="fc518482 i85bb288 vc7d8da1c" style="width: 421px !important; margin: auto !important;"><yatag class="w419a95db" style="min-height: 148px !important; font-size: 12.8923px !important;"><yatag class="d137187ab"><a href="https://an.yandex.ru/count/G8Bo72NEMGW507y2CMuCCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0Xw4llCObmvam0AW-X3m0fVCwleB-0A2W820W919W0EI_Olb2uW3YugQWmwe0mIm0mIu1Fy1w0J87VW4zfCIY0NsanAG1O_8Aw05_yG5g0NgpWIm1UhE1BW5r8aBm0NxWXd81QYk1j05qfW2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGTxUaHH9GNIEB07W82G3C07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2gA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGg8OjJ7jw003or2lk38u50C0BWAC5o0k0r9C1sGjxUaHH9GNIEEWBzfCIy0iAY0oYjzw-0UWC0PWDxy5Bu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0_xzB6XqQI1wJZP3v33jFNMsli_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0v0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000004EoGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4gpkU0P7GnK_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=321607574804481&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMjE2MDcxNTExNTcyNDgifQ%3D%3D&amp;" class="s1f47074a" target="_blank"><yatag class="m116e22e2 b5d7c7949 g35c572cf"><yatag class="r70cac259">Яндекс.Директ</yatag></yatag></a><a href="https://an.yandex.ru/count/G8Bo72NEMGW507y2CMuCCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0Xw4llCObmvam0AW-X3m0fVCwleB-0A2W820W919W0EI_Olb2uW3YugQWmwe0mIm0mIu1Fy1w0J87VW4zfCIY0NsanAG1O_8Aw05_yG5g0NgpWIm1UhE1BW5r8aBm0NxWXd81QYk1j05qfW2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGTxUaHH9GNIEB07W82G3C07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2gA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGg8OjJ7jw003or2lk38u50C0BWAC5o0k0r9C1sGjxUaHH9GNIEEWBzfCIy0iAY0oYjzw-0UWC0PWDxy5Bu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0_xzB6XqQI1wJZP3v33jFNMsli_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0v0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000004EoGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4gpkU0P7GnK_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=321607574804481&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMjE2MDcxNTExNTcyNDgifQ%3D%3D&amp;" class="m116e22e2 bf5d62b45" style="min-width: 148px !important; max-width: 168.4px !important;" target="_blank"><yatag class="cbdd5b964"><yatag class="a4c3d91a8"><yatag style="position: absolute !important; width: 234.333% !important; padding-top: 88.0952% !important; transform: translate(-28.6629%) scale(1) !important; transform-origin: 50% 50% 0px !important;" class=""><img alt="" style="position: absolute !important; left: 0px !important; top: 0px !important; width: 100% !important; height: 100% !important;" class="s5fce7c26" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/huge.webp"></yatag></yatag></yatag></a><yatag class="q2c9fd5a0"><yatag class="ta2ac2b02 ac819505f"><a href="https://an.yandex.ru/count/G8Bo72NEMGW507y2CMuCCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0Xw4llCObmvam0AW-X3m0fVCwleB-0A2W820W919W0EI_Olb2uW3YugQWmwe0mIm0mIu1Fy1w0J87VW4zfCIY0NsanAG1O_8Aw05_yG5g0NgpWIm1UhE1BW5r8aBm0NxWXd81QYk1j05qfW2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGTxUaHH9GNIEB07W82G3C07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2gA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGg8OjJ7jw003or2lk38u50C0BWAC5o0k0r9C1sGjxUaHH9GNIEEWBzfCIy0iAY0oYjzw-0UWC0PWDxy5Bu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0_xzB6XqQI1wJZP3v33jFNMsli_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0v0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000004EoGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4gpkU0P7GnK_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=321607574804481&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMjE2MDcxNTExNTcyNDgifQ%3D%3D&amp;" class="m116e22e2 s188901dd" target="_blank"><yatag class="r70cac259 f9788ad37">Синтезатор Roland E-A7</yatag></a></yatag><yatag class="b42209f72"><a href="https://an.yandex.ru/count/G8Bo72NEMGW507y2CMuCCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0Xw4llCObmvam0AW-X3m0fVCwleB-0A2W820W919W0EI_Olb2uW3YugQWmwe0mIm0mIu1Fy1w0J87VW4zfCIY0NsanAG1O_8Aw05_yG5g0NgpWIm1UhE1BW5r8aBm0NxWXd81QYk1j05qfW2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGTxUaHH9GNIEB07W82G3C07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2gA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGg8OjJ7jw003or2lk38u50C0BWAC5o0k0r9C1sGjxUaHH9GNIEEWBzfCIy0iAY0oYjzw-0UWC0PWDxy5Bu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0_xzB6XqQI1wJZP3v33jFNMsli_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0v0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000004EoGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4gpkU0P7GnK_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=321607574804481&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMjE2MDcxNTExNTcyNDgifQ%3D%3D&amp;" class="m116e22e2 g3a8b15ad" target="_blank"><yatag class="r70cac259 f9788ad37">Купить за&nbsp;82&nbsp;990&nbsp;<span class="qe18b2e3d">руб</span>.</yatag></a></yatag><yatag class="n20d1e454 ac3cc4836"><a href="https://an.yandex.ru/count/G8Bo72NEMGW507y2CMuCCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0Xw4llCObmvam0AW-X3m0fVCwleB-0A2W820W919W0EI_Olb2uW3YugQWmwe0mIm0mIu1Fy1w0J87VW4zfCIY0NsanAG1O_8Aw05_yG5g0NgpWIm1UhE1BW5r8aBm0NxWXd81QYk1j05qfW2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGTxUaHH9GNIEB07W82G3C07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2gA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGg8OjJ7jw003or2lk38u50C0BWAC5o0k0r9C1sGjxUaHH9GNIEEWBzfCIy0iAY0oYjzw-0UWC0PWDxy5Bu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0_xzB6XqQI1wJZP3v33jFNMsli_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0v0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000004EoGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4gpkU0P7GnK_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=321607574804481&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMjE2MDcxNTExNTcyNDgifQ%3D%3D&amp;" class="m116e22e2 v2add3758 fd616eda7" target="_blank"><yatag class="hbe58bad0"><yatag class="qd8cb0e44"><yatag class="r70cac259">Узнать больше</yatag></yatag></yatag></a><yatag class="e1458fb23 xe994cb7c"><yatag class="hbe58bad0"><yatag class="qd8cb0e44"><a href="https://an.yandex.ru/count/G8Bo72NEMGW507y2CMuCCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0Xw4llCObmvam0AW-X3m0fVCwleB-0A2W820W919W0EI_Olb2uW3YugQWmwe0mIm0mIu1Fy1w0J87VW4zfCIY0NsanAG1O_8Aw05_yG5g0NgpWIm1UhE1BW5r8aBm0NxWXd81QYk1j05qfW2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGTxUaHH9GNIEB07W82G3C07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2gA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGg8OjJ7jw003or2lk38u50C0BWAC5o0k0r9C1sGjxUaHH9GNIEEWBzfCIy0iAY0oYjzw-0UWC0PWDxy5Bu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0_xzB6XqQI1wJZP3v33jFNMsli_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0v0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000004EoGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4gpkU0P7GnK_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=321607574804481&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMjE2MDcxNTExNTcyNDgifQ%3D%3D&amp;" class="m116e22e2 m2b40bc5c" target="_blank"><yatag class="r70cac259">love-piano.ru</yatag></a></yatag></yatag></yatag></yatag></yatag></yatag></yatag><yatag class="g2f70b3c6 ue627b22b"><yatag class="rd6c7e311"><yatag class="edfcd4a70"><yatag></yatag></yatag></yatag></yatag><yatag class="adf5ed20d uf1e7ddde he6b8c146"><yatag class="xc81a0f48"><yatag class="t343f0dd8 k7d18ac40 ydcc3abd0"><yatag class="q4cc7a47f"><yatag style="width: 8px !important; height: 8px !important;" class="n9cf2cc1f"><svg width="8px" height="8px" viewBox="0 0 14 14"><polygon points="8.28616426 7.02081528 13.6638974 12.3985484 12.3985484 13.6638974 7.02081528 8.28616426 1.64308213 13.6638974 0.377733152 12.3985484 5.7554663 7.02081528 0.377733152 1.64308213 1.64308213 0.377733152 7.02081528 5.7554663 12.3985484 0.377733152 13.6638974 1.64308213"></polygon></svg></yatag><yatag class="b5351694d"><yatag class="a6f984959"></yatag><yatag class="sce19d15d">Скрыть&nbsp;объявление</yatag></yatag></yatag></yatag></yatag></yatag></yatag></yatag><yatag id="x9e91744f"><yatag class="i9fd5af79"></yatag></yatag></yatag></yatag></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-2736-1",
+                renderTo: "yandex_rtb_R-A-2736-1",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+
+</td></tr></tbody></table>
+<br>
+</font></font></form></font></td>
+
+<td width="25">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td width="129" bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="50">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="427" bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="25">
+<font size="0">
+&nbsp;
+</font></td>
+</tr>
+
+</tbody></table>
+
+</td><td width="129" valign="TOP" bgcolor="555581" align="CENTER"> 
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-0269592369109973";
+//120x600
+google_ad_slot = "8729918506";
+google_ad_width = 120;
+google_ad_height = 600;
+//--></script>
+<script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/show_ads.js">
+</script><ins id="aswift_1_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent;" data-ad-slot="8729918506"><ins id="aswift_1_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0px;width:120px;height:600px;" width="120" height="600" frameborder="0"></iframe></ins></ins>
+
+<br>
+<br>
+
+<table width="111" cellspacing="0" cellpadding="2" border="0">
+<tbody><tr bgcolor="dedede">
+<td align="CENTER">
+<font size="0">
+<a href="http://www.muzoborudovanie.ru/ads/adrates.php">
+Цены на рекламу
+</a>
+</font></td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+
+
+
+
+
+
+ 
+
+
+<p><table width="760" cellspacing="1" cellpadding="1" border="0" bgcolor="000000"><tbody><tr bgcolor="d0d0d0"><td colspan="3" align="CENTER"><font size="0"><a href="http://www.muzoborudovanie.ru/a/arates.php">РЕКЛАМА</a></font></td></tr><tr bgcolor="ffeecc"><td colspan="3" align="CENTER"><script type="text/javascript">
+<!--
+var _acic={dataProvider:10};(function(){var e=document.createElement("script");e.type="text/javascript";e.async=true;e.src="//www.acint.net/aci.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})()
+//-->
+</script> срочные <a href="https://zanimai.online/card/srochnyiy-mikrozaym-na-kartu.html" target="_blank">деньги на карту</a> </td></tr></tbody></table>
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+<tbody><tr valign="TOP" align="CENTER">
+<td width="129">
+
+<noindex>
+<br>
+<!-- SpyLOG -->
+<script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/counter_cv.js" id="spylog_code" type="text/javascript" counter="10716" part="" track_links="ext" page_level="1">
+</script><a href="https://spylog.com/cnt?cid=10716&amp;p=1&amp;f=3"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/cnt.gif" id="spylog_img" alt="SpyLOG" width="88" height="31" border="0"></a>
+<noscript>
+<a href="http://u107.16.spylog.com/cnt?cid=10716&f=3&p=1" target="_blank">
+<img src="http://u107.16.spylog.com/cnt?cid=10716&p=1" alt="SpyLOG" border="0" width="88" height="31"></a>
+</noscript>
+<!--/ SpyLOG -->
+
+<!--Rating@Mail.ru COUNTEr--><script language="JavaScript" type="text/javascript"><!--
+d=document;var a='';a+=';r='+escape(d.referrer)
+js=10//--></script><script language="JavaScript1.1" type="text/javascript"><!--
+a+=';j='+navigator.javaEnabled()
+js=11//--></script><script language="JavaScript1.2" type="text/javascript"><!--
+s=screen;a+=';s='+s.width+'*'+s.height
+a+=';d='+(s.colorDepth?s.colorDepth:s.pixelDepth)
+js=12//--></script><script language="JavaScript1.3" type="text/javascript"><!--
+js=13//--></script><script language="JavaScript" type="text/javascript"><!--
+d.write('<a href="http://top.mail.ru/jump?from=120209"'+
+' target=_top><img src="http://d5.cd.b1.a0.top.list.ru/counter'+
+'?id=120209;t=49;js='+js+a+';rand='+Math.random()+
+'" alt="Рейтинг@Mail.ru"'+' border=0 height=31 width=88/><\/a>')
+if(11<js)d.write('<'+'!-- ')//--></script><a href="http://top.mail.ru/jump?from=120209" target="_top"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/counter.gif" alt="Рейтинг@Mail.ru" width="88/" height="31" border="0"></a><!-- <noscript><a
+target=_top href="http://top.mail.ru/jump?from=120209"><img
+src="http://d5.cd.b1.a0.top.list.ru/counter?js=na;id=120209;t=49"
+border=0 height=31 width=88
+alt="Рейтинг@Mail.ru"/></a></noscript><script language="JavaScript" type="text/javascript"><!--
+if(11<js)d.write('--'+'>')//--><!--/COUNTER-->
+
+</noindex>
+
+</td>
+
+<td width="502">
+<p>
+<font size="-2" face="Verdana, Tahoma, Arial, sans serif">
+</font></p><p><font size="-2" face="Verdana, Tahoma, Arial, sans serif">
+<br>
+Музыкальное Оборудование
+<br><a href="http://www.muzoborudovanie.ru/">www.muzoborudovanie.ru</a>
+<br>www.moline.ru
+<br><a href="mailto:mail@muzoborudovanie.ru">mail@muzoborudovanie.ru</a>
+<br><a href="http://www.muzoborudovanie.ru/data.php">© Агентство ДАТА</a>
+<br>
+</font></p></td>
+
+<td width="129">
+<p>
+<noindex>
+<br>
+<!-- begin of Top100 code -->
+<script id="top100Counter" type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/top100.jcn"></script><a href="https://top100.rambler.ru/home?id=196166" target="_blank"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/a.gif" title="Rambler's Top100" alt="Rambler's Top100" border="0"></a><noscript><a href="http://top100.rambler.ru/home?id=196166" target="_blank"><img src="http://cnt.rambler.ru/top100.cnt?196166" alt="Rambler's Top100" width="81" height="63" border="0" /></a></noscript>
+<!-- end of Top100 code -->
+</noindex>
+
+</p></td>
+</tr>
+</tbody></table>
+
+</p></center>
+</font><iframe src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/a.htm" style="width:1px;height:1px;display:none;" width="0" height="0" frameborder="0"></iframe><iframe id="google_osd_static_frame_260777044666" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe><ins class="adsbygoogle adsbygoogle-noablate" style="display: none !important;" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_2_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;" frameborder="0"></iframe></ins></ins></ins></body><iframe id="google_esf" name="google_esf" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%205%20%E2%80%94%20%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5%20MIDI-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.%20-%20%D0%9C%D0%9E_files/zrt_lookup.htm" style="display: none;" data-ad-client="ca-pub-0269592369109973"></iframe></html>

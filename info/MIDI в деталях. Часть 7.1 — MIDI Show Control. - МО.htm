@@ -1,0 +1,1418 @@
+<html><head>
+<title>MIDI в деталях. Часть 7.1 — MIDI Show Control. - МО</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/integrator_002.js" as="script"><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/ca-pub-0269592369109973.js"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/adsbygoogle.js"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/osd.js"></script><script type="text/javascript" async="" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/aci.js"></script><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/context.js" async=""></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/show_ads_impl.js" id="google_shimpl"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/ca-pub-0269592369109973.js"></script><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/integrator_002.js"></script><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/integrator.js" as="script"><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/integrator.js"></script><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/show_ads_impl.js" as="script"><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/context_static.js" as="script"><script id="https://an.yandex.ru/partner-code-bundles/8793/context_static.js" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/context_static.js"></script><script type="text/javascript" charset="utf-8" async="" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/d0ac678e6c3095b874ca.js"></script><style type="text/css"> #m14a42a6f .d9d188e19{position:fixed !important;left:-1000px !important;top:-1000px !important;width:1px !important;height:1px !important;display:block !important}</style><style type="text/css"> .b2ff5c8fe{opacity:1 !important;white-space:normal !important;visibility:visible !important}.b2ff5c8fe,.b2ff5c8fe yatag{display:block !important;font-family:inherit !important}.b2ff5c8fe,.b2ff5c8fe,.b2ff5c8fe a,.b2ff5c8fe b,.b2ff5c8fe em,.b2ff5c8fe iframe,.b2ff5c8fe img,.b2ff5c8fe table,.b2ff5c8fe tbody,.b2ff5c8fe td,.b2ff5c8fe tr,.b2ff5c8fe yatag{box-sizing:content-box !important;color:inherit !important;font-size:inherit !important;font-weight:inherit !important;-webkit-hyphens:manual !important;-ms-hyphens:manual !important;hyphens:manual !important}.b2ff5c8fe,.b2ff5c8fe a,.b2ff5c8fe b,.b2ff5c8fe em,.b2ff5c8fe iframe,.b2ff5c8fe img,.b2ff5c8fe table,.b2ff5c8fe tbody,.b2ff5c8fe td,.b2ff5c8fe tr{background:none !important;border:none !important;border-radius:0 !important;border-spacing:0 !important;border-collapse:collapse !important;clear:none !important;float:none !important;font-variant:normal !important;letter-spacing:normal !important;line-height:normal !important;margin:0 !important;max-height:none !important;max-width:none !important;min-height:0 !important;min-width:0 !important;outline:none !important;padding:0 !important;position:static !important;text-align:left !important;text-decoration:none !important;text-indent:0 !important;text-transform:none !important;vertical-align:baseline !important;visibility:inherit !important;word-spacing:normal !important}.b2ff5c8fe,.b2ff5c8fe a,.b2ff5c8fe b,.b2ff5c8fe em,.b2ff5c8fe img,.b2ff5c8fe table,.b2ff5c8fe tbody,.b2ff5c8fe td,.b2ff5c8fe tr{height:auto !important}.b2ff5c8fe table{display:table !important;empty-cells:hide !important;table-layout:fixed !important}.b2ff5c8fe table,.b2ff5c8fe td{font-size:100% !important}.b2ff5c8fe td{display:table-cell !important;vertical-align:middle !important}.b2ff5c8fe{width:auto !important;height:auto !important;overflow:visible !important}.b2ff5c8fe{position:relative !important;z-index:1 !important;-webkit-font-smoothing:antialiased !important;-webkit-text-size-adjust:none !important}.b2ff5c8fe .bba257c31,.b2ff5c8fe .bba257c31:hover,.b2ff5c8fe .bba257c31:hover b,.b2ff5c8fe .bba257c31 b{display:inline !important;color:#006600 !important;text-decoration:none !important;border-bottom-color:rgba(0,102,0,0.4) !important;border-bottom-width:1px !important;border-bottom-style:solid !important}.b2ff5c8fe .bba257c31:hover,.b2ff5c8fe .bba257c31:hover b{color:#DD0000 !important;border-bottom-color:rgba(221,0,0,0.4) !important}.b2ff5c8fe a:focus{-webkit-user-select:none !important;-moz-user-select:none !important;-ms-user-select:none !important;user-select:none !important}.b2ff5c8fe .cc3c79b8a{cursor:pointer !important}.b2ff5c8fe .jdcdfa79{display:inline !important}.b2ff5c8fe .k32e1e957{overflow-wrap:break-word !important;word-wrap:break-word !important;-webkit-hyphens:auto !important;-ms-hyphens:auto !important;hyphens:auto !important}.b2ff5c8fe .n1f95a684,.b2ff5c8fe .j844c7748{overflow:hidden !important}.b2ff5c8fe .n1f95a684,.b2ff5c8fe .j844c7748,.b2ff5c8fe .efaf65ffd:after{position:absolute !important;top:0 !important;right:0 !important;bottom:0 !important;left:0 !important}.b2ff5c8fe .efaf65ffd:after{content:"" !important;display:block !important;background:linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.5)) !important}.b2ff5c8fe .f4384507e{cursor:pointer !important}.b2ff5c8fe .f4384507e,.b2ff5c8fe .b8391e9ed{position:relative !important}.b2ff5c8fe .b8391e9ed:after{content:"" !important;position:absolute !important;top:0 !important;left:-5px !important;bottom:-5px !important;right:0 !important}.b2ff5c8fe .b8391e9ed.he220976c:after{left:0 !important;bottom:0 !important}.b2ff5c8fe .ja3216a66{z-index:-1 !important;transition:z-index 0s linear .4s !important;cursor:default !important;line-height:1.25 !important}.b2ff5c8fe .ja3216a66,.b2ff5c8fe .gb0cbe6b1{position:absolute !important;top:0 !important;left:0 !important;width:100% !important;height:100% !important;overflow:hidden !important}.b2ff5c8fe .gb0cbe6b1{margin-left:100% !important;transition:margin-left .4s ease-out !important}.b2ff5c8fe .ka4ffca90{position:absolute !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;margin-left:0 !important;width:100% !important;height:100% !important;background:#fff !important;background:hsla(0,0%,100%,.98) !important;transition:margin-left .4s ease-out !important}.b2ff5c8fe .v8331cf77{z-index:10 !important;transition:z-index 0s !important}.b2ff5c8fe .v8331cf77 .gb0cbe6b1{margin-left:0 !important}.b2ff5c8fe .e9f0a5078{padding:0 0 4px 4px !important}.b2ff5c8fe .t8ce20e6d{position:absolute !important;top:50% !important;right:100% !important;margin-top:-9px !important;margin-right:8px !important;padding:0 4px !important;max-width:120px !important;height:18px !important;line-height:18px !important;color:#fff !important;background:#333 !important;background-color:rgba(0,0,0,.8) !important;border-radius:1px !important;visibility:hidden !important;font-size:11px !important;white-space:nowrap !important}.b2ff5c8fe .rc9b8179{position:absolute !important;top:3px !important;right:-6px !important;display:block !important;overflow:hidden !important;width:0 !important;height:0 !important;border-style:solid !important;border-width:6px 0 6px 6px !important;border-color:transparent transparent transparent #333 !important;border-color:transparent transparent transparent rgba(0,0,0,.8) !important}.b2ff5c8fe .d6a94ea7d{position:relative !important;color:#fff !important;letter-spacing:.04em !important}.b2ff5c8fe .l1d88141f{position:relative !important;padding:4px !important;border-radius:0 0 0 20% !important}.b2ff5c8fe .tcf7a68bf svg{display:block !important;max-height:none !important}.b2ff5c8fe .tcf7a68bf polygon{fill:#000000 !important}.b2ff5c8fe .o211d599e{margin:-3px !important;width:1em !important;height:1em !important;line-height:1em !important;text-align:center !important;font-size:18px !important}.b2ff5c8fe .sc691641e{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxNCAxNCI+PHBvbHlnb24gcG9pbnRzPSIxNCwwLjcgMTMuMywwIDcsNi4yOTkgMC43LDAgMCwwLjcgNi4zLDcgMCwxMy4yOTkgMC43LDE0IDcsNy43IDEzLjMsMTQgMTQsMTMuMjk5IDcuNyw3Ij48L3BvbHlnb24+PC9zdmc+") !important}.b2ff5c8fe .e9f0a5078:hover .t8ce20e6d{visibility:visible !important}.b2ff5c8fe .jac1a1433:hover .t8ce20e6d{display:none !important}.b2ff5c8fe .b52f8a8cb{visibility:visible !important}.b2ff5c8fe .b52f8a8cb .t8ce20e6d{display:none !important}.b2ff5c8fe .j764ac965 .t8ce20e6d{height:19px !important;line-height:19px !important}.b2ff5c8fe .j764ac965 .rc9b8179{top:2px !important}.b2ff5c8fe .xb0dee2d1 .l1d88141f{padding:5px !important}.b2ff5c8fe .xb0dee2d1 .o211d599e{margin:-5px !important;font-size:25px !important}.b2ff5c8fe .xb0dee2d1 .t8ce20e6d{margin-right:9px !important;margin-top:-12px !important;max-width:160px !important;height:22px !important;line-height:22px !important;font-size:13px !important}.b2ff5c8fe .xb0dee2d1 .rc9b8179{right:-7px !important;top:4px !important;border-width:7px 0 7px 7px !important}.b2ff5c8fe .e9f0a5078.jac1a1433 .t8ce20e6d{display:none !important}.b2ff5c8fe .g276aacea .l1d88141f{background-color:rgba(0,0,0,.25) !important}.b2ff5c8fe .g276aacea .tcf7a68bf polygon{fill:#fff !important}.b2ff5c8fe .g276aacea .tcf7a68bf.sc691641e{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHN0eWxlPSJmaWxsOiAjZmZmIiB2aWV3Qm94PSIwIDAgMTQgMTQiPjxwb2x5Z29uIHBvaW50cz0iMTQsMC43IDEzLjMsMCA3LDYuMjk5IDAuNywwIDAsMC43IDYuMyw3IDAsMTMuMjk5IDAuNywxNCA3LDcuNyAxMy4zLDE0IDE0LDEzLjI5OSA3LjcsNyI+PC9wb2x5Z29uPjwvc3ZnPg==") !important}.b2ff5c8fe .yf65d110d,.b2ff5c8fe .b8391e9ed.he220976c .e9f0a5078{padding:0 !important}.b2ff5c8fe .b8391e9ed.he220976c.kd35f39ac.fd0f18aad{top:3px !important;right:3px !important}.b2ff5c8fe .b8391e9ed.he220976c.kd35f39ac.fd0f18aad .l1d88141f{border-radius:20% !important}.b2ff5c8fe .qeb4ca2f8{position:absolute !important;top:0 !important;right:0 !important;left:0 !important;bottom:0 !important;width:100% !important;height:100% !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;color:#000 !important;font-size:13px !important;z-index:-1 !important;opacity:0 !important;transition:opacity .3s !important}.b2ff5c8fe .qeb4ca2f8,.b2ff5c8fe .o8d29e03f{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.b2ff5c8fe .fc7385465{margin-left:10px !important}.b2ff5c8fe .a22a615b3 svg{fill:#000 !important}.b2ff5c8fe .jd22386eb{font-size:15px !important}.b2ff5c8fe .v4699af76 .qeb4ca2f8{opacity:1 !important;z-index:10 !important}.b2ff5c8fe .xc38b27d7{-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;min-width:100% !important;min-height:100% !important;font-size:13px !important}.b2ff5c8fe .xc38b27d7,.b2ff5c8fe .t6a97a930{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;box-sizing:border-box !important}.b2ff5c8fe .t6a97a930{width:100% !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;padding:10px !important}.b2ff5c8fe .ue6f4455c{font-weight:700 !important}.b2ff5c8fe .x4db7a5bc{display:none !important;font-weight:700 !important}.b2ff5c8fe .b4797ad42,.b2ff5c8fe .x4db7a5bc{-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.b2ff5c8fe .b4797ad42{overflow:hidden !important}.b2ff5c8fe .p11374518,.b2ff5c8fe .b4797ad42{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;-webkit-flex-shrink:0 !important;-ms-flex-negative:0 !important;flex-shrink:0 !important;box-sizing:border-box !important}.b2ff5c8fe .p11374518{-webkit-align-content:center !important;-ms-flex-line-pack:center !important;align-content:center !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;padding:0 !important;margin:0 !important;position:relative !important}.b2ff5c8fe .pf3c3c500{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;box-sizing:border-box !important;margin:5px 0 !important}.b2ff5c8fe .n85a128e0{display:none !important}.b2ff5c8fe .pf3c3c500 .b80a3af55{width:100% !important;max-width:250px !important}.b2ff5c8fe .n85a128e0 .b80a3af55{width:100% !important;max-width:180px !important}.b2ff5c8fe .b80a3af55{display:block !important;padding:5px !important;background-color:#fff !important;border:1px solid #c8c8c8 !important;border-radius:4px !important;text-align:center !important;color:#555 !important;white-space:nowrap !important;transition-property:border,color !important;transition-duration:.2s !important;cursor:pointer !important;box-sizing:border-box !important}.b2ff5c8fe .b80a3af55:hover{color:#333 !important;border-color:#333 !important}.b2ff5c8fe .xc38b27d7.a43071212 .b4797ad42{padding-bottom:15px !important}.b2ff5c8fe .xc38b27d7.a43071212 .p11374518,.b2ff5c8fe .xc38b27d7.a43071212 .t6a97a930{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.b2ff5c8fe .xc38b27d7.a43071212 .p11374518{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.b2ff5c8fe .xc38b27d7.w3e7d6c52 .b4797ad42{padding-bottom:5px !important}.b2ff5c8fe .xc38b27d7.w3e7d6c52 .t6a97a930{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.b2ff5c8fe .xc38b27d7.w3e7d6c52 .p11374518{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.b2ff5c8fe .xc38b27d7.w3e7d6c52 .pf3c3c500{margin:2px 0 !important}.b2ff5c8fe .xc38b27d7.w3e7d6c52 .b80a3af55{padding:3px !important}.b2ff5c8fe .xc38b27d7.k5e845432 .b4797ad42{padding-bottom:15px !important}.b2ff5c8fe .xc38b27d7.k5e845432 .p11374518,.b2ff5c8fe .xc38b27d7.k5e845432 .t6a97a930{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.b2ff5c8fe .xc38b27d7.k5e845432 .p11374518{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.b2ff5c8fe .xc38b27d7.k5e845432 .n85a128e0{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.b2ff5c8fe .xc38b27d7.k5e845432 .n660a2482{display:none !important}.b2ff5c8fe .xc38b27d7.n8595d800 .b4797ad42{padding-bottom:5px !important}.b2ff5c8fe .xc38b27d7.n8595d800 .t6a97a930{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.b2ff5c8fe .xc38b27d7.n8595d800 .p11374518{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.b2ff5c8fe .xc38b27d7.n8595d800 .pf3c3c500{margin:2px 0 !important}.b2ff5c8fe .xc38b27d7.n8595d800 .n85a128e0{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.b2ff5c8fe .xc38b27d7.n8595d800 .n660a2482{display:none !important}.b2ff5c8fe .xc38b27d7.n8595d800 .b80a3af55{padding:3px !important}.b2ff5c8fe .xc38b27d7.k28689b47 .b4797ad42{padding-bottom:10px !important}.b2ff5c8fe .xc38b27d7.k28689b47 .t6a97a930{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.b2ff5c8fe .xc38b27d7.k28689b47 .p11374518{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;max-width:540px !important}.b2ff5c8fe .xc38b27d7.k28689b47 .pf3c3c500{width:50% !important;margin:0 !important;padding:5px !important}.b2ff5c8fe .xc38b27d7.d8a78c7e7 .b4797ad42{padding-bottom:10px !important}.b2ff5c8fe .xc38b27d7.d8a78c7e7 .t6a97a930{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.b2ff5c8fe .xc38b27d7.d8a78c7e7 .p11374518{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;max-width:340px !important}.b2ff5c8fe .xc38b27d7.d8a78c7e7 .pf3c3c500{width:50% !important;margin:0 !important;padding:5px !important}.b2ff5c8fe .xc38b27d7.d8a78c7e7 .n85a128e0{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.b2ff5c8fe .xc38b27d7.d8a78c7e7 .n660a2482{display:none !important}.b2ff5c8fe .xc38b27d7.v95de456a .t6a97a930{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.b2ff5c8fe .xc38b27d7.v95de456a .p11374518{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:20px !important}.b2ff5c8fe .xc38b27d7.v95de456a .pf3c3c500{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.b2ff5c8fe .xc38b27d7.v95de456a .b80a3af55{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.b2ff5c8fe .xc38b27d7.tef17d478 .t6a97a930{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.b2ff5c8fe .xc38b27d7.tef17d478 .p11374518{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:15px !important}.b2ff5c8fe .xc38b27d7.tef17d478 .pf3c3c500{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.b2ff5c8fe .xc38b27d7.tef17d478 .n85a128e0{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.b2ff5c8fe .xc38b27d7.tef17d478 .n660a2482{display:none !important}.b2ff5c8fe .xc38b27d7.tef17d478 .b80a3af55{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.b2ff5c8fe .xc38b27d7.e225ad84a .t6a97a930{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.b2ff5c8fe .xc38b27d7.e225ad84a .ue6f4455c{display:none !important}.b2ff5c8fe .xc38b27d7.e225ad84a .x4db7a5bc{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.b2ff5c8fe .xc38b27d7.e225ad84a .p11374518{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:15px !important}.b2ff5c8fe .xc38b27d7.e225ad84a .pf3c3c500{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.b2ff5c8fe .xc38b27d7.e225ad84a .n85a128e0{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.b2ff5c8fe .xc38b27d7.e225ad84a .n660a2482{display:none !important}.b2ff5c8fe .xc38b27d7.e225ad84a .b80a3af55{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.b2ff5c8fe .xc38b27d7.aa3daa3bf{font-size:11px !important}.b2ff5c8fe .xc38b27d7.aa3daa3bf .t6a97a930{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:4px !important}.b2ff5c8fe .xc38b27d7.aa3daa3bf .ue6f4455c{display:none !important}.b2ff5c8fe .xc38b27d7.aa3daa3bf .x4db7a5bc{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.b2ff5c8fe .xc38b27d7.aa3daa3bf .p11374518{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:10px !important}.b2ff5c8fe .xc38b27d7.aa3daa3bf .pf3c3c500{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 1px !important}.b2ff5c8fe .xc38b27d7.aa3daa3bf .n85a128e0{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.b2ff5c8fe .xc38b27d7.aa3daa3bf .n660a2482{display:none !important}.b2ff5c8fe .xc38b27d7.aa3daa3bf .b80a3af55{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.b2ff5c8fe .xc38b27d7.fbc21d27c{font-size:11px !important}.b2ff5c8fe .xc38b27d7.fbc21d27c .t6a97a930{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:0 !important}.b2ff5c8fe .xc38b27d7.fbc21d27c .ue6f4455c{display:none !important}.b2ff5c8fe .xc38b27d7.fbc21d27c .x4db7a5bc{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.b2ff5c8fe .xc38b27d7.fbc21d27c .p11374518{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:10px !important}.b2ff5c8fe .xc38b27d7.fbc21d27c .pf3c3c500{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 2px !important}.b2ff5c8fe .xc38b27d7.fbc21d27c .n85a128e0{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.b2ff5c8fe .xc38b27d7.fbc21d27c .n660a2482{display:none !important}.b2ff5c8fe .xc38b27d7.fbc21d27c .b80a3af55{padding:0 5px !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.b2ff5c8fe .xc38b27d7.q19df2c63{font-size:12px !important}.b2ff5c8fe .xc38b27d7.q19df2c63 .t6a97a930{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;padding:4px !important}.b2ff5c8fe .xc38b27d7.q19df2c63 .ue6f4455c{padding:2px 5px !important}.b2ff5c8fe .xc38b27d7.q19df2c63 .x4db7a5bc{display:none !important}.b2ff5c8fe .xc38b27d7.q19df2c63 .b4797ad42{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.b2ff5c8fe .xc38b27d7.q19df2c63 .p11374518{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important}.b2ff5c8fe .xc38b27d7.q19df2c63 .pf3c3c500{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:1px !important}.b2ff5c8fe .xc38b27d7.q19df2c63 .n85a128e0{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.b2ff5c8fe .xc38b27d7.q19df2c63 .n660a2482{display:none !important}.b2ff5c8fe .xc38b27d7.q19df2c63 .b80a3af55{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:2px !important}.b2ff5c8fe .v4699af76 .pf3c3c500{opacity:0 !important}.b2ff5c8fe .fd0f18aad{position:absolute !important;z-index:11 !important;right:0 !important;top:0 !important}.b2ff5c8fe .k15212eeb{position:absolute !important;left:-101% !important;top:0 !important;width:100% !important;height:100% !important;display:block !important}#b2ff5c8fe .k3df40e10 .sea9ae489,#b2ff5c8fe .k3df40e10 .rfeb324a8{display:none !important}#b2ff5c8fe .k3df40e10 .k15212eeb{left:0 !important;transition:left .4s ease-out !important}.b2ff5c8fe .pa0afcba2{font-family: Helvetica,Arial,sans-serif !important;border:inherit !important;border-radius:inherit !important;text-decoration:none !important;color:#000000 !important;font-weight:400 !important;line-height:1.25 !important}.b2ff5c8fe .pa0afcba2,.b2ff5c8fe .g1b1fdefb{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:column nowrap !important;-ms-flex-flow:column nowrap !important;flex-flow:column nowrap !important;position:relative !important;overflow:hidden !important}.b2ff5c8fe .g1b1fdefb{background:#FFFFFF !important}.b2ff5c8fe .k65143e02{text-decoration:inherit !important;color:inherit !important;font-weight:inherit !important;line-height:inherit !important}.b2ff5c8fe .yb5041afd:hover{color:#DD0000 !important}.b2ff5c8fe .ha77454cd:hover{color:#DD0000 !important}.b2ff5c8fe .a71989f5b:hover{color:#DD0000 !important;-webkit-text-decoration-color:rgba(221,0,0,0.2) !important;text-decoration-color:rgba(221,0,0,0.2) !important}.b2ff5c8fe .g95a879f8:hover{border-color:rgba(0,0,204,0.35) !important;color:#FFFFFF !important;fill:#FFFFFF !important}.b2ff5c8fe .g95a879f8:hover .da05dcfb2{border-color:#FFFFFF !important}.b2ff5c8fe .p9583dffc{display:inline-block !important}.b2ff5c8fe .p9583dffc:hover{color:#DD0000 !important}.b2ff5c8fe .k65143e02{line-height:normal !important;letter-spacing:normal !important;-webkit-flex-basis:unset !important;-ms-flex-preferred-size:unset !important;flex-basis:unset !important}.b2ff5c8fe .u6596f441,.b2ff5c8fe .b97953d69{display:inline-block !important;white-space:nowrap !important;font-size:10px !important;line-height:10px !important;height:10px !important;font-family:Verdana,sans-serif !important;color:inherit !important}.b2ff5c8fe .q69b245bd{background:#FFFFFF !important;color:#000000 !important;border-radius:0 0 4px 4px !important}.b2ff5c8fe .q69b245bd,.b2ff5c8fe .qabd828ef{display:block !important;font-size:10px !important;line-height:18px !important;height:18px !important;padding:0 6px !important;position:absolute !important;top:0 !important;z-index:2 !important}.b2ff5c8fe .qabd828ef{background:none !important;color:rgba(153,153,153,0.7) !important;border-radius:0 !important}.b2ff5c8fe .se8124ea .b97953d69{color:#fff !important;text-shadow:0 1px 1px rgba(0,0,0,.25) !important}.b2ff5c8fe .se8124ea{position:absolute !important;top:0 !important;left:0 !important;background:unset !important;background-image:url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iOTAiPjxkZWZzPjxmaWx0ZXIgeD0iLTQ4LjAlIiB5PSItODAuMCUiIHdpZHRoPSIxOTYuMCUiIGhlaWdodD0iMjYwLjAlIiBpZD0iQSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTYiIGluPSJTb3VyY2VHcmFwaGljIi8+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IGZpbGw9IiMwMDAiIGZpbHRlcj0idXJsKCNBKSIgeD0iLTMyIiB5PSItNDAiIHdpZHRoPSIxMDAiIGhlaWdodD0iNjAiIHJ4PSIyMCIgZmlsbC1ydWxlPSJldmVub2RkIiBvcGFjaXR5PSIuMjUwIi8+PC9zdmc+") !important;width:120px !important;height:90px !important;z-index:1 !important}.b2ff5c8fe .x25c9bf95{display:block !important;color:rgba(153,153,153,0.7) !important;position:absolute !important;bottom:3px !important;right:3px !important}.b2ff5c8fe .gfeb85314{height:18px !important;width:0 !important}.b2ff5c8fe .nea06f828{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:flex-start !important;-ms-flex-pack:start !important;justify-content:flex-start !important;box-sizing:border-box !important;line-height:0 !important;z-index:1 !important}.b2ff5c8fe .nea06f828,.b2ff5c8fe .nea06f828 .vdd2eaeb9{width:100% !important}.b2ff5c8fe .nea06f828 .p4905c6fe{padding:1px 0 !important}.b2ff5c8fe .c45c56438{display:inline-block !important;font-family:Verdana,sans-serif !important;line-height:1.2em !important;padding:0 .4em !important}.b2ff5c8fe .s9316cc64{cursor:default !important}.b2ff5c8fe .s9316cc64 .c45c56438{font-size:10px !important;white-space:nowrap !important}.b2ff5c8fe .a40b2751 .c45c56438{font-size:.8em !important}.b2ff5c8fe .i370a7222{color:#0000CC !important;font-size:1.3em !important;font-weight:700 !important;padding-bottom:.6em !important;line-height:1.25em !important}.b2ff5c8fe .j554ab676{font-size:1em !important}.b2ff5c8fe .j137fc6f5{font-size:1.1em !important}.b2ff5c8fe .s645c4df4{font-size:1.2em !important}.b2ff5c8fe .s833fdb73{font-size:1.3em !important}.b2ff5c8fe .n10607f72{font-size:1.4em !important}.b2ff5c8fe .jce958ff1{font-size:1.5em !important}.b2ff5c8fe .w1f7216f0{font-size:1.6em !important}.b2ff5c8fe .ca1167a7f{font-size:1.7em !important}.b2ff5c8fe .w2e371e7e{font-size:1.8em !important}.b2ff5c8fe .a187c0ce6{font-size:1.9em !important}.b2ff5c8fe .m16b30e07{font-size:2em !important}.b2ff5c8fe .ib4658865{border-radius:0px !important;overflow:hidden !important}.b2ff5c8fe .mf8b12e92,.b2ff5c8fe .f1013bff4{padding-bottom:1em !important}.b2ff5c8fe .d34ebe07{max-width:300px !important}.b2ff5c8fe .ec6aacd6{-webkit-flex-flow:row wrap !important;-ms-flex-flow:row wrap !important;flex-flow:row wrap !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.b2ff5c8fe .ec6aacd6,.b2ff5c8fe .k31f6c1d4{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:flex-start !important;-ms-flex-pack:start !important;justify-content:flex-start !important}.b2ff5c8fe .we85b5c7,.b2ff5c8fe .k31f6c1d4{-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important}.b2ff5c8fe .we85b5c7{display:block !important;overflow:hidden !important;border:1px solid #0000CC !important;background:#0000CC !important;padding:.4em .8em !important;color:#FFFFFF !important;border-radius:4px !important;text-align:center !important;fill:#FFFFFF !important;font-size:12.892320000000002px !important}.b2ff5c8fe .d34ebe07 .we85b5c7{padding:.4em !important}.b2ff5c8fe .gae22b570{overflow:hidden !important;height:1.4em !important;text-overflow:ellipsis !important}.b2ff5c8fe .u652275e4{white-space:nowrap !important;line-height:1.4em !important;height:1.4em !important}.b2ff5c8fe .da05dcfb2,.b2ff5c8fe .u652275e4{display:inline-block !important}.b2ff5c8fe .da05dcfb2{box-sizing:border-box !important;line-height:.45em !important;height:.45em !important;width:.45em !important;border:solid #FFFFFF !important;border-width:1px 1px 0 0 !important;-webkit-transform:translateX(-50%) rotate(45deg) !important;transform:translateX(-50%) rotate(45deg) !important;-webkit-transform-origin:100% 100% !important;transform-origin:100% 100% !important}.b2ff5c8fe .k31f6c1d4 .we85b5c7{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;font-family:Verdana,sans-serif !important;font-size:12px !important;border-radius:8px !important}.b2ff5c8fe .y4d4fe243{font-family:Verdana,sans-serif !important;display:block !important;color:#006600 !important;text-align:center !important;line-height:0 !important}.b2ff5c8fe .m2940749c{font-size:12px !important}.b2ff5c8fe .d34ebe07 .y4d4fe243{padding-top:.5em !important}.b2ff5c8fe .d34ebe07 .m2940749c{padding-top:.8em !important}.b2ff5c8fe .ec6aacd6 .y4d4fe243{padding-left:.8em !important;padding-right:.6em !important}.b2ff5c8fe .ec6aacd6 .m2940749c{padding-left:1.5em !important;padding-right:1em !important}.b2ff5c8fe .ec54a8c17{padding-bottom:1em !important}.b2ff5c8fe .m20a6ef0f{display:block !important;color:#0000CC !important;line-height:1.7em !important;text-decoration:underline !important;-webkit-text-decoration-color:rgba(0,0,204,0.2) !important;text-decoration-color:rgba(0,0,204,0.2) !important}.b2ff5c8fe .j37ad4a9d{padding-bottom:1em !important;opacity:.5 !important}.b2ff5c8fe .n182abd85{line-height:1.6em !important}.b2ff5c8fe .f466045a5{position:absolute !important;background:rgba(0,0,0,.1) !important;background-size:cover !important;box-shadow:0 1px 2px rgba(0,0,0,.5) !important;border-radius:.5em !important}.b2ff5c8fe .ka4ffca90{background:hsla(0,0%,100%,.98) !important}.b2ff5c8fe .b80a3af55{background:hsla(0,0%,100%,.98) !important;color:#555555 !important}.b2ff5c8fe .e6678c3c .jc769b6cb{-webkit-flex:1 0 auto !important;-ms-flex:1 0 auto !important;flex:1 0 auto !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important;min-height:inherit !important;position:relative !important}.b2ff5c8fe .e6678c3c .b97953d69{left:1em !important}.b2ff5c8fe .e6678c3c .qabd828ef{left:.5em !important}.b2ff5c8fe .e6678c3c .nea06f828{color:#fff !important;position:absolute !important;bottom:0 !important;left:0 !important;right:0 !important}.b2ff5c8fe .e6678c3c .nea06f828 .p4905c6fe{padding:.5em 0 !important}.b2ff5c8fe .e6678c3c .c45c56438{padding:0 1em !important}.b2ff5c8fe .e6678c3c .nb836477c{background:rgba(0,0,0,.25) !important}.b2ff5c8fe .e6678c3c .wff658d6e{background-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.6)) !important}.b2ff5c8fe .e6678c3c .ke9ad7340{-webkit-flex:1 0 !important;-ms-flex:1 0 !important;flex:1 0 !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:column nowrap !important;-ms-flex-flow:column nowrap !important;flex-flow:column nowrap !important;padding:.8em 1em 0 1em !important;overflow:hidden !important}.b2ff5c8fe .e6678c3c .ib4658865{-webkit-flex:1 0 !important;-ms-flex:1 0 !important;flex:1 0 !important;display:block !important;background:rgba(0,0,0,.1) center top !important;background-size:cover !important;background-repeat:no-repeat !important;position:relative !important;overflow:hidden !important}.b2ff5c8fe .e6678c3c .f1013bff4{margin-top:auto !important}.b2ff5c8fe .e6678c3c .f466045a5{top:2em !important;left:1em !important}.b2ff5c8fe .e6678c3c.la7b05f53 .ke9ad7340{padding:0 10px 0 1em !important}.b2ff5c8fe .mf8b12e92 .k65143e02{background-color:INVALID !important}.b2ff5c8fe .ha77454cd{color:INVALID !important}.b2ff5c8fe .yb5041afd{background:INVALID !important;color:INVALID"" !important}.b2ff5c8fe .p9583dffc{background:INVALID !important;color:INVALID !important}.b2ff5c8fe .a71989f5b{background:INVALID !important;color:INVALID !important}.b2ff5c8fe .ec54a8c17{background:INVALID !important}.b2ff5c8fe .y4d4fe243{background:INVALID !important}.b2ff5c8fe .we85b5c7{background-color:INVALID !important}.b2ff5c8fe .ced2111dc.pa0afcba2 .ha77454cd{color:INVALID !important}.b2ff5c8fe .ced2111dc.pa0afcba2 .p9583dffc{color:INVALID !important}.b2ff5c8fe .ced2111dc.pa0afcba2 .yb5041afd{color:INVALID !important}.b2ff5c8fe .ced2111dc.pa0afcba2 .we85b5c7{background-color:INVALID !important}.b2ff5c8fe .kb405c3e6.pa0afcba2 .yb5041afd{color:INVALID !important}.b2ff5c8fe .h47e3e86b{-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important;min-width:1px !important;min-height:1px !important}.b2ff5c8fe .h47e3e86b,.b2ff5c8fe .c87c7471b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.b2ff5c8fe .c87c7471b{overflow:hidden !important;-webkit-justify-content:space-between !important;-ms-flex-pack:justify !important;justify-content:space-between !important;-webkit-align-content:space-between !important;-ms-flex-line-pack:justify !important;align-content:space-between !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;margin:auto !important;border:solid #DDDCDA !important;border-width:1px !important;border-radius:0 !important;box-sizing:border-box !important}.b2ff5c8fe .aeaee554e{-webkit-align-items:flex-start !important;-ms-flex-align:start !important;align-items:flex-start !important;visibility:hidden !important}.b2ff5c8fe .de245388e{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important}.b2ff5c8fe .f989bcb32{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.b2ff5c8fe .vb7d592e0,.b2ff5c8fe .t30e273af{border-width:0 !important}.b2ff5c8fe .vb7d592e0 .pa0afcba2{border-width:1px !important}.b2ff5c8fe .l965c408c .pa0afcba2{border-width:0 !important;border-radius:0 !important}.b2ff5c8fe .q71932d2e .pa0afcba2{margin:-1px !important;border-radius:0 !important}</style><script charset="utf-8" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/watch.js"></script><script async="" crossorigin="anonymous" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/host.js"></script></head>
+
+<body vlink="656591" topmargin="0" text="000000" marginwidth="0" marginheight="0" link="333367" leftmargin="0" bgcolor="dedede" alink="656591">
+<font face="Arial, sans serif">
+
+<center>
+
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="555581">
+<tbody><tr>
+
+<td width="273" height="90" align="CENTER"> 
+<a href="http://www.muzoborudovanie.ru/index.php">
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/logo1.gif" alt="Начало" width="260" height="70" border="0"><br>
+</a>
+</td>
+
+<td width="15"> 
+&nbsp;
+</td>
+
+<td width="472" align="CENTER">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0269592369109973";
+/* 468x60 */
+google_ad_slot = "0177074942";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/show_ads.js">
+</script><ins id="aswift_0_expand" style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent;" data-ad-slot="0177074942"><ins id="aswift_0_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0px;width:468px;height:60px;" width="468" height="60" frameborder="0"></iframe></ins></ins></td>
+
+</tr>
+</tbody></table>
+
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+<tbody><tr>
+<td width="631">
+
+<table width="631" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+
+<tbody><tr>
+<td colspan="4" width="631">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td width="129" valign="TOP" bgcolor="555581" align="CENTER"> 
+
+<p>
+<font size="3">
+<br>
+<a href="http://www.muzoborudovanie.ru/news/news.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/news2.gif" alt="Новости" width="129" height="28" border="0"></a><a href="http://www.muzoborudovanie.ru/equip/equip.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/equip2.gif" alt="Оборудование" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/articles/articles.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/articles2.gif" alt="Статьи" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/forum/forum.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/forum2.gif" alt="Форум" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/files/files.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/files2.gif" alt="Файлы" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/org/org.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/org2.gif" alt="Организации" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/links/links.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/links2.gif" alt="Ссылки" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/prices/prices.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/price2.gif" alt="Прайс-листы" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/ads/advertiz.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/ads2.gif" alt="Реклама" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/dict.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/dict2.gif" alt="Словарь" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/isearch.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/isearch2.gif" alt="Поиск" width="129" height="24" border="0"></a>
+
+<font size="0">
+<br>
+<table width="121" cellspacing="0" cellpadding="2" border="0">
+
+<tbody><tr>
+<td bgcolor="333367" align="CENTER">
+<font size="1" face="Arial, sans serif" color="ffffff">
+СТАТЬИ
+</font></td>
+
+</tr><tr>
+<td bgcolor="dedede" align="CENTER">
+<font size="1" face="Verdana, Tahoma, Arial, sans serif">
+
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi1.php">Часть 1 — Основы.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi2.php">Часть 2 — Сообщения канала.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi3.php">Часть 3 — Системные сообщения.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi4.php">Часть 4 — MIDI Time Code.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi5.php">Часть 5 — Стандартные MIDI-файлы.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi6.php">Часть 6 — Передача данных.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi72.php">Часть 7.2 — MIDI Show Control.</a><br>
+
+
+</font></td></tr><tr>
+<td bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+
+</tr></tbody></table>
+
+</font></font></p></td>
+
+<td width="50">
+&nbsp;
+</td>
+
+<td width="427" valign="TOP">
+
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="3" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+MIDI в деталях. Часть 7.1 — MIDI Show Control.
+</b></font></td></tr></tbody></table>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<font size="2" face="Arial, sans serif">
+<p>
+</p><div align="RIGHT">
+<b>
+Александр ФЕДОРОВ
+</b><br>
+<a href="http://www.muzoborudovanie.ru/org/mo/mo.php">Музыкальное Оборудование</a>
+<br>
+декабрь 2004
+</div>
+
+<p>
+<font size="2" face="Arial, sans serif">
+<b>
+Седьмая часть цикла статей, подробно рассказывающих о протоколе MIDI.
+</b>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+</font></font></p><p><font size="2" face="Arial, sans serif"><font size="2" face="Verdana, Tahoma, Arial, sans serif">
+С некоторых пор слово "шоу" прочно закрепилось в нашем языке для 
+обозначения всего того, что раньше называлось представлением. Спектакль,
+ мюзикл, концерт — то есть некое массовое мероприятие, где задействованы
+ артисты, звук, свет, видео, спецэффекты. На западе "шоу" трактуется и в
+ более широком смысле, начиная от мультимедийной лекции или семинара и 
+заканчивая парками развлечений по типу Диснейленда. А если говорят о 
+"живом" выступлении, то есть когда на сцене работают артисты, 
+используется более конкретное Live Show.
+</font></font></p><font size="2" face="Arial, sans serif"><font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Техническое обеспечение современного шоу может включать в себя весьма 
+сложный комплекс оборудования: звуковые и световые системы, 
+видеопроекторы, механику сцены, пиротехнику, динамические пневмофигуры, 
+трансформируемые декорации, спецэффекты разного калибра. Многое из 
+перечисленного (например, акустические системы и световые приборы) 
+зрители видят непосредственно. Но есть еще и подводная часть айсберга — 
+вспомогательное оборудование, начиная от простейших механических 
+переключателей и заканчивая интеллектуальными устройствами и 
+робототехникой, а также компьютерными программами, обеспечивающими 
+согласованную работу всех систем.
+</p>
+
+<p>
+Технология управления шоу зародилась еще в 60-е годы, в развлекательных 
+парках. Все началось, конечно, с ручного управления, когда 
+стейдж-менеджер подавал команды голосом, а оператор конкретного 
+устройства (например, электрического подъемника) их исполнял. Один из 
+американских стейдж-менеджеров вспоминает, как ставились мюзиклы на 
+Бродвее: "В шоу было занято от 40 до 50 техников, бегающих за сценой как
+ сумасшедшие. Я использовал вспышки света, чтобы дать команду на запуск 
+определенной сцены, давал команды операторам через головные гарнитуры и 
+работал по сценарию, записанному на листке бумаги".
+</p>
+
+<p>
+Сегодня технология управления шоу — это целая индустрия со своими 
+стандартами и протоколами. Приборы одного типа объединены в системы: 
+управления светом, звуком, машинерией (механикой сцены), проекцией, 
+пиротехникой. Каждая система состоит из контроллера и конечных приборов,
+ которыми контроллер управляет посредством определенных сигналов. 
+Например, световой пульт может управлять диммерами и сканерами 
+посредством цифрового протокола DMX-512 по интерфейсу RS485. Эти 
+устройства совместно с пультом образуют самостоятельную шоу-систему, 
+внутри которой все взаимодействие происходит с помощью протоколов класса
+ "контроллер-прибор".
+</p>
+
+<p>
+Термин Show Control означает нечто большее — соединение самостоятельных 
+шоу-систем в одну большую управляемую систему. Так, компьютер, 
+подключенный к дым-машине и регулирующий количество тумана в декорации 
+морской гавани — это еще не система Show Control, как, впрочем, и 
+звуковая система, воспроизводящая шум прибоя сама по себе. Только 
+объединение этих систем в одну, управляемую от главного контроллера, 
+является полноценной системой управления шоу.
+</p>
+
+<p>
+По отношению ко времени все шоу можно разбить на два типа: асинхронные и
+ синхронные. Пример асинхронного шоу — "дом с сюрпризами" в парке 
+развлечений. Здесь посетители, бродя по дому, задевают разные датчики, 
+запуская сопоставленные с датчиками сцены (то есть последовательности 
+каких-либо механических процессов, звуковых и световых сигналов). Все 
+сцены могут происходить в разных частях "дома" одновременно и независимо
+ друг от друга, без привязки к единой шкале времени.
+</p>
+
+<p>
+В синхронном шоу, как следует из названия, используется некий способ 
+синхронизации событий. Каждое событие привязано к определенному моменту 
+времени, а шкала времени формируется мастер-устройством на основе, 
+например, видеофрагмента или саундтрека. Мастер-устройство генерирует 
+таймкод, который поступает в подчиненные контроллеры или непосредственно
+ в конечные приборы. Возможен и более простой вариант, при котором 
+устройства только стартуют одновременно, по команде с главного 
+контроллера, а долговременная постоянная синхронизация отсутствует. 
+Пример синхронного шоу — концерт или спектакль, где световые сцены и 
+другие элементы шоу синхронизированы со звуком.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Появление MIDI Show Control
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+В конце 80-х годов прошлого века протокол MIDI стал привлекать внимание 
+театральных инженеров и специалистов по концертному свету в качестве 
+альтернативы существовавшим на тот момент протоколам управления. И хотя 
+MIDI-секвенсоры и средства ввода (контроллеры) не очень подходили для 
+задач театральной автоматизации, сам протокол подходил вполне, как по 
+возможностям, так и из-за невысокой стоимости и широкой 
+распространенности.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Основная задача состояла в вызове сцены, запрограммированной в световом 
+пульте. На всякий случай уточню, что сцена — это фиксированное состояние
+ функций осветительных приборов. Сцена могла быть сколь угодной сложной 
+(с закольцовками, связанными макросами, подпрограммами и т. п.), но для 
+ее вызова требовалось нажатие всего пары кнопок светового пульта: LOAD 
+(загрузить) и GO (запустить). Очевидно, MIDI здесь вполне мог заменить 
+оператора пульта. Все, что нужно передавать в сообщении, — это номер 
+сцены и саму команду. А данные, связанные со сценой, находились бы в 
+памяти светового пульта.
+</p>
+
+<p>
+Постепенно производители светового оборудования стали использовать MIDI в
+ своей продукции. Но, как это часто бывает, возникла проблема 
+совместимости. Компании, занимающиеся театральным светом, производили 
+системы, в которых сцены менялись MIDI-сообщением Program Change, а 
+компании, производящие концертное световое оборудование, использовали 
+команды Note On.
+</p>
+
+<p>
+В 1989 году Andy Meldrum, сотрудник фирмы Vari-Lite, предложил 
+разработать открытый протокол, который позволял бы соединять шоу-системы
+ разного назначения и разных производителей, и управлять ими с помощью 
+любого MIDI-контроллера. К концу 1989 года Charlie Richmond из компании 
+Richmond Sound Design организовал рабочую группу в составе MMA (MIDI 
+Manufactures Association) и открыл форум на электронной доске 
+объявлений. Созданный в результате проект стандарта был утвержден MMA и 
+JMSC (Japanese MIDI Standard Committee) и 25 июля 1991 года превратился в
+ "Рекомендованную практику RP-002", или, иначе, в MIDI Show Control 
+версии 1.0.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Основные принципы
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Протокол MIDI Show Control (MSC) предназначен для объединения 
+интеллектуальных систем управления шоу-техникой (контроллеров) в единую 
+сеть. MSC напрямую не управляет конечными приборами и не заменяет такие 
+протоколы класса "контроллер-прибор", как DMX-512 или Strand. Это очень 
+похоже на соединение MIDI-секвенсора и синтезатора. Секвенсор посылает 
+синтезатору высокоуровневую команду "взять ноту", а синтезатор в ответ 
+запускает заложенную в его недрах программу формирования звука, то есть 
+целый набор низкоуровневых операций.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+В спецификации MSC используются термины Controller и Controlled Device. 
+Обычно MSC-система состоит из одного, главного контроллера — им чаще 
+всего является обычный компьютер (PC или Mac) с соответствующей 
+программой управления и MIDI-интерфейсом. Этот компьютер и называется в 
+спецификации словом Controller. А световой пульт в данном случае 
+является управляемым устройством (Controlled Device), которое выполняет 
+команды главного контроллера, переводя их в команды типа 
+"контроллер-прибор" и посылая последние к световым приборам по своим 
+коммутационным каналам, независящим от MIDI (в случае DMX-512 — это 
+витая пара с земляным проводом в оплетке).
+</p>
+
+<p>
+Схожим образом к главному контроллеру подключаются по MIDI остальные 
+шоу-системы (механика сцены, пиротехника и тому подобное). Набор команд 
+MSC основан на структуре команд существовавших в то время шоу-систем.
+</p>
+
+<p>
+Управляемое устройство (например, световой пульт) может также передавать
+ команды MSC через свой MIDI-выход. Это позволяет записывать действия, 
+производимые оператором на пульте — примерно так же, как происходит 
+запись в секвенсор с MIDI-клавиатуры. Только в данном случае 
+используется программа, оперирующая не треками, а списками сцен (Cue 
+List). При записи она фиксирует все события, приходящие от управляемых 
+устройств, и размещает их в списке сцен со своей позицией на шкале 
+времени.
+</p>
+
+<p>
+Таким образом, можно заранее прописать нужную последовательность событий
+ с каждого пульта управления, используемого в шоу, отредактировать 
+полученные данные, а во время шоу запустить список на воспроизведение. В
+ MSC используется таймкод MTC, а это значит, что управляемые устройства 
+можно синхронизировать с главным контроллером. Свет со звуком, 
+изображение со светом, и всю систему в целом. При этом точность выдачи 
+команд по времени равна одному кадру (то есть около 1/30 секунды).
+</p>
+
+<p>
+Кроме того, по MSC можно связать несколько контроллеров одного типа. 
+Так, например, если две световые консоли соединены по MIDI, то нажатие 
+кнопки GO на одной из них приведет к тому, что вторая консоль отработает
+ ту же команду GO, но уже без оператора. Здесь все довольно очевидно и 
+напоминает первоначальное предназначение MIDI — управлять с одной 
+клавиатуры несколькими синтезаторами одновременно.
+</p>
+
+<p>
+Важный принцип управления "живым" шоу состоит в том, что сбой одного 
+управляемого устройства не должен привести к сбою в управлении другими 
+устройствами. Этот принцип может быть реализован с помощью открытой или 
+закрытой петли.
+</p>
+
+<p>
+В системе "открытая петля" подтверждение команд от управляемого 
+устройства к контроллеру не требуется. Используется однонаправленная 
+передача данных и, соответственно, одностороння коммутация. То есть, 
+MIDI-выход главного контроллера соединяется с MIDI-входом управляемого 
+шоу-устройства, и только. Этот экономичный способ был выбран в MSC в 
+качестве основного.
+</p>
+
+<p>
+В системе "закрытая петля" используется взаимная коммутация устройств и 
+ожидается стандартизированный ответ от управляемого устройства. Такая 
+система требует более интеллектуальных контроллеров и занимает большую 
+полосу пропускания, но при этом достигается большая точность во 
+взаимодействии устройств, обнаружение, коррекция ошибок и прочие 
+прелести. Метод закрытой петли предложен в версии MSC 1.1, появившейся в
+ феврале 1996 года (документ RP-014). Для работы в режиме закрытой петли
+ используется двухэтапный протокол подтверждения (2 Phase Commit), о 
+котором поговорим в следующей статье.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Предосторожности и ограничения
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+В шоу-системе нередко используется опасное оборудование (в том числе 
+представляющее угрозу для жизни), например, пиротехника или механика. Но
+ это не значит, что такое оборудование управляется MSC непосредственно, и
+ сбой или ошибка в программе приведут к неприятным последствиям. 
+Спецификация крупными буквами предупреждает: "[Протокол MSC] никоим 
+образом не отменяет обычные меры безопасности, какие должны соблюдаться 
+при использовании потенциально опасного оборудования. Для максимальной 
+безопасности должны применяться такие ручные элементы управления, как 
+аварийные выключатели, блокираторы, ограничители, системы подтверждения 
+команд и прочее. Из автоматических устройств — запирающие переключатели,
+ датчики близости, детекторы газа, инфракрасные камеры, датчики движения
+ и давления. Протокол MSC не предназначен для отдачи команд опасному 
+оборудованию. MSC лишь подает сигнал о действии, которое желательно 
+выполнить, если все требования и условия безопасности соблюдены. Только 
+соответствующим образом спроектированные системы и подготовленный 
+обслуживающий персонал могут определить, насколько эти требования 
+выполняются в конкретной ситуации. Метод двухэтапного подтверждения 2PC 
+исключительно надежен и может использоваться для обеспечения 
+дополнительной безопасности в шоу-системах. Однако 2PC должен быть 
+реализован в соответствии с требованиями этой спецификации и только в 
+дополнение к вышеперечисленным мерам".
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+MIDI Show Control не является единственно возможным решением для 
+управления шоу-системами. Он не лишен некоторых недостатков, присущих 
+технологии MIDI в целом. Первый недостаток — невысокая скорость передачи
+ данных, а, следовательно, не всегда адекватное время отклика приборов. 
+Иногда эта проблема устраняется простой разгрузкой линии, то есть 
+соединением приборов не цепочкой, а "звездой" из распределительной 
+коробки (MIDI Thru Box) или многоканального 
+MIDI-интерфейса/маршрутизатора.
+</p>
+
+<p>
+Для большинства же задач управления шоу, скорость MSC вполне приемлема и
+ даже избыточна. Например, стандартная команда "Свет-Сцена 36.1-Пуск" 
+займет 10 байт, которые будут переданы примерно за 3 мс (подробности 
+смотрите в предыдущих статьях цикла). Это время примерно в сто раз 
+меньше среднестатистической скорости реакции оператора пульта.
+</p>
+
+<p>
+Второй очевидный недостаток — максимальная длина MIDI-кабеля, которая не
+ должна превышать 15 метров. Он может быть устранен применением 
+усилителей на линии ("бустеров"), в результате чего длина линии может 
+быть доведена до трехсот и более метров. Кроме того, есть и другие 
+варианты передачи MIDI-сообщений (FireWire или беспроводные системы).
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Формат сообщений
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Сообщения MIDI Show Control относятся к категории универсальных 
+эксклюзивных сообщений реального времени (Universal Real Time System 
+Exclusive) и используют Sub-ID#1 = 0x02 (подробнее о системных 
+сообщениях и Sub-ID см. в третьей статье цикла).
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Шаблон сообщения MSC показан на рис. 1. Начинается сообщение байтом 
+0xF0, признаком SysEx. Затем идет байт 0x7F, определяющий категорию 
+реального времени, затем передается номер прибора, которому адресовано 
+сообщение. Далее — Sub-ID 0x02, признак MSC. Байт формата команды 
+показывает, к какой категории оборудования относится сообщение: к звуку,
+ свету, механике и т. п. Далее следует сама команда. Как правило, это 
+одно действие, например, "пуск" или "стоп". Затем передаются 
+дополнительные данные — параметры команды. Чаще всего это номер сцены и 
+данные времени. Завершается SysEx-сообщение, как обычно, байтом 0xF7. 
+Общее число байт в сообщении MSC не должно превышать 128.
+</p>
+
+<br>
+ </font></font></font></font></font></font></font></font></font></font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/701.gif" alt="Рис. 1" width="606" height="65" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Как правило, команды адресуются одновременно только одному устройству. 
+Например, для выполнения команды GO на двух световых пультах нужно 
+передать от главного контроллера сообщения, показанные на рис. 2.
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/702.gif" alt="Рис. 2" width="606" height="56" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Номера с 0x00 по 0x6F соответствуют индивидуальным устройствам. Номер 
+устройства, как правило, задается пользователем в настройках (как 
+главного контроллера, так и управляемого). Возможно также создание групп
+ устройств, для чего используются групповые идентификаторы (с 0x70 по 
+0x7E, то есть всего до 15 групп). Это удобно, если одни и те же 
+сообщения необходимо постоянно посылать нескольким устройствам. Не все 
+устройства обязаны отвечать на групповые номера.
+</p>
+
+<p>
+Наконец, есть специальный широковещательный номер 0x7F, который 
+используется для передачи сообщений всем устройствам сети, независимо от
+ того, на какой номер они настроены. Один управляемый контроллер может 
+отвечать на несколько номеров, как индивидуальных, так и групповых. И 
+наоборот, несколько управляемых контроллеров могут отвечать на один и 
+тот же номер, что позволяет обойтись для них одним сообщением.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Формат команды
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Название "формат команды" (command_format), на мой взгляд, несколько 
+неудачно, поскольку не отражает сути вопроса; к тому же, его можно 
+перепутать со следующим байтом — самой командой. Формат команды в 
+терминологии MSC — это просто-напросто категория оборудования, для 
+которой предназначено сообщение.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Стандарт определяет несколько общих категорий, внутри них — несколько 
+более конкретных, и особую категорию All-types. К общим категориям 
+относятся свет, звук, машинерия, видео, проекция, спецэффекты и 
+пиротехника. Номера этих категорий содержат в младшем полубайте ноль, за
+ исключением категории "свет". Номера более конкретных категорий 
+заключены внутри общих и имеют тот же старший полубайт, что и общая 
+категория (рис. 3).
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/703.gif" alt="Рис. 3" width="287" height="1130">
+</p>
+
+<p>
+Код 0x00 зарезервирован для будущих расширений протокола. Как видно из 
+таблицы, коды выше 0x64 не определены, и их можно использовать для нужд 
+собственной системы, если в ней есть какие-то особенные категории 
+оборудования, не отраженные в спецификации.
+</p>
+
+<p>
+Чтобы сообщение было принято устройством к обработке, в нем должен быть 
+задан не только правильный номер устройства, но и категория оборудования
+ (то есть байт command_format). Очевидно, сообщение для контроллера 
+сжатого воздуха должно игнорироваться контроллером подъемника.
+</p>
+
+<p>
+Категория All-types (0x7F) используется, если сообщение подходит всем 
+без исключения устройствам системы. Однако и в этом случае устройства 
+будут отвечать на команду, только если в ней указан правильный 
+device_ID. Для отправки сообщения всем устройствам, независимо от их 
+типа и номера, можно воспользоваться комбинацией широковещательного 
+номера 0x7F и категории 0x7F.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Команды и данные
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Основой сообщения MSC является байт команды, который говорит 
+управляемому прибору о том, что, собственно, от него хотят. Например, 
+типичные команды для светового пульта: GO (пуск) и FIRE (запуск 
+макроса). Для каждой категории оборудования может использоваться до 128 
+команд. В MSC предложены некоторые типичные команды (см. далее), но, как
+ и в случае с байтом command_format, здесь можно использовать 
+собственные значения. Важно только, чтобы устройства системы их 
+понимали.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Код команды 0x00 зарезервирован для дальнейших расширений. Таким 
+образом, вместе с байтом 0x00 формата команды в MSC предусмотрены два 
+уровня расширения (рис. 4). В настоящее время таких расширений нет.
+</p>
+
+<br>
+ </font></font></font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/704.gif" alt="Рис. 4" width="606" height="106" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Каждая команда может содержать дополнительные данные. MSC здесь 
+накладывает только одно ограничение — данных должно быть столько, чтобы 
+полная длина сообщения не превышала 128 байт. Структура их остается на 
+усмотрение производителя конкретного устройства, но должна быть 
+опубликована.
+</p>
+
+<p>
+Понятно, что в простых устройствах формат данных будет проще, а их длина
+ — меньше. Чтобы организация рабочей системы из устройств разного 
+"интеллекта" не превратилась в кошмар, MSC рекомендует: в начале 
+сообщения передавать наиболее общую информацию, а затем — все более и 
+более специфичную. При этом группы байт отделяются друг от друга нулевым
+ символом-разделителем. Тогда менее интеллектуальные устройства могут 
+реагировать только на первые, довольно универсальные группы, и 
+игнорировать остальные.
+</p>
+
+<p>
+Например, сложное устройство может обрабатывать номера сцен с большим 
+количеством десятичных точек, разделяющих подсекции: скажем, 
+"235.32.7.8.654". Если главный контроллер передает такой номер в простое
+ устройство, которое понимает только сцены вида "ххх.х", то оно может 
+либо проигнорировать сообщение, либо использовать номер сцены "235.3".
+</p>
+
+<p>
+Еще пример: номер сцены может быть передан группой байт, разделенных 
+нулевым символом. То есть, номер сцены 235.3, затем — разделитель, номер
+ листа 36.6, разделитель, номер пути 59. Если устройство поддерживает 
+множественные списки (листы) сцен, но не множественные пути, оно 
+обработает сцену 235.3 в списке 36.6 (или 36) и проигнорирует данные 
+пути, просто используя текущий путь или путь по умолчанию.
+</p>
+
+<p>
+И наоборот, если простой номер сцены передается в устройство, способное 
+обрабатывать сложные номера, оно будет считать, что данный номер 
+относится к текущему списку или списку по умолчанию, используя текущий 
+путь или путь по умолчанию.
+</p>
+
+<p>
+В системах управления шоу чаще всего используются данные сцены и данные 
+времени. Поэтому в MSC для обеспечения совместимости предложен 
+стандартный способ их передачи.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Данные сцены
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Данные сцены показывают, к какой сцене из какого списка какого носителя 
+относится команда. Сцена может быть задана как одним номером (Q_number),
+ так и с указанием листа (списка сцен) и пути — поля Q_list и Q_path 
+соответственно. Между каждым полем помещается байт-разделитель (нулевой 
+символ, 0x00). Полный формат номера сцены выглядит так, как показано на 
+рис. 5.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/705.gif" alt="Рис. 5" width="563" height="31" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Допускается посылать только номер сцены или номер сцены с номером списка, рис. 6.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/706.gif" alt="Рис. 6" width="374" height="95">
+</p>
+
+<p>
+Поля Q_number, Q_list и Q_path передаются в виде ASCII-цифр от 0 до 9 
+(коды от 0x30 до 0x39), а для разделения секций используется символ 
+десятичной точки (0x2E). Например, номер сцены 235.6 в списке 36.6 и 
+пути 59 будет представлен в шестнадцатеричном виде так, как показано на 
+рис. 7.
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/707.gif" alt="Рис. 7" width="554" height="28" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Между точками находится как минимум одна цифра, но устройства должны 
+быть готовы к таким ошибкам, когда посылаются две и более точки друг за 
+другом. Количество точек, разделяющих секции, не ограничивается.
+</p>
+
+<p>
+Устройства, которые не поддерживают Q_list и/или Q_path, должны 
+"отлавливать" нулевой байт после поля Q_number (или Q_list) и затем 
+пропускать все данные, до байта 0xF7. Если в сообщении сцена задана 
+только полем Q_number, а устройство поддерживает списки и пути, то 
+используются списки и пути по умолчанию, либо текущие. MSC рекомендует 
+производителям публиковать сведения по реакции устройств на 
+вышеперечисленные поля.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Таймкод
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+В MIDI Show Control используются те же единицы времени, что и таймкоде 
+MTC (часы, минуты, секунды, кадры, доли кадра и пользовательские биты). 
+Передаются они почти тем же способом, что и в сообщении Full Frame (см. 
+четвертую статью цикла), только содержат не четыре, а пять байт данных. В
+ пятом байте помещаются либо доли кадра ff, либо статус-байт st. 
+Расшифровка байт таймкода показана на рис. 8.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/708.gif" alt="Рис. 8" width="352" height="701">
+</p>
+
+<p>
+Статус-байт содержит дополнительную информацию о таймкоде. Например, при
+ чтении данных с ленты полезно знать: это реально прописанный таймкод 
+или просто данные времени, обновляемые от импульсов тахометра во время 
+высокоскоростной перемотки. В последнем случае данные о долях кадра 
+практически бесполезны, их трудно как получить, так и передать обычным 
+методом.
+</p>
+
+<p>
+При записи данных времени тип таймкода (drop-frame или non-drop-frame) 
+может изменяться конечным устройством. Например, если управляемый 
+контроллер получил от главного команду SET_CLOCK с кадра типа non-drop 
+frame, а в устройстве используется таймкод с кадрами drop-frame, то 
+данный кадр может просто интерпретироваться как drop-frame, без всяких 
+математических преобразований. Если же команда SET_CLOCK получена с 
+несуществующим числом кадров drop-frame (например, момент времени 
+00:22:00:00), то данное число должно быть заменено на следующее 
+действительное число (в данном случае 00:22:00:02).
+</p>
+
+<p>
+Расчет разности между двумя значениями времени в таймкоде может привести
+ к неточностям, когда оба или одно значение имеют выпадающие кадры. В 
+MSC перед расчетом любых смещений drop-frame кадры должны быть сначала 
+преобразованы в non-drop frame. Итоговая разность всегда выражается в 
+таймкоде типа non-drop frame.
+</p>
+
+<p>
+Для преобразования из формата drop-frame в non-drop frame необходимо 
+отнять число выпавших кадров с момента 00:00:00:00. Например, для 
+преобразования числа 00:22:00:02 в формат non-drop нужно отнять 40 
+кадров, в результате получится 00:21:58:22. Число 40 получилось в 
+результате того, что два кадра выпали на каждой минуте с 01 по 09, с 11 
+по 19 и с 21 по 22. Некоторые производители предпочитают хранить таймкод
+ внутри устройства просто как количество кадров с момента 00:00:00:00. 
+Это уменьшает сложность расчетов, но требует соответствующих 
+преобразований на входе при записи и на выходе при воспроизведении.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Рекомендованные наборы команд
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Протокол MIDI Show Control не требует от устройств поддерживать какие-то
+ определенные команды и структуры данных, но рекомендует некоторые 
+минимальные их наборы. Если устройства поддерживают один или несколько 
+таких наборов, то совместимость их повышается, а объединение в единую 
+систему упрощается. В спецификации определены четыре минимальных набора:
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+1. Таймкод не поддерживается, воспринимаются только базовые данные и команды (простое управляемое устройство).
+</p>
+
+<p>
+2. Таймкод не поддерживается, но воспринимаются все стандартные команды и данные сообщения.
+</p>
+
+<p>
+3. Полный таймкод, полное понимание данных.
+</p>
+
+<p>
+4. Поддерживаются команды двухэтапного подтверждения.
+</p>
+
+<p>
+Минимальные наборы следует понимать лишь в духе наименьшего общего 
+знаменателя, они ни в коей мере не ограничивают функциональность 
+устройств. В следующих таблицах перечислены две категории стандартных 
+команд, предлагаемых в MSC. Напротив каждой команды указан 
+соответствующий минимальный набор, к которому она относится.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Общие команды
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Набор общих команд (рис. 9) заимствован из базового набора команд 
+управления светом, и, вероятно, применим для общих задач в любых 
+шоу-системах.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/709.gif" alt="Рис. 9" width="415" height="240">
+</p>
+
+<p>
+Команды GO, STOP, RESUME, LOAD и GO_OFF имеют одинаковую структуру и отличаются только кодом (рис. 10).
+</p>
+
+<br>
+ </font></font></font></font></font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/710.gif" alt="Рис. 10" width="550" height="65" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Команда GO (0x01) запускает указанную сцену на выполнение. Время 
+перехода к сцене программируется в управляемом устройстве. Если 
+необходимо задать время перехода из главного контроллера, следует 
+использовать команду TIMED_GO. Если номер сцены не указан, а управляемое
+ устройство имеет несколько списков сцен, то вызывается следующая по 
+номеру сцена из активного списка.
+</p>
+
+<p>
+Команда STOP (0x02) останавливает процесс перехода к указанной сцене. 
+Если номер сцены не задан, все текущие процессы перехода 
+останавливаются.
+</p>
+
+<p>
+Команда RESUME (0x03) приводит к продолжению остановленного перехода к 
+сцене. Если номер сцены не указан, все остановленные переходы 
+продолжаются.
+</p>
+
+<p>
+Команда TIMED_GO (0x04), рис. 11, запускает сцену на исполнение и задает
+ время перехода. Если сцена не указана, вызывается следующая по номеру. 
+Время задается в упомянутом выше пятибайтовом формате, обеспечивая 
+переходы от мгновенных до продолжительных (вплоть до 24 часов).
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/711.gif" alt="Рис. 11" width="540" height="65" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Если управляемое устройство не поддерживает эту команду, оно должно 
+выполнять ее как простую команду GO, игнорируя данные времени, но 
+обрабатывая номер сцены как обычно.
+</p>
+
+<p>
+Команда LOAD (0x05) помещает сцену в состояние "подготовиться". Номер 
+сцены должен быть указан обязательно. Эта команда используется в том 
+случае, если для доступа к желаемой сцене требуется время. Таким 
+образом, LOAD посылается заблаговременно, а последующая команда GO 
+выполняется устройством мгновенно. Если номер сцены указан без номера 
+списка, то сцены из всех списков с такими же номерами должны быть 
+подготовлены к запуску.
+</p>
+
+<p>
+Команда SET (0x06), рис. 12, задает значение какого-либо внутреннего 
+параметра устройства, аналогично группе MIDI-сообщений канала General 
+Purpose Controller (см. вторую статью цикла). Номер параметра и его 
+значение — 14-битные числа, LSB которых передается первым. Управляемое 
+устройство может передавать этот параметр для записи в главный 
+контроллер (и, соответственно, получать его при воспроизведении). В 
+качестве параметра могут быть использованы внутренние переменные, 
+атрибуты, скорости, уровни, режимы, функции, эффекты, каналы, субканалы,
+ переключатели и т. п.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/712.gif" alt="Рис. 12" width="427" height="65">
+</p>
+
+<p>
+В качестве необязательных данных сообщения SET может использоваться 
+время, за которое данный параметр должен достигнуть указанного значения.
+ Время передается обычным способом, см. ранее. Если управляемое 
+устройство не поддерживает данные времени в этом сообщении, оно должно 
+их игнорировать. Для систем управления светом MSC предлагает стандартный
+ набор параметров, который, как и все в этом протоколе, может быть 
+расширен в зависимости от потребностей. Номера параметров для света 
+приведены в таблице на рис. 13.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/713.gif" alt="Рис. 13" width="339" height="223">
+</p>
+
+<p>
+Команда FIRE (0x07), рис. 14, запускает клавиатурный макрос. Номер 
+макроса задается семибитным числом mm. Макросы могут программироваться 
+непосредственно в управляемом устройстве, а могут загружаться по 
+протоколу MIDI File Dump, используя ASCII-формат данных сцены, или любым
+ другим методом.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/714.gif" alt="Рис. 14" width="204" height="65">
+</p>
+
+<p>
+В следующих трех командах данные отсутствуют. Команда ALL_OFF (0x08) 
+отключает все функции и выходы устройства без изменения настроек 
+управляющих параметров. Состояние устройства перед запуском этой команды
+ может быть восстановлено командой RESTORE (0x09).
+</p>
+
+<p>
+Команда RESET (0x0A) переводит шоу в начало, то есть завершает все 
+исполняемые сцены, устанавливает функции, использующие время, в 
+начальное состояние (эквивалентное тому, которое наступает после 
+включения питания) и загружает первую сцену в каждом доступном списке в 
+режим ожидания. Команда RESET может также приводить к автоматическому 
+открытию закрытых списков сцен и закрытых путей, но это определяется 
+производителем устройства. Реакция на команду должна быть описана в 
+документе MIDI-реализации (MIDI Implementation) устройства.
+</p>
+
+<p>
+Команда GO_OFF (0x0B) начинает выключение сцены. Время выключения 
+задается в управляемом устройстве. Если номер сцены не указан, 
+выключается текущая сцена. Если указан только номер списка, выключаются 
+все активные сцены этого списка. Это сообщение применяется для 
+совместимости с устройствами, которые не замещают активную сцену новой 
+по получении команды GO. Перед запуском новой сцены они требуют 
+обязательного выключения текущей.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Команды звука
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Команды звука заимствованы из базового набора команд существующих систем
+ компьютерного управления звуковыми программами. Набор команд звука 
+приведен в таблице на рис. 15. Все команды, кроме GO/JAM_CLOCK, 
+SET_CLOCK, OPEN_CUE_PATH и CLOSE_CUE_PATH, содержат один байт данных — 
+номер списка сцен.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/715.gif" alt="Рис. 15" width="427" height="284">
+</p>
+
+<p>
+Команда GO/JAM_CLOCK (0x10), рис. 16, запускает указанную сцену на 
+выполнение, а также переводит таймер устройства в значение сцены "Go 
+Time", если сцена является автоматически исполняемой по времени. Если 
+сцена запускается вручную, сообщение игнорируется.
+</p>
+
+<br>
+ </font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+<td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td colspan="2" bgcolor="dedede" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/716.gif" alt="Рис. 16" width="434" height="65" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Команда STANDBY_+ (0x11) переводит следующую по порядку сцену в 
+состояние готовности к выполнению. Если параметр Q_list не указан, 
+используется открытый список сцен. Команда STANDBY_- (0x12) — предыдущую
+ сцену списка.
+</p>
+
+<p>
+Команда SEQUENCE_+ (0x13) переводит в состояние готовности следующую 
+сцену уровнем выше. То есть сцену, имеющую первый номер в группе больше,
+ чем у текущей сцены. Например, если сцена 29.324.98.7 находилась в 
+состоянии готовности, а следующие по списку сцены имели номера 29.325, 
+29.4, 29.7, 29.9.876, 36.7, 36.7.832, 36.8, 37. и 37.1, то после команды
+ SEQUENCE_+ будет переведена в режим готовности сцена 36.7. Если 
+параметр Q_list не указан, используется открытый список сцен.
+</p>
+
+<p>
+Все то же, с точностью до наоборот, применимо к команде SEQUENCE_- 
+(0x14). В вышеуказанной последовательности, если текущая сцена имела 
+номер 37.4.72.18.5, то в результате команды SEQUENCE_- будет переведена в
+ состояние готовности сцена 36.7.
+</p>
+
+<p>
+Команда START_CLOCK (0x15) включает таймер устройства. Таймер продолжает
+ отсчет времени с того значения, на котором он был последний раз 
+остановлен. Команда STOP_CLOCK (0x16), соответственно, останавливает 
+таймер. Команда ZERO_CLOCK (0x17) сбрасывает таймер в значение 
+00:00:00:00, не влияя на его состояние, — включен или выключен.
+</p>
+
+<p>
+Команда SET_CLOCK (0x18), рис. 17, устанавливает таймер в определенное 
+значение, переданное в стандартном формате времени. На состояние таймера
+ также не влияет.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/717.gif" alt="Рис. 17" width="303" height="65">
+</p>
+
+<p>
+Команда MTC_CHASE_ON (0x19) переводит таймер на работу от водящего 
+таймкода. Если при получении этой команды таймкод в устройство не 
+поступает, таймер продолжает работать в обычном режиме (в остановленном 
+или запущенном состоянии). Команда MTC_CHASE_OFF (0x1A) отключает таймер
+ от входящего таймкода. При получении этого сообщения таймер 
+возвращается в то запущенное или выключенное состояние, которое было до 
+приема сообщения MTC_CHASE_ON.
+</p>
+
+<p>
+Команда OPEN_CUE_LIST (0x1B) открывает указанный список сцен, то есть 
+включает все сцены списка в текущее шоу. Команда CLOSE_CUE_LIST (0x1C) 
+закрывает список.
+</p>
+
+<p>
+Команды OPEN_CUE_PATH (0x1D) и CLOSE_CUE_PATH (0x1E) содержат один байт 
+данных — номер пути. Первая команда открывает указанный путь, делая его 
+доступным для шоу, то есть для всех остальных команд MSC. Вторая команда
+ исключает путь из шоу.
+</p>
+
+<p>
+На этом стандартные команды MSC 1.0 заканчиваются. В следующий раз 
+поговорим о наборе команд для двухэтапного подтверждения и рассмотрим 
+практический пример их использования.
+</p>
+
+<p>
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="2" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+Оценка статьи
+</b></font></td></tr></tbody></table>
+
+<font size="2" face="Arial, sans serif">
+</font></p><form method="post"><font size="2" face="Arial, sans serif"><font size="2" face="Arial" color="#000000">Посещений: 23250 | Проголосовавших: 
+56 | Средняя оценка: 4.9<p><input type="hidden" name="envoi" value="1">&nbsp;<select name="note"><option value="5" selected="selected">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select>&nbsp;&nbsp;<input type="submit" value="Оценить"></p></font>
+
+<p></p>
+
+<p>
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="2" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+Комментарии
+</b></font></td></tr></tbody></table>
+
+<font size="1" face="Arial, sans serif">
+<noindex>
+</noindex>
+<big><b>В связи с обилием спама размещение комментариев отключено. Пользуйтесь <a href="http://www.muzoborudovanie.ru/forum/index.php?site=mo&amp;bn=">форумами</a>.</b><br></big>
+<br>
+
+
+<table width="427" cellspacing="1" cellpadding="1" border="0" bgcolor="000000">
+
+<tbody><tr bgcolor="d0d0d0">
+<td align="CENTER">
+<font size="0">
+<a href="http://www.muzoborudovanie.ru/ads/adrates.php">РЕКЛАМА</a>
+</font>
+
+</td></tr><tr bgcolor="ffeecc">
+<td align="CENTER">
+
+<!-- Yandex.RTB R-A-2736-1 -->
+<div id="yandex_rtb_R-A-2736-1"><yatag class="b2ff5c8fe vda52b064" id="b2ff5c8fe" lang="ru"><yatag class="h47e3e86b h8b20bbd1 t50009497 n503da7eb"><yatag class="c87c7471b de245388e vb7d592e0 i7179c9d" style="min-height: 150px !important; min-width: 423px !important; max-width: 423px !important;"><yatag data-id="195896364006318783" class="pa0afcba2 ce4880fa8 e6678c3c" style="width: 421px !important; margin: auto !important;"><yatag class="g1b1fdefb" style="min-height: 148px !important; font-size: 12.8923px !important;"><yatag class="jc769b6cb"><a href="https://an.yandex.ru/count/QSYAbkrcRYS507y2CHODCbq00000EE0gG0980c2y26W4SAg3fw87W06ylC6diEpXXzu1Y06W-X2G0VwAcTQGhVkt1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0joPEGoOQCDlm0AW-X3m0hIqzSi8-0A2W820W91BW0Eucx2h0uW3mgtHXmEe0mIm0mIu1Fy1w0JA8_W4nwiIY0N7gnAG1Pw89g05cim5g0Nhr0Im1UlK1BW5sjO9m0NZ-HZ81Vsh1j05lvi2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGVPYPYnOotIEB07W82GDC07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2jA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGPpTl2jc9000RRJlu38u50C0BWAC5o0k0r9C1sGlPYPYnOotIEEWBnwiIy0iAY0oYjzw-0UWC0PWDxy5Bu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0_PaxARkAoBwJZP3pypDLYUQFW_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0v0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000003AuGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4WRhOb7Ag1W_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=330403667826689&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIxOTU4OTYzNjQwMDYzMTg3ODMiOiIzMzA0MDMyNDQxNzk0NTYifQ%3D%3D&amp;" class="se8124ea" target="_blank"><yatag class="k65143e02 b97953d69 qabd828ef"><yatag class="jdcdfa79">Яндекс.Директ</yatag></yatag></a><a href="https://an.yandex.ru/count/QSYAbkrcRYS507y2CHODCbq00000EE0gG0980c2y26W4SAg3fw87W06ylC6diEpXXzu1Y06W-X2G0VwAcTQGhVkt1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0joPEGoOQCDlm0AW-X3m0hIqzSi8-0A2W820W91BW0Eucx2h0uW3mgtHXmEe0mIm0mIu1Fy1w0JA8_W4nwiIY0N7gnAG1Pw89g05cim5g0Nhr0Im1UlK1BW5sjO9m0NZ-HZ81Vsh1j05lvi2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGVPYPYnOotIEB07W82GDC07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2jA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGPpTl2jc9000RRJlu38u50C0BWAC5o0k0r9C1sGlPYPYnOotIEEWBnwiIy0iAY0oYjzw-0UWC0PWDxy5Bu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0_PaxARkAoBwJZP3pypDLYUQFW_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0v0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000003AuGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4WRhOb7Ag1W_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=330403667826689&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIxOTU4OTYzNjQwMDYzMTg3ODMiOiIzMzA0MDMyNDQxNzk0NTYifQ%3D%3D&amp;" class="k65143e02 ib4658865" style="min-width: 148px !important; max-width: 168.4px !important;" target="_blank"><yatag class="n1f95a684"><yatag class="j844c7748"><yatag style="position: absolute !important; width: 254.595% !important; padding-top: 88.0952% !important; transform: translate(-30.361%) scale(1) !important; transform-origin: 50% 50% 0px !important;" class=""><img alt="" style="position: absolute !important; left: 0px !important; top: 0px !important; width: 100% !important; height: 100% !important;" class="f45826cc6" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/huge.webp"></yatag></yatag></yatag></a><yatag class="ke9ad7340"><yatag class="i370a7222 m16b30e07"><a href="https://an.yandex.ru/count/QSYAbkrcRYS507y2CHODCbq00000EE0gG0980c2y26W4SAg3fw87W06ylC6diEpXXzu1Y06W-X2G0VwAcTQGhVkt1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0joPEGoOQCDlm0AW-X3m0hIqzSi8-0A2W820W91BW0Eucx2h0uW3mgtHXmEe0mIm0mIu1Fy1w0JA8_W4nwiIY0N7gnAG1Pw89g05cim5g0Nhr0Im1UlK1BW5sjO9m0NZ-HZ81Vsh1j05lvi2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGVPYPYnOotIEB07W82GDC07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2jA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGPpTl2jc9000RRJlu38u50C0BWAC5o0k0r9C1sGlPYPYnOotIEEWBnwiIy0iAY0oYjzw-0UWC0PWDxy5Bu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0_PaxARkAoBwJZP3pypDLYUQFW_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0v0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000003AuGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4WRhOb7Ag1W_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=330403667826689&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIxOTU4OTYzNjQwMDYzMTg3ODMiOiIzMzA0MDMyNDQxNzk0NTYifQ%3D%3D&amp;" class="k65143e02 yb5041afd" target="_blank"><yatag class="jdcdfa79 k32e1e957">Синтезатор Yamaha PSR-E463</yatag></a></yatag><yatag class="f1013bff4 ec6aacd6"><a href="https://an.yandex.ru/count/QSYAbkrcRYS507y2CHODCbq00000EE0gG0980c2y26W4SAg3fw87W06ylC6diEpXXzu1Y06W-X2G0VwAcTQGhVkt1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0joPEGoOQCDlm0AW-X3m0hIqzSi8-0A2W820W91BW0Eucx2h0uW3mgtHXmEe0mIm0mIu1Fy1w0JA8_W4nwiIY0N7gnAG1Pw89g05cim5g0Nhr0Im1UlK1BW5sjO9m0NZ-HZ81Vsh1j05lvi2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGVPYPYnOotIEB07W82GDC07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2jA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGPpTl2jc9000RRJlu38u50C0BWAC5o0k0r9C1sGlPYPYnOotIEEWBnwiIy0iAY0oYjzw-0UWC0PWDxy5Bu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0_PaxARkAoBwJZP3pypDLYUQFW_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0v0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000003AuGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4WRhOb7Ag1W_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=330403667826689&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIxOTU4OTYzNjQwMDYzMTg3ODMiOiIzMzA0MDMyNDQxNzk0NTYifQ%3D%3D&amp;" class="k65143e02 g95a879f8 we85b5c7" target="_blank"><yatag class="gae22b570"><yatag class="u652275e4"><yatag class="jdcdfa79">Узнать больше</yatag></yatag></yatag></a><yatag class="y4d4fe243 m2940749c"><yatag class="gae22b570"><yatag class="u652275e4"><a href="https://an.yandex.ru/count/QSYAbkrcRYS507y2CHODCbq00000EE0gG0980c2y26W4SAg3fw87W06ylC6diEpXXzu1Y06W-X2G0VwAcTQGhVkt1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0joPEGoOQCDlm0AW-X3m0hIqzSi8-0A2W820W91BW0Eucx2h0uW3mgtHXmEe0mIm0mIu1Fy1w0JA8_W4nwiIY0N7gnAG1Pw89g05cim5g0Nhr0Im1UlK1BW5sjO9m0NZ-HZ81Vsh1j05lvi2u0K-w0K1y0K1c0Q2qApp3g06gWEe1ge3gGVPYPYnOotIEB07W82GDC07XkoB6j074DW71E07XWhu1m60207G29gAa8d0a822Y07W2BdzsmU02W6O2jA9CS4A00000000y3_O2WBW2e29UlWAWBKOY0i2gWiGPpTl2jc9000RRJlu38u50C0BWAC5o0k0r9C1sGlPYPYnOotIEEWBnwiIy0iAY0oYjzw-0UWC0PWDxy5Bu0q2YGu00000003mFv0Em8Gze0x0X3sm3W6X3m0000000F0_g0_PaxARkAoBwJZP3pypDLYUQFW_u0y1W12KhhiGa13klfh2wx37tJ6Q40aH00000000y3_84A2g0j0GtuQlN_WG4O0H4OWH0v0H0Q4H00000000y3-e4S24FR0H0SWHW_Q53UWHpP_ebTxLv9vbyH40000003AuGFeH6Gq000005G00000T000002K00000BG0000284W6G4W6f4WRhOb7Ag1W_y18H-181W1CPY1C1a1Coc1C1?stat-id=1&amp;test-tag=330403667826689&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIxOTU4OTYzNjQwMDYzMTg3ODMiOiIzMzA0MDMyNDQxNzk0NTYifQ%3D%3D&amp;" class="k65143e02 p9583dffc" target="_blank"><yatag class="jdcdfa79">love-piano.ru</yatag></a></yatag></yatag></yatag></yatag></yatag></yatag></yatag><yatag class="ja3216a66 f9a1fe14b"><yatag class="gb0cbe6b1"><yatag class="ka4ffca90"><yatag></yatag></yatag></yatag></yatag><yatag class="fd0f18aad f4384507e o5a6977e6"><yatag class="ucffadde8"><yatag class="e9f0a5078 v9f832e0 xcc8da670"><yatag class="l1d88141f"><yatag style="width: 8px !important; height: 8px !important;" class="tcf7a68bf"><svg width="8px" height="8px" viewBox="0 0 14 14"><polygon points="8.28616426 7.02081528 13.6638974 12.3985484 12.3985484 13.6638974 7.02081528 8.28616426 1.64308213 13.6638974 0.377733152 12.3985484 5.7554663 7.02081528 0.377733152 1.64308213 1.64308213 0.377733152 7.02081528 5.7554663 12.3985484 0.377733152 13.6638974 1.64308213"></polygon></svg></yatag><yatag class="t8ce20e6d"><yatag class="rc9b8179"></yatag><yatag class="d6a94ea7d">Скрыть&nbsp;объявление</yatag></yatag></yatag></yatag></yatag></yatag></yatag></yatag><yatag id="m14a42a6f"><yatag class="d9d188e19"></yatag></yatag></yatag></yatag></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-2736-1",
+                renderTo: "yandex_rtb_R-A-2736-1",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+
+</td></tr></tbody></table>
+<br>
+</font></p></font></form></font></td>
+
+<td width="25">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td width="129" bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="50">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="427" bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="25">
+<font size="0">
+&nbsp;
+</font></td>
+</tr>
+
+</tbody></table>
+
+</td><td width="129" valign="TOP" bgcolor="555581" align="CENTER"> 
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-0269592369109973";
+//120x600
+google_ad_slot = "8729918506";
+google_ad_width = 120;
+google_ad_height = 600;
+//--></script>
+<script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/show_ads.js">
+</script><ins id="aswift_1_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent;" data-ad-slot="8729918506"><ins id="aswift_1_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0px;width:120px;height:600px;" width="120" height="600" frameborder="0"></iframe></ins></ins>
+
+<br>
+<br>
+
+<table width="111" cellspacing="0" cellpadding="2" border="0">
+<tbody><tr bgcolor="dedede">
+<td align="CENTER">
+<font size="0">
+<a href="http://www.muzoborudovanie.ru/ads/adrates.php">
+Цены на рекламу
+</a>
+</font></td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+
+
+
+
+
+
+ 
+
+
+<p><table width="760" cellspacing="1" cellpadding="1" border="0" bgcolor="000000"><tbody><tr bgcolor="d0d0d0"><td colspan="3" align="CENTER"><font size="0"><a href="http://www.muzoborudovanie.ru/a/arates.php">РЕКЛАМА</a></font></td></tr><tr bgcolor="ffeecc"><td colspan="3" align="CENTER"><script type="text/javascript">
+<!--
+var _acic={dataProvider:10};(function(){var e=document.createElement("script");e.type="text/javascript";e.async=true;e.src="//www.acint.net/aci.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})()
+//-->
+</script> Приобрести в Новосибирске <a href="https://chudo-moe.ru/catalog/odezhda-dlya-malyshey/" target="_blank">одежду для малышей</a> недорого. </td></tr></tbody></table>
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+<tbody><tr valign="TOP" align="CENTER">
+<td width="129">
+
+<noindex>
+<br>
+<!-- SpyLOG -->
+<script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/counter_cv.js" id="spylog_code" type="text/javascript" counter="10716" part="" track_links="ext" page_level="1">
+</script><a href="https://spylog.com/cnt?cid=10716&amp;p=1&amp;f=3"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/cnt.gif" id="spylog_img" alt="SpyLOG" width="88" height="31" border="0"></a>
+<noscript>
+<a href="http://u107.16.spylog.com/cnt?cid=10716&f=3&p=1" target="_blank">
+<img src="http://u107.16.spylog.com/cnt?cid=10716&p=1" alt="SpyLOG" border="0" width="88" height="31"></a>
+</noscript>
+<!--/ SpyLOG -->
+
+<!--Rating@Mail.ru COUNTEr--><script language="JavaScript" type="text/javascript"><!--
+d=document;var a='';a+=';r='+escape(d.referrer)
+js=10//--></script><script language="JavaScript1.1" type="text/javascript"><!--
+a+=';j='+navigator.javaEnabled()
+js=11//--></script><script language="JavaScript1.2" type="text/javascript"><!--
+s=screen;a+=';s='+s.width+'*'+s.height
+a+=';d='+(s.colorDepth?s.colorDepth:s.pixelDepth)
+js=12//--></script><script language="JavaScript1.3" type="text/javascript"><!--
+js=13//--></script><script language="JavaScript" type="text/javascript"><!--
+d.write('<a href="http://top.mail.ru/jump?from=120209"'+
+' target=_top><img src="http://d5.cd.b1.a0.top.list.ru/counter'+
+'?id=120209;t=49;js='+js+a+';rand='+Math.random()+
+'" alt="Рейтинг@Mail.ru"'+' border=0 height=31 width=88/><\/a>')
+if(11<js)d.write('<'+'!-- ')//--></script><a href="http://top.mail.ru/jump?from=120209" target="_top"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/counter.gif" alt="Рейтинг@Mail.ru" width="88/" height="31" border="0"></a><!-- <noscript><a
+target=_top href="http://top.mail.ru/jump?from=120209"><img
+src="http://d5.cd.b1.a0.top.list.ru/counter?js=na;id=120209;t=49"
+border=0 height=31 width=88
+alt="Рейтинг@Mail.ru"/></a></noscript><script language="JavaScript" type="text/javascript"><!--
+if(11<js)d.write('--'+'>')//--><!--/COUNTER-->
+
+</noindex>
+
+</td>
+
+<td width="502">
+<p>
+<font size="-2" face="Verdana, Tahoma, Arial, sans serif">
+</font></p><p><font size="-2" face="Verdana, Tahoma, Arial, sans serif">
+<br>
+Музыкальное Оборудование
+<br><a href="http://www.muzoborudovanie.ru/">www.muzoborudovanie.ru</a>
+<br>www.moline.ru
+<br><a href="mailto:mail@muzoborudovanie.ru">mail@muzoborudovanie.ru</a>
+<br><a href="http://www.muzoborudovanie.ru/data.php">© Агентство ДАТА</a>
+<br>
+</font></p></td>
+
+<td width="129">
+<p>
+<noindex>
+<br>
+<!-- begin of Top100 code -->
+<script id="top100Counter" type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/top100.jcn"></script><a href="https://top100.rambler.ru/home?id=196166" target="_blank"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/a.gif" title="Rambler's Top100" alt="Rambler's Top100" border="0"></a><noscript><a href="http://top100.rambler.ru/home?id=196166" target="_blank"><img src="http://cnt.rambler.ru/top100.cnt?196166" alt="Rambler's Top100" width="81" height="63" border="0" /></a></noscript>
+<!-- end of Top100 code -->
+</noindex>
+
+</p></td>
+</tr>
+</tbody></table>
+
+</p></center>
+</font><iframe src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/a.htm" style="width:1px;height:1px;display:none;" width="0" height="0" frameborder="0"></iframe><iframe id="google_osd_static_frame_1263395568747" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe><ins class="adsbygoogle adsbygoogle-noablate" style="display: none !important;" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_2_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;" frameborder="0"></iframe></ins></ins></ins></body><iframe id="google_esf" name="google_esf" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.1%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/zrt_lookup.htm" style="display: none;" data-ad-client="ca-pub-0269592369109973"></iframe></html>

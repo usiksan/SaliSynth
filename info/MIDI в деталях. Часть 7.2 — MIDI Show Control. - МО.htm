@@ -1,0 +1,1602 @@
+<html><head>
+<title>MIDI в деталях. Часть 7.2 — MIDI Show Control. - МО</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/integrator_002.js" as="script"><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/ca-pub-0269592369109973.js"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/adsbygoogle.js"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/osd.js"></script><script type="text/javascript" async="" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/aci.js"></script><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/context.js" async=""></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/show_ads_impl.js" id="google_shimpl"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/ca-pub-0269592369109973.js"></script><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/integrator_002.js"></script><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/integrator.js" as="script"><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/integrator.js"></script><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/show_ads_impl.js" as="script"><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/context_static.js" as="script"><script id="https://an.yandex.ru/partner-code-bundles/8794/context_static.js" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/context_static.js"></script><script type="text/javascript" charset="utf-8" async="" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/d0ac678e6c3095b874ca.js"></script><style type="text/css"> #j1224b45 .i988a41f3{position:fixed !important;left:-1000px !important;top:-1000px !important;width:1px !important;height:1px !important;display:block !important}</style><style type="text/css"> .vd5268d4{opacity:1 !important;white-space:normal !important;visibility:visible !important}.vd5268d4,.vd5268d4 yatag{display:block !important;font-family:inherit !important}.vd5268d4,.vd5268d4,.vd5268d4 a,.vd5268d4 b,.vd5268d4 em,.vd5268d4 iframe,.vd5268d4 img,.vd5268d4 table,.vd5268d4 tbody,.vd5268d4 td,.vd5268d4 tr,.vd5268d4 yatag{box-sizing:content-box !important;color:inherit !important;font-size:inherit !important;font-weight:inherit !important;-webkit-hyphens:manual !important;-ms-hyphens:manual !important;hyphens:manual !important}.vd5268d4,.vd5268d4 a,.vd5268d4 b,.vd5268d4 em,.vd5268d4 iframe,.vd5268d4 img,.vd5268d4 table,.vd5268d4 tbody,.vd5268d4 td,.vd5268d4 tr{background:none !important;border:none !important;border-radius:0 !important;border-spacing:0 !important;border-collapse:collapse !important;clear:none !important;float:none !important;font-variant:normal !important;letter-spacing:normal !important;line-height:normal !important;margin:0 !important;max-height:none !important;max-width:none !important;min-height:0 !important;min-width:0 !important;outline:none !important;padding:0 !important;position:static !important;text-align:left !important;text-decoration:none !important;text-indent:0 !important;text-transform:none !important;vertical-align:baseline !important;visibility:inherit !important;word-spacing:normal !important}.vd5268d4,.vd5268d4 a,.vd5268d4 b,.vd5268d4 em,.vd5268d4 img,.vd5268d4 table,.vd5268d4 tbody,.vd5268d4 td,.vd5268d4 tr{height:auto !important}.vd5268d4 table{display:table !important;empty-cells:hide !important;table-layout:fixed !important}.vd5268d4 table,.vd5268d4 td{font-size:100% !important}.vd5268d4 td{display:table-cell !important;vertical-align:middle !important}.vd5268d4{width:auto !important;height:auto !important;overflow:visible !important}.vd5268d4{position:relative !important;z-index:1 !important;-webkit-font-smoothing:antialiased !important;-webkit-text-size-adjust:none !important}.vd5268d4 .y952d031b,.vd5268d4 .y952d031b:hover,.vd5268d4 .y952d031b:hover b,.vd5268d4 .y952d031b b{display:inline !important;color:#006600 !important;text-decoration:none !important;border-bottom-color:rgba(0,102,0,0.4) !important;border-bottom-width:1px !important;border-bottom-style:solid !important}.vd5268d4 .y952d031b:hover,.vd5268d4 .y952d031b:hover b{color:#DD0000 !important;border-bottom-color:rgba(221,0,0,0.4) !important}.vd5268d4 a:focus{-webkit-user-select:none !important;-moz-user-select:none !important;-ms-user-select:none !important;user-select:none !important}.vd5268d4 .t1a2acfe0{cursor:pointer !important}.vd5268d4 .icfd6d653{display:inline !important}.vd5268d4 .p61da863d{overflow-wrap:break-word !important;word-wrap:break-word !important;-webkit-hyphens:auto !important;-ms-hyphens:auto !important;hyphens:auto !important}.vd5268d4 .l3fa163ee,.vd5268d4 .p97a269a2{overflow:hidden !important}.vd5268d4 .l3fa163ee,.vd5268d4 .p97a269a2,.vd5268d4 .f47c98d7:after{position:absolute !important;top:0 !important;right:0 !important;bottom:0 !important;left:0 !important}.vd5268d4 .f47c98d7:after{content:"" !important;display:block !important;background:linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.5)) !important}.vd5268d4 .a20e0f054{cursor:pointer !important}.vd5268d4 .a20e0f054,.vd5268d4 .s9f5d2ac7{position:relative !important}.vd5268d4 .s9f5d2ac7:after{content:"" !important;position:absolute !important;top:0 !important;left:-5px !important;bottom:-5px !important;right:0 !important}.vd5268d4 .s9f5d2ac7.j574a5d46:after{left:0 !important;bottom:0 !important}.vd5268d4 .e3038e04c{z-index:-1 !important;transition:z-index 0s linear .4s !important;cursor:default !important;line-height:1.25 !important}.vd5268d4 .e3038e04c,.vd5268d4 .e8bd36d9b{position:absolute !important;top:0 !important;left:0 !important;width:100% !important;height:100% !important;overflow:hidden !important}.vd5268d4 .e8bd36d9b{margin-left:100% !important;transition:margin-left .4s ease-out !important}.vd5268d4 .t6b4922fa{position:absolute !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;margin-left:0 !important;width:100% !important;height:100% !important;background:#fff !important;background:hsla(0,0%,100%,.98) !important;transition:margin-left .4s ease-out !important}.vd5268d4 .yfae0b65d{z-index:10 !important;transition:z-index 0s !important}.vd5268d4 .yfae0b65d .e8bd36d9b{margin-left:0 !important}.vd5268d4 .nba71b152{padding:0 0 4px 4px !important}.vd5268d4 .la8ad4f47{position:absolute !important;top:50% !important;right:100% !important;margin-top:-9px !important;margin-right:8px !important;padding:0 4px !important;max-width:120px !important;height:18px !important;line-height:18px !important;color:#fff !important;background:#333 !important;background-color:rgba(0,0,0,.8) !important;border-radius:1px !important;visibility:hidden !important;font-size:11px !important;white-space:nowrap !important}.vd5268d4 .qcea45d53{position:absolute !important;top:3px !important;right:-6px !important;display:block !important;overflow:hidden !important;width:0 !important;height:0 !important;border-style:solid !important;border-width:6px 0 6px 6px !important;border-color:transparent transparent transparent #333 !important;border-color:transparent transparent transparent rgba(0,0,0,.8) !important}.vd5268d4 .a741b2357{position:relative !important;color:#fff !important;letter-spacing:.04em !important}.vd5268d4 .k2a904f5{position:relative !important;padding:4px !important;border-radius:0 0 0 20% !important}.vd5268d4 .y40c69e95 svg{display:block !important;max-height:none !important}.vd5268d4 .y40c69e95 polygon{fill:#000000 !important}.vd5268d4 .bacb8e2f4{margin:-3px !important;width:1em !important;height:1em !important;line-height:1em !important;text-align:center !important;font-size:18px !important}.vd5268d4 .j522ced74{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxNCAxNCI+PHBvbHlnb24gcG9pbnRzPSIxNCwwLjcgMTMuMywwIDcsNi4yOTkgMC43LDAgMCwwLjcgNi4zLDcgMCwxMy4yOTkgMC43LDE0IDcsNy43IDEzLjMsMTQgMTQsMTMuMjk5IDcuNyw3Ij48L3BvbHlnb24+PC9zdmc+") !important}.vd5268d4 .nba71b152:hover .la8ad4f47{visibility:visible !important}.vd5268d4 .v735ebb19:hover .la8ad4f47{display:none !important}.vd5268d4 .caf4322a1{visibility:visible !important}.vd5268d4 .caf4322a1 .la8ad4f47{display:none !important}.vd5268d4 .g2f8bd84f .la8ad4f47{height:19px !important;line-height:19px !important}.vd5268d4 .g2f8bd84f .qcea45d53{top:2px !important}.vd5268d4 .p7d9c02bb .k2a904f5{padding:5px !important}.vd5268d4 .p7d9c02bb .bacb8e2f4{margin:-5px !important;font-size:25px !important}.vd5268d4 .p7d9c02bb .la8ad4f47{margin-right:9px !important;margin-top:-12px !important;max-width:160px !important;height:22px !important;line-height:22px !important;font-size:13px !important}.vd5268d4 .p7d9c02bb .qcea45d53{right:-7px !important;top:4px !important;border-width:7px 0 7px 7px !important}.vd5268d4 .nba71b152.v735ebb19 .la8ad4f47{display:none !important}.vd5268d4 .xcf8ef7c0 .k2a904f5{background-color:rgba(0,0,0,.25) !important}.vd5268d4 .xcf8ef7c0 .y40c69e95 polygon{fill:#fff !important}.vd5268d4 .xcf8ef7c0 .y40c69e95.j522ced74{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHN0eWxlPSJmaWxsOiAjZmZmIiB2aWV3Qm94PSIwIDAgMTQgMTQiPjxwb2x5Z29uIHBvaW50cz0iMTQsMC43IDEzLjMsMCA3LDYuMjk5IDAuNywwIDAsMC43IDYuMyw3IDAsMTMuMjk5IDAuNywxNCA3LDcuNyAxMy4zLDE0IDE0LDEzLjI5OSA3LjcsNyI+PC9wb2x5Z29uPjwvc3ZnPg==") !important}.vd5268d4 .w4b9129e7,.vd5268d4 .s9f5d2ac7.j574a5d46 .nba71b152{padding:0 !important}.vd5268d4 .s9f5d2ac7.j574a5d46.c66c16286.q6845a887{top:3px !important;right:3px !important}.vd5268d4 .s9f5d2ac7.j574a5d46.c66c16286.q6845a887 .k2a904f5{border-radius:20% !important}.vd5268d4 .e6b403d2{position:absolute !important;top:0 !important;right:0 !important;left:0 !important;bottom:0 !important;width:100% !important;height:100% !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;color:#000 !important;font-size:13px !important;z-index:-1 !important;opacity:0 !important;transition:opacity .3s !important}.vd5268d4 .e6b403d2,.vd5268d4 .pfe761615{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.vd5268d4 .c8079634f{margin-left:10px !important}.vd5268d4 .ie9eabc99 svg{fill:#000 !important}.vd5268d4 .m77244ac1{font-size:15px !important}.vd5268d4 .rc16c1d5c .e6b403d2{opacity:1 !important;z-index:10 !important}.vd5268d4 .df283c4bd{-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;min-width:100% !important;min-height:100% !important;font-size:13px !important}.vd5268d4 .df283c4bd,.vd5268d4 .x41ad3b1a{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;box-sizing:border-box !important}.vd5268d4 .x41ad3b1a{width:100% !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;padding:10px !important}.vd5268d4 .e2f828cb6{font-weight:700 !important}.vd5268d4 .qced4c696{display:none !important;font-weight:700 !important}.vd5268d4 .n9a08cba8,.vd5268d4 .qced4c696{-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.vd5268d4 .n9a08cba8{overflow:hidden !important}.vd5268d4 .t3a0acf72,.vd5268d4 .n9a08cba8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;-webkit-flex-shrink:0 !important;-ms-flex-negative:0 !important;flex-shrink:0 !important;box-sizing:border-box !important}.vd5268d4 .t3a0acf72{-webkit-align-content:center !important;-ms-flex-line-pack:center !important;align-content:center !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;padding:0 !important;margin:0 !important;position:relative !important}.vd5268d4 .tcc52256a{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;box-sizing:border-box !important;margin:5px 0 !important}.vd5268d4 .w50c35fca{display:none !important}.vd5268d4 .tcc52256a .m94de2c3f{width:100% !important;max-width:250px !important}.vd5268d4 .w50c35fca .m94de2c3f{width:100% !important;max-width:180px !important}.vd5268d4 .m94de2c3f{display:block !important;padding:5px !important;background-color:#fff !important;border:1px solid #c8c8c8 !important;border-radius:4px !important;text-align:center !important;color:#555 !important;white-space:nowrap !important;transition-property:border,color !important;transition-duration:.2s !important;cursor:pointer !important;box-sizing:border-box !important}.vd5268d4 .m94de2c3f:hover{color:#333 !important;border-color:#333 !important}.vd5268d4 .df283c4bd.x249b0c78 .n9a08cba8{padding-bottom:15px !important}.vd5268d4 .df283c4bd.x249b0c78 .t3a0acf72,.vd5268d4 .df283c4bd.x249b0c78 .x41ad3b1a{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.vd5268d4 .df283c4bd.x249b0c78 .t3a0acf72{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.vd5268d4 .df283c4bd.o7ea982b8 .n9a08cba8{padding-bottom:5px !important}.vd5268d4 .df283c4bd.o7ea982b8 .x41ad3b1a{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.vd5268d4 .df283c4bd.o7ea982b8 .t3a0acf72{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.vd5268d4 .df283c4bd.o7ea982b8 .tcc52256a{margin:2px 0 !important}.vd5268d4 .df283c4bd.o7ea982b8 .m94de2c3f{padding:3px !important}.vd5268d4 .df283c4bd.q78120418 .n9a08cba8{padding-bottom:15px !important}.vd5268d4 .df283c4bd.q78120418 .t3a0acf72,.vd5268d4 .df283c4bd.q78120418 .x41ad3b1a{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.vd5268d4 .df283c4bd.q78120418 .t3a0acf72{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.vd5268d4 .df283c4bd.q78120418 .w50c35fca{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.vd5268d4 .df283c4bd.q78120418 .g59e326e8{display:none !important}.vd5268d4 .df283c4bd.r5e24386a .n9a08cba8{padding-bottom:5px !important}.vd5268d4 .df283c4bd.r5e24386a .x41ad3b1a{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.vd5268d4 .df283c4bd.r5e24386a .t3a0acf72{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.vd5268d4 .df283c4bd.r5e24386a .tcc52256a{margin:2px 0 !important}.vd5268d4 .df283c4bd.r5e24386a .w50c35fca{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.vd5268d4 .df283c4bd.r5e24386a .g59e326e8{display:none !important}.vd5268d4 .df283c4bd.r5e24386a .m94de2c3f{padding:3px !important}.vd5268d4 .df283c4bd.k69a6402d .n9a08cba8{padding-bottom:10px !important}.vd5268d4 .df283c4bd.k69a6402d .x41ad3b1a{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.vd5268d4 .df283c4bd.k69a6402d .t3a0acf72{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;max-width:540px !important}.vd5268d4 .df283c4bd.k69a6402d .tcc52256a{width:50% !important;margin:0 !important;padding:5px !important}.vd5268d4 .df283c4bd.f146cb6cd .n9a08cba8{padding-bottom:10px !important}.vd5268d4 .df283c4bd.f146cb6cd .x41ad3b1a{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.vd5268d4 .df283c4bd.f146cb6cd .t3a0acf72{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;max-width:340px !important}.vd5268d4 .df283c4bd.f146cb6cd .tcc52256a{width:50% !important;margin:0 !important;padding:5px !important}.vd5268d4 .df283c4bd.f146cb6cd .w50c35fca{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.vd5268d4 .df283c4bd.f146cb6cd .g59e326e8{display:none !important}.vd5268d4 .df283c4bd.r3e029040 .x41ad3b1a{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.vd5268d4 .df283c4bd.r3e029040 .t3a0acf72{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:20px !important}.vd5268d4 .df283c4bd.r3e029040 .tcc52256a{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.vd5268d4 .df283c4bd.r3e029040 .m94de2c3f{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.vd5268d4 .df283c4bd.ha7f3552 .x41ad3b1a{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.vd5268d4 .df283c4bd.ha7f3552 .t3a0acf72{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:15px !important}.vd5268d4 .df283c4bd.ha7f3552 .tcc52256a{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.vd5268d4 .df283c4bd.ha7f3552 .w50c35fca{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.vd5268d4 .df283c4bd.ha7f3552 .g59e326e8{display:none !important}.vd5268d4 .df283c4bd.ha7f3552 .m94de2c3f{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.vd5268d4 .df283c4bd.ld75628a0 .x41ad3b1a{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.vd5268d4 .df283c4bd.ld75628a0 .e2f828cb6{display:none !important}.vd5268d4 .df283c4bd.ld75628a0 .qced4c696{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.vd5268d4 .df283c4bd.ld75628a0 .t3a0acf72{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:15px !important}.vd5268d4 .df283c4bd.ld75628a0 .tcc52256a{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.vd5268d4 .df283c4bd.ld75628a0 .w50c35fca{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.vd5268d4 .df283c4bd.ld75628a0 .g59e326e8{display:none !important}.vd5268d4 .df283c4bd.ld75628a0 .m94de2c3f{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.vd5268d4 .df283c4bd.f1526d995{font-size:11px !important}.vd5268d4 .df283c4bd.f1526d995 .x41ad3b1a{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:4px !important}.vd5268d4 .df283c4bd.f1526d995 .e2f828cb6{display:none !important}.vd5268d4 .df283c4bd.f1526d995 .qced4c696{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.vd5268d4 .df283c4bd.f1526d995 .t3a0acf72{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:10px !important}.vd5268d4 .df283c4bd.f1526d995 .tcc52256a{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 1px !important}.vd5268d4 .df283c4bd.f1526d995 .w50c35fca{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.vd5268d4 .df283c4bd.f1526d995 .g59e326e8{display:none !important}.vd5268d4 .df283c4bd.f1526d995 .m94de2c3f{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.vd5268d4 .df283c4bd.m1f069056{font-size:11px !important}.vd5268d4 .df283c4bd.m1f069056 .x41ad3b1a{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:0 !important}.vd5268d4 .df283c4bd.m1f069056 .e2f828cb6{display:none !important}.vd5268d4 .df283c4bd.m1f069056 .qced4c696{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.vd5268d4 .df283c4bd.m1f069056 .t3a0acf72{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:10px !important}.vd5268d4 .df283c4bd.m1f069056 .tcc52256a{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 2px !important}.vd5268d4 .df283c4bd.m1f069056 .w50c35fca{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.vd5268d4 .df283c4bd.m1f069056 .g59e326e8{display:none !important}.vd5268d4 .df283c4bd.m1f069056 .m94de2c3f{padding:0 5px !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.vd5268d4 .df283c4bd.u5c55be49{font-size:12px !important}.vd5268d4 .df283c4bd.u5c55be49 .x41ad3b1a{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;padding:4px !important}.vd5268d4 .df283c4bd.u5c55be49 .e2f828cb6{padding:2px 5px !important}.vd5268d4 .df283c4bd.u5c55be49 .qced4c696{display:none !important}.vd5268d4 .df283c4bd.u5c55be49 .n9a08cba8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.vd5268d4 .df283c4bd.u5c55be49 .t3a0acf72{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important}.vd5268d4 .df283c4bd.u5c55be49 .tcc52256a{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:1px !important}.vd5268d4 .df283c4bd.u5c55be49 .w50c35fca{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.vd5268d4 .df283c4bd.u5c55be49 .g59e326e8{display:none !important}.vd5268d4 .df283c4bd.u5c55be49 .m94de2c3f{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:2px !important}.vd5268d4 .rc16c1d5c .tcc52256a{opacity:0 !important}.vd5268d4 .q6845a887{position:absolute !important;z-index:11 !important;right:0 !important;top:0 !important}.vd5268d4 .jba21f2c1{position:absolute !important;left:-101% !important;top:0 !important;width:100% !important;height:100% !important;display:block !important}#vd5268d4 .t43d667a .sf851a063,#vd5268d4 .t43d667a .p4a97f082{display:none !important}#vd5268d4 .t43d667a .jba21f2c1{left:0 !important;transition:left .4s ease-out !important}.vd5268d4 .qcc828388{font-family: Helvetica,Arial,sans-serif !important;border:inherit !important;border-radius:inherit !important;text-decoration:none !important;color:#000000 !important;font-weight:400 !important;line-height:1.25 !important}.vd5268d4 .qcc828388,.vd5268d4 .kaddb9ad1{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:column nowrap !important;-ms-flex-flow:column nowrap !important;flex-flow:column nowrap !important;position:relative !important;overflow:hidden !important}.vd5268d4 .kaddb9ad1{background:#FFFFFF !important}.vd5268d4 .d58ed4068{text-decoration:inherit !important;color:inherit !important;font-weight:inherit !important;line-height:inherit !important}.vd5268d4 .vbe8a53d7:hover{color:#DD0000 !important}.vd5268d4 .m307e0ba7:hover{color:#DD0000 !important}.vd5268d4 .gbb9e1131:hover{color:#DD0000 !important;-webkit-text-decoration-color:rgba(221,0,0,0.2) !important;text-decoration-color:rgba(221,0,0,0.2) !important}.vd5268d4 .pb10fdad2:hover{border-color:rgba(0,0,204,0.35) !important;color:#FFFFFF !important;fill:#FFFFFF !important}.vd5268d4 .pb10fdad2:hover .jb9eb7f98{border-color:#FFFFFF !important}.vd5268d4 .sf8689dd6{display:inline-block !important}.vd5268d4 .sf8689dd6:hover{color:#DD0000 !important}.vd5268d4 .d58ed4068{line-height:normal !important;letter-spacing:normal !important;-webkit-flex-basis:unset !important;-ms-flex-preferred-size:unset !important;flex-basis:unset !important}.vd5268d4 .h44991c2b,.vd5268d4 .y6be32143{display:inline-block !important;white-space:nowrap !important;font-size:10px !important;line-height:10px !important;height:10px !important;font-family:Verdana,sans-serif !important;color:inherit !important}.vd5268d4 .deec15b97{background:#FFFFFF !important;color:#000000 !important;border-radius:0 0 4px 4px !important}.vd5268d4 .deec15b97,.vd5268d4 .n985649c5{display:block !important;font-size:10px !important;line-height:18px !important;height:18px !important;padding:0 6px !important;position:absolute !important;top:0 !important;z-index:2 !important}.vd5268d4 .n985649c5{background:none !important;color:rgba(153,153,153,0.7) !important;border-radius:0 !important}.vd5268d4 .kb6a56fc0 .y6be32143{color:#fff !important;text-shadow:0 1px 1px rgba(0,0,0,.25) !important}.vd5268d4 .kb6a56fc0{position:absolute !important;top:0 !important;left:0 !important;background:unset !important;background-image:url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iOTAiPjxkZWZzPjxmaWx0ZXIgeD0iLTQ4LjAlIiB5PSItODAuMCUiIHdpZHRoPSIxOTYuMCUiIGhlaWdodD0iMjYwLjAlIiBpZD0iQSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTYiIGluPSJTb3VyY2VHcmFwaGljIi8+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IGZpbGw9IiMwMDAiIGZpbHRlcj0idXJsKCNBKSIgeD0iLTMyIiB5PSItNDAiIHdpZHRoPSIxMDAiIGhlaWdodD0iNjAiIHJ4PSIyMCIgZmlsbC1ydWxlPSJldmVub2RkIiBvcGFjaXR5PSIuMjUwIi8+PC9zdmc+") !important;width:120px !important;height:90px !important;z-index:1 !important}.vd5268d4 .c62e9e7f{display:block !important;color:rgba(153,153,153,0.7) !important;position:absolute !important;bottom:3px !important;right:3px !important}.vd5268d4 .nc7f087e{height:18px !important;width:0 !important}.vd5268d4 .l35ebc402{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:flex-start !important;-ms-flex-pack:start !important;justify-content:flex-start !important;box-sizing:border-box !important;line-height:0 !important;z-index:1 !important}.vd5268d4 .l35ebc402,.vd5268d4 .l35ebc402 .s1ac06793{width:100% !important}.vd5268d4 .l35ebc402 .k266266d4{padding:1px 0 !important}.vd5268d4 .b7f652812{display:inline-block !important;font-family:Verdana,sans-serif !important;line-height:1.2em !important;padding:0 .4em !important}.vd5268d4 .va5b6604e{cursor:default !important}.vd5268d4 .va5b6604e .b7f652812{font-size:10px !important;white-space:nowrap !important}.vd5268d4 .nd0c8473b .b7f652812{font-size:.8em !important}.vd5268d4 .j62dd2a08{color:#0000CC !important;font-size:1.3em !important;font-weight:700 !important;padding-bottom:.6em !important;line-height:1.25em !important}.vd5268d4 .fd01d245c{font-size:1em !important}.vd5268d4 .hba7bcddf{font-size:1.1em !important}.vd5268d4 .b64b6d9de{font-size:1.2em !important}.vd5268d4 .cb3716559{font-size:1.3em !important}.vd5268d4 .p43b59058{font-size:1.4em !important}.vd5268d4 .r2e1439db{font-size:1.5em !important}.vd5268d4 .hd84f45da{font-size:1.6em !important}.vd5268d4 .e7b4f9355{font-size:1.7em !important}.vd5268d4 .rb93be54{font-size:1.8em !important}.vd5268d4 .qa59382cc{font-size:1.9em !important}.vd5268d4 .hab8ed4ed{font-size:2em !important}.vd5268d4 .f6da6974f{border-radius:0px !important;overflow:hidden !important}.vd5268d4 .kda4528f8,.vd5268d4 .n106e4bde{padding-bottom:1em !important}.vd5268d4 .x982a84ed{max-width:300px !important}.vd5268d4 .p9414203c{-webkit-flex-flow:row wrap !important;-ms-flex-flow:row wrap !important;flex-flow:row wrap !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.vd5268d4 .p9414203c,.vd5268d4 .u17fad73e{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:flex-start !important;-ms-flex-pack:start !important;justify-content:flex-start !important}.vd5268d4 .w4fc35aad,.vd5268d4 .u17fad73e{-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important}.vd5268d4 .w4fc35aad{display:block !important;overflow:hidden !important;border:1px solid #0000CC !important;background:#0000CC !important;padding:.4em .8em !important;color:#FFFFFF !important;border-radius:4px !important;text-align:center !important;fill:#FFFFFF !important;font-size:12.892320000000002px !important}.vd5268d4 .x982a84ed .w4fc35aad{padding:.4em !important}.vd5268d4 .u66ffe45a{overflow:hidden !important;height:1.4em !important;text-overflow:ellipsis !important}.vd5268d4 .x77c209ce{white-space:nowrap !important;line-height:1.4em !important;height:1.4em !important}.vd5268d4 .jb9eb7f98,.vd5268d4 .x77c209ce{display:inline-block !important}.vd5268d4 .jb9eb7f98{box-sizing:border-box !important;line-height:.45em !important;height:.45em !important;width:.45em !important;border:solid #FFFFFF !important;border-width:1px 1px 0 0 !important;-webkit-transform:translateX(-50%) rotate(45deg) !important;transform:translateX(-50%) rotate(45deg) !important;-webkit-transform-origin:100% 100% !important;transform-origin:100% 100% !important}.vd5268d4 .u17fad73e .w4fc35aad{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;font-family:Verdana,sans-serif !important;font-size:12px !important;border-radius:8px !important}.vd5268d4 .f47102a29{font-family:Verdana,sans-serif !important;display:block !important;color:#006600 !important;text-align:center !important;line-height:0 !important}.vd5268d4 .k99915bf6{font-size:12px !important}.vd5268d4 .x982a84ed .f47102a29{padding-top:.5em !important}.vd5268d4 .x982a84ed .k99915bf6{padding-top:.8em !important}.vd5268d4 .p9414203c .f47102a29{padding-left:.8em !important;padding-right:.6em !important}.vd5268d4 .p9414203c .k99915bf6{padding-left:1.5em !important;padding-right:1em !important}.vd5268d4 .i47e14afd{padding-bottom:1em !important}.vd5268d4 .g180ce7e5{display:block !important;color:#0000CC !important;line-height:1.7em !important;text-decoration:underline !important;-webkit-text-decoration-color:rgba(0,0,204,0.2) !important;text-decoration-color:rgba(0,0,204,0.2) !important}.vd5268d4 .i7a9c5b77{padding-bottom:1em !important;opacity:.5 !important}.vd5268d4 .mad4a46f{line-height:1.6em !important}.vd5268d4 .r7b2a318f{position:absolute !important;background:rgba(0,0,0,.1) !important;background-size:cover !important;box-shadow:0 1px 2px rgba(0,0,0,.5) !important;border-radius:.5em !important}.vd5268d4 .t6b4922fa{background:hsla(0,0%,100%,.98) !important}.vd5268d4 .m94de2c3f{background:hsla(0,0%,100%,.98) !important;color:#555555 !important}.vd5268d4 .w8784ad16 .o23b430a1{-webkit-flex:1 0 auto !important;-ms-flex:1 0 auto !important;flex:1 0 auto !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important;min-height:inherit !important;position:relative !important}.vd5268d4 .w8784ad16 .y6be32143{left:1em !important}.vd5268d4 .w8784ad16 .n985649c5{left:.5em !important}.vd5268d4 .w8784ad16 .l35ebc402{color:#fff !important;position:absolute !important;bottom:0 !important;left:0 !important;right:0 !important}.vd5268d4 .w8784ad16 .l35ebc402 .k266266d4{padding:.5em 0 !important}.vd5268d4 .w8784ad16 .b7f652812{padding:0 1em !important}.vd5268d4 .w8784ad16 .u1b1b0556{background:rgba(0,0,0,.25) !important}.vd5268d4 .w8784ad16 .mef073544{background-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.6)) !important}.vd5268d4 .w8784ad16 .v9a7933aa{-webkit-flex:1 0 !important;-ms-flex:1 0 !important;flex:1 0 !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:column nowrap !important;-ms-flex-flow:column nowrap !important;flex-flow:column nowrap !important;padding:.8em 1em 0 1em !important;overflow:hidden !important}.vd5268d4 .w8784ad16 .f6da6974f{-webkit-flex:1 0 !important;-ms-flex:1 0 !important;flex:1 0 !important;display:block !important;background:rgba(0,0,0,.1) center top !important;background-size:cover !important;background-repeat:no-repeat !important;position:relative !important;overflow:hidden !important}.vd5268d4 .w8784ad16 .n106e4bde{margin-top:auto !important}.vd5268d4 .w8784ad16 .r7b2a318f{top:2em !important;left:1em !important}.vd5268d4 .w8784ad16.w8f2b9f39 .v9a7933aa{padding:0 10px 0 1em !important}.vd5268d4 .kda4528f8 .d58ed4068{background-color:INVALID !important}.vd5268d4 .m307e0ba7{color:INVALID !important}.vd5268d4 .vbe8a53d7{background:INVALID !important;color:INVALID"" !important}.vd5268d4 .sf8689dd6{background:INVALID !important;color:INVALID !important}.vd5268d4 .gbb9e1131{background:INVALID !important;color:INVALID !important}.vd5268d4 .i47e14afd{background:INVALID !important}.vd5268d4 .f47102a29{background:INVALID !important}.vd5268d4 .w4fc35aad{background-color:INVALID !important}.vd5268d4 .l35af5936.qcc828388 .m307e0ba7{color:INVALID !important}.vd5268d4 .l35af5936.qcc828388 .sf8689dd6{color:INVALID !important}.vd5268d4 .l35af5936.qcc828388 .vbe8a53d7{color:INVALID !important}.vd5268d4 .l35af5936.qcc828388 .w4fc35aad{background-color:INVALID !important}.vd5268d4 .f411d39cc.qcc828388 .vbe8a53d7{color:INVALID !important}.vd5268d4 .gece4ac41{-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important;min-width:1px !important;min-height:1px !important}.vd5268d4 .gece4ac41,.vd5268d4 .h256adaf1{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.vd5268d4 .h256adaf1{overflow:hidden !important;-webkit-justify-content:space-between !important;-ms-flex-pack:justify !important;justify-content:space-between !important;-webkit-align-content:space-between !important;-ms-flex-line-pack:justify !important;align-content:space-between !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;margin:auto !important;border:solid #DDDCDA !important;border-width:1px !important;border-radius:0 !important;box-sizing:border-box !important}.vd5268d4 .fe76702a4{-webkit-align-items:flex-start !important;-ms-flex-align:start !important;align-items:flex-start !important;visibility:hidden !important}.vd5268d4 .o8025c9e4{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important}.vd5268d4 .lb2297b18{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.vd5268d4 .f82f7c9ca,.vd5268d4 .pb473b185{border-width:0 !important}.vd5268d4 .f82f7c9ca .qcc828388{border-width:1px !important}.vd5268d4 .i18f22fe6 .qcc828388{border-width:0 !important;border-radius:0 !important}.vd5268d4 .k476d7404 .qcc828388{margin:-1px !important;border-radius:0 !important}</style><script charset="utf-8" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/watch.js"></script><script async="" crossorigin="anonymous" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/host.js"></script></head>
+
+<body vlink="656591" topmargin="0" text="000000" marginwidth="0" marginheight="0" link="333367" leftmargin="0" bgcolor="dedede" alink="656591">
+<font face="Arial, sans serif">
+
+<center>
+
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="555581">
+<tbody><tr>
+
+<td width="273" height="90" align="CENTER"> 
+<a href="http://www.muzoborudovanie.ru/index.php">
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/logo1.gif" alt="Начало" width="260" height="70" border="0"><br>
+</a>
+</td>
+
+<td width="15"> 
+&nbsp;
+</td>
+
+<td width="472" align="CENTER">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0269592369109973";
+/* 468x60 */
+google_ad_slot = "0177074942";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/show_ads.js">
+</script><ins id="aswift_0_expand" style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent;" data-ad-slot="0177074942"><ins id="aswift_0_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0px;width:468px;height:60px;" width="468" height="60" frameborder="0"></iframe></ins></ins></td>
+
+</tr>
+</tbody></table>
+
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+<tbody><tr>
+<td width="631">
+
+<table width="631" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+
+<tbody><tr>
+<td colspan="4" width="631">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td width="129" valign="TOP" bgcolor="555581" align="CENTER"> 
+
+<p>
+<font size="3">
+<br>
+<a href="http://www.muzoborudovanie.ru/news/news.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/news2.gif" alt="Новости" width="129" height="28" border="0"></a><a href="http://www.muzoborudovanie.ru/equip/equip.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/equip2.gif" alt="Оборудование" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/articles/articles.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/articles2.gif" alt="Статьи" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/forum/forum.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/forum2.gif" alt="Форум" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/files/files.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/files2.gif" alt="Файлы" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/org/org.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/org2.gif" alt="Организации" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/links/links.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/links2.gif" alt="Ссылки" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/prices/prices.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/price2.gif" alt="Прайс-листы" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/ads/advertiz.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/ads2.gif" alt="Реклама" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/dict.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/dict2.gif" alt="Словарь" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/isearch.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/isearch2.gif" alt="Поиск" width="129" height="24" border="0"></a>
+
+<font size="0">
+<br>
+<table width="121" cellspacing="0" cellpadding="2" border="0">
+
+<tbody><tr>
+<td bgcolor="333367" align="CENTER">
+<font size="1" face="Arial, sans serif" color="ffffff">
+СТАТЬИ
+</font></td>
+
+</tr><tr>
+<td bgcolor="dedede" align="CENTER">
+<font size="1" face="Verdana, Tahoma, Arial, sans serif">
+
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi1.php">Часть 1 — Основы.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi2.php">Часть 2 — Сообщения канала.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi3.php">Часть 3 — Системные сообщения.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi4.php">Часть 4 — MIDI Time Code.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi5.php">Часть 5 — Стандартные MIDI-файлы.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi6.php">Часть 6 — Передача данных.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi71.php">Часть 7.1 — MIDI Show Control.</a><br>
+
+</font></td></tr><tr>
+<td bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+
+</tr></tbody></table>
+
+</font></font></p></td>
+
+<td width="50">
+&nbsp;
+</td>
+
+<td width="427" valign="TOP">
+
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="3" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+MIDI в деталях. Часть 7.2 — MIDI Show Control.<br>
+&nbsp;
+Двухэтапное подтверждение.
+</b></font></td></tr></tbody></table>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<font size="2" face="Arial, sans serif">
+<p>
+</p><div align="RIGHT">
+<b>
+Александр ФЕДОРОВ
+</b><br>
+<a href="http://www.muzoborudovanie.ru/org/mo/mo.php">Музыкальное Оборудование</a>
+<br>
+январь 2005 
+</div>
+
+<p>
+<font size="2" face="Arial, sans serif">
+<b>
+Продолжение седьмой части цикла статей, подробно рассказывающих о протоколе MIDI. 
+</b>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+</font></font></p><p><font size="2" face="Arial, sans serif"><font size="2" face="Verdana, Tahoma, Arial, sans serif">
+Двухэтапное подтверждение (2PC, Two Phase Commit) — это особый метод 
+взаимодействия устройств, при котором все команды подтверждаются и до 
+выполнения, и по завершении. Технически — это набор команд, расширяющих 
+базовую версию протокола MIDI Show Control. Этот набор появился в 1996 
+году и описан в документе RP-014, выпущенном организацией MMA. Вместе с 
+исходной спецификацией MSC (документ RP-002) он образует новую версию 
+протокола (MIDI Show Control 1.1).
+</font></font></p><font size="2" face="Arial, sans serif"><font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+При разработке метода 2PC стояла непростая задача — обеспечить связь 
+нескольких устройств закрытой архитектуры друг с другом, при которой все
+ они работают согласованно либо не работают совсем, независимо от 
+наличия ошибок в коммутационных каналах. Задача была решена с 
+использованием двух фаз (этапов) в коммуникации. На первом этапе все 
+стороны соглашаются о том, что должно быть сделано. На втором этапе 
+стороны реализуют это соглашение и сообщают о результатах.
+</p>
+
+<p>
+Метод двухэтапного подтверждения напоминает метод сценической 
+координации, применяемый при взаимодействии стейдж-менеджера и оператора
+ устройства. Первая фаза — ожидания (STANDBY), соответствует команде 
+"приготовиться". Вторая фаза — "выполнить" или "пошел" (GO).
+</p>
+
+<p>
+Метод 2PС предлагается использовать для тщательно спланированных шоу и 
+тогда, когда в целях безопасности требуются дополнительные проверки и 
+избыточность в механизмах управления (например, при работе с машинерией 
+или пиротехникой). При этом обеспечиваются проверка данных и обнаружение
+ ошибок в коммутационных каналах.
+</p>
+
+<p>
+2PC требует взаимной коммутации устройств. Это значит, что, кроме 
+соединения главного контроллера с контролируемым устройством, требуется и
+ обратное, то есть MIDI-выход пульта управления прибором соединяется с 
+MIDI-входом главного контроллера. Команды 2PC образуют четвертый 
+рекомендованный набор (о первых трех см. <a href="http://www.muzoborudovanie.ru/articles/midi/midi71.php">предыдущую статью</a>), он приведен в таблице на рис. 1.
+</p>
+
+<br>
+ </font></font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7201.gif" alt="Рис. 1" width="534" height="203" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Спецификация предполагает, что в системе 2PC около каждого контроллера и
+ контролируемого устройства присутствует человек-оператор, который 
+называется в данном случае "локальный оператор". Локальный оператор 
+может просто наблюдать за процессом, либо выполнять дополнительную 
+проверку безопасности и ручное вмешательство в управление при сбое 
+оборудования. Предполагается, что локальный оператор выполняет свои 
+функции через специальную панель управления (пульт или схожий 
+интерфейс), который называется "интерфейс локального оператора".
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Сообщения 2PC
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+В отсутствие сбойных ситуаций для выполнения одной сцены в протоколе 2PC
+ используются четыре сообщения. Они показаны в таблице на рис. 2 с 
+указанием порядка следования и стороны-отправителя.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7202.gif" alt="Рис. 2" width="542" height="158" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Сначала главный контроллер посылает подчиненному устройству сообщение 
+STANDBY ("приготовиться"). Это сообщение "разогревает" прибор и 
+уведомляет его о том, что скоро должна быть выполнена заданная сцена. В 
+ответ на это устройство отвечает контроллеру сообщением STANDING_BY 
+("наготове"), показывая свою готовность выполнить данную сцену. Для 
+выполнения сцены главный контроллер посылает сообщение GO_2PC. Последнее
+ сообщение серии, COMPLETE ("выполнено"), посылается прибором главному 
+контроллеру и сообщает о том, что выполнение сцены завершено успешно.
+</p>
+
+<p>
+Предусмотрены также три сообщения на случай, если произошел сбой: ABORT, CANCEL и CANCELLED.
+</p>
+
+<p>
+Если контролируемое устройство обнаруживает сбойную (исключительную) 
+ситуацию, то есть ситуацию, когда нормальное выполнение сцены 
+невозможно, оно уведомляет об этом главный контроллер посредством 
+сообщения ABORT. Для указания причины сбоя в это сообщение помещается 
+код состояния, на основании которого главный контроллер может выбрать 
+дальнейший вариант действий.
+</p>
+
+<p>
+Сообщение CANCEL посылается от контроллера к прибору и говорит о том, 
+что предыдущее сообщение (STANDBY и/или GO_2PC) нужно отменить. В ответ 
+на это прибор может ответить сообщением CANCELLED ("отменено"), 
+подтверждая отмену предыдущих команд.
+</p>
+
+<p>
+Сообщения 2PC имеют несколько общих элементов, таких как номер секвенции
+ (nn nn), контрольная сумма (сс), код состояния (s1 s2) и данные сцены 
+(d1 d2 d3 d4). Эти элементы описаны далее, в соответствующих разделах. 
+На рисунках 3-9 показана структура сообщений 2PC.
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7203.gif" alt="Рис. 3" width="606" height="58" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7204.gif" alt="Рис. 4" width="606" height="57" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7205.gif" alt="Рис. 5" width="606" height="58" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7206.gif" alt="Рис. 6" width="506" height="58" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7207.gif" alt="Рис. 7" width="506" height="58" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7208.gif" alt="Рис. 8" width="303" height="58">
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7209.gif" alt="Рис. 9" width="303" height="58">
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Номер секвенции
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Нумерация сцен в сообщениях от контроллера к контролируемому устройству 
+происходит в протоколе 2PC так же, как и в обычных сообщениях MSC (то 
+есть с помощью полей Q_number, Q_list или Q_path, см. <a href="http://www.muzoborudovanie.ru/articles/midi/midi71.php">предыдущую статью</a>).
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Кроме того, для каждого из сообщений STANDBY, GO_2PC и CANCEL главный 
+контроллер генерирует уникальный номер (от 1 до 16383), который 
+называется номером секвенции. Этот же номер передается в обратных 
+сообщениях (STANDING_BY, COMLETE, CANCELLED и ABORT), и по нему главный 
+контроллер определяет, к какой сцене относится сообщение. Таким образом,
+ в обратных сообщениях достаточно использовать только номер секвенции, 
+полный номер сцены передавать не нужно.
+</p>
+
+<p>
+Номера секвенций позволяют работать по методу 2PC простым устройствам, 
+таким как различные детекторы и датчики. Например, детектор газа может 
+не понимать концепцию сцен. При получении сообщения STANDBY он просто 
+проверяет наличие газа. Если газ не обнаружен, детектор отвечает 
+сообщением ABORT, если обнаружен — сообщением STANDING_BY. Детектор 
+игнорирует поля типа Q_number и просто копирует номер секвенции из 
+входящего сообщения в исходящее. Кроме того, номера секвенций облегчают 
+отслеживание ответных сообщений от контролируемых устройств оператору 
+главного контроллера.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Контрольные суммы
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Каждое сообщение 2PC содержит контрольную сумму, состоящую из двух MIDI-байт (14 бит). При расчете контрольной суммы поля <i>command_format</i>, <i>command</i> и <i>data</i>
+ сообщения рассматриваются как массив двухбайтовых значений. Если число 
+байт в этих полях нечетное, для расчета суммы в конец добавляется один 
+нулевой байт. Перед расчетом те байты, которые занимает контрольная 
+сумма, обнуляются.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Контрольная сумма рассчитывается путем простого сложения элементов 
+полученного массива, при этом переполнения игнорируются. После чего к 
+полученному результату прибавляется номер устройства. В завершении над 
+полученным числом и константой 0x7F7F (32639) выполняется логическая 
+операция AND (см. статью цикла <a href="http://www.muzoborudovanie.ru/articles/midi/midi6.php">"Передача данных."</a>).
+</p>
+
+<p>
+Сторона, принимающая сообщение, проверяет его правильность, заново 
+рассчитывая контрольную сумму и сверяя ее с полученным значением в 
+сообщении. Если контрольная сумма отличается на стороне контролируемого 
+устройства, оно посылает контроллеру сообщение ABORT с кодом состояния 
+"ошибка контрольной суммы". Если сумма отличается на стороне 
+контроллера, он реагирует на это так, будто было получено сообщение 
+ABORT.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Коды состояния
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Коды состояния используются в сообщениях ABORT и CANCELLED и отражают 
+причину ошибки или состояние отмененной сцены. Код состояния 
+представляет собой беззнаковое двухбайтовое целое число. Чтобы оно могло
+ быть передано по MIDI, два младших бита числа должны быть нулевыми. 
+Соответственно, наименьший код состояния будет равен 4, наибольший 
+0xFFFC (65532). В описании сообщений статус-код выглядит как "s1 s2". 
+Метод преобразования кода состояния в значения s1 и s2, и наоборот, 
+показан на рис. 10.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></font></font></font></font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+<td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td colspan="2" bgcolor="dedede" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7210.gif" alt="Рис. 10" width="460" height="110" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Есть три числовых диапазона кодов состояния. Первый диапазон — общий для
+ всех форматов команд, коды состояния в нем применимы для любых типов 
+контроллеров. Характерная особенность этих кодов в том, что все они 
+являются отрицательными числами, если рассматривать код как целое число 
+со знаком (подробнее о представлении целых отрицательных чисел см. <a href="http://www.muzoborudovanie.ru/articles/midi/midi4.php">четвертую статью</a> цикла). Все коды, возвращаемые в сообщениях CANCELLED, попадают в этот первый диапазон.
+</p>
+
+<p>
+Второй диапазон зависит от формата команды, то есть специфичен для 
+устройств определенного типа. Например, код состояния 0x1008 означает 
+"низкое давление воды", если получен от устройства типа "спецэффект" 
+(формат команды от 0x50 до 0x5F). Но когда тот же код получен от 
+устройства управления звуком (формат команды от 0x10 до 0x1F), он 
+означает "неполадки в усилителе".
+</p>
+
+<p>
+Третий диапазон зависит как от формата команды, так и от производителя. 
+То есть, производители используют коды состояния в третьем диапазоне по 
+своему усмотрению. Информация об этих кодах обязательно должна быть 
+опубликована. Естественно, наибольшая совместимость систем достигается в
+ том случае, если коды из этого диапазона используются как можно реже. 
+Спецификация 2PC рекомендует всегда, когда это возможно, использовать 
+коды состояния из второго диапазона.
+</p>
+
+<p>
+Код состояния 0 зарезервирован на случай неизвестной ошибки или ошибки, 
+для обозначения которой другие коды не подходят. Таблица на рис. 11 
+подытоживает вышесказанное.
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7211.gif" alt="Рис. 11" width="606" height="225" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+В таблицах на рис. 12 и 13 приведены все коды состояния, не зависящие от
+ формата команды. Буквы в столбце "Сообщения" показывают, какие 
+сообщения могут привести к получению ответа от устройства с данным кодом
+ состояния (S=STANDBY, G=GO_2PC, C=CANCEL). Первая таблица содержит коды
+ состояния, используемые в сообщении CANCELLED, вторая — в сообщении 
+ABORT. Обратите внимание, что сообщение ABORT, посланное прибором в 
+результате обработки сообщения CANCEL, может иметь только два кода 
+состояния: "неизвестная/неопределенная ошибка" и "ошибка контрольной 
+суммы". Код состояния "тайм-аут" никогда не появляется в реально 
+передаваемых сообщениях, он включен для упрощения внутреннего устройства
+ контроллера.
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7212.gif" alt="Рис. 12" width="506" height="219" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7213.gif" alt="Рис. 13" width="528" height="597" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+В таблице на рис. 14 перечислены коды состояния из второго диапазона, то
+ есть коды, которые зависят от формата команды, но применимы ко всем 
+производителям устройств.
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7214.gif" alt="Рис. 14" width="575" height="836" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Данные сцены
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+В сообщениях STANDBY и GO_2PC используются четыре семибитных байта 
+данных. Эти байты должны присутствовать обязательно, независимо от того,
+ используются ли они контролируемым устройством или нет. Если корректные
+ значения d1-d4 для данной сцены (или для данного прибора) неизвестны, 
+на их месте должны быть переданы нули.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Байты данных позволяют сопоставить со сценой дополнительную информацию. 
+Например, в световых пультах, работающих по принципу "Go On, Go Off", 
+используется величина "Go Level", или gl, которая задается выражением gl
+ = d1 + (d2*128). Последовательность команд STANDBY-GO_2PC со значением 
+gl=255 эквивалентна команде Go On. Та же последовательность со значением
+ gl=0 эквивалентна команде Go Off. Допустимы и промежуточные значения gl
+ от 0 до 255. Например, значение gl=128 эквивалентно команде "Go Cue To 
+50%". Любое значение gl вне диапазона 0-255 в настоящее время является 
+некорректным, а при его получении прибор должен отправить сообщение 
+ABORT со статус-кодом "некорректное значение данных сцены d1". Значения 
+gl=256 и выше зарезервированы для возможных будущих расширений.
+</p>
+
+<p>
+В других типах устройств использование байтов d1-d4 определяется 
+производителем и должно быть описано в документации. Если устройство 
+получает некорректные данные d1-d4, оно должно ответить сообщением ABORT
+ с одним из кодов состояния "некорректное значение данных сцены dx". 
+Например, некорректное значение d1 должно привести к сообщению ABORT с 
+кодом "некорректное значение данных сцены d1". В тех случаях, когда 
+ошибка данных касается более чем одного байта d1-d4, сообщение ABORT 
+должно содержать код состояния, соответствующий наименьшему ошибочному 
+байту. Устройства, которые понимают только часть байтов данных, 
+например, d1 и d3, должны игнорировать значения остальных байт.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Взаимодействие устройств
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Итак, выполнение сцены начинается с команды "приготовиться" (STANDBY), 
+которую главный контролер посылает контролируемому устройству. Главный 
+контроллер ожидает ответного сообщения STANDING_BY в течение двух 
+секунд. Если за это время оно не приходит, главный контроллер считает, 
+что прибор ответил сообщением ABORT. Если по любой из причин прибор не 
+может подготовить данную сцену к выполнению, то он отвечает сообщением 
+ABORT явно.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Ответное сообщение STANDING_BY посылается только в том случае, если 
+запрошенная сцена известна прибору, находится в его памяти и готова к 
+немедленному выполнению. В сообщении STANDING_BY прибор передает также 
+максимальное время, требуемое для выполнения сцены. Позже контроллер 
+использует это время, чтобы определить, не произошел ли сбой в 
+контролируемом устройстве. Максимальное время может быть значительно 
+больше реально требуемого для сцены, но никак не меньше. Если для 
+выполнения сцены требуется вмешательство оператора, то время ожидания 
+действий оператора также должно учитываться.
+</p>
+
+<p>
+После успешного обмена STANDBY-STANDING_BY главный контроллер посылает 
+сообщение GO_2PC, которое приводит к выполнению заданной сцены. По 
+завершении сцены прибор отправляет в главный контроллер сообщение 
+COMPLETE. Если во время выполнения сцены происходит сбой, прибор 
+немедленно передает сообщение ABORT с соответствующим кодом состояния. 
+Если сообщение GO_2PC пришло с тем номером сцены, для которого еще не 
+поступало сообщения STANDBY (вероятно, из-за ошибки в главном 
+контроллере), то прибор должен ответить сообщением ABORT с кодом 
+состояния "не в режиме ожидания".
+</p>
+
+<p>
+Контролируемое устройство не обязано помнить акт обмена 
+STANDBY-STANDING_BY для какой-либо сцены продолжительное время. 
+Например, если сцена была успешно согласована, а главный контроллер 
+послал сообщение GO_2PC только через час после согласования, прибор 
+может просто-напросто забыть, "о чем идет речь", и ответить сообщением 
+ABORT с кодом состояния "не в режиме ожидания".
+</p>
+
+<p>
+Возможен также случай предварительного согласования STANDBY-STANDING_BY 
+для нескольких сцен с одним и тем же прибором до того, как будет 
+передана первая команда GO_2PC. В этом случае устройству нужно помнить 
+несколько сцен, находящихся в режиме ожидания. Производители должны 
+публиковать максимальное число таких сцен. Хранимый в памяти акт обмена 
+STANDBY-STANDING_BY очищается по получении сообщения GO_2PC. Чтобы 
+выполнить сцену повторно, требуется новое согласование.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Тайм-ауты
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Основной метод обнаружения ошибок по методу 2PC состоит в отслеживании 
+временного интервала между отправкой сообщения прибору и получением от 
+него ответа. Если этот интервал превышает максимально допустимый, 
+наступает тайм-аут. Главный контроллер расценивает тайм-аут так, будто 
+прибор передал сообщение ABORT с кодом состояния "тайм-аут". Этот 
+"искусственный" код (поскольку он никогда не посылается прибором явно) 
+говорит контроллеру о том, что контролируемое устройство перешло в 
+неуправляемый режим (по крайней мере, по протоколу 2PC).
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Для сообщений STANDBY и CANCEL тайм-аут равен двум секундам. Поэтому, 
+например, сообщения STANDBY должны посылаться как минимум за две секунды
+ до предполагаемого времени отправки сообщения GO_2PC.
+</p>
+
+<p>
+Тайм-аут на сообщение GO_2PC (то есть время между отправкой этого 
+сообщения и прихода ответного COMPLETE) не является величиной постоянной
+ и зависит от продолжительности сцены, переданной прибором в сообщении 
+STANDING_BY. Если после запуска сцены сообщение COMPLETE не пришло в 
+течение 125% от указанной продолжительности, то контроллер расценивает 
+это как тайм-аут. Дополнительные 25% нужны для учета "разброса часов" в 
+контроллере и контролируемом устройстве.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Ожидание сообщений
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Метод 2PC был разработан так, чтобы контролируемые устройства никогда не
+ ожидали сообщений от главного контроллера. Прибор просто принимает 
+сообщение, выполняет предписанные им действия и возвращает ответное 
+сообщение. Даже в состоянии "наготове" прибор лишь помнит обмен 
+STANDBY-STANDING_BY, который был произведен в недавнем времени, но не 
+находится в постоянном ожидании команды GO_2PC.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Преимущество такого способа работы очевидно. Так как контролируемое 
+устройство никогда не ждет сообщений, оно всегда готово принять команды 
+ручного управления от локального оператора. Следовательно, если даже 
+главный контроллер даст сбой, шоу может продолжаться с использованием 
+ручного управления на каждом из устройств.
+</p>
+
+<p>
+Главный контроллер по определению должен ожидать сообщений STANDING_BY, 
+COMPLETE и CANCELLED в течение определенного времени. Более того, он 
+должен одновременно ожидать многочисленные сообщения, чей порядок 
+отправки не определен. Поэтому в контроллере применяется некий алгоритм 
+обнаружения тайм-аутов для множества сообщений от множества приборов.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Обработка исключительных ситуаций
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Подобная обработка основана в методе 2PC на простом принципе. Если на 
+очередную команду главного контроллера какой-либо прибор отвечает 
+сообщением ABORT, то вся система переходит в специальную фазу 
+восстановления. Главный контроллер посылает всем приборам системы 
+сообщения CANCEL, информируя их об отклонении от безошибочной 
+последовательности сцен. Это сообщение посылается для тех сцен, которые 
+находятся в состоянии "наготове" или уже выполняются.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Если отменяемая сцена находится в состоянии "наготове", то акт 
+согласования STANDBY-STANDING_BY просто забывается. Если сцена уже 
+исполняется, прибор может выполнить одно из действий:<br>
+1) завершить сцену как обычно;<br>
+2) приостановить сцену, ожидая дальнейшего ее выполнения;<br>
+3) прекратить сцену без возможности дальнейшего ее выполнения;<br>
+4) вернуться к состоянию, которое было до начала выполнения команды GO_2PC;<br>
+5) выполнить сцену в обратном порядке.
+</p>
+
+<p>
+Кроме того, в процесс может вмешаться локальный оператор и перевести прибор в режим ручного управления.
+</p>
+
+<p>
+Какое из этих действий будет выполнено, зависит от оборудования и 
+обстоятельств, при которых получено сообщение CANCEL. Если выполняемая 
+сцена приводит к какому-либо вреду, вероятно, лучший выбор в данном 
+случае — завершить сцену. Если сцена приводит к неопределенной, 
+ненадежной ситуации, ее следует приостановить, сбросить или выполнить в 
+обратном порядке. Конечное решение зависит от оборудования и ситуации в 
+шоу.
+</p>
+
+<p>
+Некоторые приборы всегда выполняют одно из перечисленных 
+восстановительных действий, другие позволяют это действие 
+запрограммировать. Поведение прибора при получении сообщения CANCEL 
+должно быть документировано производителем.
+</p>
+
+<p>
+Если устройство решит завершить сцену в обычном порядке, оно должно 
+послать как сообщение CANCELLED с кодом "в процессе завершения", так и 
+сообщение COMPLETE. Первое из них посылается в ответ на сообщение CANCEL
+ немедленно, второе — после фактического завершения сцены. Сцены, 
+приостановленные сообщением CANCEL, могут продолжить выполнение после 
+обмена STANDBY-STANDING_BY-GO_2PC.
+</p>
+
+<p>
+В любом случае, на сообщение CANCEL прибор должен ответить либо 
+сообщением CANCELLED, либо сообщением ABORT. Последнее допустимо только в
+ том случае, если в сообщении CANCEL обнаружена ошибка контрольной 
+суммы. Если на сообщение CANCEL не получен ответ в течение двух секунд, 
+контроллер обработает ситуацию так, будто было передано сообщение ABORT.
+</p>
+
+<p>
+Сообщение ABORT, как говорилось ранее, посылается контролируемым 
+устройством в случае сбоя при выполнении команд STANDBY, GO_2PC или 
+CANCEL. Номер секвенции в этом сообщении говорит контроллеру о том, 
+какое из сообщений STANDBY, GO_2PC или CANCEL вызвало сбой. Код 
+состояния показывает наиболее значимую причину сбоя, однако могут быть и
+ дополнительные, менее важные причины. Поэтому исправления сбойной 
+ситуации на основе одного кода состояния может быть недостаточно.
+</p>
+
+<p>
+Значимость кода состояния пропорциональна легкости, с которой сбойная 
+ситуация может быть исправлена. Например, код "блокирующий переключатель
+ не установлен" менее значим, чем "сбой в моторе". Первый сбой может 
+быть исправлен немедленным вмешательством человека; второй, возможно, 
+удастся исправить, только разобрав мотор.
+</p>
+
+<p>
+Код состояния "manual overriding in progress" ("сцена в процессе ручного
+ управления") показывает, что локальный оператор контролируемого 
+устройства взял на себя контроль за выполнением сцены. Некоторые 
+устройства могут игнорировать все сообщения 2PC, пока локальный оператор
+ использует ручное управление.
+</p>
+
+<p>
+Иногда сообщение ABORT не означает сбой устройства, а просто говорит о 
+том, что ожидаемое событие все еще не произошло. Подобное поведение 
+характерно для всевозможных датчиков и детекторов. Для таких приборов 
+главный контроллер не передает сообщение CANCEL.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Пример работы 2PC
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Посмотрим, как может использоваться метод 2PC на практике. Для простоты 
+возьмем небольшую координированную последовательность команд, образующих
+ сцену. Сначала опишем процесс обмена сообщениями без ошибок, затем 
+рассмотрим несколько сбойных ситуаций и то, как они могут быть 
+обработаны.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+В сцене будет задействован моторизированный поворотный стол, на котором 
+находится некая конструкция (предположим, небольшая декорация). 
+Изначально декорация повернута к зрителю "спиной", так что задача стола —
+ развернуть ее на 180 градусов, лицом к зрителю. Поворот стола 
+происходит в течение 30 секунд. В начале сцены декорация дополнительно 
+закрыта от зрителя иллюстрированным полотнищем, которое прикреплено к 
+механическому штанкету №12 и поднимается перед поворотом стола. Система 
+сценического подъема и поворотный стол работают по MIDI и имеют 
+независимые консоли управления у операторов.
+</p>
+
+<p>
+Перед началом сцены со стола должна выйти актриса. К сожалению, она 
+выходит так, что этого не видит ни один из операторов (в реальной жизни 
+это маловероятно, но здесь необходимо, чтобы показать большинство 
+функций 2PC). Поэтому используется "электронный глаз", установленный 
+так, что актриса во время своего ухода обязательно перекрывает его луч. 
+Перед тем как начнет работать механика сцены, электронный глаз должен 
+определить, что актриса вышла.
+</p>
+
+<p>
+Естественно, ко всему этому добавляются свет и звук. Есть две звуковые и
+ три световые сцены. Первая звуковая сцена начинается, когда актриса 
+пересекает луч глаза, вторая — когда стол повернется наполовину, то есть
+ на 90 градусов. Первая световая сцена начинается, когда полотнище 
+приоткрывает декорацию, вторая — когда стол начинает поворачиваться, 
+финальная сцена — когда декорация полностью развернется к залу.
+</p>
+
+<p>
+Весь процесс управляется главным контроллером — компьютерной программой.
+ Он разбит на несколько этапов так, чтобы программа могла отслеживать 
+ключевые события. Например, поворот стола разбит на два этапа по 90 
+градусов вместо одного, полного поворота на 180. В таблице на рис. 15 
+показан список сцен с коротким описанием.
+</p>
+
+<br>
+ </font></font></font></font></font></font></font></font></font></font></font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7215.gif" alt="Рис. 15" width="598" height="266" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Все происходит в следующей последовательности:<br>
+1. Ожидать выполнения сцены EE-6.<br>
+2. Запустить сцену S-109.<br>
+3. Подождать 3 секунды (дать время актрисе уйти).<br>
+4. Запустить сцены F-28 и L-118.<br>
+5. Подождать завершения сцены F-28.<br>
+6. Запустить сцены F-28.1, ТТ-34 и L-118.1<br>
+7. Ожидать завершения сцены ТТ-34.<br>
+8. Запустить сцены ТТ-34.1 и S-110<br>
+9. Ожидать завершения сцены ТТ-34.1<br>
+10. Запустить сцену L-119.
+</p>
+
+<p>
+Названия сцен (типа "L-119") приведены здесь для удобства, в 
+MIDI-сообщениях они не передаются. Например, сообщение для сцены TT-34.1
+ будет содержать следующие параметры: command_format=24, Q_number=34.1, а
+ L-119 — command_format=01, Q_number=119.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Обмен сообщениями без ошибок
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Последовательность сообщений 2PC в упрощенном виде при безошибочном 
+выполнении сцен данного примера приведена в таблице на рис. 16.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7216.gif" alt="Рис. 16" width="506" height="720" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Примечания:
+</p>
+
+<p>
+A. Контролер посылает сообщения STANDBY для сцен, которые должны 
+начаться до того, как стол повернется на 90 градусов. Эти сообщения 
+посылаются заблаговременно, с учетом возможного двухсекундного 
+тайм-аута.
+</p>
+
+<p>
+B. Получена серия ответных сообщений STANDING_BY. Сцена, к которой 
+относится STANDING_BY, задается только номером секвенции. Видно также, 
+что сообщения STANDING_BY получены не в том порядке, в каком отправлены 
+сообщения STANDBY. В данном случае система сценического подъема послала 
+два сообщения STANDING_BY одно за другим.
+</p>
+
+<p>
+C. Электронный глаз ответил на сообщение STANDBY сообщением ABORT, так как актриса еще не пересекла луч.
+</p>
+
+<p>
+D. Электронный глаз ответил на сообщение STANDBY сообщением STANDING_BY —
+ актриса, наконец, пересекла луч. Поскольку больше нам электронный глаз 
+не нужен, мы не будем посылать ему сообщение GO_2PC. Однако это 
+равносильно отмене сцены, и в соответствии со спецификацией 2PC мы 
+должны были бы послать для сцены EE-6 сообщение CANCEL. Но для простых 
+устройств-детекторов вроде электронного глаза это необязательно, так как
+ для них команда GO_2PC все равно никогда не посылается.
+</p>
+
+<p>
+E. Обратите внимание на столбец секунд. Между приемом сообщения 
+STANDING_BY от электронного глаза в момент времени 06.010 и отправкой 
+сообщения GO_2PC для света и системы подъема прошла задержка примерно в 
+три секунды (время, необходимое для ухода актрисы).
+</p>
+
+<p>
+F. Сообщение GO_2PC для сцены 28.1 отправлено перед получением сообщения
+ COMPLETE для сцены 28. Контроллер системы подъема понимает это так, что
+ штанкет №12 должен продолжать подъем и после завершения сцены 28.
+</p>
+
+<p>
+G. По получении сообщения COMPLETE для сцены 28 можно приступать к 
+выполнению сцен 34 поворотного стола и света 118.1. В это время 
+происходит также обмен сообщениями STANDBY- STANDING_BY для оставшихся 
+сцен.
+</p>
+
+<p>
+H. Штанкет №12 поднят до колосников.
+</p>
+
+<p>
+I. Сообщение GO_2PC для сцены 34.1 поворотного стола отправлено перед 
+получением сообщения COMPLETE для сцены 34. Так же, как и система 
+подъема, контроллер стола интерпретирует это как сигнал не прекращать 
+движения после отправки сообщения COMPLETE для сцены 34.
+</p>
+
+<p>
+J. После завершения сцены 34 включается звуковая сцена 110.
+</p>
+
+<p>
+K. После завершения сцены 34.1 включается световая сцена 119.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Ошибки, обнаруженные на ранней стадии
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Теперь предположим, что во время выполнения нашей сцены произошли 
+кое-какие ошибки. Сначала рассмотрим ошибку, которая приводит к 
+прекращению всей сцены. Предположим, контроллер системы подъема 
+обнаружил неполадку одного из лебедочных моторов, связанных с 
+двенадцатым штанкетом. Тогда система подъема вместо STANDING_BY вернет 
+сообщение ABORT. После чего главный контроллер (компьютерная программа) 
+ответит сообщением CANCEL для всех сцен, которым было отправлено 
+сообщение STANDBY. Последовательность сообщений может выглядеть так, как
+ показано на рис. 17.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<br>
+ </font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="555581" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/7217.gif" alt="Рис. 17" width="539" height="374" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Примечания:
+</p>
+
+<p>
+A. Первая сцена системы подъема возвращает сообщение ABORT с кодом 
+состояния "сбой в моторе". Этот код преобразуется в текстовое сообщение,
+ которое выводится оператору системы.
+</p>
+
+<p>
+B. Всем контролируемым устройствам посылается сообщение CANCEL для тех 
+сцен, которые еще не завершились. Это в соответствии с требованиями 2PC 
+по восстановлению после сбоя (см. ранее). Так как отдельные приборы все 
+еще обрабатывают сообщения STANDBY, сообщения STANDING_BY и CANCEL 
+перемешиваются во времени друг с другом.
+</p>
+
+<p>
+C. К главному контролеру начинают приходить сообщения CANCELLED. Как и в
+ случае с сообщениями STANDING_BY, они приходят не в том порядке, в 
+каком были отправлены сообщения CANCEL. Статус-код сообщений CANCELLED —
+ "terminated", так как ни одна из отмененных сцен не начала выполняться.
+</p>
+
+<p>
+D. Главному контроллеру не остается ничего другого, как отменить сцену 
+F-28.1 (сообщение CANCEL в момент времени 0.018 с). Так как контроллер 
+системы подъема уже забыл, что сцена F-28.1 была в состоянии "наготове",
+ он отправляет главному контроллеру сообщение CANCELLED со статус-кодом 
+"не в режиме ожидания".
+</p>
+
+<p>
+Как видно из этого гипотетического примера, протокол 2PC успешно выявил 
+неполадку с лебедочным мотором. Начало поворота площадки было 
+автоматически остановлено. Декорация на площадке не повернулась и не 
+порвала полотнище, которое осталось неподвижно висеть. Кроме того, 
+стейдж-менеджер за главным контроллером был проинформирован о неполадке 
+сообщением на экране компьютера.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Ошибки, произошедшие во время выполнения сцены
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Они обрабатываются почти так же, как и вышеуказанная ошибка. Все 
+ожидающие или выполняющиеся сцены завершаются сообщением CANCEL от 
+главного контроллера. Отличие здесь в том, что число возможных вариантов
+ выключения безобразия на сцене значительно увеличивается. И выбор 
+правильного решения не всегда очевиден.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Спецификация рекомендует разработчикам тщательно рассмотреть все 
+варианты — от продолжения работы как ни в чем не бывало до возврата в 
+исходное состояние. Предположим, что мотор поворотного стола из нашего 
+примера сломался после поворота стола на 45 градусов. Тогда, спустя 
+где-то 18 секунд от начала сцены (см. рис. 16), главному контроллеру 
+будет передано сообщение ABORT.
+</p>
+
+<p>
+Поле чего все сцены получат сообщения CANCEL. Две из них, находящиеся в 
+состоянии "наготове" (S-110 и L-119), обработают отмену "по-простому", 
+забыв, что им было послано сообщение "приготовиться". Однако обработка 
+сообщения CANCEL в сцене F-28, которая к этому моменту еще не 
+завершилась, более проблематична. Так как полотнище продолжает подъем, 
+то вероятно, лучше всего поднять его до конца, дав сцене F-28 полностью 
+завершиться, с возвращением статус-кода "completing" в сообщении 
+CANCELLED и последующим сообщением COMPLETE. Но если бы по сценарию 
+полотнище должно было не подниматься, а опускаться, показывая зрителю 
+нанесенную на него картину, сцену F-28 следовало бы, наверное, завершить
+ немедленно.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Сравнительная характеристика 2PC и MSC
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Подытожим сказанное выше сравнительной характеристикой обоих наборов команд.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Обычные команды MSC посылаются в любой момент времени и выполняются 
+немедленно. Команды 2PC планируются, образуя нечто вроде сценария, в 
+котором последовательность сцен должна выполняться совершенно 
+определенным образом и никак иначе. Обычные сообщения MSC хорошо 
+подходят для мероприятий типа Live Show (например, для рок-концертов, 
+где нет жесткого планирования) и для медиа-элементов, которые не 
+представляют угрозы безопасности, таких как свет, звук и видео. Команды 
+2PC больше подходят для запрограммированных шоу и для медиа-элементов, 
+которые влияют на безопасность, например, машинерия и пиротехника.
+</p>
+
+<p>
+В наборе команд MSC есть несколько сообщений, которые приводят к 
+различным электрическим или механическим процессам в контролируемом 
+устройстве, например, команды GO, SET, FIRE, STOP и RESUME. Набор команд
+ 2PC содержит лишь одно сообщение, приводящее к действию — GO_2PC. К 
+какому результату приведет данное сообщение, зависит от списка сцен, 
+сохраненного в контролируемом устройстве, и от того, как этот сценарий 
+будет интерпретирован.
+</p>
+
+<p>
+Главное преимущество MSC перед 2PC — быстрый отклик на запрошенное 
+действие и простая конфигурация системы ("отрытая петля"). Быстрый 
+отклик происходит по двум причинам. Во-первых, MSC требует одного 
+сообщения для одного действия. 2PC требует, по крайней мере, трех. 
+Во-вторых, 2PC включает задержку (тайм-аут) продолжительностью до двух 
+секунд между запросом на действие и началом выполнения этого действия.
+</p>
+
+<p>
+Метод 2PC имеет два преимущества перед MSC. Во-первых, 2PC может 
+координировать действия множества контролируемых устройств, с четко 
+определенными последствиями при сбое одного из устройств. Во-вторых, в 
+2PC встроена система обнаружения ошибок и восстановления после сбоя.
+</p>
+
+<p>
+Отличия между сообщениями 2PC и рядовыми сообщениями MSC настолько 
+принципиальны, что каждый конкретный прибор, как правило, поддерживает 
+только один набор команд — либо 2PC, либо MSC, но не оба сразу.
+</p>
+
+<p>
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="2" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+Оценка статьи
+</b></font></td></tr></tbody></table>
+
+<font size="2" face="Arial, sans serif">
+</font></p><form method="post"><font size="2" face="Arial, sans serif"><font size="2" face="Arial" color="#000000">Посещений: 13269 | Проголосовавших: 
+38 | Средняя оценка: 4.7<p><input type="hidden" name="envoi" value="1">&nbsp;<select name="note"><option value="5" selected="selected">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select>&nbsp;&nbsp;<input type="submit" value="Оценить"></p></font>
+
+<p></p>
+
+<p>
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="2" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+Комментарии
+</b></font></td></tr></tbody></table>
+
+<font size="1" face="Arial, sans serif">
+<noindex>
+</noindex>
+<big><b>В связи с обилием спама размещение комментариев отключено. Пользуйтесь <a href="http://www.muzoborudovanie.ru/forum/index.php?site=mo&amp;bn=">форумами</a>.</b><br></big>
+<br>
+
+
+<table width="427" cellspacing="1" cellpadding="1" border="0" bgcolor="000000">
+
+<tbody><tr bgcolor="d0d0d0">
+<td align="CENTER">
+<font size="0">
+<a href="http://www.muzoborudovanie.ru/ads/adrates.php">РЕКЛАМА</a>
+</font>
+
+</td></tr><tr bgcolor="ffeecc">
+<td align="CENTER">
+
+<!-- Yandex.RTB R-A-2736-1 -->
+<div id="yandex_rtb_R-A-2736-1"><yatag class="vd5268d4 yecf2444e" id="vd5268d4" lang="ru"><yatag class="gece4ac41 y57dddbbb td297537d mf53e6bc1"><yatag class="h256adaf1 o8025c9e4 f82f7c9ca h4a06ad77" style="min-height: 150px !important; min-width: 423px !important; max-width: 423px !important;"><yatag data-id="212663125119248880" class="qcc828388 a306cdb82 w8784ad16" style="width: 421px !important; margin: auto !important;"><yatag class="kaddb9ad1" style="min-height: 148px !important; font-size: 12.8923px !important;"><yatag class="o23b430a1"><a href="https://an.yandex.ru/count/DZnExY_ZKrK507G2CMeDCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0avKeZHQbE_vm0AW-X3m0gpOb-CF-0A2W820WA1BW0EsavJM1eW3oP3gPAW31B031BW4_m7e1C4X-0IZmn281QF34905gwyie0MhXGMe1UIP1B05v9a4k0Npeml01UFv6CW5_Qi6q0Mv_m7W1Jxe1G7m1G6O1eBGhFCEe0Qg0wW6gWEf1v689E91GT8ui0U0W90qm0U6x8iQq0SGs0S4u0U62lW70O080T08cegGYS2GW8A80U08kVtR1u0A0PWAeeanmGe00000003mFzWA0k0AW8bw-0g0jHY82mAg2n3BgEvFaOW003_vClqCZWK0m0k0emN82u3Kam7P2v689E91GT8uw0kZmn3m2mg83AAtthu1w0m1c0tlmKlW3GA93W0000000F0_a0x0X3sW3i24FR0E0Q4F00000000y3-e3v6Hal2Qg93fEDaFgjXy1Rnp_3_W3m6049Ikkn2G4Ew-ciBhiCVTCPeG2H400000003mFyWGeAe2q13VXgzV-10HW14HY143a141g170X3sm4G784OFsXGte4SsVw9NUrUIUPV4H0000002chq3w4HaD000001K000007G00000b000002q00000Y181a181gH97iv7deHaLF_0I4VWI0O0J6OWJ0P0JCfWJ0G00?stat-id=1&amp;test-tag=330953423640577&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMzA5NTI5OTk5OTMzNDQifQ%3D%3D&amp;" class="kb6a56fc0" target="_blank"><yatag class="d58ed4068 y6be32143 n985649c5"><yatag class="icfd6d653">Яндекс.Директ</yatag></yatag></a><a href="https://an.yandex.ru/count/DZnExY_ZKrK507G2CMeDCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0avKeZHQbE_vm0AW-X3m0gpOb-CF-0A2W820WA1BW0EsavJM1eW3oP3gPAW31B031BW4_m7e1C4X-0IZmn281QF34905gwyie0MhXGMe1UIP1B05v9a4k0Npeml01UFv6CW5_Qi6q0Mv_m7W1Jxe1G7m1G6O1eBGhFCEe0Qg0wW6gWEf1v689E91GT8ui0U0W90qm0U6x8iQq0SGs0S4u0U62lW70O080T08cegGYS2GW8A80U08kVtR1u0A0PWAeeanmGe00000003mFzWA0k0AW8bw-0g0jHY82mAg2n3BgEvFaOW003_vClqCZWK0m0k0emN82u3Kam7P2v689E91GT8uw0kZmn3m2mg83AAtthu1w0m1c0tlmKlW3GA93W0000000F0_a0x0X3sW3i24FR0E0Q4F00000000y3-e3v6Hal2Qg93fEDaFgjXy1Rnp_3_W3m6049Ikkn2G4Ew-ciBhiCVTCPeG2H400000003mFyWGeAe2q13VXgzV-10HW14HY143a141g170X3sm4G784OFsXGte4SsVw9NUrUIUPV4H0000002chq3w4HaD000001K000007G00000b000002q00000Y181a181gH97iv7deHaLF_0I4VWI0O0J6OWJ0P0JCfWJ0G00?stat-id=1&amp;test-tag=330953423640577&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMzA5NTI5OTk5OTMzNDQifQ%3D%3D&amp;" class="d58ed4068 f6da6974f" style="min-width: 148px !important; max-width: 168.4px !important;" target="_blank"><yatag class="l3fa163ee"><yatag class="p97a269a2"><yatag style="position: absolute !important; width: 234.333% !important; padding-top: 88.0952% !important; transform: translate(-28.6629%) scale(1) !important; transform-origin: 50% 50% 0px !important;" class=""><img alt="" style="position: absolute !important; left: 0px !important; top: 0px !important; width: 100% !important; height: 100% !important;" class="ldf70e82c" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/huge.webp"></yatag></yatag></yatag></a><yatag class="v9a7933aa"><yatag class="j62dd2a08 e7b4f9355"><a href="https://an.yandex.ru/count/DZnExY_ZKrK507G2CMeDCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0avKeZHQbE_vm0AW-X3m0gpOb-CF-0A2W820WA1BW0EsavJM1eW3oP3gPAW31B031BW4_m7e1C4X-0IZmn281QF34905gwyie0MhXGMe1UIP1B05v9a4k0Npeml01UFv6CW5_Qi6q0Mv_m7W1Jxe1G7m1G6O1eBGhFCEe0Qg0wW6gWEf1v689E91GT8ui0U0W90qm0U6x8iQq0SGs0S4u0U62lW70O080T08cegGYS2GW8A80U08kVtR1u0A0PWAeeanmGe00000003mFzWA0k0AW8bw-0g0jHY82mAg2n3BgEvFaOW003_vClqCZWK0m0k0emN82u3Kam7P2v689E91GT8uw0kZmn3m2mg83AAtthu1w0m1c0tlmKlW3GA93W0000000F0_a0x0X3sW3i24FR0E0Q4F00000000y3-e3v6Hal2Qg93fEDaFgjXy1Rnp_3_W3m6049Ikkn2G4Ew-ciBhiCVTCPeG2H400000003mFyWGeAe2q13VXgzV-10HW14HY143a141g170X3sm4G784OFsXGte4SsVw9NUrUIUPV4H0000002chq3w4HaD000001K000007G00000b000002q00000Y181a181gH97iv7deHaLF_0I4VWI0O0J6OWJ0P0JCfWJ0G00?stat-id=1&amp;test-tag=330953423640577&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMzA5NTI5OTk5OTMzNDQifQ%3D%3D&amp;" class="d58ed4068 vbe8a53d7" target="_blank"><yatag class="icfd6d653 p61da863d">Синтезатор Roland E-A7</yatag></a></yatag><yatag class="kda4528f8"><a href="https://an.yandex.ru/count/DZnExY_ZKrK507G2CMeDCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0avKeZHQbE_vm0AW-X3m0gpOb-CF-0A2W820WA1BW0EsavJM1eW3oP3gPAW31B031BW4_m7e1C4X-0IZmn281QF34905gwyie0MhXGMe1UIP1B05v9a4k0Npeml01UFv6CW5_Qi6q0Mv_m7W1Jxe1G7m1G6O1eBGhFCEe0Qg0wW6gWEf1v689E91GT8ui0U0W90qm0U6x8iQq0SGs0S4u0U62lW70O080T08cegGYS2GW8A80U08kVtR1u0A0PWAeeanmGe00000003mFzWA0k0AW8bw-0g0jHY82mAg2n3BgEvFaOW003_vClqCZWK0m0k0emN82u3Kam7P2v689E91GT8uw0kZmn3m2mg83AAtthu1w0m1c0tlmKlW3GA93W0000000F0_a0x0X3sW3i24FR0E0Q4F00000000y3-e3v6Hal2Qg93fEDaFgjXy1Rnp_3_W3m6049Ikkn2G4Ew-ciBhiCVTCPeG2H400000003mFyWGeAe2q13VXgzV-10HW14HY143a141g170X3sm4G784OFsXGte4SsVw9NUrUIUPV4H0000002chq3w4HaD000001K000007G00000b000002q00000Y181a181gH97iv7deHaLF_0I4VWI0O0J6OWJ0P0JCfWJ0G00?stat-id=1&amp;test-tag=330953423640577&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMzA5NTI5OTk5OTMzNDQifQ%3D%3D&amp;" class="d58ed4068 m307e0ba7" target="_blank"><yatag class="icfd6d653 p61da863d">Купить за&nbsp;82&nbsp;990&nbsp;<span class="t28239037">руб</span>.</yatag></a></yatag><yatag class="n106e4bde p9414203c"><a href="https://an.yandex.ru/count/DZnExY_ZKrK507G2CMeDCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0avKeZHQbE_vm0AW-X3m0gpOb-CF-0A2W820WA1BW0EsavJM1eW3oP3gPAW31B031BW4_m7e1C4X-0IZmn281QF34905gwyie0MhXGMe1UIP1B05v9a4k0Npeml01UFv6CW5_Qi6q0Mv_m7W1Jxe1G7m1G6O1eBGhFCEe0Qg0wW6gWEf1v689E91GT8ui0U0W90qm0U6x8iQq0SGs0S4u0U62lW70O080T08cegGYS2GW8A80U08kVtR1u0A0PWAeeanmGe00000003mFzWA0k0AW8bw-0g0jHY82mAg2n3BgEvFaOW003_vClqCZWK0m0k0emN82u3Kam7P2v689E91GT8uw0kZmn3m2mg83AAtthu1w0m1c0tlmKlW3GA93W0000000F0_a0x0X3sW3i24FR0E0Q4F00000000y3-e3v6Hal2Qg93fEDaFgjXy1Rnp_3_W3m6049Ikkn2G4Ew-ciBhiCVTCPeG2H400000003mFyWGeAe2q13VXgzV-10HW14HY143a141g170X3sm4G784OFsXGte4SsVw9NUrUIUPV4H0000002chq3w4HaD000001K000007G00000b000002q00000Y181a181gH97iv7deHaLF_0I4VWI0O0J6OWJ0P0JCfWJ0G00?stat-id=1&amp;test-tag=330953423640577&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMzA5NTI5OTk5OTMzNDQifQ%3D%3D&amp;" class="d58ed4068 pb10fdad2 w4fc35aad" target="_blank"><yatag class="u66ffe45a"><yatag class="x77c209ce"><yatag class="icfd6d653">Узнать больше</yatag></yatag></yatag></a><yatag class="f47102a29 k99915bf6"><yatag class="u66ffe45a"><yatag class="x77c209ce"><a href="https://an.yandex.ru/count/DZnExY_ZKrK507G2CMeDCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0avKeZHQbE_vm0AW-X3m0gpOb-CF-0A2W820WA1BW0EsavJM1eW3oP3gPAW31B031BW4_m7e1C4X-0IZmn281QF34905gwyie0MhXGMe1UIP1B05v9a4k0Npeml01UFv6CW5_Qi6q0Mv_m7W1Jxe1G7m1G6O1eBGhFCEe0Qg0wW6gWEf1v689E91GT8ui0U0W90qm0U6x8iQq0SGs0S4u0U62lW70O080T08cegGYS2GW8A80U08kVtR1u0A0PWAeeanmGe00000003mFzWA0k0AW8bw-0g0jHY82mAg2n3BgEvFaOW003_vClqCZWK0m0k0emN82u3Kam7P2v689E91GT8uw0kZmn3m2mg83AAtthu1w0m1c0tlmKlW3GA93W0000000F0_a0x0X3sW3i24FR0E0Q4F00000000y3-e3v6Hal2Qg93fEDaFgjXy1Rnp_3_W3m6049Ikkn2G4Ew-ciBhiCVTCPeG2H400000003mFyWGeAe2q13VXgzV-10HW14HY143a141g170X3sm4G784OFsXGte4SsVw9NUrUIUPV4H0000002chq3w4HaD000001K000007G00000b000002q00000Y181a181gH97iv7deHaLF_0I4VWI0O0J6OWJ0P0JCfWJ0G00?stat-id=1&amp;test-tag=330953423640577&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMzA5NTI5OTk5OTMzNDQifQ%3D%3D&amp;" class="d58ed4068 sf8689dd6" target="_blank"><yatag class="icfd6d653">love-piano.ru</yatag></a></yatag></yatag></yatag></yatag></yatag></yatag></yatag><yatag class="e3038e04c gf66a5b21"><yatag class="e8bd36d9b"><yatag class="t6b4922fa"><yatag></yatag></yatag></yatag></yatag><yatag class="q6845a887 a20e0f054 fe780edcc"><yatag class="yfda746c2"><yatag class="nba71b152 bd51a69ca m856ad55a"><yatag class="k2a904f5"><yatag style="width: 8px !important; height: 8px !important;" class="y40c69e95"><svg width="8px" height="8px" viewBox="0 0 14 14"><polygon points="8.28616426 7.02081528 13.6638974 12.3985484 12.3985484 13.6638974 7.02081528 8.28616426 1.64308213 13.6638974 0.377733152 12.3985484 5.7554663 7.02081528 0.377733152 1.64308213 1.64308213 0.377733152 7.02081528 5.7554663 12.3985484 0.377733152 13.6638974 1.64308213"></polygon></svg></yatag><yatag class="la8ad4f47"><yatag class="qcea45d53"></yatag><yatag class="a741b2357">Скрыть&nbsp;объявление</yatag></yatag></yatag></yatag></yatag></yatag></yatag></yatag><yatag id="j1224b45"><yatag class="i988a41f3"></yatag></yatag></yatag></yatag></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-2736-1",
+                renderTo: "yandex_rtb_R-A-2736-1",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+
+</td></tr></tbody></table>
+<br>
+</font></p></font></form></font></font></font></font></font></td>
+
+<td width="25">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td width="129" bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="50">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="427" bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="25">
+<font size="0">
+&nbsp;
+</font></td>
+</tr>
+
+</tbody></table>
+
+</td><td width="129" valign="TOP" bgcolor="555581" align="CENTER"> 
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-0269592369109973";
+//120x600
+google_ad_slot = "8729918506";
+google_ad_width = 120;
+google_ad_height = 600;
+//--></script>
+<script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/show_ads.js">
+</script><ins id="aswift_1_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent;" data-ad-slot="8729918506"><ins id="aswift_1_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0px;width:120px;height:600px;" width="120" height="600" frameborder="0"></iframe></ins></ins>
+
+<br>
+<br>
+
+<table width="111" cellspacing="0" cellpadding="2" border="0">
+<tbody><tr bgcolor="dedede">
+<td align="CENTER">
+<font size="0">
+<a href="http://www.muzoborudovanie.ru/ads/adrates.php">
+Цены на рекламу
+</a>
+</font></td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+
+
+
+
+
+
+ 
+
+
+<script type="text/javascript">
+<!--
+var _acic={dataProvider:10};(function(){var e=document.createElement("script");e.type="text/javascript";e.async=true;e.src="//www.acint.net/aci.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})()
+//-->
+</script>
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+<tbody><tr valign="TOP" align="CENTER">
+<td width="129">
+
+<noindex>
+<br>
+<!-- SpyLOG -->
+<script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/counter_cv.js" id="spylog_code" type="text/javascript" counter="10716" part="" track_links="ext" page_level="1">
+</script><a href="https://spylog.com/cnt?cid=10716&amp;p=1&amp;f=3"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/cnt.gif" id="spylog_img" alt="SpyLOG" width="88" height="31" border="0"></a>
+<noscript>
+<a href="http://u107.16.spylog.com/cnt?cid=10716&f=3&p=1" target="_blank">
+<img src="http://u107.16.spylog.com/cnt?cid=10716&p=1" alt="SpyLOG" border="0" width="88" height="31"></a>
+</noscript>
+<!--/ SpyLOG -->
+
+<!--Rating@Mail.ru COUNTEr--><script language="JavaScript" type="text/javascript"><!--
+d=document;var a='';a+=';r='+escape(d.referrer)
+js=10//--></script><script language="JavaScript1.1" type="text/javascript"><!--
+a+=';j='+navigator.javaEnabled()
+js=11//--></script><script language="JavaScript1.2" type="text/javascript"><!--
+s=screen;a+=';s='+s.width+'*'+s.height
+a+=';d='+(s.colorDepth?s.colorDepth:s.pixelDepth)
+js=12//--></script><script language="JavaScript1.3" type="text/javascript"><!--
+js=13//--></script><script language="JavaScript" type="text/javascript"><!--
+d.write('<a href="http://top.mail.ru/jump?from=120209"'+
+' target=_top><img src="http://d5.cd.b1.a0.top.list.ru/counter'+
+'?id=120209;t=49;js='+js+a+';rand='+Math.random()+
+'" alt="Рейтинг@Mail.ru"'+' border=0 height=31 width=88/><\/a>')
+if(11<js)d.write('<'+'!-- ')//--></script><a href="http://top.mail.ru/jump?from=120209" target="_top"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/counter.gif" alt="Рейтинг@Mail.ru" width="88/" height="31" border="0"></a><!-- <noscript><a
+target=_top href="http://top.mail.ru/jump?from=120209"><img
+src="http://d5.cd.b1.a0.top.list.ru/counter?js=na;id=120209;t=49"
+border=0 height=31 width=88
+alt="Рейтинг@Mail.ru"/></a></noscript><script language="JavaScript" type="text/javascript"><!--
+if(11<js)d.write('--'+'>')//--><!--/COUNTER-->
+
+</noindex>
+
+</td>
+
+<td width="502">
+<p>
+<font size="-2" face="Verdana, Tahoma, Arial, sans serif">
+</font></p><p><font size="-2" face="Verdana, Tahoma, Arial, sans serif">
+<br>
+Музыкальное Оборудование
+<br><a href="http://www.muzoborudovanie.ru/">www.muzoborudovanie.ru</a>
+<br>www.moline.ru
+<br><a href="mailto:mail@muzoborudovanie.ru">mail@muzoborudovanie.ru</a>
+<br><a href="http://www.muzoborudovanie.ru/data.php">© Агентство ДАТА</a>
+<br>
+</font></p></td>
+
+<td width="129">
+<p>
+<noindex>
+<br>
+<!-- begin of Top100 code -->
+<script id="top100Counter" type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/top100.jcn"></script><a href="https://top100.rambler.ru/home?id=196166" target="_blank"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/a.gif" title="Rambler's Top100" alt="Rambler's Top100" border="0"></a><noscript><a href="http://top100.rambler.ru/home?id=196166" target="_blank"><img src="http://cnt.rambler.ru/top100.cnt?196166" alt="Rambler's Top100" width="81" height="63" border="0" /></a></noscript>
+<!-- end of Top100 code -->
+</noindex>
+
+</p></td>
+</tr>
+</tbody></table>
+
+</center>
+</font><iframe src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/a.htm" style="width:1px;height:1px;display:none;" width="0" height="0" frameborder="0"></iframe><iframe id="google_osd_static_frame_1979526467657" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe><ins class="adsbygoogle adsbygoogle-noablate" style="display: none !important;" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_2_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;" frameborder="0"></iframe></ins></ins></ins></body><iframe id="google_esf" name="google_esf" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%207.2%20%E2%80%94%20MIDI%20Show%20Control.%20-%20%D0%9C%D0%9E_files/zrt_lookup.htm" style="display: none;" data-ad-client="ca-pub-0269592369109973"></iframe></html>

@@ -1,0 +1,1339 @@
+<html><head>
+<title>MIDI в деталях. Часть 4 — MIDI Time Code. - МО</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/integrator_002.js" as="script"><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/ca-pub-0269592369109973.js"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/adsbygoogle.js"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/osd.js"></script><script type="text/javascript" async="" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/aci.js"></script><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/context.js" async=""></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/show_ads_impl.js" id="google_shimpl"></script><script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/ca-pub-0269592369109973.js"></script><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/integrator_002.js"></script><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/integrator.js" as="script"><script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/integrator.js"></script><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/show_ads_impl.js" as="script"><link rel="preload" href="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/context_static.js" as="script"><script id="https://an.yandex.ru/partner-code-bundles/8789/context_static.js" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/context_static.js"></script><script type="text/javascript" charset="utf-8" async="" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/d0ac678e6c3095b874ca.js"></script><style type="text/css"> #o4ddd036c .r439b5e1a{position:fixed !important;left:-1000px !important;top:-1000px !important;width:1px !important;height:1px !important;display:block !important}</style><style type="text/css"> .c35201dfd{opacity:1 !important;white-space:normal !important;visibility:visible !important}.c35201dfd,.c35201dfd yatag{display:block !important;font-family:inherit !important}.c35201dfd,.c35201dfd,.c35201dfd a,.c35201dfd b,.c35201dfd em,.c35201dfd iframe,.c35201dfd img,.c35201dfd table,.c35201dfd tbody,.c35201dfd td,.c35201dfd tr,.c35201dfd yatag{box-sizing:content-box !important;color:inherit !important;font-size:inherit !important;font-weight:inherit !important;-webkit-hyphens:manual !important;-ms-hyphens:manual !important;hyphens:manual !important}.c35201dfd,.c35201dfd a,.c35201dfd b,.c35201dfd em,.c35201dfd iframe,.c35201dfd img,.c35201dfd table,.c35201dfd tbody,.c35201dfd td,.c35201dfd tr{background:none !important;border:none !important;border-radius:0 !important;border-spacing:0 !important;border-collapse:collapse !important;clear:none !important;float:none !important;font-variant:normal !important;letter-spacing:normal !important;line-height:normal !important;margin:0 !important;max-height:none !important;max-width:none !important;min-height:0 !important;min-width:0 !important;outline:none !important;padding:0 !important;position:static !important;text-align:left !important;text-decoration:none !important;text-indent:0 !important;text-transform:none !important;vertical-align:baseline !important;visibility:inherit !important;word-spacing:normal !important}.c35201dfd,.c35201dfd a,.c35201dfd b,.c35201dfd em,.c35201dfd img,.c35201dfd table,.c35201dfd tbody,.c35201dfd td,.c35201dfd tr{height:auto !important}.c35201dfd table{display:table !important;empty-cells:hide !important;table-layout:fixed !important}.c35201dfd table,.c35201dfd td{font-size:100% !important}.c35201dfd td{display:table-cell !important;vertical-align:middle !important}.c35201dfd{width:auto !important;height:auto !important;overflow:visible !important}.c35201dfd{position:relative !important;z-index:1 !important;-webkit-font-smoothing:antialiased !important;-webkit-text-size-adjust:none !important}.c35201dfd .y1811fab2,.c35201dfd .y1811fab2:hover,.c35201dfd .y1811fab2:hover b,.c35201dfd .y1811fab2 b{display:inline !important;color:#006600 !important;text-decoration:none !important;border-bottom-color:rgba(0,102,0,0.4) !important;border-bottom-width:1px !important;border-bottom-style:solid !important}.c35201dfd .y1811fab2:hover,.c35201dfd .y1811fab2:hover b{color:#DD0000 !important;border-bottom-color:rgba(221,0,0,0.4) !important}.c35201dfd a:focus{-webkit-user-select:none !important;-moz-user-select:none !important;-ms-user-select:none !important;user-select:none !important}.c35201dfd .oc63bdf09{cursor:pointer !important}.c35201dfd .odb3abbfa{display:inline !important}.c35201dfd .ib74653d4{overflow-wrap:break-word !important;word-wrap:break-word !important;-webkit-hyphens:auto !important;-ms-hyphens:auto !important;hyphens:auto !important}.c35201dfd .ea26ae787,.c35201dfd .ob208bc4b{overflow:hidden !important}.c35201dfd .ea26ae787,.c35201dfd .ob208bc4b,.c35201dfd .j871a7f7e:after{position:absolute !important;top:0 !important;right:0 !important;bottom:0 !important;left:0 !important}.c35201dfd .j871a7f7e:after{content:"" !important;display:block !important;background:linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.5)) !important}.c35201dfd .g48aea57d{cursor:pointer !important}.c35201dfd .g48aea57d,.c35201dfd .nb419856e{position:relative !important}.c35201dfd .nb419856e:after{content:"" !important;position:absolute !important;top:0 !important;left:-5px !important;bottom:-5px !important;right:0 !important}.c35201dfd .nb419856e.wd8aba6ef:after{left:0 !important;bottom:0 !important}.c35201dfd .ea376bb65{z-index:-1 !important;transition:z-index 0s linear .4s !important;cursor:default !important;line-height:1.25 !important}.c35201dfd .ea376bb65,.c35201dfd .eeb86532{position:absolute !important;top:0 !important;left:0 !important;width:100% !important;height:100% !important;overflow:hidden !important}.c35201dfd .eeb86532{margin-left:100% !important;transition:margin-left .4s ease-out !important}.c35201dfd .xc4ba3193{position:absolute !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;margin-left:0 !important;width:100% !important;height:100% !important;background:#fff !important;background:hsla(0,0%,100%,.98) !important;transition:margin-left .4s ease-out !important}.c35201dfd .y6eceac74{z-index:10 !important;transition:z-index 0s !important}.c35201dfd .y6eceac74 .eeb86532{margin-left:0 !important}.c35201dfd .q327a85fb{padding:0 0 4px 4px !important}.c35201dfd .gbd69a9ee{position:absolute !important;top:50% !important;right:100% !important;margin-top:-9px !important;margin-right:8px !important;padding:0 4px !important;max-width:120px !important;height:18px !important;line-height:18px !important;color:#fff !important;background:#333 !important;background-color:rgba(0,0,0,.8) !important;border-radius:1px !important;visibility:hidden !important;font-size:11px !important;white-space:nowrap !important}.c35201dfd .wda0842fa{position:absolute !important;top:3px !important;right:-6px !important;display:block !important;overflow:hidden !important;width:0 !important;height:0 !important;border-style:solid !important;border-width:6px 0 6px 6px !important;border-color:transparent transparent transparent #333 !important;border-color:transparent transparent transparent rgba(0,0,0,.8) !important}.c35201dfd .ef6b909fe{position:relative !important;color:#fff !important;letter-spacing:.04em !important}.c35201dfd .a9e3b209c{position:relative !important;padding:4px !important;border-radius:0 0 0 20% !important}.c35201dfd .x3d3c04bc svg{display:block !important;max-height:none !important}.c35201dfd .x3d3c04bc polygon{fill:#000000 !important}.c35201dfd .l3de57f1d{margin:-3px !important;width:1em !important;height:1em !important;line-height:1em !important;text-align:center !important;font-size:18px !important}.c35201dfd .pe359899d{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxNCAxNCI+PHBvbHlnb24gcG9pbnRzPSIxNCwwLjcgMTMuMywwIDcsNi4yOTkgMC43LDAgMCwwLjcgNi4zLDcgMCwxMy4yOTkgMC43LDE0IDcsNy43IDEzLjMsMTQgMTQsMTMuMjk5IDcuNyw3Ij48L3BvbHlnb24+PC9zdmc+") !important}.c35201dfd .q327a85fb:hover .gbd69a9ee{visibility:visible !important}.c35201dfd .ab1ebd230:hover .gbd69a9ee{display:none !important}.c35201dfd .g6641b148{visibility:visible !important}.c35201dfd .g6641b148 .gbd69a9ee{display:none !important}.c35201dfd .efd99e4e6 .gbd69a9ee{height:19px !important;line-height:19px !important}.c35201dfd .efd99e4e6 .wda0842fa{top:2px !important}.c35201dfd .ae16e50d2 .a9e3b209c{padding:5px !important}.c35201dfd .ae16e50d2 .l3de57f1d{margin:-5px !important;font-size:25px !important}.c35201dfd .ae16e50d2 .gbd69a9ee{margin-right:9px !important;margin-top:-12px !important;max-width:160px !important;height:22px !important;line-height:22px !important;font-size:13px !important}.c35201dfd .ae16e50d2 .wda0842fa{right:-7px !important;top:4px !important;border-width:7px 0 7px 7px !important}.c35201dfd .q327a85fb.ab1ebd230 .gbd69a9ee{display:none !important}.c35201dfd .w12411fe9 .a9e3b209c{background-color:rgba(0,0,0,.25) !important}.c35201dfd .w12411fe9 .x3d3c04bc polygon{fill:#fff !important}.c35201dfd .w12411fe9 .x3d3c04bc.pe359899d{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHN0eWxlPSJmaWxsOiAjZmZmIiB2aWV3Qm94PSIwIDAgMTQgMTQiPjxwb2x5Z29uIHBvaW50cz0iMTQsMC43IDEzLjMsMCA3LDYuMjk5IDAuNywwIDAsMC43IDYuMyw3IDAsMTMuMjk5IDAuNywxNCA3LDcuNyAxMy4zLDE0IDE0LDEzLjI5OSA3LjcsNyI+PC9wb2x5Z29uPjwvc3ZnPg==") !important}.c35201dfd .qfffabb0e,.c35201dfd .nb419856e.wd8aba6ef .q327a85fb{padding:0 !important}.c35201dfd .nb419856e.wd8aba6ef.cb32b4e2f.x3b31632e{top:3px !important;right:3px !important}.c35201dfd .nb419856e.wd8aba6ef.cb32b4e2f.x3b31632e .a9e3b209c{border-radius:20% !important}.c35201dfd .d7ebcd87b{position:absolute !important;top:0 !important;right:0 !important;left:0 !important;bottom:0 !important;width:100% !important;height:100% !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;color:#000 !important;font-size:13px !important;z-index:-1 !important;opacity:0 !important;transition:opacity .3s !important}.c35201dfd .d7ebcd87b,.c35201dfd .ofaeb7c3c{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.c35201dfd .e4e876fe6{margin-left:10px !important}.c35201dfd .q2877d3b0 svg{fill:#000 !important}.c35201dfd .t4ca501e8{font-size:15px !important}.c35201dfd .fa28b8475 .d7ebcd87b{opacity:1 !important;z-index:10 !important}.c35201dfd .a47ef9254{-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;min-width:100% !important;min-height:100% !important;font-size:13px !important}.c35201dfd .a47ef9254,.c35201dfd .q3e1063b3{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;box-sizing:border-box !important}.c35201dfd .q3e1063b3{width:100% !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;padding:10px !important}.c35201dfd .o2f046c5f{font-weight:700 !important}.c35201dfd .e89203e3f{display:none !important;font-weight:700 !important}.c35201dfd .be7940ec1,.c35201dfd .e89203e3f{-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.c35201dfd .be7940ec1{overflow:hidden !important}.c35201dfd .qda2a2c1b,.c35201dfd .be7940ec1{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;-webkit-flex-shrink:0 !important;-ms-flex-negative:0 !important;flex-shrink:0 !important;box-sizing:border-box !important}.c35201dfd .qda2a2c1b{-webkit-align-content:center !important;-ms-flex-line-pack:center !important;align-content:center !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;padding:0 !important;margin:0 !important;position:relative !important}.c35201dfd .ob7e1a803{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;box-sizing:border-box !important;margin:5px 0 !important}.c35201dfd .t143c5a63{display:none !important}.c35201dfd .ob7e1a803 .y6fea7b56{width:100% !important;max-width:250px !important}.c35201dfd .t143c5a63 .y6fea7b56{width:100% !important;max-width:180px !important}.c35201dfd .y6fea7b56{display:block !important;padding:5px !important;background-color:#fff !important;border:1px solid #c8c8c8 !important;border-radius:4px !important;text-align:center !important;color:#555 !important;white-space:nowrap !important;transition-property:border,color !important;transition-duration:.2s !important;cursor:pointer !important;box-sizing:border-box !important}.c35201dfd .y6fea7b56:hover{color:#333 !important;border-color:#333 !important}.c35201dfd .a47ef9254.jf7df5991 .be7940ec1{padding-bottom:15px !important}.c35201dfd .a47ef9254.jf7df5991 .qda2a2c1b,.c35201dfd .a47ef9254.jf7df5991 .q3e1063b3{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.c35201dfd .a47ef9254.jf7df5991 .qda2a2c1b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.c35201dfd .a47ef9254.p3a1651d1 .be7940ec1{padding-bottom:5px !important}.c35201dfd .a47ef9254.p3a1651d1 .q3e1063b3{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.c35201dfd .a47ef9254.p3a1651d1 .qda2a2c1b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.c35201dfd .a47ef9254.p3a1651d1 .ob7e1a803{margin:2px 0 !important}.c35201dfd .a47ef9254.p3a1651d1 .y6fea7b56{padding:3px !important}.c35201dfd .a47ef9254.w2f90ca31 .be7940ec1{padding-bottom:15px !important}.c35201dfd .a47ef9254.w2f90ca31 .qda2a2c1b,.c35201dfd .a47ef9254.w2f90ca31 .q3e1063b3{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.c35201dfd .a47ef9254.w2f90ca31 .qda2a2c1b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.c35201dfd .a47ef9254.w2f90ca31 .t143c5a63{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.c35201dfd .a47ef9254.w2f90ca31 .ibf45e801{display:none !important}.c35201dfd .a47ef9254.m49b3bb03 .be7940ec1{padding-bottom:5px !important}.c35201dfd .a47ef9254.m49b3bb03 .q3e1063b3{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.c35201dfd .a47ef9254.m49b3bb03 .qda2a2c1b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:stretch !important;-ms-flex-align:stretch !important;align-items:stretch !important}.c35201dfd .a47ef9254.m49b3bb03 .ob7e1a803{margin:2px 0 !important}.c35201dfd .a47ef9254.m49b3bb03 .t143c5a63{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.c35201dfd .a47ef9254.m49b3bb03 .ibf45e801{display:none !important}.c35201dfd .a47ef9254.m49b3bb03 .y6fea7b56{padding:3px !important}.c35201dfd .a47ef9254.t513081c4 .be7940ec1{padding-bottom:10px !important}.c35201dfd .a47ef9254.t513081c4 .q3e1063b3{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.c35201dfd .a47ef9254.t513081c4 .qda2a2c1b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;max-width:540px !important}.c35201dfd .a47ef9254.t513081c4 .ob7e1a803{width:50% !important;margin:0 !important;padding:5px !important}.c35201dfd .a47ef9254.r1a7920e4 .be7940ec1{padding-bottom:10px !important}.c35201dfd .a47ef9254.r1a7920e4 .q3e1063b3{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.c35201dfd .a47ef9254.r1a7920e4 .qda2a2c1b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;max-width:340px !important}.c35201dfd .a47ef9254.r1a7920e4 .ob7e1a803{width:50% !important;margin:0 !important;padding:5px !important}.c35201dfd .a47ef9254.r1a7920e4 .t143c5a63{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.c35201dfd .a47ef9254.r1a7920e4 .ibf45e801{display:none !important}.c35201dfd .a47ef9254.m80b4b869 .q3e1063b3{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.c35201dfd .a47ef9254.m80b4b869 .qda2a2c1b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:20px !important}.c35201dfd .a47ef9254.m80b4b869 .ob7e1a803{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.c35201dfd .a47ef9254.m80b4b869 .y6fea7b56{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.c35201dfd .a47ef9254.g828809fb .q3e1063b3{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.c35201dfd .a47ef9254.g828809fb .qda2a2c1b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:15px !important}.c35201dfd .a47ef9254.g828809fb .ob7e1a803{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.c35201dfd .a47ef9254.g828809fb .t143c5a63{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.c35201dfd .a47ef9254.g828809fb .ibf45e801{display:none !important}.c35201dfd .a47ef9254.g828809fb .y6fea7b56{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.c35201dfd .a47ef9254.v6b8fb9c9 .q3e1063b3{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.c35201dfd .a47ef9254.v6b8fb9c9 .o2f046c5f{display:none !important}.c35201dfd .a47ef9254.v6b8fb9c9 .e89203e3f{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.c35201dfd .a47ef9254.v6b8fb9c9 .qda2a2c1b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:15px !important}.c35201dfd .a47ef9254.v6b8fb9c9 .ob7e1a803{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 5px !important}.c35201dfd .a47ef9254.v6b8fb9c9 .t143c5a63{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.c35201dfd .a47ef9254.v6b8fb9c9 .ibf45e801{display:none !important}.c35201dfd .a47ef9254.v6b8fb9c9 .y6fea7b56{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.c35201dfd .a47ef9254.e119c3fbc{font-size:11px !important}.c35201dfd .a47ef9254.e119c3fbc .q3e1063b3{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:4px !important}.c35201dfd .a47ef9254.e119c3fbc .o2f046c5f{display:none !important}.c35201dfd .a47ef9254.e119c3fbc .e89203e3f{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.c35201dfd .a47ef9254.e119c3fbc .qda2a2c1b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:10px !important}.c35201dfd .a47ef9254.e119c3fbc .ob7e1a803{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 1px !important}.c35201dfd .a47ef9254.e119c3fbc .t143c5a63{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.c35201dfd .a47ef9254.e119c3fbc .ibf45e801{display:none !important}.c35201dfd .a47ef9254.e119c3fbc .y6fea7b56{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.c35201dfd .a47ef9254.ne4965ff{font-size:11px !important}.c35201dfd .a47ef9254.ne4965ff .q3e1063b3{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:0 !important}.c35201dfd .a47ef9254.ne4965ff .o2f046c5f{display:none !important}.c35201dfd .a47ef9254.ne4965ff .e89203e3f{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.c35201dfd .a47ef9254.ne4965ff .qda2a2c1b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important;padding-left:10px !important}.c35201dfd .a47ef9254.ne4965ff .ob7e1a803{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:0 2px !important}.c35201dfd .a47ef9254.ne4965ff .t143c5a63{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.c35201dfd .a47ef9254.ne4965ff .ibf45e801{display:none !important}.c35201dfd .a47ef9254.ne4965ff .y6fea7b56{padding:0 5px !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important}.c35201dfd .a47ef9254.feb282760{font-size:12px !important}.c35201dfd .a47ef9254.feb282760 .q3e1063b3{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important;padding:4px !important}.c35201dfd .a47ef9254.feb282760 .o2f046c5f{padding:2px 5px !important}.c35201dfd .a47ef9254.feb282760 .e89203e3f{display:none !important}.c35201dfd .a47ef9254.feb282760 .be7940ec1{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.c35201dfd .a47ef9254.feb282760 .qda2a2c1b{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;-webkit-flex-shrink:1 !important;-ms-flex-negative:1 !important;flex-shrink:1 !important}.c35201dfd .a47ef9254.feb282760 .ob7e1a803{-webkit-flex-grow:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important;margin:1px !important}.c35201dfd .a47ef9254.feb282760 .t143c5a63{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.c35201dfd .a47ef9254.feb282760 .ibf45e801{display:none !important}.c35201dfd .a47ef9254.feb282760 .y6fea7b56{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:center !important;-ms-flex-pack:center !important;justify-content:center !important;padding:2px !important}.c35201dfd .fa28b8475 .ob7e1a803{opacity:0 !important}.c35201dfd .x3b31632e{position:absolute !important;z-index:11 !important;right:0 !important;top:0 !important}.c35201dfd .q8fa2a9e8{position:absolute !important;left:-101% !important;top:0 !important;width:100% !important;height:100% !important;display:block !important}#c35201dfd .x5dae7513 .s3581308a,#c35201dfd .x5dae7513 .r1fc7db2b{display:none !important}#c35201dfd .x5dae7513 .q8fa2a9e8{left:0 !important;transition:left .4s ease-out !important}.c35201dfd .n161fbda1{font-family: Helvetica,Arial,sans-serif !important;border:inherit !important;border-radius:inherit !important;text-decoration:none !important;color:#000000 !important;font-weight:400 !important;line-height:1.25 !important}.c35201dfd .n161fbda1,.c35201dfd .bf13dddf8{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:column nowrap !important;-ms-flex-flow:column nowrap !important;flex-flow:column nowrap !important;position:relative !important;overflow:hidden !important}.c35201dfd .bf13dddf8{background:#FFFFFF !important}.c35201dfd .fbe500181{text-decoration:inherit !important;color:inherit !important;font-weight:inherit !important;line-height:inherit !important}.c35201dfd .e41283a7e:hover{color:#DD0000 !important}.c35201dfd .ee4571cce:hover{color:#DD0000 !important}.c35201dfd .te07e2bd8:hover{color:#DD0000 !important;-webkit-text-decoration-color:rgba(221,0,0,0.2) !important;text-decoration-color:rgba(221,0,0,0.2) !important}.c35201dfd .s2918af7b:hover{border-color:rgba(0,0,204,0.35) !important;color:#FFFFFF !important;fill:#FFFFFF !important}.c35201dfd .s2918af7b:hover .p716a45b1{border-color:#FFFFFF !important}.c35201dfd .te7ab737f{display:inline-block !important}.c35201dfd .te7ab737f:hover{color:#DD0000 !important}.c35201dfd .fbe500181{line-height:normal !important;letter-spacing:normal !important;-webkit-flex-basis:unset !important;-ms-flex-preferred-size:unset !important;flex-basis:unset !important}.c35201dfd .i3a89de42,.c35201dfd .v9657aea{display:inline-block !important;white-space:nowrap !important;font-size:10px !important;line-height:10px !important;height:10px !important;font-family:Verdana,sans-serif !important;color:inherit !important}.c35201dfd .x2f8ea23e{background:#FFFFFF !important;color:#000000 !important;border-radius:0 0 4px 4px !important}.c35201dfd .x2f8ea23e,.c35201dfd .se51101ec{display:block !important;font-size:10px !important;line-height:18px !important;height:18px !important;padding:0 6px !important;position:absolute !important;top:0 !important;z-index:2 !important}.c35201dfd .se51101ec{background:none !important;color:rgba(153,153,153,0.7) !important;border-radius:0 !important}.c35201dfd .ff95797e9 .v9657aea{color:#fff !important;text-shadow:0 1px 1px rgba(0,0,0,.25) !important}.c35201dfd .ff95797e9{position:absolute !important;top:0 !important;left:0 !important;background:unset !important;background-image:url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iOTAiPjxkZWZzPjxmaWx0ZXIgeD0iLTQ4LjAlIiB5PSItODAuMCUiIHdpZHRoPSIxOTYuMCUiIGhlaWdodD0iMjYwLjAlIiBpZD0iQSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTYiIGluPSJTb3VyY2VHcmFwaGljIi8+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IGZpbGw9IiMwMDAiIGZpbHRlcj0idXJsKCNBKSIgeD0iLTMyIiB5PSItNDAiIHdpZHRoPSIxMDAiIGhlaWdodD0iNjAiIHJ4PSIyMCIgZmlsbC1ydWxlPSJldmVub2RkIiBvcGFjaXR5PSIuMjUwIi8+PC9zdmc+") !important;width:120px !important;height:90px !important;z-index:1 !important}.c35201dfd .me1cb6d96{display:block !important;color:rgba(153,153,153,0.7) !important;position:absolute !important;bottom:3px !important;right:3px !important}.c35201dfd .pdd2a1817{height:18px !important;width:0 !important}.c35201dfd .nb1baeab{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-justify-content:flex-start !important;-ms-flex-pack:start !important;justify-content:flex-start !important;box-sizing:border-box !important;line-height:0 !important;z-index:1 !important}.c35201dfd .nb1baeab,.c35201dfd .nb1baeab .he453ad3a{width:100% !important}.c35201dfd .nb1baeab .q4e301bfd{padding:1px 0 !important}.c35201dfd .mc2769ebb{display:inline-block !important;font-family:Verdana,sans-serif !important;line-height:1.2em !important;padding:0 .4em !important}.c35201dfd .qe0695be7{cursor:default !important}.c35201dfd .qe0695be7 .mc2769ebb{font-size:10px !important;white-space:nowrap !important}.c35201dfd .c349a9552 .mc2769ebb{font-size:.8em !important}.c35201dfd .cac7a6421{color:#0000CC !important;font-size:1.3em !important;font-weight:700 !important;padding-bottom:.6em !important;line-height:1.25em !important}.c35201dfd .sb13c8b75{font-size:1em !important}.c35201dfd .sf66b6676{font-size:1.1em !important}.c35201dfd .jd4b6177{font-size:1.2em !important}.c35201dfd .ab0255a70{font-size:1.3em !important}.c35201dfd .bad9af671{font-size:1.4em !important}.c35201dfd .bf2c9d172{font-size:1.5em !important}.c35201dfd .r9a9cc73{font-size:1.6em !important}.c35201dfd .w35ebd77c{font-size:1.7em !important}.c35201dfd .x3361737d{font-size:1.8em !important}.c35201dfd .u18d15de5{font-size:1.9em !important}.c35201dfd .u92911684{font-size:2em !important}.c35201dfd .h3bb4a3e6{border-radius:0px !important;overflow:hidden !important}.c35201dfd .aad897611,.c35201dfd .rb902d377{padding-bottom:1em !important}.c35201dfd .l7f2cc684{max-width:300px !important}.c35201dfd .oc6baf055{-webkit-flex-flow:row wrap !important;-ms-flex-flow:row wrap !important;flex-flow:row wrap !important;-webkit-align-items:center !important;-ms-flex-align:center !important;align-items:center !important}.c35201dfd .oc6baf055,.c35201dfd .id0ce68d7{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-justify-content:flex-start !important;-ms-flex-pack:start !important;justify-content:flex-start !important}.c35201dfd .g374d9c44,.c35201dfd .id0ce68d7{-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important}.c35201dfd .g374d9c44{display:block !important;overflow:hidden !important;border:1px solid #0000CC !important;background:#0000CC !important;padding:.4em .8em !important;color:#FFFFFF !important;border-radius:4px !important;text-align:center !important;fill:#FFFFFF !important;font-size:12.892320000000002px !important}.c35201dfd .l7f2cc684 .g374d9c44{padding:.4em !important}.c35201dfd .b985a6af3{overflow:hidden !important;height:1.4em !important;text-overflow:ellipsis !important}.c35201dfd .sb2750567{white-space:nowrap !important;line-height:1.4em !important;height:1.4em !important}.c35201dfd .p716a45b1,.c35201dfd .sb2750567{display:inline-block !important}.c35201dfd .p716a45b1{box-sizing:border-box !important;line-height:.45em !important;height:.45em !important;width:.45em !important;border:solid #FFFFFF !important;border-width:1px 1px 0 0 !important;-webkit-transform:translateX(-50%) rotate(45deg) !important;transform:translateX(-50%) rotate(45deg) !important;-webkit-transform-origin:100% 100% !important;transform-origin:100% 100% !important}.c35201dfd .id0ce68d7 .g374d9c44{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;font-family:Verdana,sans-serif !important;font-size:12px !important;border-radius:8px !important}.c35201dfd .mb7606ac0{font-family:Verdana,sans-serif !important;display:block !important;color:#006600 !important;text-align:center !important;line-height:0 !important}.c35201dfd .jb0eab99f{font-size:12px !important}.c35201dfd .l7f2cc684 .mb7606ac0{padding-top:.5em !important}.c35201dfd .l7f2cc684 .jb0eab99f{padding-top:.8em !important}.c35201dfd .oc6baf055 .mb7606ac0{padding-left:.8em !important;padding-right:.6em !important}.c35201dfd .oc6baf055 .jb0eab99f{padding-left:1.5em !important;padding-right:1em !important}.c35201dfd .f9cc51894{padding-bottom:1em !important}.c35201dfd .m45bd778c{display:block !important;color:#0000CC !important;line-height:1.7em !important;text-decoration:underline !important;-webkit-text-decoration-color:rgba(0,0,204,0.2) !important;text-decoration-color:rgba(0,0,204,0.2) !important}.c35201dfd .p9ce7789e{padding-bottom:1em !important;opacity:.5 !important}.c35201dfd .n788fe786{line-height:1.6em !important}.c35201dfd .g7679e26{position:absolute !important;background:rgba(0,0,0,.1) !important;background-size:cover !important;box-shadow:0 1px 2px rgba(0,0,0,.5) !important;border-radius:.5em !important}.c35201dfd .xc4ba3193{background:hsla(0,0%,100%,.98) !important}.c35201dfd .y6fea7b56{background:hsla(0,0%,100%,.98) !important;color:#555555 !important}.c35201dfd .k41d024bf .odab2bf48{-webkit-flex:1 0 auto !important;-ms-flex:1 0 auto !important;flex:1 0 auto !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important;min-height:inherit !important;position:relative !important}.c35201dfd .k41d024bf .v9657aea{left:1em !important}.c35201dfd .k41d024bf .se51101ec{left:.5em !important}.c35201dfd .k41d024bf .nb1baeab{color:#fff !important;position:absolute !important;bottom:0 !important;left:0 !important;right:0 !important}.c35201dfd .k41d024bf .nb1baeab .q4e301bfd{padding:.5em 0 !important}.c35201dfd .k41d024bf .mc2769ebb{padding:0 1em !important}.c35201dfd .k41d024bf .va5ddaff{background:rgba(0,0,0,.25) !important}.c35201dfd .k41d024bf .ja8f35e6d{background-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.6)) !important}.c35201dfd .k41d024bf .c6e313843{-webkit-flex:1 0 !important;-ms-flex:1 0 !important;flex:1 0 !important;display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important;-webkit-flex-flow:column nowrap !important;-ms-flex-flow:column nowrap !important;flex-flow:column nowrap !important;padding:.8em 1em 0 1em !important;overflow:hidden !important}.c35201dfd .k41d024bf .h3bb4a3e6{-webkit-flex:1 0 !important;-ms-flex:1 0 !important;flex:1 0 !important;display:block !important;background:rgba(0,0,0,.1) center top !important;background-size:cover !important;background-repeat:no-repeat !important;position:relative !important;overflow:hidden !important}.c35201dfd .k41d024bf .rb902d377{margin-top:auto !important}.c35201dfd .k41d024bf .g7679e26{top:2em !important;left:1em !important}.c35201dfd .k41d024bf.r6d5d6bd0 .c6e313843{padding:0 10px 0 1em !important}.c35201dfd .aad897611 .fbe500181{background-color:INVALID !important}.c35201dfd .ee4571cce{color:INVALID !important}.c35201dfd .e41283a7e{background:INVALID !important;color:INVALID"" !important}.c35201dfd .te7ab737f{background:INVALID !important;color:INVALID !important}.c35201dfd .te07e2bd8{background:INVALID !important;color:INVALID !important}.c35201dfd .f9cc51894{background:INVALID !important}.c35201dfd .mb7606ac0{background:INVALID !important}.c35201dfd .g374d9c44{background-color:INVALID !important}.c35201dfd .v353138df.n161fbda1 .ee4571cce{color:INVALID !important}.c35201dfd .v353138df.n161fbda1 .te7ab737f{color:INVALID !important}.c35201dfd .v353138df.n161fbda1 .e41283a7e{color:INVALID !important}.c35201dfd .v353138df.n161fbda1 .g374d9c44{background-color:INVALID !important}.c35201dfd .fb45b14e5.n161fbda1 .e41283a7e{color:INVALID !important}.c35201dfd .nc2656368{-webkit-flex-flow:row nowrap !important;-ms-flex-flow:row nowrap !important;flex-flow:row nowrap !important;min-width:1px !important;min-height:1px !important}.c35201dfd .nc2656368,.c35201dfd .y49c2f598{display:-webkit-flex !important;display:-ms-flexbox !important;display:flex !important}.c35201dfd .y49c2f598{overflow:hidden !important;-webkit-justify-content:space-between !important;-ms-flex-pack:justify !important;justify-content:space-between !important;-webkit-align-content:space-between !important;-ms-flex-line-pack:justify !important;align-content:space-between !important;-webkit-flex-wrap:wrap !important;-ms-flex-wrap:wrap !important;flex-wrap:wrap !important;margin:auto !important;border:solid #DDDCDA !important;border-width:1px !important;border-radius:0 !important;box-sizing:border-box !important}.c35201dfd .nf2da94cd{-webkit-align-items:flex-start !important;-ms-flex-align:start !important;align-items:flex-start !important;visibility:hidden !important}.c35201dfd .la370da0d{-webkit-flex-direction:row !important;-ms-flex-direction:row !important;flex-direction:row !important}.c35201dfd .r69a84131{-webkit-flex-direction:column !important;-ms-flex-direction:column !important;flex-direction:column !important}.c35201dfd .c4670c463,.c35201dfd .f43078bac{border-width:0 !important}.c35201dfd .c4670c463 .n161fbda1{border-width:1px !important}.c35201dfd .tc26a018f .n161fbda1{border-width:0 !important;border-radius:0 !important}.c35201dfd .x4ef2fd2d .n161fbda1{margin:-1px !important;border-radius:0 !important}</style><script charset="utf-8" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/watch.js"></script><script async="" crossorigin="anonymous" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/host.js"></script></head>
+
+<body vlink="656591" topmargin="0" text="000000" marginwidth="0" marginheight="0" link="333367" leftmargin="0" bgcolor="dedede" alink="656591">
+<font face="Arial, sans serif">
+
+<center>
+
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="555581">
+<tbody><tr>
+
+<td width="273" height="90" align="CENTER"> 
+<a href="http://www.muzoborudovanie.ru/index.php">
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/logo1.gif" alt="Начало" width="260" height="70" border="0"><br>
+</a>
+</td>
+
+<td width="15"> 
+&nbsp;
+</td>
+
+<td width="472" align="CENTER">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0269592369109973";
+/* 468x60 */
+google_ad_slot = "0177074942";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/show_ads.js">
+</script><ins id="aswift_0_expand" style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent;" data-ad-slot="0177074942"><ins id="aswift_0_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0px;width:468px;height:60px;" width="468" height="60" frameborder="0"></iframe></ins></ins></td>
+
+</tr>
+</tbody></table>
+
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+<tbody><tr>
+<td width="631">
+
+<table width="631" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+
+<tbody><tr>
+<td colspan="4" width="631">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td width="129" valign="TOP" bgcolor="555581" align="CENTER"> 
+
+<p>
+<font size="3">
+<br>
+<a href="http://www.muzoborudovanie.ru/news/news.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/news2.gif" alt="Новости" width="129" height="28" border="0"></a><a href="http://www.muzoborudovanie.ru/equip/equip.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/equip2.gif" alt="Оборудование" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/articles/articles.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/articles2.gif" alt="Статьи" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/forum/forum.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/forum2.gif" alt="Форум" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/files/files.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/files2.gif" alt="Файлы" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/org/org.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/org2.gif" alt="Организации" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/links/links.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/links2.gif" alt="Ссылки" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/prices/prices.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/price2.gif" alt="Прайс-листы" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/ads/advertiz.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/ads2.gif" alt="Реклама" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/dict.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/dict2.gif" alt="Словарь" width="129" height="25" border="0"></a><a href="http://www.muzoborudovanie.ru/isearch.php"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/isearch2.gif" alt="Поиск" width="129" height="24" border="0"></a>
+
+<font size="0">
+<br>
+<table width="121" cellspacing="0" cellpadding="2" border="0">
+
+<tbody><tr>
+<td bgcolor="333367" align="CENTER">
+<font size="1" face="Arial, sans serif" color="ffffff">
+СТАТЬИ
+</font></td>
+
+</tr><tr>
+<td bgcolor="dedede" align="CENTER">
+<font size="1" face="Verdana, Tahoma, Arial, sans serif">
+
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi1.php">Часть 1 — Основы.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi2.php">Часть 2 — Сообщения канала.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi3.php">Часть 3 — Системные сообщения.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi5.php">Часть 5 — Стандартные MIDI-файлы.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi6.php">Часть 6 — Передача данных.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi71.php">Часть 7.1 — MIDI Show Control.</a><br>
+<a href="http://www.muzoborudovanie.ru/articles/midi/midi72.php">Часть 7.2 — MIDI Show Control.</a><br>
+
+</font></td></tr><tr>
+<td bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+
+</tr></tbody></table>
+
+</font></font></p></td>
+
+<td width="50">
+&nbsp;
+</td>
+
+<td width="427" valign="TOP">
+
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="3" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+MIDI в деталях. Часть 4 — MIDI Time Code.
+</b></font></td></tr></tbody></table>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<font size="2" face="Arial, sans serif">
+<p>
+</p><div align="RIGHT">
+<b>
+Александр ФЕДОРОВ
+</b><br>
+<a href="http://www.muzoborudovanie.ru/org/mo/mo.php">Музыкальное Оборудование</a>
+<br>
+январь 2004
+</div>
+
+<p>
+<font size="2" face="Arial, sans serif">
+<b>
+Четвертая часть цикла статей, подробно рассказывающих о протоколе MIDI.
+</b>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+</font></font></p><p><font size="2" face="Arial, sans serif"><font size="2" face="Verdana, Tahoma, Arial, sans serif">
+В трех предыдущих статьях цикла были рассмотрены основные сообщения 
+MIDI, посредством которых вот уже более двадцати лет общаются друг с 
+другом электромузыкальные инструменты и приборы для работы со звуком. 
+После выхода первой версии MIDI в 1983 году дальнейшее расширение 
+протокола происходило своеобразными "волнами". Первые четыре года шла 
+"притирка" и "обкатка" MIDI производителями. Пионерами здесь были 
+Sequential Circuits и Roland, затем Yamaha, а за ними потянулись и 
+остальные. Несмотря на серьезную критику, обрушившуюся на протокол, 
+альтернатив ему, по большому счету, не было.
+</font></font></p><font size="2" face="Arial, sans serif"><font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Первая волна расширений пришлась на 1987 год — появились MIDI Time Code и
+ Sample Dump Standard. Затем — затишье, а с 1991 по 1992 год произошли 
+самые масштабные дополнения, которые полностью раскрыли потенциал MIDI. 
+Протокол стал применяться не только в "домашней" работе аранжировщика, 
+но в студиях звукозаписи и постпроизводства, в кино- и видеоиндустрии, 
+на концертах для управления звуком, светом, оборудованием сцены и даже 
+пиротехникой.
+</p>
+
+<p>
+Затем, до середины 90-х, наблюдалось очередное затишье, а начиная с 1996
+ года и по сей день происходит постоянное расширение MIDI, хотя и не 
+такое значительное, как в предыдущие годы. Сейчас деятельность 
+организации MMA направлена в область мобильных устройств и универсальных
+ форматов представления данных (XML).
+</p>
+
+<p>
+Расширениям протокола и будут посвящены несколько следующих статей 
+цикла. В основном я постараюсь придерживаться хронологического порядка 
+выхода официальных спецификаций, иначе мы утонем в перекрестных ссылках 
+из одной спецификации в другую.
+</p>
+
+<p>
+Тема сегодняшней статьи — первое расширение протокола, MIDI Time Code (MTC).
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+SMPTE
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Основная причина появления MIDI Time Code — потребность в надежной и 
+удобной системе синхронизации звукозаписывающего, кино- и 
+видеооборудования с одной стороны и MIDI-секвенсоров и музыкальных 
+инструментов — с другой. В мире профессиональной звукозаписи и 
+кино-видеопроизводстве основным форматом синхронизации является 
+SMPTE/EBU, принятый в 1971 году Обществом кино- и видеоинженеров США 
+(Society of Motion Picture and Television Engineers, SMPTE). Позднее к 
+нему присоединился Европейский союз вещателей (European Broadcast Union,
+ EBU).
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+MIDI Time Code является своеобразным мостом между устройствами, 
+работающими с SMPTE, и MIDI-устройствами. По сути, MTC — это метод 
+передачи SMPTE по протоколу MIDI.
+</p>
+
+<p>
+В SMPTE используется таймкод — блоки информации, передаваемые через 
+равные промежутки времени одновременно со звуком или изображением, 
+помечающие данный участок уникальной меткой времени. Время в SMPTE 
+является абсолютным, измеряется в часах, минутах, секундах и кадрах (в 
+одной секунде может быть от 24 до 30 кадров). Абсолютное время диктуется
+ самой природой носителя (скорость движения ленты в многодорожечном или в
+ видеомагнитофоне от музыкального темпа не зависит). Монтажные операции с
+ кино- видео- и аудиоматериалом, указание позиций начала и окончания 
+записи также удобнее производить, привязываясь к абсолютной шкале, а не к
+ тактам и долям.
+</p>
+
+<p>
+SMPTE содержит в себе одновременно и позиционную информацию (данные о 
+времени), и информацию о скорости, которую можно вычислить из частоты 
+поступления кадров. В системе, где необходимо синхронизировать несколько
+ устройств, одно из них назначается ведущим (мастером), а все остальные —
+ ведомыми (подчиненными). При воспроизведении в режиме синхронизации 
+мастер генерирует таймкод, а подчиненные устройства под него 
+подстраиваются. Если мастер является аналоговым устройством, то таймкод 
+физически прописывается на ленту (то есть занимает звуковую дорожку). В 
+цифровых устройствах таймкод может вычисляться прямо в процессе 
+воспроизведения, либо прописываться в область субкода.
+</p>
+
+<p>
+Таймкод SMPTE — это информация о времени и некоторых сопутствующих 
+данных, представленная в цифровом виде. Однако реально цифрового сигнала
+ SMPTE не существует, так как записать его "по битам" на аналоговый или 
+видеомагнитофон нельзя. Поэтому используются два варианта сигналов, 
+пригодных для записи: LTC (Longitudinal Time Code) и VITC (Vertical 
+Interval Time Code). Первый представляет собой звуковой сигнал, 
+полученный путем специального преобразования цифровой информации SMPTE. 
+Второй является частью видеосигнала и записывается в строки, не 
+содержащие изображения.
+</p>
+
+<p>
+В SMPTE существуют четыре стандартных формата кадров:
+</p>
+
+<p>
+- 24 fps (frames per second, кадров в секунду), используется в кинопроизводстве в странах с частотой переменного тока 60 Гц;
+</p>
+
+<p>
+- 25 fps, используется в Европе, Австралии и тех странах, где частота 
+переменного тока 50 Гц, а стандарт цветного телевещания — PAL или SECAM;
+</p>
+
+<p>
+- 30 fps — этот формат берет свое начало от устаревшего американского 
+стандарта черно-белого телевещания. Существует в двух видах: 30 fps 
+Non-Drop (частота кадров постоянна и в точности равна 30 кадрам в 
+секунду) и 30 fps Drop Frame ("выпадающие" кадры, частота непостоянна, 
+среднее значение 29,97 кадров в секунду). Последняя разновидность 
+используется в цветном вещании формата NTSC (Америка, Япония). 
+Обсуждение вопроса о дробном числе кадров в секунду выходит за рамки 
+этой статьи. Можно отметить лишь, что "выпадающие" кадры — это кадры, 
+которые просто пропускаются в тайм-коде: по два кадра в начале каждой 
+минуты, за исключением нулевой и каждой десятой минуты часа.
+</p>
+
+<p>
+При работе в чисто звуковом производстве выбор частоты кадров значения не имеет.
+</p>
+
+<p>
+Простейшей единицей информации в SMPTE является блок данных, 
+передаваемый каждый кадр реального времени, поэтому он так и называется —
+ кадр SMPTE. В аудиопроизводстве, в основном, применяется LTC-вариант 
+SMPTE, поэтому рассмотрим его формат подробнее. Для кодирования битов в 
+аудиосигнале используется схема под названием Bi-Phase Mark: нули 
+кодируются одиночным переворотом фазы на границе периода, единицы — 
+двумя переворотами, один на границе периода, другой в половине периода 
+(рис. 1). При частоте 30 fps скорость потока составляет 2400 бит/с. 
+Частота потока нулей равна 1,2 кГц, потока единиц — 2,4 кГц. Надо 
+сказать, что на слух все это звучит довольно противно.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/401.gif" alt="Рис. 1" width="280" height="150">
+</p>
+
+<p>
+LTC-кадр имеет длину 80 бит. Структура кадра показана на рис. 2. Время 
+SMPTE кодируется методом BCD (Binary Coded Decimal), редко применяющимся
+ в современной технике. В этом методе под каждую десятичную цифру 
+отводятся четыре бита, что нерационально (цифр всего десять, а места 
+хватило бы и на шестнадцать). В кадре на запись времени отводятся 26 
+бит, между ними вклиниваются дополнительные данные, а завершается все 
+синхрословом (последние 16 бит).
+</p>
+
+<br>
+ </font></font></font></font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/402.gif" alt="Рис. 2" width="606" height="246" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Большую часть дополнительных данных составляют так называемые 
+пользовательские биты (User Bits), восемь групп по четыре бита. Они 
+предназначены для передачи дополнительной информации, заданной 
+пользователем, например, номера ленты или даты. Могут содержать четыре 
+символа либо восемь цифр. Есть также несколько технологических битов, 
+назначение которых не имеет смысла здесь описывать. Синхрослово 
+используется для определения границы кадра, направления движения ленты, 
+скорости потока и автокалибровки устройства, считывающего таймкод. 
+Значение синхрослова фиксировано: 0011 1111 1111 1101.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+MIDI Time Code
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Протокол MIDI Time Code состоит из двух основных частей: сообщений, 
+отвечающих за передачу таймкода SMPTE, и сообщений управления событиями 
+(MIDI Cueing). Передача таймкода — процесс очевидный: текущее время 
+SMPTE упаковывается в обычные сообщения MIDI, которые распространяются 
+по MIDI-кабелю к потребителям. Источником MTC могут быть синхронизаторы —
+ специальные приборы, преобразующие LTC- или VITC-вариант сигнала SMPTE,
+ поступающего от мастера, в сигналы разных типов, в том числе и в 
+сообщения MIDI Time Code. Второй вариант — прямое генерирование MTC 
+секвенсором на основе размера и темпа произведения, либо цифровым 
+магнитофоном или компьютерной рабочей станцией на основе частоты 
+дискретизации и порядкового номера семпла.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Вторая составляющая MTC, MIDI Cueing — это нечто особенное, не имеющее 
+аналогов в SMPTE: способ автоматизации работы MIDI-системы на основе 
+запрограммированного списка событий.
+</p>
+
+<p>
+Далее речь пойдет о структуре MTC, без обсуждения практических аспектов,
+ а также оборудования для синхронизации и управления. Поэтому, если вы 
+не сталкивались с этой темой ранее, приведенный материал может 
+показаться довольно абстрактным. Однако таков замысел цикла: сначала мы 
+рассматриваем язык общения устройств, после чего — физическую реализацию
+ протокола, и только потом сами устройства с особенностями их 
+использования.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Quarter Frame
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Основное сообщение MTC для передачи таймкода называется Quarter Frame 
+(четверть кадра), как следует из названия, оно передается четыре раза за
+ SMPTE-кадр. В режиме синхронной работы от мастера к ведомым устройствам
+ поступает непрерывный поток сообщений Quarter Frame, так что здесь 
+прослеживается аналогия с сообщением MIDI Clock (см. <a href="http://www.muzoborudovanie.ru/articles/midi/midi3.php">предыдущую статью</a>).
+ Однако между этими сообщениями есть принципиальная разница: частота 
+потока Quarter Frame не зависит от текущего темпа, а определяется 
+выбранным форматом кадров SMPTE. Так, при 30 fps один "тик" Quarter 
+Frame будет происходить каждые 8,3 мс. Однако только "тиками" в системе 
+синхронизации по абсолютному времени не обойтись. Нужно передавать само 
+время, как это и происходит в SMPTE.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Правда, здесь возникает сложность — как передать 80-битный кадр в одном 
+сообщении Quarter Frame? Решение нашлось простое. Во-первых, не всю 
+информацию из этих 80 бит нужно передавать с каждым тиком, достаточно 
+будет текущего времени, а пользовательские данные и биты состояния можно
+ передать дополнительно, с другими сообщениями. Во-вторых, время можно 
+передавать поэтапно: в первом сообщении Quarter Frame передать кадры, во
+ втором — секунды, и так далее. В результате получилась структура, 
+приведенная на рис. 3.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/403.gif" alt="Рис. 3" width="427" height="307">
+</p>
+
+<p>
+Сообщение Quarter Frame относится к категории общесистемных и состоит из
+ статус-байта 0xF1 и одного байта данных. Этот байт делится на две 
+части: первая (биты 4, 5 и 6) содержит тип данных, а сами данные 
+хранятся во второй части (младшие четыре бита, рис. 3). Тип данных — это
+ не что иное, как часы, минуты, секунды или кадры. Правда, с помощью 
+четырех оставшихся бит много информации не передашь, поэтому значение 
+величины (например, номера кадра) формируется из двух последовательных 
+сообщений Quarter Frame. Четыре бита данных первого сообщения 
+объединяются с четырьмя битами второго, образуя байт данных, который 
+затем и принимается к обработке. Так что первое сообщение будет иметь 
+тип, скажем, "номер кадра, младшая половина значения", а второе — "номер
+ кадра, старшая половина".
+</p>
+
+<p>
+Простой пример: получены два сообщения Quarter Frame, байт данных 
+первого равен 00000011, второго — 00010001. Тип данных первого (биты 4, 
+5, 6) имеет номер 0, то есть "номер кадра, младшая половина", второго — 
+"номер кадра, старшая половина". Объединяя биты данных, получаем 
+00010011, то есть номер кадра равен 19. С секундами, минутами и часами 
+все аналогично. Правда, итоговый байт расшифровывается по-разному (рис. 
+4).
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/404.gif" alt="Рис. 4" width="427" height="453">
+</p>
+
+<p>
+Для номеров кадров используются только пять младших битов (старшие три 
+бита должны быть нулевые и приемником игнорироваться). Диапазон номеров —
+ от 0 до 29, первый кадр имеет номер 0. Для секунд и минут — шесть 
+младших битов (диапазон от 0 до 59). Для часов итоговый байт содержит 
+две величины: собственно номер часа (младшие пять бит) и частоту кадров 
+(биты 5 и 6). Старший бит игнорируется. Расшифровка частот кадров 
+приведена на рис. 4. Стоит заметить, что в стандарте SMPTE частота 
+кадров в самом кадре не кодируется, а определяется приемником 
+самостоятельно.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/405.gif" alt="Рис. 5" width="85" height="178" align="RIGHT">
+</p>
+
+<p>
+Если тайм-код передается в прямом направлении (то есть время идет 
+вперед), то устройство, генерирующее MTC, посылает восемь сообщений 
+Quarter Frame в показанном на рис. 5 порядке с интервалом в четверть 
+кадра между каждым сообщением, после чего процесс повторяется. Если 
+отсчет времени идет назад, то сообщения передаются в обратном порядке, 
+начиная с 0xF1 0x7n и заканчивая 0xF1 0x1n.  В любом случае передаются 
+все восемь сообщений, иначе приемник не получит полного значения 
+времени.
+</p>
+
+<p>
+Таким образом, на передачу информации об одном кадре SMPTE затрачивается
+ время, равное двум кадрам (8 х 1/4). А значит, при преобразовании SMPTE
+ в MTC только каждый второй кадр попадает в MIDI-таймкод. Это несколько 
+снижает скорость реакции ведомого устройства — для того, чтобы 
+"зацепиться", ему нужно прочитать восемь сообщений Quarter Frame в 
+указанном на рис. 5 (или обратном) порядке. В реальном времени это может
+ занять от двух до четырех кадров, в зависимости от момента начала 
+считывания. С другой стороны, информация о скорости (извлекаемая по 
+времени прихода сообщения Quarter Frame) приходит в четыре раза чаще по 
+сравнению с SMPTE, что способствует более качественной синхронизации.
+</p>
+
+<p>
+Теперь пара тонкостей. В SMPTE (в варианте LTC) приемник считает за 
+начало кадра момент получения первого бита 80-битной посылки. В MTC за 
+начало кадра считается момент прихода первого и пятого сообщения Quarter
+ Frame в серии, то есть 0xF1 0x0n и 0xF1 0x4n. Но время-то можно 
+прочитать только после того, как будут получены все восемь сообщений 
+серии. К этому моменту полученное значение времени устареет на два 
+кадра. Для отображения на дисплее правильного времени приемное 
+устройство должно прибавить к считанному значению поправку в эти самые 
+два кадра. При обратном отсчете времени поправка не нужна — время 
+считывается после прихода сообщения 0xF1 0x0n, то есть в момент 
+реального начала кадра.
+</p>
+
+<p>
+По идее, после однократного считывания времени приемник может просто 
+подсчитывать сообщения Quarter Frame и самостоятельно крутить стрелки на
+ своем "циферблате", так как число кадров в секунду также содержится в 
+считанном значении. Однако спецификация требует постоянной "сверки 
+часов", то есть извлечения реально переданного времени после каждых 
+восьми сообщений Quarter Frame.
+</p>
+
+<p>
+На рис. 6 показан пример передачи SMPTE-времени 02:44:39:12 в виде серии
+ из восьми сообщений Quarter Frame (частота кадров — 30 fps, non-drop). 
+Стоит отметить, что для частот 24, 30 drop frame и 30 non-drop номера 
+кадров в сообщениях Quarter Frame будут всегда четные, а для частоты 25 
+fps — четные будут меняться на нечетные каждую секунду. Связано это с 
+тем, что половина кадров SMPTE в MIDI Time Code не попадает.
+</p>
+
+<br>
+ </font></font></font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/406.gif" alt="Рис. 6" width="606" height="435" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Может показаться, что сообщения Quarter Frame сильно загружают канал 
+передачи. Давайте подсчитаем. Скорость передачи данных по MIDI-кабелю 
+составляет 31250 Кбит/с. Реально для передачи каждого байта требуются не
+ восемь, а десять бит (почему — поговорим в статье об аппаратной 
+реализации интерфейса). Следовательно, время передачи одного байта 
+составляет 320 микросекунд (10 / 31250). Возьмем самую высокую частоту 
+кадров SMPTE — 30 fps. Каждое сообщение Quarter Frame состоит из двух 
+байт, и эта пара будет передаваться 120 раз в секунду (30 fps х 4 
+сообщения на кадр). В данном случае канал будет занят 640 мкс каждую 
+1/120 секунды, или 7,68% времени. А это значит, что кроме MIDI Time Code
+ по тому же кабелю спокойно может пройти еще и насыщенная аранжировка. И
+ хотя на практике мешать синхросигнал с рабочими данными не принято (под
+ MTC отводится отдельный порт), особых препятствий для этого нет.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Full Frame
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Несмотря на предыдущий оптимистичный вывод, возможны ситуации, когда 
+сообщения Quarter Frame займут всю полосу пропускания MIDI и даже 
+перегрузят канал передачи. Например, при воспроизведении на повышенной 
+скорости, при перемотке ленты в многодорожечном или видеомагнитофоне. В 
+этом случае исходный SMPTE-таймкод начнет поступать в генератор MTC с 
+большой скоростью, и абсолютное время понесется с бешеным темпом. 
+Реальная частота кадров возрастет настолько, что MIDI-шина окажется 
+перегруженной.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Для таких случаев разработчики MTC предусмотрели сообщение Full Frame 
+(полный кадр). Оно содержит временную координату целиком и посылается 
+мастером периодически, отмечая текущую позицию времени приблизительно. 
+Ведомые устройства "слушают" эти сообщения и перемещают свои курсоры 
+(позиции локации) вслед за мастером. После того, как перемещение курсора
+ в мастере закончилось и включился режим обычного воспроизведения, 
+мастер снова посылает поток сообщений Quarter Frame. В современных 
+системах записи на диск перемещение курсора выполняется практически 
+мгновенно, а вот в механических устройствах (аналоговых или цифровых 
+ленточных магнитофонах) для этого требуется время, особенно в момент 
+перехода от перемотки к нормальному воспроизведению. Поэтому мастеру 
+рекомендуется делать паузу между последним сообщением Full Frame и 
+следующим за ним Quarter Frame, чтобы все устройства системы успели 
+подготовиться к воспроизведению с новой позиции.
+</p>
+
+<p>
+Таким образом, сообщение Quarter Frame используется только в режиме 
+обычного воспроизведения, во всех других случаях генератор MTC должен 
+передавать Full Frame.
+</p>
+
+<p>
+Сообщение Full Frame относится к группе универсальных сообщений SysEx 
+реального времени и имеет структуру, показанную на рис. 7. После 
+заголовка следует номер устройства в системе (Device ID, см. <a href="http://www.muzoborudovanie.ru/articles/midi/midi3.php">предыдущую статью</a>).
+ Напомню, номер 0x7F (127) означает, что сообщение будет передано 
+широковещательно, то есть всем устройствам системы. Следующий байт, Sub 
+ID, определяет категорию сообщения, в данном случае он равен 1 
+(категория MIDI Time Code, Long Form, см. <a href="http://www.muzoborudovanie.ru/articles/midi/midi3.php">предыдущую статью</a>).
+ На случай возможных расширений введен также уточняющий байт Sub ID 2, 
+который для сообщения Full Frame также равен 1. Наконец, идут четыре 
+байта данных: часы, минуты, секунды и кадры. Эти байты имеют ту же 
+структуру, что и байты, полученные при объединении пар сообщений Quarter
+ Frame (см. ранее). Так что байт часов содержит еще и частоту кадров. 
+Завершается сообщение, как обычно, байтом EOX.
+</p>
+
+<br>
+ </font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/407.gif" alt="Рис. 7" width="606" height="80" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+User Bits
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+Разработчики MTC не забыли и про пользовательскую информацию, 
+передаваемую в кадре SMPTE. Учитывая то, что эта информация обычно не 
+изменяется на протяжении всего сеанса синхронизации, нет надобности и 
+передавать ее так часто, как в SMPTE. Для этих целей используется 
+специальное сообщение SysEx. Его можно передать при инициализации 
+устройств MIDI-системы, или несколько раз по ходу работы — 
+пользовательская информация не критична к точному времени доставки.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Структура сообщения User Bits аналогична сообщению Full Frame (рис. 8). 
+Только номер подкатегории (Sub ID 2) здесь равен 2 и используются девять
+ байт данных. Первые восемь из них содержат в старшей половине нули, а в
+ младшей — биты из двоичных групп SMPTE, с первой по восьмую 
+соответственно. Девятый байт сообщения содержит в двух младших битах 
+флаги Binary Group Flag из кадра SMPTE.
+</p>
+
+<br>
+ </font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/408.gif" alt="Рис. 8" width="606" height="248" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Notation Information
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+К категории "информация о нотации" относятся два сообщения, описывающие 
+текущий музыкальный размер с настройкой метронома и номер такта. Эти 
+сообщения были добавлены в спецификацию MIDI в конце 1991 года и 
+помещены в группу универсальных сообщений SysEx реального времени.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Сообщение <b>Time Signature</b> (музыкальный размер) существует в двух 
+вариантах: "немедленном" (Sub ID 2 равен 2) и "задержанном" (Sub ID 2 
+равен 42). При получении первого приемник должен сразу же изменить 
+текущий музыкальный размер, второго — по окончании текущего такта. В 
+остальном эти сообщения идентичны и имеют структуру, показанную на рис. 
+9. Байт данных ln содержит количество байт, следующих за ним, до 
+завершающего EOX. В большинстве случаев оно равно трем — 
+числитель/знаменатель размера (nn / dd) и байт qq, который определяет 
+количество сообщений MIDI Clock, приходящихся на каждый удар метронома. 
+Числитель записывается "как есть", знаменатель — как степень двойки. 
+Например, при размере 6/8 байт nn будет равен 6, байт dd — 3. При 
+составном размере внутри такта (например, 3/4 + 7/4), за байтом qq могут
+ следовать дополнительные пары байт nn и dd, а, следовательно, значение 
+ln будет больше 3.
+</p>
+
+<br>
+ </font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/409.gif" alt="Рис. 9" width="606" height="83" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Сообщение <b>Bar Marker</b> (Sub ID 2 равен 1, рис. 10), передается в 
+момент начала очередного такта (вернее, непосредственно перед сообщением
+ MIDI Clock или Quarter Frame, с которого начинается такт). Сообщение 
+облегчает работу приемному устройству — зная то, на какое место такта 
+приходятся позиции начала/окончания записи, приемник может по-разному 
+эти позиции обрабатывать. Текущий номер такта может отображаться на 
+дисплее (например, мастер-клавиатуры), что очень удобно для музыканта. 
+Самое главное, сообщение Bar Marker, в отличие от Song Position Pointer 
+(см. <a href="http://www.muzoborudovanie.ru/articles/midi/midi3.php">предыдущую статью</a>), может передавать текущую позицию перед началом песни, то есть "затакт".
+</p>
+
+<br>
+ </font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/410.gif" alt="Рис. 10" width="606" height="85" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Структура сообщения такая. За стандартным заголовком следуют два байта 
+(lb и mb), которые содержат номер такта, целое 14-битное число со знаком
+ (младшие семь бит находятся в байте lb, старшие — в mb; о компьютерном 
+представлении целых отрицательных чисел рассказано во врезке). Так что 
+номера тактов получаются в диапазоне от -8192 до +8191. Положительные 
+номера означают текущий номер такта, а также косвенно говорят о том, что
+ передающее устройство находится в режиме воспроизведения. Нумерация 
+тактов идет с единицы, так что получение байтов lb mb = 0x01 0x00 
+означает, что начался первый такт. Максимальное положительное значение 
+(lb mb = 0x7F 0x3F) говорит о том, что воспроизведение идет, но номер 
+текущего такта неизвестен или не имеет значения. Отрицательные номера 
+означают "затакт" (отсчет перед воспроизведением). Например, получая  -1
+ (lb mb = 0x7F 0x7F), приемник понимает, что до начала воспроизведения 
+остается один такт, о чем можно известить и музыканта. Максимальный 
+отрицательный номер (lb mb = 0x00 0x40) говорит о том, что 
+воспроизведение остановлено.
+</p>
+
+<p>
+<table cellspacing="0" cellpadding="5" border="0" bgcolor="333367">
+<tbody><tr>
+<td>
+
+<p>
+<font size="2" face="Arial, sans serif" color="ffffff">
+
+</font></p><p><font size="2" face="Arial, sans serif" color="ffffff">
+<font face="Arial, sans serif">
+<big>
+<b>
+Представление целых чисел со знаком
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+В обыденной жизни для того, чтобы записать отрицательное число, мы 
+просто ставим перед ним знак "минус". Компьютер же никаких знаков не 
+понимает и умеет работать только с битами, которые могут принимать одно 
+из значений: 0 или 1. При работе с целыми числами  всегда используется 
+фиксированное число разрядов (бит). Например, если у нас есть четыре 
+разряда, то мы можем сохранять числа от 0 до 15 (2<sup>4</sup>-1). Это что касается положительных чисел. А как же с отрицательными?
+</font></font></font></p><font size="2" face="Arial, sans serif" color="ffffff"><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Раз никаких средств поставить "черточку" перед нашими четырьмя битами 
+нет, выделим один из них, например старший, в качестве индикатора знака.
+ Если он равен нулю — число положительное, если единице — отрицательное.
+ Тогда на представление самого числа останутся три бита (а, 
+следовательно, диапазон возможных абсолютных значений сократится вдвое).
+ Есть несколько способов, как использовать эти биты. Первый — записывать
+ в них значение числа по модулю. Вроде бы все просто: число +5 будет 
+выглядеть как 0101, а число -5 — как 1101. Однако такой способ имеет 
+недостатки: во-первых, у нас получаются два представления нуля, +0 
+(0000) и -0 (1000), а во-вторых, алгоритм сложения и вычитания в 
+микропроцессоре будет сложным и неэффективным.
+</p>
+
+<p>
+В большинстве современных процессоров (и, естественно, в MIDI) 
+используется модификация этого способа. Старший бит по-прежнему является
+ показателем знака числа. Положительное число записывается в оставшиеся 
+биты как обычно, а отрицательное занимает все биты в виде так 
+называемого <i>двоичного дополнения </i>своего абсолютного значения. 
+Предположим, нужно записать число -5. Для этого выполняем операцию 
+двоичного дополнения над абсолютным значением (5): инвертируем каждый 
+бит (вместо нуля пишем единицу, и наоборот), а к полученному числу 
+прибавляем 1 (рис. 11). Интересно, что выполнив эту процедуру еще раз, 
+мы получим исходное абсолютное значение.
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/411.gif" alt="Рис. 11" width="350" height="239">
+</p>
+
+<p>
+Наглядное пояснение к такому способу представления дает рис. 12 — 
+числовая прямая при ограниченном диапазоне чисел может быть свернута в 
+круг. На рисунке круг содержит четырехзначные двоичные значения, хотя 
+такое же построение можно провести для любого количества разрядов. 
+Двоичные значения в круге можно рассматривать либо как беззнаковые 
+(тогда их диапазон будет от 0 до 15), либо как числа со знаком (в 
+диапазоне от -8 до +7). В этом состоит одна из главных особенностей 
+представления данных в компьютере: для него любые данные — набор битов, а
+ как их интерпретировать, зависит от программы. Может показаться, что 
+отрицательных чисел здесь на одно больше, чем положительных. Но если 
+ноль принять за положительное число, то все будет "по-честному".
+</p>
+
+<p>
+<img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/412.gif" alt="Рис. 12" width="427" height="405">
+</p>
+
+<p>
+Какие преимущества в таком способе? Во-первых, остается только одно 
+представление нуля. Во-вторых, значительно облегчаются арифметические 
+операции, в частности, довольно сложная (для процессора) операция 
+вычитания может быть выполнена с помощью сложения! Например, для 
+вычитания 3 - 7 компьютер складывает 3 (0011) и двоичное дополнение 
+числа 7 (1001, то есть беззнаковое 9, см. на круге). В результате 
+получается 12 (1100), или  -4.
+</p>
+
+<p>
+Особенность двоичного дополнения: при разном количестве разрядов одно и 
+то же отрицательное число соответствует разным числам без знака. Так, в 
+предыдущем примере (при разрядности четыре бита) беззнаковому 12 
+соответствовало -4. Если использовать для хранения числа восемь бит (то 
+есть байт), то -4 будет записано как 11111100, то есть как беззнаковое 
+252.  Есть правило, которое можно использовать для нахождения такого 
+соответствия при любом числе разрядов: нужно сложить отрицательное число
+ с числом 2<sup>N</sup>, где N — число разрядов.
+</p>
+
+<p>
+В MIDI чаще всего используются 14-битные числа со знаком, то есть в 
+диапазоне от -8192 до +8191. Приведу пример упаковки отрицательного 
+числа в форме двоичного дополнения в MIDI-пару LSB/MSB.  Пусть число 
+будет -5833. Складываем его с 16384 (2<sup>14</sup>), получаем 10551. 
+Это и будет беззнаковое представление -5833 при разрядности 14 бит. 
+Упакуем его в пару MSB/LSB (подробнее об этом см. вторую статью цикла): 
+MSB = 82 или 0x52 (10551/128), LSB = 55 или 0x37 (10551 — (82 х 128)).
+</p>
+
+</font></font></font></td>
+</tr>
+</tbody></table>
+
+</p><p>
+<font face="Arial, sans serif">
+<big>
+<b>
+MIDI Cueing
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+MIDI Cueing — это часть протокола MTC, предназначенная для 
+автоматизированного управления устройствами MIDI-системы на основе 
+списка событий. Точный перевод слова Cueing на русский язык вряд ли 
+возможен. Наиболее подходящий в данном случае вариант — "управление 
+временнЫми метками" (cue points).
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Основная задача MIDI Cueing — облегчить работу инженера в сложной 
+системе, состоящей из звуковоспроизводящих и записывающих устройств, 
+видеомагнитофонов, MIDI-секвенсоров, процессоров эффектов, 
+тон-генераторов и другого оборудования, характерного для студий по 
+озвучиванию кино-видеоматериалов и постпроизводства. Ручная настройка 
+необходимых параметров в каждом устройстве (например, позиций начала и 
+окончания записи, воспроизведения, смещения таймкода относительно 
+мастера) отнимает значительное время, а при необходимости частого 
+изменения превращается в головную боль.
+</p>
+
+<p>
+MIDI Cueing предлагает автоматизацию рабочего процесса. Центральным 
+элементом системы является менеджер событий (Cue List Manager) — 
+устройство или компьютерная программа, которая позволяет 
+запрограммировать список событий, а затем послать этот список в 
+подчиненные устройства. Для каждого события в списке задано SMPTE-время 
+исполнения. При наступлении этого времени устройство выполняет событие 
+(а если точнее, действие, сопоставленное с событием). Естественно, для 
+этого необходимо получать от мастера таймкод.
+</p>
+
+<p>
+Если устройства не могут обрабатывать список событий самостоятельно, но 
+имеют MIDI-интерфейс, то для управления ими может использоваться 
+секвенсор, который принимает список событий, а затем, по наступлении 
+указанного времени, преобразует событие в команды, понятные устройству 
+(Note On, Note Off, Start, Stop и т. п.).
+</p>
+
+<p>
+Для реализации протокола MIDI Cueing используются так называемые 
+сообщения настройки (Set-Up Messages). В каждом сообщении указывается 
+тип события, его номер и время исполнения. Таким образом, список событий
+ передается в виде сообщений настройки.
+</p>
+
+<p>
+Относятся они к группе универсальных сообщений SysEx (Non-Realtime) и 
+имеют структуру, показанную на рис. 13. Байт Sub ID равен 4 (категория 
+MIDI Time Code Setup), а из возможных 128 событий (байт Sub ID 2) в 
+настоящий момент определены 19. После байта Sub ID 2 следует время 
+SMPTE, к которому относится событие: часы, минуты, секунды, кадры и доли
+ кадра. В сообщениях настройки каждый кадр подразделяется на 100 
+субкадров, что позволяет указать время наступления события с очень 
+высокой точностью. Номер события (от 0 до 16383) передается в следующих 
+двух байтах (LSB идет первым).
+</p>
+
+<br>
+ </font></font></font></td>
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td colspan="3" bgcolor="ffffff" align="RIGHT">
+  <img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/413.gif" alt="Рис. 13" width="606" height="328" align="middle">
+ </td>
+
+ <td width="25">
+  &nbsp;
+ </td>
+</tr>
+<tr>
+ <td width="129" bgcolor="555581">
+  &nbsp;
+ </td>
+ <td width="50">
+  &nbsp;
+ </td>
+ <td width="427">
+  <br>
+
+<font size="2" face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Далее может следовать дополнительная информация одного из двух видов: 
+обычные сообщения MIDI или простой текст (набор ASCII-символов). Эта 
+информация используется в некоторых сообщениях настройки для более 
+тонкого управления устройством. Однако есть небольшая проблема — как 
+передать сообщения MIDI в теле сообщения настройки? Если делать это 
+непосредственно, то они сразу же начнут выполняться приемником, да еще и
+ логика сообщения SysEx нарушится: перед завершающим байтом EOX появятся
+ непредусмотренные статус-байты. Такая же проблема будет и с текстом. 
+Поэтому используется своеобразное экранирование: исходные байты, которые
+ нужно передать в качестве дополнительной информации, разбиваются на 
+половины. К каждой половине слева приписываются четыре нулевых бита, в 
+результате она становится разрешенным байтом данных MIDI. Сначала 
+передается младшая половина исходного байта, затем старшая. Естественно,
+ размер полученного потока будет вдвое превышать исходный.
+</p>
+
+<p>
+Например, сообщение о нажатии клавиши (три байта: 0x91 0x3A 0x1F) будет 
+преобразовано в шесть байт данных: 0x01 0x09 0x0A 0x03 0x0F 0x01. А, 
+скажем, английская заглавная буква "A" (ASCII-код 0x41) будет 
+представлена двумя байтами: 0x01 0x04.
+</p>
+
+<p>
+Есть также группа сообщений настройки под общим названием Real Time MTC 
+Cueing (относятся к типу универсальных сообщений SysEx реального 
+времени, Sub ID равен 5). Если обычные сообщения настройки задают время 
+наступления события в будущем, то при получении сообщений этой группы 
+приемник должен выполнить событие немедленно.
+</p>
+
+<p>
+<font face="Arial, sans serif">
+<big>
+<b>
+Сообщения настройки
+</b>
+</big>
+<br>
+
+<font face="Verdana, Tahoma, Arial, sans serif">
+В сообщении <b>Special</b> (Sub ID 2 равен 0x00) передается информация 
+глобального характера, касающаяся всего устройства в целом. Эта 
+информация представлена набором из шести команд, номер команды 
+передается в байтах sl и sm вместо номера события.
+</font></font></p><font face="Arial, sans serif"><font face="Verdana, Tahoma, Arial, sans serif">
+
+<p>
+Команда Time Code Offset (0x00 0x00) задает смещение по времени в 
+конкретном приборе относительно времени, передаваемого мастером. 
+Например, стоит задача синхронизировать видеофрагмент с каким-либо 
+звуковым фрагментом, однако прописаны они с разного абсолютного времени.
+ Для того, чтобы оба фрагмента стартовали одновременно, в устройстве, 
+воспроизводящем звук, нужно выставить соответствующую поправку.
+</p>
+
+<p>
+Команда Enable Event List (0x01 0x00) разрешает прибору выполнение 
+событий из своего списка (при наступлении заданного времени), команда 
+Disable Event List (0x02 0x00) — запрещает, но при этом события не 
+должны удаляться из списка. Последняя команда удобна для временного 
+"заглушения" активности какого-либо из приборов сложной MIDI-системы. 
+Команда Clear Event List (0x03 0x00) заставляет прибор очистить свой 
+список событий. Во всех трех командах время, переданное в сообщении, 
+игнорируется.
+</p>
+
+<p>
+Команда System Stop (0x04 0x00) сообщает ведомому устройству время, при 
+наступлении которого оно может быть выключено. Последняя команда в этой 
+категории, Event List Request (0x05 0x00), посылается мастером при 
+необходимости получить список событий от какого-либо подчиненного 
+устройства. Устройство, чей Device ID указан в сообщении, должно 
+отправить мастеру свой список событий в виде серии сообщений настройки. 
+Отправка должна начаться со времени, переданного в сообщении.
+</p>
+
+<p>
+Сообщения <b>Punch In </b>и <b>Punch Out</b> (Sub ID 2 равен 0x01 и 0x02
+ соответственно) задают позиции начала и окончания записи на дорожке. 
+Номер дорожки содержится в байтах sl и sm. Для последующего удаления 
+этих позиций из списка событий служат сообщения <b>Delete Punch In</b> и <b>Delete Punch Out</b> (0x03 и 0x04 соответственно). Конкретная позиция распознается по номеру события и времени его наступления.
+</p>
+
+<p>
+Сообщения <b>Event Start</b> и <b>Event Stop</b> (0x05 и 0x06) 
+предназначены для указания позиций, в которых начинается и оканчивается 
+некоторый процесс, например, воспроизведение семпла, передвижение 
+фейдера на микшере с автоматизацией и тому подобное. В сообщениях 
+передается номер события, а что именно будет происходить, зависит от 
+того, какое действие сопоставлено с этим номером в подчиненном 
+устройстве. Если нужно передать какие-либо параметры события (например, 
+настройки процессора эффектов, уровень громкости и т. п.), используются 
+сообщения <b>Event Start</b>/<b>Stop with Additional Information</b> 
+(0x07/0x08), которые отличаются от двух предыдущих тем, что содержат 
+между номером события и байтом EOX дополнительную информацию (о правилах
+ ее кодирования говорилось ранее). Для удаления позиций начала/окончания
+ процесса используются сообщения <b>Delete Event Start</b>/<b>Stop </b>(0x09/0x0A).
+</p>
+
+<p>
+В списке событий могут быть также простые события, которые выполняются 
+"за раз" и не требуют указания позиции окончания. Типичный пример — 
+хит-пойнты (точки привязки) в звуковых эффектах, маркеры монтажа и 
+редактирования. Для указания позиции размещения такого события (Cue 
+Point) применяются сообщения <b>Cue Point</b> (0x0B) и <b>Cue Point with Additional Information</b>
+ (0x0C). Пример: пусть событие номер 8 означает воспроизведение семпла 
+бьющегося стекла. Тогда для того, чтобы "разбить" с некоторым интервалом
+ пару тарелок, нужно послать два сообщения Cue Point с номером 8, но 
+разным временем исполнения. Для удаления позиции из списка событий 
+служит сообщение <b>Delete Cue Point</b> (0x0D).
+</p>
+
+<p>
+Наконец, последнее сообщение настройки, <b>Event Name with Additional Information</b>
+ (0x0E), присваивает имя событию с определенным номером, происходящему в
+ заданное время. Имя указывается в виде преобразованного ASCII-потока 
+(см. ранее). Предназначено это сообщение исключительно для удобства — с 
+именованным событием работать легче.
+</p>
+
+<p>
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="2" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+Оценка статьи
+</b></font></td></tr></tbody></table>
+
+<font size="2" face="Arial, sans serif">
+</font></p><form method="post"><font size="2" face="Arial, sans serif"><font size="2" face="Arial" color="#000000">Посещений: 21026 | Проголосовавших: 
+41 | Средняя оценка: 4.8<p><input type="hidden" name="envoi" value="1">&nbsp;<select name="note"><option value="5" selected="selected">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select>&nbsp;&nbsp;<input type="submit" value="Оценить"></p></font>
+
+<p></p>
+
+<p>
+<table width="427" cellspacing="0" cellpadding="1" bgcolor="555581">
+<tbody><tr>
+<td>
+<font size="2" face="Arial, sans serif" color="ffffff">
+<b>
+&nbsp;
+Комментарии
+</b></font></td></tr></tbody></table>
+
+<font size="1" face="Arial, sans serif">
+<noindex>
+</noindex>
+<big><b>В связи с обилием спама размещение комментариев отключено. Пользуйтесь <a href="http://www.muzoborudovanie.ru/forum/index.php?site=mo&amp;bn=">форумами</a>.</b><br></big>
+<br>
+
+
+<table width="427" cellspacing="1" cellpadding="1" border="0" bgcolor="000000">
+
+<tbody><tr bgcolor="d0d0d0">
+<td align="CENTER">
+<font size="0">
+<a href="http://www.muzoborudovanie.ru/ads/adrates.php">РЕКЛАМА</a>
+</font>
+
+</td></tr><tr bgcolor="ffeecc">
+<td align="CENTER">
+
+<!-- Yandex.RTB R-A-2736-1 -->
+<div id="yandex_rtb_R-A-2736-1"><yatag class="c35201dfd x27a53fe7" id="c35201dfd" lang="ru"><yatag class="nc2656368 jbbb029d2 u277b2114 tcabf22e8"><yatag class="y49c2f598 la370da0d c4670c463 o6c51ca9e" style="min-height: 150px !important; min-width: 423px !important; max-width: 423px !important;"><yatag data-id="212663125119248880" class="n161fbda1 c59cc62b k41d024bf" style="width: 421px !important; margin: auto !important;"><yatag class="bf13dddf8" style="min-height: 148px !important; font-size: 12.8923px !important;"><yatag class="odab2bf48"><a href="https://an.yandex.ru/count/6R_carnCqFW507u2CI4CCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0bYqW1kI26b9m0AW-X3m0hUTyDSA-0A2W820WD1AW0EsavJM1eW3oP3gPAW31B031BW4_m7e1FKX-0Icnn281QR74905rxyie0N8XWMe1UUQ1B05vve4k0M7g0l01Vk26SW5gAu6q0Nt_m7W1Jxe1G7m1G6O1eBGhFCEe0Qg0wW6gWEf1v-EwDJSyj4ui0U0W90im0U6x8iQq0SGs0S4u0U62lW70O080T08cegGYS2GW8A80U08kVtR1u0A0PWAeeanmGe00000003mFzWA0k0AW8bw-0g0jHY82mAg2n0WyjZwduu001gscUaCZWK0m0k0emN82u3Kam7P2v-EwDJSyj4uw0kcnn3m2mg83AAtthu1w0m1c0tlmKlW3GA93W0000000F0_a0x0X3sW3i24FR0E0Q4F00000000y3-e3v-TmgV9s_peEDaFgjXy1Rnp_3_W3m6049Ikkn2G4Ew-ciBhiCVTCPeG2H400000003mFyWGeAe2q13VXgzV-10HW14HY141a141eH400000003mFwWHm8Gzi141o163zeKDw17Dd-YLtjNadcNn4G000000ohD0-X4P3G00000L000001q000009G00000j000008WI0P0I0QaIHxEHvw4P5J_m4X7u4W604nc84m6G4pAO4m40?stat-id=1&amp;test-tag=328204644571137&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMjgyMDQyMjA5MjM5MDQifQ%3D%3D&amp;" class="ff95797e9" target="_blank"><yatag class="fbe500181 v9657aea se51101ec"><yatag class="odb3abbfa">Яндекс.Директ</yatag></yatag></a><a href="https://an.yandex.ru/count/6R_carnCqFW507u2CI4CCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0bYqW1kI26b9m0AW-X3m0hUTyDSA-0A2W820WD1AW0EsavJM1eW3oP3gPAW31B031BW4_m7e1FKX-0Icnn281QR74905rxyie0N8XWMe1UUQ1B05vve4k0M7g0l01Vk26SW5gAu6q0Nt_m7W1Jxe1G7m1G6O1eBGhFCEe0Qg0wW6gWEf1v-EwDJSyj4ui0U0W90im0U6x8iQq0SGs0S4u0U62lW70O080T08cegGYS2GW8A80U08kVtR1u0A0PWAeeanmGe00000003mFzWA0k0AW8bw-0g0jHY82mAg2n0WyjZwduu001gscUaCZWK0m0k0emN82u3Kam7P2v-EwDJSyj4uw0kcnn3m2mg83AAtthu1w0m1c0tlmKlW3GA93W0000000F0_a0x0X3sW3i24FR0E0Q4F00000000y3-e3v-TmgV9s_peEDaFgjXy1Rnp_3_W3m6049Ikkn2G4Ew-ciBhiCVTCPeG2H400000003mFyWGeAe2q13VXgzV-10HW14HY141a141eH400000003mFwWHm8Gzi141o163zeKDw17Dd-YLtjNadcNn4G000000ohD0-X4P3G00000L000001q000009G00000j000008WI0P0I0QaIHxEHvw4P5J_m4X7u4W604nc84m6G4pAO4m40?stat-id=1&amp;test-tag=328204644571137&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMjgyMDQyMjA5MjM5MDQifQ%3D%3D&amp;" class="fbe500181 h3bb4a3e6" style="min-width: 148px !important; max-width: 168.4px !important;" target="_blank"><yatag class="ea26ae787"><yatag class="ob208bc4b"><yatag style="position: absolute !important; width: 234.333% !important; padding-top: 88.0952% !important; transform: translate(-28.6629%) scale(1) !important; transform-origin: 50% 50% 0px !important;" class=""><img alt="" style="position: absolute !important; left: 0px !important; top: 0px !important; width: 100% !important; height: 100% !important;" class="ba4362c45" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/huge.webp"></yatag></yatag></yatag></a><yatag class="c6e313843"><yatag class="cac7a6421 w35ebd77c"><a href="https://an.yandex.ru/count/6R_carnCqFW507u2CI4CCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0bYqW1kI26b9m0AW-X3m0hUTyDSA-0A2W820WD1AW0EsavJM1eW3oP3gPAW31B031BW4_m7e1FKX-0Icnn281QR74905rxyie0N8XWMe1UUQ1B05vve4k0M7g0l01Vk26SW5gAu6q0Nt_m7W1Jxe1G7m1G6O1eBGhFCEe0Qg0wW6gWEf1v-EwDJSyj4ui0U0W90im0U6x8iQq0SGs0S4u0U62lW70O080T08cegGYS2GW8A80U08kVtR1u0A0PWAeeanmGe00000003mFzWA0k0AW8bw-0g0jHY82mAg2n0WyjZwduu001gscUaCZWK0m0k0emN82u3Kam7P2v-EwDJSyj4uw0kcnn3m2mg83AAtthu1w0m1c0tlmKlW3GA93W0000000F0_a0x0X3sW3i24FR0E0Q4F00000000y3-e3v-TmgV9s_peEDaFgjXy1Rnp_3_W3m6049Ikkn2G4Ew-ciBhiCVTCPeG2H400000003mFyWGeAe2q13VXgzV-10HW14HY141a141eH400000003mFwWHm8Gzi141o163zeKDw17Dd-YLtjNadcNn4G000000ohD0-X4P3G00000L000001q000009G00000j000008WI0P0I0QaIHxEHvw4P5J_m4X7u4W604nc84m6G4pAO4m40?stat-id=1&amp;test-tag=328204644571137&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMjgyMDQyMjA5MjM5MDQifQ%3D%3D&amp;" class="fbe500181 e41283a7e" target="_blank"><yatag class="odb3abbfa ib74653d4">Синтезатор Roland E-A7</yatag></a></yatag><yatag class="aad897611"><a href="https://an.yandex.ru/count/6R_carnCqFW507u2CI4CCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0bYqW1kI26b9m0AW-X3m0hUTyDSA-0A2W820WD1AW0EsavJM1eW3oP3gPAW31B031BW4_m7e1FKX-0Icnn281QR74905rxyie0N8XWMe1UUQ1B05vve4k0M7g0l01Vk26SW5gAu6q0Nt_m7W1Jxe1G7m1G6O1eBGhFCEe0Qg0wW6gWEf1v-EwDJSyj4ui0U0W90im0U6x8iQq0SGs0S4u0U62lW70O080T08cegGYS2GW8A80U08kVtR1u0A0PWAeeanmGe00000003mFzWA0k0AW8bw-0g0jHY82mAg2n0WyjZwduu001gscUaCZWK0m0k0emN82u3Kam7P2v-EwDJSyj4uw0kcnn3m2mg83AAtthu1w0m1c0tlmKlW3GA93W0000000F0_a0x0X3sW3i24FR0E0Q4F00000000y3-e3v-TmgV9s_peEDaFgjXy1Rnp_3_W3m6049Ikkn2G4Ew-ciBhiCVTCPeG2H400000003mFyWGeAe2q13VXgzV-10HW14HY141a141eH400000003mFwWHm8Gzi141o163zeKDw17Dd-YLtjNadcNn4G000000ohD0-X4P3G00000L000001q000009G00000j000008WI0P0I0QaIHxEHvw4P5J_m4X7u4W604nc84m6G4pAO4m40?stat-id=1&amp;test-tag=328204644571137&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMjgyMDQyMjA5MjM5MDQifQ%3D%3D&amp;" class="fbe500181 ee4571cce" target="_blank"><yatag class="odb3abbfa ib74653d4">Купить за&nbsp;82&nbsp;990&nbsp;<span class="y49de2d5e">руб</span>.</yatag></a></yatag><yatag class="rb902d377 oc6baf055"><a href="https://an.yandex.ru/count/6R_carnCqFW507u2CI4CCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0bYqW1kI26b9m0AW-X3m0hUTyDSA-0A2W820WD1AW0EsavJM1eW3oP3gPAW31B031BW4_m7e1FKX-0Icnn281QR74905rxyie0N8XWMe1UUQ1B05vve4k0M7g0l01Vk26SW5gAu6q0Nt_m7W1Jxe1G7m1G6O1eBGhFCEe0Qg0wW6gWEf1v-EwDJSyj4ui0U0W90im0U6x8iQq0SGs0S4u0U62lW70O080T08cegGYS2GW8A80U08kVtR1u0A0PWAeeanmGe00000003mFzWA0k0AW8bw-0g0jHY82mAg2n0WyjZwduu001gscUaCZWK0m0k0emN82u3Kam7P2v-EwDJSyj4uw0kcnn3m2mg83AAtthu1w0m1c0tlmKlW3GA93W0000000F0_a0x0X3sW3i24FR0E0Q4F00000000y3-e3v-TmgV9s_peEDaFgjXy1Rnp_3_W3m6049Ikkn2G4Ew-ciBhiCVTCPeG2H400000003mFyWGeAe2q13VXgzV-10HW14HY141a141eH400000003mFwWHm8Gzi141o163zeKDw17Dd-YLtjNadcNn4G000000ohD0-X4P3G00000L000001q000009G00000j000008WI0P0I0QaIHxEHvw4P5J_m4X7u4W604nc84m6G4pAO4m40?stat-id=1&amp;test-tag=328204644571137&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMjgyMDQyMjA5MjM5MDQifQ%3D%3D&amp;" class="fbe500181 s2918af7b g374d9c44" target="_blank"><yatag class="b985a6af3"><yatag class="sb2750567"><yatag class="odb3abbfa">Узнать больше</yatag></yatag></yatag></a><yatag class="mb7606ac0 jb0eab99f"><yatag class="b985a6af3"><yatag class="sb2750567"><a href="https://an.yandex.ru/count/6R_carnCqFW507u2CI4CCbq00000EE0gG0980c2y26W4SAg3fw87W07kWvsVvkEMnTe1Y06W-X2G0U2dzTY9_yFp1Q01Xj_nvooe0OY4hQCgi066oQq2k06O-83E6C010jW1ZeAd4-01Witv0kW1SlW1ehVUlW680W6O0eAfm0sW0lBwjm-v0bYqW1kI26b9m0AW-X3m0hUTyDSA-0A2W820WD1AW0EsavJM1eW3oP3gPAW31B031BW4_m7e1FKX-0Icnn281QR74905rxyie0N8XWMe1UUQ1B05vve4k0M7g0l01Vk26SW5gAu6q0Nt_m7W1Jxe1G7m1G6O1eBGhFCEe0Qg0wW6gWEf1v-EwDJSyj4ui0U0W90im0U6x8iQq0SGs0S4u0U62lW70O080T08cegGYS2GW8A80U08kVtR1u0A0PWAeeanmGe00000003mFzWA0k0AW8bw-0g0jHY82mAg2n0WyjZwduu001gscUaCZWK0m0k0emN82u3Kam7P2v-EwDJSyj4uw0kcnn3m2mg83AAtthu1w0m1c0tlmKlW3GA93W0000000F0_a0x0X3sW3i24FR0E0Q4F00000000y3-e3v-TmgV9s_peEDaFgjXy1Rnp_3_W3m6049Ikkn2G4Ew-ciBhiCVTCPeG2H400000003mFyWGeAe2q13VXgzV-10HW14HY141a141eH400000003mFwWHm8Gzi141o163zeKDw17Dd-YLtjNadcNn4G000000ohD0-X4P3G00000L000001q000009G00000j000008WI0P0I0QaIHxEHvw4P5J_m4X7u4W604nc84m6G4pAO4m40?stat-id=1&amp;test-tag=328204644571137&amp;format-type=54&amp;actual-format=40&amp;banner-test-tags=eyIyMTI2NjMxMjUxMTkyNDg4ODAiOiIzMjgyMDQyMjA5MjM5MDQifQ%3D%3D&amp;" class="fbe500181 te7ab737f" target="_blank"><yatag class="odb3abbfa">love-piano.ru</yatag></a></yatag></yatag></yatag></yatag></yatag></yatag></yatag><yatag class="ea376bb65 kad68e9c8"><yatag class="eeb86532"><yatag class="xc4ba3193"><yatag></yatag></yatag></yatag></yatag><yatag class="x3b31632e g48aea57d j5abec8e5"><yatag class="s7ce8f6b"><yatag class="q327a85fb x98936463 sb6c55bf3"><yatag class="a9e3b209c"><yatag style="width: 8px !important; height: 8px !important;" class="x3d3c04bc"><svg width="8px" height="8px" viewBox="0 0 14 14"><polygon points="8.28616426 7.02081528 13.6638974 12.3985484 12.3985484 13.6638974 7.02081528 8.28616426 1.64308213 13.6638974 0.377733152 12.3985484 5.7554663 7.02081528 0.377733152 1.64308213 1.64308213 0.377733152 7.02081528 5.7554663 12.3985484 0.377733152 13.6638974 1.64308213"></polygon></svg></yatag><yatag class="gbd69a9ee"><yatag class="wda0842fa"></yatag><yatag class="ef6b909fe">Скрыть&nbsp;объявление</yatag></yatag></yatag></yatag></yatag></yatag></yatag></yatag><yatag id="o4ddd036c"><yatag class="r439b5e1a"></yatag></yatag></yatag></yatag></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-2736-1",
+                renderTo: "yandex_rtb_R-A-2736-1",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+
+</td></tr></tbody></table>
+<br>
+</font></p></font></form></font></font></font></td>
+
+<td width="25">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td width="129" bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="50">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="427" bgcolor="555581">
+<font size="0">
+&nbsp;
+</font></td>
+<td width="25">
+<font size="0">
+&nbsp;
+</font></td>
+</tr>
+
+</tbody></table>
+
+</td><td width="129" valign="TOP" bgcolor="555581" align="CENTER"> 
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-0269592369109973";
+//120x600
+google_ad_slot = "8729918506";
+google_ad_width = 120;
+google_ad_height = 600;
+//--></script>
+<script type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/show_ads.js">
+</script><ins id="aswift_1_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent;" data-ad-slot="8729918506"><ins id="aswift_1_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0px;width:120px;height:600px;" width="120" height="600" frameborder="0"></iframe></ins></ins>
+
+<br>
+<br>
+
+<table width="111" cellspacing="0" cellpadding="2" border="0">
+<tbody><tr bgcolor="dedede">
+<td align="CENTER">
+<font size="0">
+<a href="http://www.muzoborudovanie.ru/ads/adrates.php">
+Цены на рекламу
+</a>
+</font></td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+
+
+
+
+
+
+ 
+
+
+<script type="text/javascript">
+<!--
+var _acic={dataProvider:10};(function(){var e=document.createElement("script");e.type="text/javascript";e.async=true;e.src="//www.acint.net/aci.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})()
+//-->
+</script>
+<table width="760" cellspacing="0" cellpadding="0" border="0" bgcolor="dedede">
+<tbody><tr valign="TOP" align="CENTER">
+<td width="129">
+
+<noindex>
+<br>
+<!-- SpyLOG -->
+<script src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/counter_cv.js" id="spylog_code" type="text/javascript" counter="10716" part="" track_links="ext" page_level="1">
+</script><a href="https://spylog.com/cnt?cid=10716&amp;p=1&amp;f=3"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/cnt.gif" id="spylog_img" alt="SpyLOG" width="88" height="31" border="0"></a>
+<noscript>
+<a href="http://u107.16.spylog.com/cnt?cid=10716&f=3&p=1" target="_blank">
+<img src="http://u107.16.spylog.com/cnt?cid=10716&p=1" alt="SpyLOG" border="0" width="88" height="31"></a>
+</noscript>
+<!--/ SpyLOG -->
+
+<!--Rating@Mail.ru COUNTEr--><script language="JavaScript" type="text/javascript"><!--
+d=document;var a='';a+=';r='+escape(d.referrer)
+js=10//--></script><script language="JavaScript1.1" type="text/javascript"><!--
+a+=';j='+navigator.javaEnabled()
+js=11//--></script><script language="JavaScript1.2" type="text/javascript"><!--
+s=screen;a+=';s='+s.width+'*'+s.height
+a+=';d='+(s.colorDepth?s.colorDepth:s.pixelDepth)
+js=12//--></script><script language="JavaScript1.3" type="text/javascript"><!--
+js=13//--></script><script language="JavaScript" type="text/javascript"><!--
+d.write('<a href="http://top.mail.ru/jump?from=120209"'+
+' target=_top><img src="http://d5.cd.b1.a0.top.list.ru/counter'+
+'?id=120209;t=49;js='+js+a+';rand='+Math.random()+
+'" alt="Рейтинг@Mail.ru"'+' border=0 height=31 width=88/><\/a>')
+if(11<js)d.write('<'+'!-- ')//--></script><a href="http://top.mail.ru/jump?from=120209" target="_top"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/counter.gif" alt="Рейтинг@Mail.ru" width="88/" height="31" border="0"></a><!-- <noscript><a
+target=_top href="http://top.mail.ru/jump?from=120209"><img
+src="http://d5.cd.b1.a0.top.list.ru/counter?js=na;id=120209;t=49"
+border=0 height=31 width=88
+alt="Рейтинг@Mail.ru"/></a></noscript><script language="JavaScript" type="text/javascript"><!--
+if(11<js)d.write('--'+'>')//--><!--/COUNTER-->
+
+</noindex>
+
+</td>
+
+<td width="502">
+<p>
+<font size="-2" face="Verdana, Tahoma, Arial, sans serif">
+</font></p><p><font size="-2" face="Verdana, Tahoma, Arial, sans serif">
+<br>
+Музыкальное Оборудование
+<br><a href="http://www.muzoborudovanie.ru/">www.muzoborudovanie.ru</a>
+<br>www.moline.ru
+<br><a href="mailto:mail@muzoborudovanie.ru">mail@muzoborudovanie.ru</a>
+<br><a href="http://www.muzoborudovanie.ru/data.php">© Агентство ДАТА</a>
+<br>
+</font></p></td>
+
+<td width="129">
+<p>
+<noindex>
+<br>
+<!-- begin of Top100 code -->
+<script id="top100Counter" type="text/javascript" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/top100.jcn"></script><a href="https://top100.rambler.ru/home?id=196166" target="_blank"><img src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/a.gif" title="Rambler's Top100" alt="Rambler's Top100" border="0"></a><noscript><a href="http://top100.rambler.ru/home?id=196166" target="_blank"><img src="http://cnt.rambler.ru/top100.cnt?196166" alt="Rambler's Top100" width="81" height="63" border="0" /></a></noscript>
+<!-- end of Top100 code -->
+</noindex>
+
+</p></td>
+</tr>
+</tbody></table>
+
+</center>
+</font><iframe src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/a.htm" style="width:1px;height:1px;display:none;" width="0" height="0" frameborder="0"></iframe><iframe id="google_osd_static_frame_9096543699606" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe><ins class="adsbygoogle adsbygoogle-noablate" style="display: none !important;" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_2_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;" frameborder="0"></iframe></ins></ins></ins></body><iframe id="google_esf" name="google_esf" src="MIDI%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85.%20%D0%A7%D0%B0%D1%81%D1%82%D1%8C%204%20%E2%80%94%20MIDI%20Time%20Code.%20-%20%D0%9C%D0%9E_files/zrt_lookup.htm" style="display: none;" data-ad-client="ca-pub-0269592369109973"></iframe></html>
