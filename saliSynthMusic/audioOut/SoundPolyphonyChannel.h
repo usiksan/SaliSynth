@@ -10,17 +10,35 @@
 #define SOUNDPOLYPHONYCHANNEL_H
 
 
+
 class SoundPolyphonyChannel
   {
-    int period;
-    int current;
+    int    mPeriod;
+    int    mCurrent;
+    //double mPeriod;
+    int    mSamples[3000];
+    int    mId;
+    bool   mRun;
+    bool   mPlus;
+    double mStep;
+    double mAngle;
   public:
     SoundPolyphonyChannel();
 
     //Return next channel sample
-    int sample();
+    int  sample();
 
-    void setPeriod( int p ) { period = p; }
+    void setPeriod( int p ) { mPeriod = p; }
+
+    void setChannel( int channel, int note );
+
+    void noteOn( int pressure );
+
+    void noteOff();
+
+    int  id() const { return mId; }
+
+    static int buildId( int channel, int note ) { return (note << 4) | channel; }
   };
 
 

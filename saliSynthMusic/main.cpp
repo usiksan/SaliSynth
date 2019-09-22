@@ -13,6 +13,8 @@
 
 #include "midiInput/MidiInput.h"
 
+#include "soundFont/SoundFont.h"
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QThread>
@@ -61,8 +63,8 @@ int main(int argc, char *argv[])
   //Sound buffer - is audio stream source
   SoundBufferIODevice *device = new SoundBufferIODevice();
   device->open( QIODevice::ReadOnly );
-  audio->setNotifyInterval(5);
-  audio->setBufferSize(4096);
+  audio->setNotifyInterval(10);
+  audio->setBufferSize(1920*4);
 
   //SoundPolyphonyManager::mSoundPolyphony[10].setPeriod(88);
   //SoundPolyphonyManager::mSoundPolyphony[50].setPeriod(130);
@@ -83,6 +85,9 @@ int main(int argc, char *argv[])
   MidiInput *midiInput = new MidiInput( midiThread );
   midiInput->connect( midiInput, &MidiInput::midi, midiOut, &SoundMidiOut::midi );
   midiThread->start();
+
+  SoundFont font;
+  font.read( "/home/dial/midi/25 Piano Soundfonts/Grand Piano.sf2" );
 
   return app.exec();
   }

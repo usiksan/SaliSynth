@@ -12,12 +12,14 @@
 #include "synthConfig.h"
 
 #include <QIODevice>
-#include <QTime>
+#include <QElapsedTimer>
 
 
 class SoundBufferIODevice : public QIODevice
   {
     Q_OBJECT
+
+    QElapsedTimer mTimer;
   public:
     SoundBufferIODevice();
 

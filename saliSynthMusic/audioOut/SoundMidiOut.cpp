@@ -23,10 +23,11 @@ void SoundMidiOut::midi(quint8 status, quint8 data0, quint8 data1)
   switch( cmd ) {
     case 0 :
       //Note off [note pressure]
+      SoundPolyphonyManager::noteOff( channel, data0 );
       break;
     case 1 :
       //Note on [note pressure]
-      SoundPolyphonyManager::mSoundPolyphony[channel].setPeriod( data1 ? 82 : 0 );
+      SoundPolyphonyManager::noteOn( channel, data0, data1 );
       break;
     case 2 :
       //Polyphonic key pressure [note pressure]

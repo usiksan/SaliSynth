@@ -17,7 +17,13 @@ class SoundPolyphonyManager
   {
   public:
 
-    static SoundPolyphonyChannel mSoundPolyphony[POLYPHONY_COUNT];
+    static void noteOff( int channel, int note );
+
+    static void noteOn( int channel, int note, int pressure );
+
+    static SoundPolyphonyChannel &channel( int channel, int note );
+
+    static SoundPolyphonyChannel  mSoundPolyphony[POLYPHONY_COUNT];
   };
 
 #endif // SOUNDPOLYPHONYMANAGER_H

@@ -19,6 +19,7 @@ static int audioBufferSize;
 SoundBufferIODevice::SoundBufferIODevice() :
   QIODevice()
   {
+  mTimer.start();
   }
 
 
@@ -47,17 +48,16 @@ qint64 SoundBufferIODevice::bytesAvailable() const
 
 qint64 SoundBufferIODevice::readData(char *data, qint64 maxlen)
   {
-  if( audioBufferSize == 0 )
-    audioBufferSize = audio->bufferSize();
+//  if( audioBufferSize == 0 )
+//    audioBufferSize = audio->bufferSize();
 
-  if( fillBuffer > 14 && (audioBufferSize - audio->bytesFree()) >= SAMPLES_PER_20MS )
-    return 0;
+//  if( fillBuffer > 14 && (audioBufferSize - audio->bytesFree()) >= SAMPLES_PER_20MS )
+//    return 0;
 
   if( fillBuffer++ < 40 ) {
-    //qDebug()  << "maxlen" << maxlen << "bytes free" << audio->bytesFree();
+    qDebug()  << "maxlen" << maxlen << "bytes free" << audio->bytesFree() << "timer" << mTimer.restart();
     }
 
-  qint64 len = qMin( maxlen, static_cast<qint64>(SAMPLES_PER_20MS * 2) );
 
   qint16 *outSamples = static_cast<qint16*>( static_cast<void*>(data) );
 
@@ -76,7 +76,7 @@ qint64 SoundBufferIODevice::readData(char *data, qint64 maxlen)
     outSamples[i] = static_cast<qint16>(sample);
     }
 
-  return static_cast<qint64>(len);
+  return SAMPLES_PER_20MS * 2;
   }
 
 
