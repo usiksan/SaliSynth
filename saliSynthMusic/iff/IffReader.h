@@ -50,6 +50,8 @@ class IffReader
 
     bool        readChars( char *dst, int len );
 
+    quint8      peekUint8();
+
     quint8      getUint8();
     quint16     getUint16be();
     quint16     getUint16le();

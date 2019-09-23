@@ -43,7 +43,7 @@ IffReader::~IffReader()
 
 bool IffReader::isEnd() const
   {
-  return mFile->pos() == mChunkStart + mChunkLength;
+  return mFile->pos() >= mChunkStart + mChunkLength;
   }
 
 
@@ -92,6 +92,16 @@ bool IffReader::readChunk(const char *name, std::function<bool (IffReader &)> fu
 bool IffReader::readChars(char *dst, int len)
   {
   return mFile->read( dst, len ) == len;
+  }
+
+
+
+
+quint8 IffReader::peekUint8()
+  {
+  char ch;
+  mFile->peek( &ch, 1 );
+  return static_cast<quint8>(ch);
   }
 
 

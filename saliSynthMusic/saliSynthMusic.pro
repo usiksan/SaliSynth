@@ -18,12 +18,16 @@ SOURCES += \
         audioOut/SoundMidiOut.cpp \
         audioOut/SoundPolyphonyChannel.cpp \
         audioOut/SoundPolyphonyManager.cpp \
-        iff/IffMidi.cpp \
         iff/IffReader.cpp \
         main.cpp \
+        midiFile/MidiFile.cpp \
         midiInput/MidiInput.cpp \
+        soundFont/SfSynthInstrument.cpp \
+        soundFont/SfSynthNote.cpp \
+        soundFont/SfSynthPreset.cpp \
         soundFont/SfSynthTrack.cpp \
-        soundFont/SoundFont.cpp
+        soundFont/SoundFont.cpp \
+        soundFont/SoundFontMap.cpp
 
 RESOURCES += qml.qrc
 
@@ -44,9 +48,13 @@ HEADERS += \
   audioOut/SoundMidiOut.h \
   audioOut/SoundPolyphonyChannel.h \
   audioOut/SoundPolyphonyManager.h \
-  iff/IffMidi.h \
   iff/IffReader.h \
+  midiFile/MidiFile.h \
   midiInput/MidiInput.h \
+  soundFont/SfSynthInstrument.h \
+  soundFont/SfSynthNote.h \
+  soundFont/SfSynthPreset.h \
   soundFont/SfSynthTrack.h \
   soundFont/SoundFont.h \
+  soundFont/SoundFontMap.h \
   synthConfig.h

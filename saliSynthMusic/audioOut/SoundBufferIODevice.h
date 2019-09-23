@@ -10,18 +10,25 @@
 #define SOUNDBUFFERIODEVICE_H
 
 #include "synthConfig.h"
+#include "soundFont/SfSynthNote.h"
 
 #include <QIODevice>
 #include <QElapsedTimer>
 
+using SfSynthNotePtr = SfSynthNote*;
 
 class SoundBufferIODevice : public QIODevice
   {
     Q_OBJECT
 
-    QElapsedTimer mTimer;
+    QList<SfSynthNotePtr> mActiveNotes;
+    QElapsedTimer         mTimer;
   public:
     SoundBufferIODevice();
+
+
+  public slots:
+    void addNote( SfSynthNotePtr notePtr );
 
     // QIODevice interface
   public:

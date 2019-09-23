@@ -8,12 +8,14 @@
 */
 #include "synthConfig.h"
 #include "audioOut/SoundBufferIODevice.h"
-#include "audioOut/SoundPolyphonyManager.h"
-#include "audioOut/SoundMidiOut.h"
 
 #include "midiInput/MidiInput.h"
 
 #include "soundFont/SoundFont.h"
+#include "soundFont/SoundFontMap.h"
+#include "soundFont/SfSynthPreset.h"
+
+#include "midiFile/MidiFile.h"
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -77,17 +79,27 @@ int main(int argc, char *argv[])
            << " bytes free" << audio->bytesFree();
 
   //Start midi synthesator
-  SoundMidiOut *midiOut = new SoundMidiOut();
+  SfSynthPreset *midiOut = new SfSynthPreset();
 
+  //Synthesator output connect to SoundBufferIODevice
+  midiOut->connect( midiOut, &SfSynthPreset::noteOn, device, &SoundBufferIODevice::addNote );
 
   //Start midi keyboard
   QThread *midiThread = new QThread();
   MidiInput *midiInput = new MidiInput( midiThread );
-  midiInput->connect( midiInput, &MidiInput::midi, midiOut, &SoundMidiOut::midi );
+  midiInput->connect( midiInput, &MidiInput::midi, midiOut, &SfSynthPreset::midi );
   midiThread->start();
 
-  SoundFont font;
-  font.read( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2" );
+  SoundFontMap::init();
+  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2", 0, 0, 0 );
+  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2", 1, 0, 1 );
+  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2", 2, 0, 2 );
+  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2", 3, 0, 3 );
+//  SoundFont font;
+//  font.read( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2" );
+
+//  MidiFile midi;
+//  midi.read( "/home/dial/midi/white_dove.mid" );
 
   return app.exec();
   }

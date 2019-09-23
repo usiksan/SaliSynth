@@ -41,7 +41,11 @@ bool SoundFont::read(const QString fname)
   if( !reader.isValid() )
     return false;
 
-  return reader.readChunk( "RIFF", [this] ( IffReader &reader ) -> bool { return readRiff(reader); } );
+  if( reader.readChunk( "RIFF", [this] ( IffReader &reader ) -> bool { return readRiff(reader); } ) ) {
+    mFileName = fname;
+    return true;
+    }
+  return false;
   }
 
 

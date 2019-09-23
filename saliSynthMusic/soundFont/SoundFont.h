@@ -101,6 +101,7 @@ using SfInstrumentVector = QVector<SfInstrument>;
 
 class SoundFont
   {
+    QString                mFileName;
     QVector<qint16>        mSamples;
     SfSampleVector         mSampleHeaders;
     SfPresetVector         mPresets;
@@ -115,9 +116,11 @@ class SoundFont
     SoundFont();
     ~SoundFont();
 
-    void clear();
+    void    clear();
 
-    bool read( const QString fname );
+    QString fileName() const { return mFileName; }
+
+    bool    read( const QString fname );
 
   private:
     bool readRiff( IffReader &reader );
@@ -150,5 +153,7 @@ class SoundFont
 
     bool readPmod( IffReader &reader );
   };
+
+using SoundFontPtr = QSharedPointer<SoundFont>;
 
 #endif // SOUNDFONT_H

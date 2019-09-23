@@ -25,6 +25,15 @@ SoundBufferIODevice::SoundBufferIODevice() :
 
 
 
+void SoundBufferIODevice::addNote(SfSynthNotePtr notePtr)
+  {
+  if( !mActiveNotes.contains(notePtr) )
+    mActiveNotes.append( notePtr );
+  }
+
+
+
+
 bool SoundBufferIODevice::isSequential() const
   {
   return true;
@@ -65,8 +74,8 @@ qint64 SoundBufferIODevice::readData(char *data, qint64 maxlen)
   for( int i = 0; i < SAMPLES_PER_20MS; i++ ) {
     //Summ all channels
     int sample = 0;
-    for( int k = 0; k < POLYPHONY_COUNT; k++ )
-      sample += SoundPolyphonyManager::mSoundPolyphony[k].sample();
+    for( auto ptr : mActiveNotes )
+      sample += ptr->sample();
 
     //Average sample
     if( sample > 32767 ) sample = 32767;
@@ -75,6 +84,11 @@ qint64 SoundBufferIODevice::readData(char *data, qint64 maxlen)
     //Store sample to output buffer
     outSamples[i] = static_cast<qint16>(sample);
     }
+
+  //Check and remove stopped notes
+  for( int i = mActiveNotes.count() - 1; i >= 0; i-- )
+    if( mActiveNotes.at(i)->isStopped() )
+      mActiveNotes.removeAt(i);
 
   return SAMPLES_PER_20MS * 2;
   }

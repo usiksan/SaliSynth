@@ -5,6 +5,31 @@ SfSynthTrack::SfSynthTrack()
 
   }
 
+int SfSynthTrack::sample(bool &stopped)
+  {
+  if( mVolumePhase == vpStop )
+    return mVolumeTick = 0;
+  stopped = false;
+  mVolumeTick++;
+  if( mVolumePhase == vpDelay ) {
+    if( mVolumeTick >= mVolDelayEnvelope ) {
+      //Delay phase completed
+      mVolumeTick = 0;
+      mVolumePhase = vpAttack;
+      }
+    }
+  }
+
+void SfSynthTrack::noteOff(quint8 pressure)
+  {
+
+  }
+
+bool SfSynthTrack::noteOn(quint8 pressure)
+  {
+
+  }
+
 
 
 
