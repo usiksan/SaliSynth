@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
   midiThread->start();
 
   SoundFont font;
-  font.read( "/home/dial/midi/25 Piano Soundfonts/Grand Piano.sf2" );
+  font.read( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2" );
 
   return app.exec();
   }

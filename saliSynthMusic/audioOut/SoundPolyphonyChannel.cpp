@@ -8,6 +8,7 @@
 */
 #include "SoundPolyphonyChannel.h"
 
+#include <math.h>
 #include <QDebug>
 
 SoundPolyphonyChannel::SoundPolyphonyChannel() :

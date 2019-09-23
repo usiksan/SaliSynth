@@ -22,9 +22,7 @@ SOURCES += \
         iff/IffReader.cpp \
         main.cpp \
         midiInput/MidiInput.cpp \
-        soundFont/SfInstrument.cpp \
-        soundFont/SfPreset.cpp \
-        soundFont/SfSample.cpp \
+        soundFont/SfSynthTrack.cpp \
         soundFont/SoundFont.cpp
 
 RESOURCES += qml.qrc
@@ -49,8 +47,6 @@ HEADERS += \
   iff/IffMidi.h \
   iff/IffReader.h \
   midiInput/MidiInput.h \
-  soundFont/SfInstrument.h \
-  soundFont/SfPreset.h \
-  soundFont/SfSample.h \
+  soundFont/SfSynthTrack.h \
   soundFont/SoundFont.h \
   synthConfig.h
