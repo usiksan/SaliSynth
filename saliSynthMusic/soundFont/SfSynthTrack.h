@@ -31,6 +31,7 @@ class SfSynthTrack
       vpDecay,
       vpSustain,
       vpRelease,
+      //vpRestart
       }           mVolumePhase;
     int           mVolumeTick;
     int           mAttenuation;        //Current attenuation level. At phase attack - linear multer in 1/32768 of volume
@@ -43,11 +44,15 @@ class SfSynthTrack
     int           mVolDecayEnvelope;   //Time for volume linearly ramps toward the sustain level
     int           mVolReleaseEnvelope; //Time
     int           mVolSustainLevel;    //This is the decrease in level, expressed in centibels, to which the Volume Envelope value ramps during the decay phase.
+
+    quint8        mMinVelocity;        //Velocity range for which this track actived
+    quint8        mMaxVelocity;
   public:
     SfSynthTrack();
 
     void setup(const qint16 *samples, int sampleEnd, int sampleLoopStart, int sampleLoopEnd, bool exitLoop, int sampleStep, int volumeInitial,
-               int volDelayEnvelope, int volAttackEnvelope, int volHoldEnvelope, int volDecayEnvelope, int volReleaseEnvelope, int volSustainLevel );
+               int volDelayEnvelope, int volAttackEnvelope, int volHoldEnvelope, int volDecayEnvelope, int volReleaseEnvelope, int volSustainLevel,
+               int velRange );
 
     int  sample( bool &stopped );
 

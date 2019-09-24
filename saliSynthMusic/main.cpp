@@ -92,14 +92,35 @@ int main(int argc, char *argv[])
   midiThread->start();
 
   SoundFontMap::init();
-  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 0, 0, 0 );
-  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 1, 0, 1 );
-  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 2, 0, 2 );
-  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 3, 0, 3 );
+
+  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Fleita Main.SF2", 0, 0, 0 );
+  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Fleita Main.SF2", 1, 0, 1 );
+  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Fleita Main.SF2", 2, 0, 2 );
+  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Fleita Main.SF2", 3, 0, 3 );
+
+//  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Organs-Strings-V1.0.sf2", 0, 0, 0 );
+//  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Organs-Strings-V1.0.sf2", 1, 0, 1 );
+//  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Organs-Strings-V1.0.sf2", 2, 0, 2 );
+//  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Organs-Strings-V1.0.sf2", 3, 0, 3 );
+
+//  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Giga Piano.sf2", 0, 0, 4 );
+//  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Giga Piano.sf2", 1, 0, 5 );
+//  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Giga Piano.sf2", 2, 0, 6 );
+//  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Giga Piano.sf2", 3, 0, 7 );
+
+//  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Nice-4-Bass-V1.5.sf2", 0, 0, 8 );
+//  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Nice-4-Bass-V1.5.sf2", 1, 0, 9 );
+//  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Nice-4-Bass-V1.5.sf2", 2, 0, 10 );
+//  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Nice-4-Bass-V1.5.sf2", 3, 0, 11 );
+
+//  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 0, 0, 0 );
+//  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 1, 0, 1 );
+//  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 2, 0, 2 );
+//  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 3, 0, 3 );
 
   midiOut->programm(0);
 
-  midiOut->midi( 0x10, 60, 120 );
+  //midiOut->midi( 0x10, 60, 120 );
 //  SoundFont font;
 //  font.read( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2" );
 

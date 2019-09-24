@@ -111,9 +111,11 @@ bool SfSynthNote::addTrack( quint16 *generator, const SfSample &sam, qint16 *sam
   track.setup( samples, endSample, startLoop, endLoop, (generator[sfpiSampleModes] & 1) == 0,
                static_cast<int>( step * 65536.0 ), generator[sfpiInitialAttenuation],
                delayVolEnv, attackVolEnv, holdVolEnv, decayVolEnv, releaseVolEnv,
-               generator[sfpiSustainVolEnv]
+               generator[sfpiSustainVolEnv], generator[sfpiVelRange]
                );
+  //if( mTracks.count() == 0 )
   mTracks.append( track );
+  qDebug() << "note" << mNote << mTracks.count();
   return true;
   }
 

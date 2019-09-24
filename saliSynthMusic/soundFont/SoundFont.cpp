@@ -73,8 +73,8 @@ bool SoundFont::buildPreset(int preset, std::function<void( quint16 *generator, 
   generator[sfpiDecayVolEnv] = static_cast<quint16>(-12000);
   generator[sfpiReleaseVolEnv] = static_cast<quint16>(-12000);
 
-  generator[sfpiKeyRange] = 127;
-  generator[sfpiVelRange] = 127;
+  generator[sfpiKeyRange] = 127 << 8;
+  generator[sfpiVelRange] = 127 << 8;
   generator[sfpiKeyNum] = static_cast<quint16>(-1);
   generator[sfpiVelocity] = static_cast<quint16>(-1);
 
@@ -89,7 +89,7 @@ bool SoundFont::buildPreset(int preset, std::function<void( quint16 *generator, 
   int endBag   = mPresets.at(preset + 1).wPresetBagIndex;
   qDebug() << "selected" << preset << "preset";
   qDebug() << mPresets.at(preset).achPresetName << mPresets.at(preset).wBank << mPresets.at(preset).wPreset;
-  qDebug() << "Bags:";
+  qDebug() << "Bags:" << startBag << endBag;
   bool globalZone = true;
   while( startBag < endBag ) {
     int startGen = mPresetBags.at(startBag).mGeneratorStartIndex;
@@ -129,7 +129,7 @@ bool SoundFont::buildInstrument(quint16 *generator, std::function<void( quint16 
 
   int startBag = mInstruments.at(instrument).wInstumentBagIndex;
   int endBag   = mInstruments.at(instrument + 1).wInstumentBagIndex;
-  qDebug() << mInstruments.at(instrument).achInstrumentName << startBag << endBag;
+  qDebug() << "instrument name" << mInstruments.at(instrument).achInstrumentName << startBag << endBag;
 
   qDebug() << "Bags:";
   bool globalZone = true;

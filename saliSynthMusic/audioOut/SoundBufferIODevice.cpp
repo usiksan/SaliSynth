@@ -78,7 +78,7 @@ qint64 SoundBufferIODevice::readData(char *data, qint64 maxlen)
       sample += ptr->sample();
 
     //Average sample
-    if( sample > 32767 ) sample = 32767;
+    if( sample > 32767 ) { qDebug() << "top average" << sample; sample = 32767; }
     if( sample < -32768 ) sample = -32768;
 
     //Store sample to output buffer
@@ -87,8 +87,10 @@ qint64 SoundBufferIODevice::readData(char *data, qint64 maxlen)
 
   //Check and remove stopped notes
   for( int i = mActiveNotes.count() - 1; i >= 0; i-- )
-    if( mActiveNotes.at(i)->isStopped() )
+    if( mActiveNotes.at(i)->isStopped() ) {
       mActiveNotes.removeAt(i);
+//      qDebug() << "remove" << i;
+      }
 
   return SAMPLES_PER_20MS * 2;
   }
