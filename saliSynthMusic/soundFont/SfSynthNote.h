@@ -2,6 +2,7 @@
 #define SFSYNTHNOTE_H
 
 #include "SfSynthTrack.h"
+#include "SoundFont.h"
 
 class SfSynthPreset;
 
@@ -10,9 +11,12 @@ class SfSynthPreset;
 class SfSynthNote
   {
     SfSynthTrackVector mTracks; //Track of which consist a note
+    int                mNote;
     bool               mStopped;
   public:
     SfSynthNote();
+
+    void setNote( int note ) { mNote = note; }
 
     void clear();
 
@@ -23,6 +27,9 @@ class SfSynthNote
     void noteOff( quint8 pressure );
 
     bool noteOn( quint8 pressure );
+
+    bool addTrack( quint16 *generator, const SfSample &sam, qint16 *samples, int endSample, int startLoop, int endLoop,
+                   int delayVolEnv, int attackVolEnv, int holdVolEnv, int decayVolEnv, int releaseVolEnv );
   };
 
 #endif // SFSYNTHNOTE_H

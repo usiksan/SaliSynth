@@ -10,12 +10,10 @@
 class SfSynthTrack
   {
     const qint16 *mSamples;     //Samples vector
-    int           mSampleStart; //Sample start index
     int           mSampleEnd;
     int           mSampleLoopStart;
     int           mSampleLoopEnd;
     bool          mExitLoop;        //Walk through end loop, else looping
-    bool          mRun;             //If true then generating samples
 
     //Oscillator
     int           mSampleIndex;     //Current sample index
@@ -23,23 +21,33 @@ class SfSynthTrack
     int           mSampleStep;      //Step of sample to provide a given sample rate. In 1/65536
 
     //Amplitude envelope modulator
+    int           mVolumeInitial;      //In santiBell note default attenuation
+    int           mVolume;             //Normal signal volume without regulation. In 1/32768
     enum {
       vpStop,
       vpDelay,
       vpAttack,
       vpHold,
       vpDecay,
+      vpSustain,
       vpRelease,
       }           mVolumePhase;
     int           mVolumeTick;
-    int           mVolDelayEnvelope;  //Delay before sound start. In tick
-    int           mVolAttackEnvelope; //Attack time. Volume rich from zero to peak
-    int           mVolHoldEnvelope;   //Hold time. Volume hold peak level
-    int           mVolDecayEnvelope;  //Time for volume linearly ramps toward the sustain level
+    int           mAttenuation;        //Current attenuation level. At phase attack - linear multer in 1/32768 of volume
+                                       //At other phases - db in 1/32768 of santiBell
+    int           mAttenuationStep;    //At attack phase it is linear step to increase result volume from zero to mVolume. In 1/32768 of volume
+                                       //At decay and release phases - it linear step to decrease volume from current level to target level. In 1/32768 santiBell per 64 tick
+    int           mVolDelayEnvelope;   //Delay before sound start. In tick
+    int           mVolAttackEnvelope;  //Attack time. Volume rich from zero to peak. In tick
+    int           mVolHoldEnvelope;    //Hold time. Volume hold peak level
+    int           mVolDecayEnvelope;   //Time for volume linearly ramps toward the sustain level
     int           mVolReleaseEnvelope; //Time
-    int           mVolSustainLevel;
+    int           mVolSustainLevel;    //This is the decrease in level, expressed in centibels, to which the Volume Envelope value ramps during the decay phase.
   public:
     SfSynthTrack();
+
+    void setup(const qint16 *samples, int sampleEnd, int sampleLoopStart, int sampleLoopEnd, bool exitLoop, int sampleStep, int volumeInitial,
+               int volDelayEnvelope, int volAttackEnvelope, int volHoldEnvelope, int volDecayEnvelope, int volReleaseEnvelope, int volSustainLevel );
 
     int  sample( bool &stopped );
 
@@ -52,6 +60,8 @@ class SfSynthTrack
     int nextSampleIndex();
     int sampleAtIndex() const { return mSamples[mSampleIndex]; }
     int sampleAtNextIndex() const { return mSamples[mSampleIndex + 1]; }
+
+    static int mAttenuator[1024];     //santiBell to K mapping. K in 1/32768
   };
 
 using SfSynthTrackVector = QVector<SfSynthTrack>;

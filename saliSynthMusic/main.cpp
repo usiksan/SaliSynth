@@ -80,6 +80,7 @@ int main(int argc, char *argv[])
 
   //Start midi synthesator
   SfSynthPreset *midiOut = new SfSynthPreset();
+//  SfSynthTrack track;
 
   //Synthesator output connect to SoundBufferIODevice
   midiOut->connect( midiOut, &SfSynthPreset::noteOn, device, &SoundBufferIODevice::addNote );
@@ -91,10 +92,14 @@ int main(int argc, char *argv[])
   midiThread->start();
 
   SoundFontMap::init();
-  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2", 0, 0, 0 );
-  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2", 1, 0, 1 );
-  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2", 2, 0, 2 );
-  SoundFontMap::append( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2", 3, 0, 3 );
+  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 0, 0, 0 );
+  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 1, 0, 1 );
+  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 2, 0, 2 );
+  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 3, 0, 3 );
+
+  midiOut->programm(0);
+
+  midiOut->midi( 0x10, 60, 120 );
 //  SoundFont font;
 //  font.read( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2" );
 

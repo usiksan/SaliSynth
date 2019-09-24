@@ -12,6 +12,65 @@
 
 #include "iff/IffReader.h"
 #include <QVector>
+#include <functional>
+
+
+enum SfGeneratorParamId {
+  sfpiStartAddressOffset = 0,
+  sfpiEndAddressOffset = 1,
+  sfpiStartLoopAddressOffset = 2,
+  sfpiEndLoopAddressOffset = 3,
+  sfpiStartAddressCoarseOffset = 4,
+  sfpiModLfoToPitch = 5,
+  sfpiVibLfoToPitch = 6,
+  sfpiModEnvToPitch = 7,
+  sfpiInitialFilterFc = 8,
+  sfpiInitialFilterQ = 9,
+  sfpiModLfoToFilterFc = 10,
+  sfpiModEnvToFilterFc = 11,
+  sfpiEndAddressCoarseOffset = 12,
+  sfpiModLfoToVolume = 13,
+  sfpiChorusEffectsSend = 15,
+  sfpiReverbEffectsSend = 16,
+  sfpiPan = 17,
+  sfpiDelayModLfo = 21,
+  sfpiFreqModLfo = 22,
+  sfpiDelayVibLfo = 23,
+  sfpiFreqVibLfo = 24,
+  sfpiDelayModEnv = 25,
+  sfpiAttackModEnv = 26,
+  sfpiHoldModEnv = 27,
+  sfpiDecayModEnv = 28,
+  sfpiSustainModEnv = 29,
+  sfpiReleaseModEnv = 30,
+  sfpiKeyNumToModEnvHold = 31,
+  sfpiKeyNumToModEnvDecay = 32,
+  sfpiDelayVolEnv = 33,
+  sfpiAttackVolEnv = 34,
+  sfpiHoldVolEnv = 35,
+  sfpiDecayVolEnv = 36,
+  sfpiSustainVolEnv = 37,
+  sfpiReleaseVolEnv = 38,
+  sfpiKeyNumToVolEnvHold = 39,
+  sfpiKeyNumToVolEnvDecay = 40,
+  sfpiInstrument = 41,
+  sfpiKeyRange = 43,
+  sfpiVelRange = 44,
+  sfpiStartLoopCoarseOffset = 45,
+  sfpiKeyNum = 46,
+  sfpiVelocity = 47,
+  sfpiInitialAttenuation = 48,
+  sfpiEndLoopCoarseOffset = 50,
+  sfpiCoarseTune = 51,
+  sfpiFineTune = 52,
+  sfpiSampleId = 53,
+  sfpiSampleModes = 54,
+  sfpiScaleTuning = 56,
+  sfpiExclusiveClass = 57,
+  sfpiOverridingRootKey = 58
+};
+
+
 
 struct SfSample
   {
@@ -122,7 +181,11 @@ class SoundFont
 
     bool    read( const QString fname );
 
+    bool    buildPreset( int preset, std::function<void( quint16 *generator, const SfSample &sam, qint16 *samples )> addTracks );
+
   private:
+    bool    buildInstrument( quint16 *generator, std::function<void( quint16 *generator, const SfSample &sam, qint16 *samples )> addTracks );
+
     bool readRiff( IffReader &reader );
 
     bool readSfbk( IffReader &reader );

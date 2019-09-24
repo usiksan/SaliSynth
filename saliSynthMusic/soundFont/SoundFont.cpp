@@ -51,6 +51,126 @@ bool SoundFont::read(const QString fname)
 
 
 
+bool SoundFont::buildPreset(int preset, std::function<void( quint16 *generator, const SfSample &sam, qint16 *samples )> addTracks )
+  {
+  //Create default generator
+  quint16 generator[61];
+  for( int i = 0; i < 61; i++ )
+    generator[i] = 0;
+  generator[sfpiInitialFilterFc] = 13500;
+  generator[sfpiDelayModLfo] = static_cast<quint16>(-12000);
+  generator[sfpiDelayVibLfo] = static_cast<quint16>(-12000);
+
+  generator[sfpiDelayModEnv] = static_cast<quint16>(-12000);
+  generator[sfpiAttackModEnv] = static_cast<quint16>(-12000);
+  generator[sfpiHoldModEnv] = static_cast<quint16>(-12000);
+  generator[sfpiDecayModEnv] = static_cast<quint16>(-12000);
+  generator[sfpiReleaseModEnv] = static_cast<quint16>(-12000);
+
+  generator[sfpiDelayVolEnv] = static_cast<quint16>(-12000);
+  generator[sfpiAttackVolEnv] = static_cast<quint16>(-12000);
+  generator[sfpiHoldVolEnv] = static_cast<quint16>(-12000);
+  generator[sfpiDecayVolEnv] = static_cast<quint16>(-12000);
+  generator[sfpiReleaseVolEnv] = static_cast<quint16>(-12000);
+
+  generator[sfpiKeyRange] = 127;
+  generator[sfpiVelRange] = 127;
+  generator[sfpiKeyNum] = static_cast<quint16>(-1);
+  generator[sfpiVelocity] = static_cast<quint16>(-1);
+
+  generator[sfpiScaleTuning] = static_cast<quint16>(100);
+  generator[sfpiOverridingRootKey] = static_cast<quint16>(-1);
+
+  //Check available preset
+  if( preset < 0 || preset >= mPresets.count() - 1 )
+    return false;
+
+  int startBag = mPresets.at(preset).wPresetBagIndex;
+  int endBag   = mPresets.at(preset + 1).wPresetBagIndex;
+  qDebug() << "selected" << preset << "preset";
+  qDebug() << mPresets.at(preset).achPresetName << mPresets.at(preset).wBank << mPresets.at(preset).wPreset;
+  qDebug() << "Bags:";
+  bool globalZone = true;
+  while( startBag < endBag ) {
+    int startGen = mPresetBags.at(startBag).mGeneratorStartIndex;
+    int endGen = mPresetBags.at(startBag + 1).mGeneratorStartIndex;
+    qDebug() << startGen << endGen << mPresetBags.at(startBag).mModulatorStartIndex;
+
+    quint16 zoneGenerator[61];
+    memcpy( zoneGenerator, generator, sizeof(quint16) * 61 );
+
+    while( startGen < endGen ) {
+      int paramIndex = mPresetGenerators.at(startGen).mParamIndex;
+      if( paramIndex < 0 || paramIndex >= 61 ) return false;
+      qDebug() << "param" << paramIndex << mPresetGenerators.at(startGen).mParamValue;
+      zoneGenerator[paramIndex] = mPresetGenerators.at(startGen).mParamValue;
+      if( paramIndex == sfpiInstrument ) globalZone = false;
+      startGen++;
+      }
+
+    if( globalZone )
+      memcpy( generator, zoneGenerator, sizeof(quint16) * 61 );
+    else
+      buildInstrument( zoneGenerator, addTracks );
+    startBag++;
+    }
+  return true;
+  }
+
+
+
+
+bool SoundFont::buildInstrument(quint16 *generator, std::function<void( quint16 *generator, const SfSample &sam, qint16 *samples )> addTracks )
+  {
+  int instrument = generator[sfpiInstrument];
+  qDebug() << "selected instrument" << instrument;
+  if( instrument < 0 || instrument >= mInstruments.count() - 1 )
+    return false;
+
+  int startBag = mInstruments.at(instrument).wInstumentBagIndex;
+  int endBag   = mInstruments.at(instrument + 1).wInstumentBagIndex;
+  qDebug() << mInstruments.at(instrument).achInstrumentName << startBag << endBag;
+
+  qDebug() << "Bags:";
+  bool globalZone = true;
+  while( startBag < endBag ) {
+    int startGen = mInstrumentBags.at(startBag).mGeneratorStartIndex;
+    int endGen = mInstrumentBags.at(startBag + 1).mGeneratorStartIndex;
+    qDebug() << startGen << endGen << mInstrumentBags.at(startBag).mModulatorStartIndex;
+
+    quint16 zoneGenerator[61];
+    memcpy( zoneGenerator, generator, sizeof(quint16) * 61 );
+
+    while( startGen < endGen ) {
+      int paramIndex = mInstrumentGenerators.at(startGen).mParamIndex;
+      if( paramIndex < 0 || paramIndex >= 61 ) return false;
+      qDebug() << "param" << paramIndex << mInstrumentGenerators.at(startGen).mParamValue;
+      zoneGenerator[paramIndex] = mInstrumentGenerators.at(startGen).mParamValue;
+      if( paramIndex == sfpiSampleId ) globalZone = false;
+      startGen++;
+      }
+
+    if( globalZone )
+      memcpy( generator, zoneGenerator, sizeof(quint16) * 61 );
+    else {
+      int sampleId = zoneGenerator[sfpiSampleId];
+      if( sampleId >= mSampleHeaders.count() - 1 )
+        return false;
+      addTracks( zoneGenerator, mSampleHeaders.at(sampleId), mSamples.data() );
+      }
+    startBag++;
+    }
+  return true;
+  }
+
+
+
+
+
+
+
+
+
 bool SoundFont::readRiff(IffReader &reader)
   {
   return reader.needFour( "sfbk" ) && readSfbk(reader);
