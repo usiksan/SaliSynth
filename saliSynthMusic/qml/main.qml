@@ -32,13 +32,14 @@ Window {
 
   //Sound font map
   SvQmlJsonModel { id: soundFontMap; file: settings; jsonName: "soundFontMap"; fields: [
-      "iconName",      //visual icon name for instrument
-      "title",         //instrument visual title
-      "soundFontFile", //Sound font file name
-      "preset",        //Preset in sound font file
-      "programm"       //Programm which associates with this preset and sound font file
+      "iconName",        //visual icon name for instrument
+      "instrumentTitle", //instrument visual title
+      "soundFontFile",   //Sound font file name
+      "preset",          //Preset in sound font file
+      "programm"         //Programm which associates with this preset and sound font file
      ] }
 
+  Binding { target: synth;    property: "model";         value: soundFontMap }
 
   //Background image
   Image {

@@ -121,6 +121,6 @@ void SfSynth::applySoundFont(int programm, const QString soundFont, int preset)
 void SfSynth::addModelRecord(int index, const QString title)
   {
   mModel->addRecord();
-  mModel->setString( index, "title", title );
+  mModel->setString( index, "instrumentTitle", title );
   mModel->setInt( index, "programm", index );
   }
