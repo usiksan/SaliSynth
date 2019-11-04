@@ -175,13 +175,16 @@ class SoundFont
     SoundFont();
     ~SoundFont();
 
-    void    clear();
+    void        clear();
 
-    QString fileName() const { return mFileName; }
+    QString     fileName() const { return mFileName; }
 
-    bool    read( const QString fname );
+    //Preset name list
+    QStringList presetList() const;
 
-    bool    buildPreset( int preset, std::function<void( quint16 *generator, const SfSample &sam, qint16 *samples )> addTracks );
+    bool        read( const QString fname );
+
+    bool        buildPreset( int preset, std::function<void( quint16 *generator, const SfSample &sam, qint16 *samples )> addTracks );
 
   private:
     bool    buildInstrument( quint16 *generator, std::function<void( quint16 *generator, const SfSample &sam, qint16 *samples )> addTracks );

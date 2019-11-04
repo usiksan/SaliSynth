@@ -35,6 +35,23 @@ void SoundFont::clear()
 
 
 
+
+//Preset name list
+QStringList SoundFont::presetList() const
+  {
+  //Prepare list
+  QStringList list;
+
+  //Fill preset name list from preset list
+  for( int i = 0; i < mPresets.count(); i++ )
+    list.append( QString::fromLatin1( mPresets.at(i).achPresetName ) );
+
+  //Return preset name list
+  return list;
+  }
+
+
+
 bool SoundFont::read(const QString fname)
   {
   IffReader reader(fname,true);

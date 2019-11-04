@@ -38,9 +38,8 @@ class SfSynthPreset : public QObject
     //Change current programm of preset
     void programm( quint8 prg );
 
-  private:
-
     void build( SoundFontPtr soundFont, int preset );
+
   };
 
 using SfSynthPresetPtr = QSharedPointer<SfSynthPreset>;

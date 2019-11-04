@@ -37,7 +37,7 @@ class SvQmlJsonModel : public QAbstractListModel
     Q_PROPERTY(QStringList ignoredFields READ ignoredFields WRITE setIgnoredFields NOTIFY ignoredFieldsChanged)
   public:
     SvQmlJsonModel( QObject *parent = nullptr );
-    ~SvQmlJsonModel();
+    ~SvQmlJsonModel() override;
 
     //Доступ к файлу, к которому относится это значение
     SvQmlJsonFile *getFile() const { return mFile; }
