@@ -124,8 +124,8 @@ int main(int argc, char *argv[])
 //  SoundFont font;
 //  font.read( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2" );
 
-//  MidiFile midi;
-//  midi.read( "/home/dial/midi/white_dove.mid" );
+  MidiFile midi;
+  midi.read( "/home/dial/midi/white_dove.mid" );
 
   return app.exec();
   }

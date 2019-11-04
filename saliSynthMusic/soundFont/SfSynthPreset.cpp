@@ -4,12 +4,19 @@
 #include <math.h>
 #include <QDebug>
 
+
+
 SfSynthPreset::SfSynthPreset(QObject *parent) :
   QObject(parent)
   {
   for( int i = 0; i < 128; i++ )
     mNotes[i].setNote(i);
   }
+
+
+
+
+
 
 void SfSynthPreset::midi(quint8 cmd, quint8 data0, quint8 data1)
   {
@@ -50,11 +57,15 @@ void SfSynthPreset::midi(quint8 cmd, quint8 data0, quint8 data1)
 
 
 
+
+
 inline int delay( quint16 time ) {
   double tm = static_cast<qint16>(time);
   double sec = pow( 2.0, tm / 1200.0 );
   return static_cast<int>( sec * 48000.0 );
   }
+
+
 
 
 void SfSynthPreset::build(SoundFontPtr soundFont, int preset)
@@ -104,4 +115,5 @@ void SfSynthPreset::programm(quint8 prg)
   {
   SoundFontMap map = SoundFontMap::map( 0, prg );
   build( map.mSoundFontPtr, map.mSoundFontPreset );
+  mProgramm = prg;
   }

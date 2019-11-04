@@ -13,8 +13,12 @@ class SfSynthPreset : public QObject
 
     SfSynthNote  mNotes[128];
     SoundFontPtr mSoundFontPtr;
+    int          mProgramm;
   public:
     explicit SfSynthPreset(QObject *parent = nullptr);
+
+    int programm() const { return mProgramm; }
+
 
   signals:
     void noteOn( SfSynthNote *note );
@@ -26,5 +30,7 @@ class SfSynthPreset : public QObject
 
     void programm( quint8 prg );
   };
+
+using SfSynthPresetPtr = QSharedPointer<SfSynthPreset>;
 
 #endif // SFSYNTHPRESET_H

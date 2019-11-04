@@ -7,6 +7,8 @@
  Description
  History
    06.08.2019 v1  Begin sound output test
+   04.10.2019 v2  Append midi file reader.
+                  Append channel preset changer
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H

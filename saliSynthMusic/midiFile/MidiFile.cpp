@@ -1,3 +1,12 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   MIDI file
+*/
 #include "MidiFile.h"
 
 #include <QDebug>
@@ -6,6 +15,10 @@ MidiFile::MidiFile()
   {
 
   }
+
+
+
+
 
 bool MidiFile::read(QString fname)
   {
@@ -18,14 +31,24 @@ bool MidiFile::read(QString fname)
     return false;
 
   //Repeated tracks
+  int trackIndex = 0;
   while( !reader.isEnd() ) {
     IffReader track = reader.getChunk();
     qDebug() << track.name();
-    if( track.compareChunkName("MTrk") )
+    if( track.compareChunkName("MTrk") ) {
       readMtrk( track );
+      trackIndex++;
+      }
     }
   return true;
   }
+
+
+
+
+
+
+
 
 bool MidiFile::readMthd(IffReader &reader)
   {
@@ -34,17 +57,31 @@ bool MidiFile::readMthd(IffReader &reader)
   mTrackNumber = reader.getUint16be();
   mDivision    = reader.getUint16be();
 
+  //Build track vector
+  mTracks.clear();
+  //Single track in midi with some channels
+  mTracks.resize(16);
+
   qDebug() << mFormat << mTrackNumber << mDivision;
   return true;
   }
 
+
+
+
+
+
+
 void MidiFile::readMtrk(IffReader &reader)
   {
+  quint32 time = 0;
+  QString trackName;
   while( !reader.isEnd() ) {
     //Read midi event
 
     quint32 timeOffset = variableLenValue(reader);
     quint8 statusByte = reader.getUint8();
+    time += timeOffset;
     qDebug() << timeOffset << statusByte;
     if( statusByte == 0xff ) {
       //Meta-event
@@ -54,6 +91,24 @@ void MidiFile::readMtrk(IffReader &reader)
       for( quint32 i = 0; i < len; i++ )
         ar[i] = reader.getInt8();
       qDebug() << "meta" << metaEvent << len << ar;
+
+      if( metaEvent == 3 )
+        //Track name
+        trackName = QString::fromUtf8( ar );
+
+      else if( metaEvent == 0x51 ) {
+        //Set tempo
+        mTempo = static_cast<quint32>(
+                   (static_cast<unsigned>(ar[0] & 0xff) << 16) |
+                   (static_cast<unsigned>(ar[1] & 0xff) << 8) |
+                   static_cast<unsigned>(ar[2] & 0xff) );
+        }
+
+      else if( metaEvent == 0x58 ) {
+        //Time signature
+
+        }
+
       }
     else if( statusByte == 0xf0 ) {
       //Sys-ex
@@ -63,27 +118,37 @@ void MidiFile::readMtrk(IffReader &reader)
         ar[i] = reader.getInt8();
       qDebug() << "sys-ex" << len << ar;
       }
+    else if( (statusByte & 0xf0) == 0xf0 ) {
+      //System events
+      }
     else {
       //Midi-event
-      quint8 data0 = reader.peekUint8();
-      if( data0 & 0x80 ) {
-        qDebug() << "midi-0";
-
+      MidiEvent event;
+      event.mTime = time;
+      event.mType = statusByte;
+      if( (statusByte & 0xf0) == 0xc0 || (statusByte & 0xf0) == 0xd0 ) {
+        //Programm change or Channel pressure
+        event.mData0 = reader.getUint8();
+        qDebug("midi-1 %x %d", statusByte, event.mData0 );
         }
       else {
-        data0 = reader.getUint8();
-        quint8 data1 = reader.peekUint8();
-        if( data1 & 0x80 ) {
-          qDebug() << "midi-1" << data0;
-          }
-        else {
-          data1 = reader.getUint8();
-          qDebug() << "midi-2" << data0 << data1;
-          }
+        event.mData0 = reader.getUint8();
+        event.mData1 = reader.getUint8();
+        qDebug("midi-2 %x %d %d", statusByte, event.mData0, event.mData1 );
         }
+      int trackIndex = statusByte & 0xf;
+      if( !trackName.isEmpty() ) {
+        mTracks[trackIndex].mName = trackName;
+        trackName.clear();
+        }
+      mTracks[trackIndex].mEvents.append( event );
       }
     }
   }
+
+
+
+
 
 quint32 MidiFile::variableLenValue(IffReader &reader)
   {

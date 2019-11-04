@@ -22,6 +22,7 @@ SOURCES += \
         main.cpp \
         midiFile/MidiFile.cpp \
         midiInput/MidiInput.cpp \
+        soundFont/SfSynth.cpp \
         soundFont/SfSynthNote.cpp \
         soundFont/SfSynthPreset.cpp \
         soundFont/SfSynthTrack.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
   iff/IffReader.h \
   midiFile/MidiFile.h \
   midiInput/MidiInput.h \
+  soundFont/SfSynth.h \
   soundFont/SfSynthNote.h \
   soundFont/SfSynthPreset.h \
   soundFont/SfSynthTrack.h \
