@@ -43,6 +43,16 @@ bool MidiFile::read(QString fname)
   return true;
   }
 
+void MidiFile::tick()
+  {
+
+  }
+
+void MidiFile::seek(quint32 time)
+  {
+
+  }
+
 
 
 

@@ -1,3 +1,15 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   Single note for synth. Note is single or set of sound played simultaneously.
+   For this, note consist of one or more tracks each of that is separate sound
+   generator.
+   Note sounds when midi events.
+*/
 #include "SfSynthNote.h"
 #include <math.h>
 #include <QDebug>
@@ -8,25 +20,46 @@ SfSynthNote::SfSynthNote() :
 
   }
 
+//Clear builded note to its default cleared nondefined state
 void SfSynthNote::clear()
   {
+  //Stop note sounds
   mStopped = true;
+  //Remove all note tracks
   mTracks.clear();
   }
 
+
+
+
+//Get next sound sample for this note
 int SfSynthNote::sample()
   {
   if( !mStopped && mTracks.count() ) {
+
     //Calculate sum of all tracks
     int sampleSum = 0;
+
+    //Stopped flag set to false if any track is not completed
     bool stopped = true;
+
+    //Generate next sample for each track
     for( SfSynthTrack &track : mTracks )
       sampleSum += track.sample( stopped );
+
+    //Update stop flag
     mStopped = stopped;
+
+    //Return tracks sample sum
     return sampleSum;
     }
+
+  //Note stopped or no track, so we return 0
   return 0;
   }
+
+
+
 
 
 void SfSynthNote::noteOff(quint8 pressure)
@@ -34,6 +67,8 @@ void SfSynthNote::noteOff(quint8 pressure)
   for( SfSynthTrack &track : mTracks )
     track.noteOff( pressure );
   }
+
+
 
 
 
@@ -45,6 +80,9 @@ bool SfSynthNote::noteOn(quint8 pressure)
   mStopped = !started;
   return started;
   }
+
+
+
 
 
 static double noteFriq[12] = {
@@ -62,6 +100,8 @@ static double noteFriq[12] = {
   493.88
 };
 
+
+
 static double oktavaMult[11] = {
   0.0625, //0  Суб-контр
   0.125,  //1  Контр
@@ -77,6 +117,9 @@ static double oktavaMult[11] = {
 };
 
 
+
+
+//Build track for note
 bool SfSynthNote::addTrack( quint16 *generator, const SfSample &sam, qint16 *samples, int endSample, int startLoop, int endLoop,
                             int delayVolEnv, int attackVolEnv, int holdVolEnv, int decayVolEnv, int releaseVolEnv )
   {

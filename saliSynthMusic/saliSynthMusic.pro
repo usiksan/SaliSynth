@@ -13,6 +13,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        Host/SvTime2x.cpp \
+        SvQml/SvDir.cpp \
+        SvQml/SvQmlHtmlImageProvider.cpp \
+        SvQml/SvQmlJsonFile.cpp \
+        SvQml/SvQmlJsonHistory.cpp \
+        SvQml/SvQmlJsonModel.cpp \
+        SvQml/SvQmlJsonObjectModelFile.cpp \
+        SvQml/SvQmlJsonString.cpp \
+        SvQml/SvQmlJsonValue.cpp \
+        SvQml/SvQmlUtils.cpp \
         audioOut/SoundBufferIODevice.cpp \
         audioOut/SoundMidiChannel.cpp \
         audioOut/SoundMidiOut.cpp \
@@ -43,6 +53,16 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+  Host/SvTime2x.h \
+  SvQml/SvDir.h \
+  SvQml/SvQmlHtmlImageProvider.h \
+  SvQml/SvQmlJsonFile.h \
+  SvQml/SvQmlJsonHistory.h \
+  SvQml/SvQmlJsonModel.h \
+  SvQml/SvQmlJsonObjectModelFile.h \
+  SvQml/SvQmlJsonString.h \
+  SvQml/SvQmlJsonValue.h \
+  SvQml/SvQmlUtils.h \
   audioOut/SoundBufferIODevice.h \
   audioOut/SoundMidiChannel.h \
   audioOut/SoundMidiOut.h \

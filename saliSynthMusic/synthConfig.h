@@ -14,7 +14,7 @@
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 1
+#define VERSION 2
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

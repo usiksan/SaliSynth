@@ -1,3 +1,13 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   Single preset for synth. Preset is single or set of instruments acts as the whole.
+   Preset sounds when you press a key (midi event from keyboard or midi file or accompaniment)
+*/
 #include "SfSynthPreset.h"
 #include "SoundFontMap.h"
 
@@ -18,6 +28,7 @@ SfSynthPreset::SfSynthPreset(QObject *parent) :
 
 
 
+//Action on midi event
 void SfSynthPreset::midi(quint8 cmd, quint8 data0, quint8 data1)
   {
   cmd = ((cmd >> 4) & 0x7);
@@ -111,9 +122,9 @@ void SfSynthPreset::build(SoundFontPtr soundFont, int preset)
 
 
 
+//Change current programm of preset
 void SfSynthPreset::programm(quint8 prg)
   {
   SoundFontMap map = SoundFontMap::map( 0, prg );
   build( map.mSoundFontPtr, map.mSoundFontPreset );
-  mProgramm = prg;
   }

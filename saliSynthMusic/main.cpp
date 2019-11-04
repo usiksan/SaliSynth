@@ -17,8 +17,21 @@
 
 #include "midiFile/MidiFile.h"
 
+#include "SvQml/SvQmlUtils.h"
+
+//json-files
+#include "SvQml/SvQmlJsonFile.h"
+#include "SvQml/SvQmlJsonString.h"
+#include "SvQml/SvQmlJsonHistory.h"
+#include "SvQml/SvQmlJsonModel.h"
+
+//Help provider
+#include "SvQml/SvQmlHtmlImageProvider.h"
+
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QThread>
 #include <QDebug>
 
@@ -35,7 +48,24 @@ int main(int argc, char *argv[])
 
   QGuiApplication app(argc, argv);
 
+
+  //Utilites
+  qmlRegisterType<SvQmlUtils>               ("SvQml", 1, 0, "SvQmlUtils" );
+
+  //json-files
+  qmlRegisterType<SvQmlJsonFile>            ("SvQml", 1, 0, "SvQmlJsonFile" );
+  qmlRegisterType<SvQmlJsonString>          ("SvQml", 1, 0, "SvQmlJsonString" );
+  qmlRegisterType<SvQmlJsonHistory>         ("SvQml", 1, 0, "SvQmlJsonHistory" );
+  qmlRegisterType<SvQmlJsonModel>           ("SvQml", 1, 0, "SvQmlJsonModel" );
+
+
   QQmlApplicationEngine engine;
+
+  //Help provider
+  SvQmlHtmlImageProvider *guideImageProvider = new SvQmlHtmlImageProvider();
+  engine.addImageProvider( "guideImageProvider", guideImageProvider );
+  engine.rootContext()->setContextProperty("guideImageProvider", guideImageProvider);
+
   const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
   QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                    &app, [url](QObject *obj, const QUrl &objUrl) {
@@ -43,6 +73,8 @@ int main(int argc, char *argv[])
       QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
   engine.load(url);
+
+  engine.rootContext()->setContextProperty( "version", QVariant(VERSION) );
 
 
   //Create audio device for output synthesed audio stream
@@ -68,19 +100,15 @@ int main(int argc, char *argv[])
   audio->setNotifyInterval(10);
   audio->setBufferSize(1920*4);
 
-  //SoundPolyphonyManager::mSoundPolyphony[10].setPeriod(88);
-  //SoundPolyphonyManager::mSoundPolyphony[50].setPeriod(130);
-
-  qDebug() << "buffer size" << audio->bufferSize() << "notify interval" << audio->notifyInterval() << " period size" << audio->periodSize()
-           << " bytes free" << audio->bytesFree();
+//  qDebug() << "buffer size" << audio->bufferSize() << "notify interval" << audio->notifyInterval() << " period size" << audio->periodSize()
+//           << " bytes free" << audio->bytesFree();
   audio->start( device );
 
-  qDebug() << "buffer size" << audio->bufferSize() << "notify interval" << audio->notifyInterval() << " period size" << audio->periodSize()
-           << " bytes free" << audio->bytesFree();
+//  qDebug() << "buffer size" << audio->bufferSize() << "notify interval" << audio->notifyInterval() << " period size" << audio->periodSize()
+//           << " bytes free" << audio->bytesFree();
 
   //Start midi synthesator
   SfSynthPreset *midiOut = new SfSynthPreset();
-//  SfSynthTrack track;
 
   //Synthesator output connect to SoundBufferIODevice
   midiOut->connect( midiOut, &SfSynthPreset::noteOn, device, &SoundBufferIODevice::addNote );
@@ -119,10 +147,6 @@ int main(int argc, char *argv[])
 //  SoundFontMap::append( "/home/asibilev/work/SaliSynth/sf2/Piano Grand.SF2", 3, 0, 3 );
 
   midiOut->programm(0);
-
-  //midiOut->midi( 0x10, 60, 120 );
-//  SoundFont font;
-//  font.read( "/home/dial/work/SaliSynth/sf2/Piano Grand.SF2" );
 
   MidiFile midi;
   midi.read( "/home/dial/midi/white_dove.mid" );

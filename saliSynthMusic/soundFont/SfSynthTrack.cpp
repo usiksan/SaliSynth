@@ -1,3 +1,16 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   Single track for single note for synth. Track is single sample sourced sound synth.
+   Track represents single instrument in SoundFont. Single instrument is the minimum indivisible
+   sound. It may be any sound not only fact single instrument. It may be, for example
+   whole orchestra. But this orchestra can not be divided into instruments and sound as
+   whole.
+*/
 #include "SfSynthTrack.h"
 
 #include <math.h>
@@ -216,12 +229,6 @@ int SfSynthTrack::nextSample()
   int curSample  = sampleAtIndex();
   int delta = sampleAtNextIndex() - curSample;
   curSample += delta * mSampleSubIndex >> 16;
-
-//  static int tt = 0;
-//  if( tt < 1000 ) {
-//    qDebug() << "sample" << sampleAtIndex() << sampleAtNextIndex() << curSample;
-//    tt++;
-//    }
 
   //Calculate next sample index
   mSampleSubIndex += mSampleStep;
