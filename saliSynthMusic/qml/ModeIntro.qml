@@ -7,11 +7,10 @@
  Description
    Intro page with work mode selection
 */
-import QtQuick 2.0
+import QtQuick 2.8
 
-Item {
+ModeBase {
   id: introMode
-  anchors.fill: parent
 
   property int buttonSize: 70
 

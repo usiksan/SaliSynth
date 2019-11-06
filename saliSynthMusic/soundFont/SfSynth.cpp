@@ -1,5 +1,8 @@
 #include "SfSynth.h"
+#include "SvQml/SvDir.h"
+#include "SvQml/SvQmlUtils.h"
 
+#include <QDebug>
 
 
 SfSynth::SfSynth(QObject *parent) :
@@ -20,46 +23,20 @@ void SfSynth::setModel(SvQmlJsonModel *md)
     //Initialize model
     for( int i = 0; i < 128; i++ )
       addModelRecord( i, QString("Instrument %1").arg(i) );
-//    addModelRecord( 0, tr("Grand piano") );
-//    addModelRecord( 1, tr("Bright piano") );
-//    addModelRecord( 2, tr("E Grand piano") );
-//    addModelRecord( 3, tr("Honky-tonk") );
-//    addModelRecord( 4, tr("E Piano 1") );
-//    addModelRecord( 5, tr("E Piano 2") );
-//    addModelRecord( 6, tr("Harpsichord") );
-//    addModelRecord( 7, tr("Clavi") );
-
-//    addModelRecord( 8, tr("Celesta") );
-//    addModelRecord( 9, tr("Glockenspiel") );
-//    addModelRecord( 10, tr("Music box") );
-//    addModelRecord( 11, tr("Vibraphone") );
     }
 
   //Fill programms
-  SfSynthPresetPtr defPreset( new SfSynthPreset() );
   for( int i = 0; i < 128; i++ ) {
-    QString soundFont = mModel->asString( i, "soundFontFile" );
-    if( soundFont.isEmpty() ) {
-      //No sound font assigned for this programm slot
-      mProgramms[i] = defPreset;
-      }
-    else {
-      //Sound font assigned for this programm slot
-      if( !mSoundFontMap.contains( soundFont ) ) {
-        //Sound font not yet loaded
-        //We creating sound font
-        SoundFontPtr soundFontPtr( new SoundFont );
-        //...load it
-        soundFontPtr->read( soundFont );
-        //...and append to map
-        mSoundFontMap.insert( soundFont, soundFontPtr );
-        }
+    //Create programm
+    SfSynthPresetPtr preset( new SfSynthPreset() );
+    mProgramms[i] = preset;
+    //Connect programm
+    connect( preset.data(), &SfSynthPreset::noteOn, this, &SfSynth::noteOn );
 
-      SfSynthPresetPtr preset( new SfSynthPreset() );
-      preset->build( mSoundFontMap.value(soundFont), mModel->asInt( i, "preset" ) );
-      //Connect programm
-      connect( preset.data(), &SfSynthPreset::noteOn, this, &SfSynth::noteOn );
-      }
+    QString soundFont = mModel->asString( i, "soundFontFile" );
+    if( !soundFont.isEmpty() )
+      //Sound font assigned for this programm slot
+      applySoundFont( i, soundFont, mModel->asInt( i, "preset" ) );
     }
 
   //Build default channels
@@ -72,11 +49,19 @@ void SfSynth::setModel(SvQmlJsonModel *md)
 
 QStringList SfSynth::presetList(const QString soundFont )
   {
-  if( mSoundFontMap.contains( soundFont ) )
-    return mSoundFontMap.value( soundFont )->presetList();
+  if( mSoundFontMap.contains( soundFont ) && !mSoundFontMap.value(soundFont).isNull() )
+    return mSoundFontMap.value( soundFont ).toStrongRef()->presetList();
 
   //No sound font with this name
   return QStringList{};
+  }
+
+
+
+
+QString SfSynth::soundFontPath() const
+  {
+  return SvQmlUtils::getHomePath() + "saliSynthMusic/soundFonts/";
   }
 
 
@@ -101,18 +86,24 @@ void SfSynth::midi(quint8 cmd, quint8 data0, quint8 data1)
 
 void SfSynth::applySoundFont(int programm, const QString soundFont, int preset)
   {
+  mModel->setString( programm, "soundFontFile", soundFont );
+  mModel->setInt( programm, "preset", preset );
+  qDebug() << "sound font" << soundFont;
   //Check if it new file
-  if( !mSoundFontMap.contains( soundFont ) ) {
+  if( !mSoundFontMap.contains( soundFont ) || mSoundFontMap.value(soundFont).isNull() ) {
     //Sound font not yet loaded
     //We creating sound font
     SoundFontPtr soundFontPtr( new SoundFont );
     //...load it
-    soundFontPtr->read( soundFont );
+    soundFontPtr->read( soundFontPath() + soundFont + ".sf2" );
     //...and append to map
     mSoundFontMap.insert( soundFont, soundFontPtr );
-    }
 
-  mProgramms[programm & 0x7f]->build( mSoundFontMap.value(soundFont), preset );
+    mProgramms[programm & 0x7f]->build( soundFontPtr, preset );
+    }
+  else
+    mProgramms[programm & 0x7f]->build( mSoundFontMap.value(soundFont).toStrongRef(), preset );
+  mModel->setString( programm, "presetName", mSoundFontMap.value(soundFont).toStrongRef()->presetName(preset) );
   }
 
 
@@ -124,3 +115,4 @@ void SfSynth::addModelRecord(int index, const QString title)
   mModel->setString( index, "instrumentTitle", title );
   mModel->setInt( index, "programm", index );
   }
+

@@ -56,5 +56,19 @@
         <file>img/RU.png</file>
         <file>img/iconSoundFont.png</file>
         <file>qml/InstrumentIconListModel.qml</file>
+        <file>img/instrumentPiano.png</file>
+        <file>qml/InstrumentIconSelect.qml</file>
+        <file>img/instrumentGuitarAcoustic.png</file>
+        <file>img/instrumentGuitarElectro.png</file>
+        <file>qml/ModeBase.qml</file>
+        <file>img/Kbd64Default.png</file>
+        <file>img/Kbd64Pressed.png</file>
+        <file>img/Kbd96Default.png</file>
+        <file>img/Kbd96Pressed.png</file>
+        <file>img/Kbd134Default.png</file>
+        <file>img/Kbd134Pressed.png</file>
+        <file>img/backNumPad.png</file>
+        <file>qml/SoundFontLoad.qml</file>
+        <file>img/iconClose.png</file>
     </qresource>
 </RCC>

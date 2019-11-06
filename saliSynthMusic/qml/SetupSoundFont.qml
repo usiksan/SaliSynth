@@ -1,18 +1,35 @@
-import QtQuick 2.0
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   Setup
+   Sound font table management
+*/
+import QtQuick 2.8
 
 SvTabViewItem {
   //Fields with
 //  property int widthMarker: 50
   property int widthNpp: 50
-  property int widthIcon: 70
+  property int widthIcon: 64
   property int widthTitle: 150
-  property int widthPreset: 50
+  property int widthPreset: 150
   property int widthFontName: 250
+
+  property int currentRow : 0
+
+  function setCurrentRow( row ) {
+    currentRow = row;
+  }
+
 
    //Table title
   Row {
     id: idTitle
-    anchors.top: parent.bottom
+    anchors.top: parent.top
     anchors.topMargin: 35
     anchors.left: parent.left
     anchors.leftMargin: 5
@@ -92,9 +109,17 @@ SvTabViewItem {
           onLeftButton: setCurrentRow(index);
         }
         Image {
-          width: 64
+          width: widthIcon
           height: 64
           source: iconName
+          MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: {
+              setCurrentRow(index);
+              instrumentIconSelector.instrumentIconSelect( iconName, function (str) { iconName = str; } )
+            }
+          }
         }
         //Instrument title
         SvFieldText {
@@ -102,22 +127,31 @@ SvTabViewItem {
           width: widthTitle
           editable: true
           onLeftButton: setCurrentRow(index);
+          onApply: instrumentTitle = str;
         }
         //Preset number
         SvFieldText {
-          text: preset
-          width: widthPart
-          editable: true
+          text: presetName
+          width: widthPreset
+          editable: false
           onLeftButton: setCurrentRow(index);
         }
         //Sound font file
         SvFieldText {
           text: soundFontFile
           width: widthFontName
-          editable: true
-          onLeftButton: setCurrentRow(index);
+          editable: false
+          onLeftButton: {
+            setCurrentRow(index);
+            soundFontSelector.visible = true
+          }
         }
       }
     }
+  }
+
+  SoundFontLoad {
+    id: soundFontSelector
+    onSelected: synth.applySoundFont( currentRow, str, soundFontMap.asInt(currentRow,"preset") )
   }
 }

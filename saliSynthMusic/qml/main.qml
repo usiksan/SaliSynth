@@ -13,7 +13,7 @@ import SvQml 1.0
 
 Window {
   visible: true
-  width: 640
+  width: 800
   height: 480
   title: qsTr("Sali Synth Music V") + version
 
@@ -36,20 +36,31 @@ Window {
       "instrumentTitle", //instrument visual title
       "soundFontFile",   //Sound font file name
       "preset",          //Preset in sound font file
+      "presetName",      //Preset name in sound font file
       "programm"         //Programm which associates with this preset and sound font file
      ] }
 
   Binding { target: synth;    property: "model";         value: soundFontMap }
 
-  //Background image
-  Image {
-    anchors.fill: parent
-    source: "qrc:/img/backMain.png"
-  }
 
   //Current mode
   property int currentMode : 0
   ModeIntro { visible: currentMode === 0 }
   ModeSetup { visible: currentMode === 1 }
+
+  //Instrument icon selector
+  InstrumentIconSelect { id: instrumentIconSelector }
+
+  //Digital input pad
+  SvNumPad { id: numPad }
+
+  //Full keyboard
+  SvKeyboard { id: keyboard }
+
+  //Pop-up messages
+  SvMessageBox { id: messageBox }
+
+  //Query box
+  SvQueryBox { id: queryBox }
 
 }

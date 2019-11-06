@@ -15,7 +15,7 @@ class SfSynth : public QObject
 
     SfSynthPresetPtr               mChannels[16];
     SfSynthPresetPtr               mProgramms[128];
-    QMap<QString,SoundFontPtr>     mSoundFontMap;
+    QMap<QString,SoundFontWeakPtr> mSoundFontMap;
 
     SvQmlJsonModel                *mModel;
 
@@ -28,6 +28,8 @@ class SfSynth : public QObject
     void            setModel( SvQmlJsonModel *md );
 
     Q_INVOKABLE QStringList presetList(const QString soundFont );
+
+    Q_INVOKABLE QString     soundFontPath() const;
   signals:
     void noteOn( SfSynthNote *note );
 

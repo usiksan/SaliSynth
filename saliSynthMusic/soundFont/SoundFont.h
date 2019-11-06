@@ -13,6 +13,7 @@
 #include "iff/IffReader.h"
 #include <QVector>
 #include <functional>
+#include <QWeakPointer>
 
 
 enum SfGeneratorParamId {
@@ -182,6 +183,9 @@ class SoundFont
     //Preset name list
     QStringList presetList() const;
 
+    //Preset name by index
+    QString     presetName( int preset ) const;
+
     bool        read( const QString fname );
 
     bool        buildPreset( int preset, std::function<void( quint16 *generator, const SfSample &sam, qint16 *samples )> addTracks );
@@ -221,5 +225,6 @@ class SoundFont
   };
 
 using SoundFontPtr = QSharedPointer<SoundFont>;
+using SoundFontWeakPtr = QWeakPointer<SoundFont>;
 
 #endif // SOUNDFONT_H

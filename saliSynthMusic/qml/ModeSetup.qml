@@ -11,8 +11,7 @@ import QtQuick 2.8
 import QtQml.Models 2.2
 import SvQml 1.0
 
-Item {
-  anchors.fill: parent
+ModeBase {
 
   SvTabView {
     textSize: 10

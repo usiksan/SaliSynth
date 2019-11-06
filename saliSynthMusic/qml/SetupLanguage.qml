@@ -1,3 +1,13 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   Setup
+   Select interface language
+*/
 import QtQuick 2.8
 import QtQuick.Layouts 1.3
 import SvQml 1.0

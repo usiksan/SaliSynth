@@ -52,6 +52,17 @@ QStringList SoundFont::presetList() const
 
 
 
+
+//Preset name by index
+QString SoundFont::presetName(int preset) const
+  {
+  if( preset >= 0 && preset < mPresets.count() )
+    return QString::fromLatin1( mPresets.at(preset).achPresetName );
+  return QString{};
+  }
+
+
+
 bool SoundFont::read(const QString fname)
   {
   IffReader reader(fname,true);
