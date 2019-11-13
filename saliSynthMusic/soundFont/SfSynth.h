@@ -18,8 +18,10 @@ class SfSynth : public QObject
     QMap<QString,SoundFontWeakPtr> mSoundFontMap;
 
     SvQmlJsonModel                *mModel;
+    bool                           mMidiConnected;
 
     Q_PROPERTY(SvQmlJsonModel* model READ getModel WRITE setModel NOTIFY modelChanged)
+    Q_PROPERTY(bool midiConnected READ getMidiConnected NOTIFY midiConnectedChanged )
   public:
     explicit SfSynth(QObject *parent = nullptr);
 
@@ -27,7 +29,10 @@ class SfSynth : public QObject
     SvQmlJsonModel *getModel() const { return mModel; }
     void            setModel( SvQmlJsonModel *md );
 
-    Q_INVOKABLE QStringList presetList(const QString soundFont );
+    //midiConnected access
+    bool            getMidiConnected() const { return mMidiConnected; }
+
+    Q_INVOKABLE QStringList presetList( int programm );
 
     Q_INVOKABLE QString     soundFontPath() const;
   signals:
@@ -35,10 +40,18 @@ class SfSynth : public QObject
 
     void modelChanged();
 
+    void midiConnectedChanged();
+
   public slots:
     void midi( quint8 cmd, quint8 data0, quint8 data1 );
 
+    void setProgramm( int channel, int programm );
+
+    void midiConnection( bool on );
+
     void applySoundFont(int programm, const QString soundFont, int preset );
+
+    void applyPreset( int programm, int preset );
 
   private:
     void addModelRecord( int index, const QString title );

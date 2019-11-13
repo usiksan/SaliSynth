@@ -26,6 +26,7 @@ class SfSynthPreset : public QObject
   public:
     explicit SfSynthPreset(QObject *parent = nullptr);
 
+    SoundFontPtr soundFontPtr() const { return mSoundFontPtr; }
 
   signals:
     //Append note to audio output to synth it

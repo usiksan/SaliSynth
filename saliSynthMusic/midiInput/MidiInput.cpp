@@ -42,7 +42,7 @@ MidiInput::~MidiInput()
 void MidiInput::onTimer()
   {
   char buf[30];
-  int r;
+  ssize_t r;
   do {
     //Read buffer
     r = read( mMidiHandle, buf, 30 );
@@ -86,13 +86,18 @@ void MidiInput::onTimer()
 
 void MidiInput::onStart()
   {
-  QTimer *tm = new QTimer();
-  tm->setInterval(10);
   mMidiHandle = open( "/dev/snd/midiC1D0", O_RDONLY | O_NONBLOCK );
   if( mMidiHandle >= 0 ) {
+    QTimer *tm = new QTimer();
+    tm->setInterval(10);
     connect( tm, &QTimer::timeout, this, &MidiInput::onTimer );
     tm->start();
+    emit connectionChanged( true );
     qDebug() << "midi open" << mMidiHandle;
+    }
+  else {
+    //Try connect after one second
+    QTimer::singleShot( 1000, this, &MidiInput::onStart );
     }
   }
 

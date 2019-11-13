@@ -70,5 +70,6 @@
         <file>img/backNumPad.png</file>
         <file>qml/SoundFontLoad.qml</file>
         <file>img/iconClose.png</file>
+        <file>qml/PresetListSelect.qml</file>
     </qresource>
 </RCC>

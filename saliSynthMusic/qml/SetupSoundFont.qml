@@ -23,6 +23,7 @@ SvTabViewItem {
 
   function setCurrentRow( row ) {
     currentRow = row;
+    synth.setProgramm( 0, row );
   }
 
 
@@ -134,7 +135,10 @@ SvTabViewItem {
           text: presetName
           width: widthPreset
           editable: false
-          onLeftButton: setCurrentRow(index);
+          onLeftButton: {
+            setCurrentRow(index);
+            presetListSelector.presetSelect( index, preset );
+          }
         }
         //Sound font file
         SvFieldText {
@@ -152,6 +156,11 @@ SvTabViewItem {
 
   SoundFontLoad {
     id: soundFontSelector
-    onSelected: synth.applySoundFont( currentRow, str, soundFontMap.asInt(currentRow,"preset") )
+    onSelected: synth.applySoundFont( currentRow, str, 0 )
+  }
+
+  PresetListSelect {
+    id: presetListSelector
+    onSelected: synth.applyPreset( currentRow, presetIndex )
   }
 }

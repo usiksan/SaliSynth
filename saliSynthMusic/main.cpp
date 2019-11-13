@@ -105,6 +105,7 @@ int main(int argc, char *argv[])
   QThread *midiThread = new QThread();
   MidiInput *midiInput = new MidiInput( midiThread );
   midiInput->connect( midiInput, &MidiInput::midi, synth, &SfSynth::midi );
+  midiInput->connect( midiInput, &MidiInput::connectionChanged, synth, &SfSynth::midiConnection );
   midiThread->start();
 
 

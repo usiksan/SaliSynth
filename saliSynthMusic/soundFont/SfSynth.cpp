@@ -7,7 +7,8 @@
 
 SfSynth::SfSynth(QObject *parent) :
   QObject(parent),
-  mModel(nullptr)
+  mModel(nullptr),
+  mMidiConnected(false)
   {
   }
 
@@ -47,14 +48,20 @@ void SfSynth::setModel(SvQmlJsonModel *md)
 
 
 
-QStringList SfSynth::presetList(const QString soundFont )
-  {
-  if( mSoundFontMap.contains( soundFont ) && !mSoundFontMap.value(soundFont).isNull() )
-    return mSoundFontMap.value( soundFont ).toStrongRef()->presetList();
 
-  //No sound font with this name
-  return QStringList{};
+
+
+QStringList SfSynth::presetList(int programm)
+  {
+  SoundFontPtr soundFontPtr = mProgramms[ programm & 0x7f ]->soundFontPtr();
+  if( soundFontPtr.isNull() )
+    //No sound font assigned to programm
+    return QStringList{};
+  return soundFontPtr->presetList();
   }
+
+
+
 
 
 
@@ -72,12 +79,32 @@ void SfSynth::midi(quint8 cmd, quint8 data0, quint8 data1)
   {
   if( mModel == nullptr ) return;
   int channel = cmd & 0xf;
-  if( (cmd & 0xf0) == 0xc0 )
+  if( (cmd & 0x70) == 0x40 )
     //Change programm
-    mChannels[channel] = mProgramms[data0 & 0x7f];
+    setProgramm( channel, data0 );
   else
     //Common midi
     mChannels[channel]->midi( cmd, data0, data1 );
+  }
+
+
+
+
+void SfSynth::setProgramm(int channel, int programm)
+  {
+  channel &= 0xf;
+  programm &= 0x7f;
+  mChannels[channel] = mProgramms[programm];
+  }
+
+
+
+
+
+void SfSynth::midiConnection(bool on)
+  {
+  mMidiConnected = on;
+  emit midiConnectedChanged();
   }
 
 
@@ -104,6 +131,23 @@ void SfSynth::applySoundFont(int programm, const QString soundFont, int preset)
   else
     mProgramms[programm & 0x7f]->build( mSoundFontMap.value(soundFont).toStrongRef(), preset );
   mModel->setString( programm, "presetName", mSoundFontMap.value(soundFont).toStrongRef()->presetName(preset) );
+  }
+
+
+
+
+void SfSynth::applyPreset(int programm, int preset)
+  {
+  programm &= 0x7f;
+  SoundFontPtr soundFontPtr = mProgramms[ programm & 0x7f ]->soundFontPtr();
+  if( !soundFontPtr.isNull() ) {
+    //No sound font assigned to programm
+    mProgramms[programm]->build(soundFontPtr, preset );
+    //Assign textual name
+    mModel->setString( programm, "presetName", soundFontPtr->presetName(preset) );
+    //..and preset index
+    mModel->setInt( programm, "preset", preset );
+    }
   }
 
 

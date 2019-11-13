@@ -43,7 +43,8 @@ QStringList SoundFont::presetList() const
   QStringList list;
 
   //Fill preset name list from preset list
-  for( int i = 0; i < mPresets.count(); i++ )
+  //Exclude last preset because it is unused
+  for( int i = 0; i < mPresets.count() - 1; i++ )
     list.append( QString::fromLatin1( mPresets.at(i).achPresetName ) );
 
   //Return preset name list

@@ -14,12 +14,13 @@
                   Appended instrument icon selector
                   Appended sound file selector
                   Display name of preset
+   07.11.2019 v5  Appended preset selection from sound font preset list
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 4
+#define VERSION 5
 
 //Polyphony count
 #define POLYPHONY_COUNT 128
