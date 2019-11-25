@@ -71,5 +71,6 @@
         <file>qml/SoundFontLoad.qml</file>
         <file>img/iconClose.png</file>
         <file>qml/PresetListSelect.qml</file>
+        <file>qml/SetupMidiKeyboard.qml</file>
     </qresource>
 </RCC>
