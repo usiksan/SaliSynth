@@ -116,14 +116,14 @@ bool SoundFont::buildPreset(int preset, std::function<void( quint16 *generator, 
 
   int startBag = mPresets.at(preset).wPresetBagIndex;
   int endBag   = mPresets.at(preset + 1).wPresetBagIndex;
-  qDebug() << "selected" << preset << "preset";
-  qDebug() << mPresets.at(preset).achPresetName << mPresets.at(preset).wBank << mPresets.at(preset).wPreset;
-  qDebug() << "Bags:" << startBag << endBag;
+  //qDebug() << "selected" << preset << "preset";
+  //qDebug() << mPresets.at(preset).achPresetName << mPresets.at(preset).wBank << mPresets.at(preset).wPreset;
+  //qDebug() << "Bags:" << startBag << endBag;
   bool globalZone = true;
   while( startBag < endBag ) {
     int startGen = mPresetBags.at(startBag).mGeneratorStartIndex;
     int endGen = mPresetBags.at(startBag + 1).mGeneratorStartIndex;
-    qDebug() << startGen << endGen << mPresetBags.at(startBag).mModulatorStartIndex;
+    //qDebug() << startGen << endGen << mPresetBags.at(startBag).mModulatorStartIndex;
 
     quint16 zoneGenerator[61];
     memcpy( zoneGenerator, generator, sizeof(quint16) * 61 );
@@ -131,7 +131,7 @@ bool SoundFont::buildPreset(int preset, std::function<void( quint16 *generator, 
     while( startGen < endGen ) {
       int paramIndex = mPresetGenerators.at(startGen).mParamIndex;
       if( paramIndex < 0 || paramIndex >= 61 ) return false;
-      qDebug() << "param" << paramIndex << mPresetGenerators.at(startGen).mParamValue;
+      //qDebug() << "param" << paramIndex << mPresetGenerators.at(startGen).mParamValue;
       zoneGenerator[paramIndex] = mPresetGenerators.at(startGen).mParamValue;
       if( paramIndex == sfpiInstrument ) globalZone = false;
       startGen++;
@@ -152,20 +152,20 @@ bool SoundFont::buildPreset(int preset, std::function<void( quint16 *generator, 
 bool SoundFont::buildInstrument(quint16 *generator, std::function<void( quint16 *generator, const SfSample &sam, qint16 *samples )> addTracks )
   {
   int instrument = generator[sfpiInstrument];
-  qDebug() << "selected instrument" << instrument;
+  //qDebug() << "selected instrument" << instrument;
   if( instrument < 0 || instrument >= mInstruments.count() - 1 )
     return false;
 
   int startBag = mInstruments.at(instrument).wInstumentBagIndex;
   int endBag   = mInstruments.at(instrument + 1).wInstumentBagIndex;
-  qDebug() << "instrument name" << mInstruments.at(instrument).achInstrumentName << startBag << endBag;
+  //qDebug() << "instrument name" << mInstruments.at(instrument).achInstrumentName << startBag << endBag;
 
-  qDebug() << "Bags:";
+  //qDebug() << "Bags:";
   bool globalZone = true;
   while( startBag < endBag ) {
     int startGen = mInstrumentBags.at(startBag).mGeneratorStartIndex;
     int endGen = mInstrumentBags.at(startBag + 1).mGeneratorStartIndex;
-    qDebug() << startGen << endGen << mInstrumentBags.at(startBag).mModulatorStartIndex;
+    //qDebug() << startGen << endGen << mInstrumentBags.at(startBag).mModulatorStartIndex;
 
     quint16 zoneGenerator[61];
     memcpy( zoneGenerator, generator, sizeof(quint16) * 61 );
@@ -173,7 +173,7 @@ bool SoundFont::buildInstrument(quint16 *generator, std::function<void( quint16 
     while( startGen < endGen ) {
       int paramIndex = mInstrumentGenerators.at(startGen).mParamIndex;
       if( paramIndex < 0 || paramIndex >= 61 ) return false;
-      qDebug() << "param" << paramIndex << mInstrumentGenerators.at(startGen).mParamValue;
+      //qDebug() << "param" << paramIndex << mInstrumentGenerators.at(startGen).mParamValue;
       zoneGenerator[paramIndex] = mInstrumentGenerators.at(startGen).mParamValue;
       if( paramIndex == sfpiSampleId ) globalZone = false;
       startGen++;
@@ -235,7 +235,7 @@ bool SoundFont::readInfo(IffReader &reader)
   {
   while( !reader.isEnd() ) {
     IffReader chunk = reader.getChunk();
-    qDebug() << "INFO" << chunk.name();
+    //qDebug() << "INFO" << chunk.name();
     switch( chunk.chunkFour() ) {
 //      case IFF_FOUR('i','f','i','l') :
 //        //Version
@@ -275,7 +275,7 @@ bool SoundFont::readSdta(IffReader &reader)
   {
   while( !reader.isEnd() ) {
     IffReader chunk = reader.getChunk();
-    qDebug() << "sdta" << chunk.name();
+    //qDebug() << "sdta" << chunk.name();
     switch( chunk.chunkFour() ) {
       case IFF_FOUR('s','m','p','l') :
         if( !readSmpl(chunk) ) return false;
@@ -292,7 +292,7 @@ bool SoundFont::readPdta(IffReader &reader)
   {
   while( !reader.isEnd() ) {
     IffReader chunk = reader.getChunk();
-    qDebug() << "pdta" << chunk.name();
+    //qDebug() << "pdta" << chunk.name();
     switch( chunk.chunkFour() ) {
       case IFF_FOUR('p','h','d','r') :
         if( !readPhdr(chunk) ) return false;
@@ -354,7 +354,7 @@ bool SoundFont::readShdr(IffReader &reader)
     sm.chPitchCorrection = reader.getInt8();
     sm.wSampleLink       = reader.getUint16le();
     sm.sfSampleType      = reader.getUint16le();
-    qDebug() << "header" << sm.achSampleName;
+    //qDebug() << "header" << sm.achSampleName;
     mSampleHeaders.append( sm );
     }
   return true;
@@ -370,7 +370,7 @@ bool SoundFont::readInst(IffReader &reader)
     reader.readChars( inst.achInstrumentName, 20 );
     inst.achInstrumentName[20] = 0;
     inst.wInstumentBagIndex = reader.getUint16le();
-    qDebug() << "inst" << inst.achInstrumentName << inst.wInstumentBagIndex;
+    //qDebug() << "inst" << inst.achInstrumentName << inst.wInstumentBagIndex;
     if( mInstruments.count() )
       mInstruments.last().mLastBagIndex = inst.wInstumentBagIndex - 1;
     mInstruments.append( inst );
@@ -387,7 +387,7 @@ bool SoundFont::readIbag(IffReader &reader)
     SfBag bag;
     bag.mGeneratorStartIndex = reader.getUint16le();
     bag.mModulatorStartIndex = reader.getUint16le();
-    qDebug() << "bag" << bag.mGeneratorStartIndex << bag.mModulatorStartIndex;
+    //qDebug() << "bag" << bag.mGeneratorStartIndex << bag.mModulatorStartIndex;
     mInstrumentBags.append( bag );
     }
   return true;
@@ -404,7 +404,7 @@ bool SoundFont::readImod(IffReader &reader)
     mod.mModAmount = reader.getInt16le();
     mod.mModAmtSrcOper = reader.getUint16le();
     mod.mModTransOper = reader.getUint16le();
-    qDebug() << "mod" << mod.mModSrcOper << mod.mModDstOper << mod.mModAmount << mod.mModAmtSrcOper << mod.mModTransOper;
+    //qDebug() << "mod" << mod.mModSrcOper << mod.mModDstOper << mod.mModAmount << mod.mModAmtSrcOper << mod.mModTransOper;
     mInstrumentModulators.append( mod );
     }
   return true;
@@ -419,7 +419,7 @@ bool SoundFont::readIgen(IffReader &reader)
     SfGeneratorParam gen;
     gen.mParamIndex = reader.getUint16le();
     gen.mParamValue = reader.getUint16le();
-    qDebug() << "gen" << gen.mParamIndex << gen.mParamValue;
+    //qDebug() << "gen" << gen.mParamIndex << gen.mParamValue;
     mInstrumentGenerators.append( gen );
     }
   return true;
@@ -441,7 +441,7 @@ bool SoundFont::readPhdr(IffReader &reader)
     hdr.dwLibrary      = reader.getUint32le();
     hdr.dwGentre       = reader.getUint32le();
     hdr.dwMorphology   = reader.getUint32le();
-    qDebug() << "Preset" << hdr.achPresetName << hdr.wPreset << hdr.wBank << hdr.wPresetBagIndex;
+    //qDebug() << "Preset" << hdr.achPresetName << hdr.wPreset << hdr.wBank << hdr.wPresetBagIndex;
     mPresets.append( hdr );
     }
   return true;
@@ -455,7 +455,7 @@ bool SoundFont::readPbag(IffReader &reader)
     SfBag bag;
     bag.mGeneratorStartIndex = reader.getUint16le();
     bag.mModulatorStartIndex = reader.getUint16le();
-    qDebug() << "bag" << bag.mGeneratorStartIndex << bag.mModulatorStartIndex;
+    //qDebug() << "bag" << bag.mGeneratorStartIndex << bag.mModulatorStartIndex;
     mPresetBags.append( bag );
     }
   return true;
@@ -470,7 +470,7 @@ bool SoundFont::readPgen(IffReader &reader)
     SfGeneratorParam gen;
     gen.mParamIndex = reader.getUint16le();
     gen.mParamValue = reader.getUint16le();
-    qDebug() << "gen" << gen.mParamIndex << gen.mParamValue;
+    //qDebug() << "gen" << gen.mParamIndex << gen.mParamValue;
     mPresetGenerators.append( gen );
     }
   return true;
@@ -488,7 +488,7 @@ bool SoundFont::readPmod(IffReader &reader)
     mod.mModAmount = reader.getInt16le();
     mod.mModAmtSrcOper = reader.getUint16le();
     mod.mModTransOper = reader.getUint16le();
-    qDebug() << "mod" << mod.mModSrcOper << mod.mModDstOper << mod.mModAmount << mod.mModAmtSrcOper << mod.mModTransOper;
+    //qDebug() << "mod" << mod.mModSrcOper << mod.mModDstOper << mod.mModAmount << mod.mModAmtSrcOper << mod.mModTransOper;
     mPresetModulators.append( mod );
     }
   return true;

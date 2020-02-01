@@ -121,8 +121,8 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
   engine.load(url);
 
-//  MidiFile midi;
-//  midi.read( "/home/dial/midi/white_dove.mid" );
+  MidiFile midi;
+  //midi.read( "/home/salilab/midi/white_dove.mid" );
 
   return app.exec();
   }

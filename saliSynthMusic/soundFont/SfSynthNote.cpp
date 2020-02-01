@@ -158,7 +158,7 @@ bool SfSynthNote::addTrack( quint16 *generator, const SfSample &sam, qint16 *sam
                );
   //if( mTracks.count() == 0 )
   mTracks.append( track );
-  qDebug() << "note" << mNote << mTracks.count();
+  //qDebug() << "note" << mNote << mTracks.count();
   return true;
   }
 
