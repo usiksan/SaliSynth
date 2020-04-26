@@ -33,12 +33,13 @@
                   Display name of preset
    07.11.2019 v5  Appended preset selection from sound font preset list
    25.04.2020 v6  Refactoring programm structure. Append MidiProcessor
+              v7  Append delimiter functionality
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 6
+#define VERSION 7
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

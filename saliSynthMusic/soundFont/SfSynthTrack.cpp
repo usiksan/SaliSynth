@@ -111,7 +111,7 @@ int SfSynthTrack::sample(bool &stopped)
       mVolumeTick = 0;
       mVolumePhase = vpHold;
       mAttenuation = 0;
-      qDebug() << "hold" << this;
+      //qDebug() << "hold" << this;
       return nextSample() * mVolume >> 15;
       }
     if( (mVolumeTick & 0x3f) == 0 )
@@ -125,7 +125,7 @@ int SfSynthTrack::sample(bool &stopped)
       mVolumeTick = 0;
       mVolumePhase = vpDecay;
       mAttenuation = 0;
-      qDebug() << "decay" << this;
+      //qDebug() << "decay" << this;
       if( mVolDecayEnvelope < 64 )
         mAttenuationStep = mVolSustainLevel << 15;
       else
@@ -147,7 +147,7 @@ int SfSynthTrack::sample(bool &stopped)
       //Decay phase completed
       mVolumePhase = vpSustain;
       mAttenuation = mVolSustainLevel << 15;
-      qDebug() << "sustain" << this;
+      //qDebug() << "sustain" << this;
       }
     return nextSample() * ( mVolume * mAttenuator[(mAttenuation >> 15) & 0x3ff] >> 15 ) >> 15;
     }

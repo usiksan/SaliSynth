@@ -8,6 +8,8 @@
 class MidiProcessor: public QObject
   {
     Q_OBJECT
+
+    int mKeyDelimiter;
   public:
     MidiProcessor(  QThread *th, QObject *parent = nullptr);
 
@@ -36,6 +38,10 @@ class MidiProcessor: public QObject
 
   private slots:
     void onTimer();
+
+  private:
+    void keyboardLeft( quint8 cmd, quint8 data0, quint8 data1 );
+    void keyboardRight( quint8 cmd, quint8 data0, quint8 data1 );
   };
 
 #endif // MIDIPROCESSOR_H
