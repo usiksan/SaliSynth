@@ -44,9 +44,10 @@ Window {
 
 
   //Current mode
-  property int currentMode : 0
+  property int currentMode : 2
   ModeIntro { visible: currentMode === 0 }
   ModeSetup { visible: currentMode === 1 }
+  ModeWork  { visible: currentMode === 2 }
 
   //Instrument icon selector
   InstrumentIconSelect { id: instrumentIconSelector }

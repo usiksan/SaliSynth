@@ -1,6 +1,8 @@
 #ifndef MIDIPROCESSOR_H
 #define MIDIPROCESSOR_H
 
+#include "QmlKeyboard.h"
+
 #include <QObject>
 #include <QThread>
 
@@ -9,9 +11,12 @@ class MidiProcessor: public QObject
   {
     Q_OBJECT
 
-    int mKeyDelimiter;
+    QmlKeyboard *mQmlKeyboard;   //! Keyboard representation on the screen
+    int          mKeyDelimiter;
+
+    Q_PROPERTY(QmlKeyboard* qmlKeyboard READ qmlKeyboard NOTIFY qmlKeyboardChanged)
   public:
-    MidiProcessor(  QThread *th, QObject *parent = nullptr);
+    MidiProcessor( QThread *th, QObject *parent = nullptr );
 
     //!
     //! \brief emitMidi Emits signal with one midi command. Used
@@ -21,7 +26,10 @@ class MidiProcessor: public QObject
     //!
     void midiEmit( quint8 cmd, quint8 data0, quint8 data1 );
 
+    QmlKeyboard *qmlKeyboard() const { return mQmlKeyboard; }
   signals:
+    void qmlKeyboardChanged();
+
     //!
     //! \brief midi  MIDI export. This signal emits one midi command.
     //!              This signal connected to the wave synth and generate real sound
@@ -30,6 +38,9 @@ class MidiProcessor: public QObject
     //! \param data1 MIDI command data 1
     //!
     void midiSignal( quint8 cmd, quint8 data0, quint8 data1 );
+
+
+    void keyIndicate( quint8 keyCode, bool set, quint8 colorMask );
 
   public slots:
     void onStart();

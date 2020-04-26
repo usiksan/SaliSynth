@@ -34,12 +34,15 @@
    07.11.2019 v5  Appended preset selection from sound font preset list
    25.04.2020 v6  Refactoring programm structure. Append MidiProcessor
               v7  Append delimiter functionality
+              v8  Append visual representation of keyborad on model-view basis
+              v9  Append press key visualisation on screen
+                  Append possibility to play on keyboard by screen representation press
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 7
+#define VERSION 9
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

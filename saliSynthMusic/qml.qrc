@@ -72,5 +72,6 @@
         <file>img/iconClose.png</file>
         <file>qml/PresetListSelect.qml</file>
         <file>qml/SetupMidiKeyboard.qml</file>
+        <file>qml/PianoKeyboard.qml</file>
     </qresource>
 </RCC>

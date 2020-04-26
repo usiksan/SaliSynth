@@ -138,7 +138,8 @@ int main(int argc, char *argv[])
   midiProcessor->connect( midiProcessor, &MidiProcessor::midiSignal, synth, &SfSynth::midiSlot );
 
   //Inject midi processor to visual subsystem
-  engine.rootContext()->setContextProperty( "midiProcessor", midiProcessor );
+  //engine.rootContext()->setContextProperty( "midiProcessor", midiProcessor );
+  engine.rootContext()->setContextProperty( "qmlKeyboard", midiProcessor->qmlKeyboard() );
 
   midiThread->start();
 
