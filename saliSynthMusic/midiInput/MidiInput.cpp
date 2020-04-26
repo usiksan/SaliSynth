@@ -52,7 +52,7 @@ void MidiInput::onTimer()
       if( buf[i] & 0x80 ) {
         //Control byte i
         if( mDataIndex >= 0 ) {
-          emit midi( mControl, mData0, 0 );
+          emit midiSignal( mControl, mData0, 0 );
           //qDebug() << "before control midi" << mControl << mData0;
           }
         mControl = buf[i] & 0x7f;
@@ -66,7 +66,7 @@ void MidiInput::onTimer()
           mDataIndex = 1;
           }
         else if( mDataIndex == 1 ) {
-          emit midi( mControl, mData0, buf[i] & 0x7f );
+          emit midiSignal( mControl, mData0, buf[i] & 0x7f );
           qDebug() << "normal midi" << mControl << mData0 << static_cast<int>(buf[i] & 0x7f);
           mDataIndex = -1;
           }
@@ -75,7 +75,7 @@ void MidiInput::onTimer()
     }
   while( r == 30 );
   if( mDataIndex >= 0 ) {
-    emit midi( mControl, mData0, 0 );
+    emit midiSignal( mControl, mData0, 0 );
     //qDebug() << "post midi" << mControl << mData0;
     }
   }

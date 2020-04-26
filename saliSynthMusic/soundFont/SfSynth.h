@@ -43,7 +43,7 @@ class SfSynth : public QObject
     void midiConnectedChanged();
 
   public slots:
-    void midi( quint8 cmd, quint8 data0, quint8 data1 );
+    void midiSlot( quint8 cmd, quint8 data0, quint8 data1 );
 
     void setProgramm( int channel, int programm );
 

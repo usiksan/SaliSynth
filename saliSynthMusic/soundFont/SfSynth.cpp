@@ -75,7 +75,7 @@ QString SfSynth::soundFontPath() const
 
 
 
-void SfSynth::midi(quint8 cmd, quint8 data0, quint8 data1)
+void SfSynth::midiSlot(quint8 cmd, quint8 data0, quint8 data1)
   {
   if( mModel == nullptr ) return;
   int channel = cmd & 0xf;

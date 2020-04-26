@@ -28,7 +28,7 @@ class MidiInput : public QObject
     ~MidiInput();
 
   signals:
-    void midi( quint8 control, quint8 data0, quint8 data1 );
+    void midiSignal( quint8 control, quint8 data0, quint8 data1 );
 
     //Emit when connect or disconnect keyboard
     void connectionChanged( bool connected );

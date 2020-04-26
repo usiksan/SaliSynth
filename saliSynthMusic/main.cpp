@@ -5,6 +5,7 @@
  Web
    SaliLab.com
  Description
+   Entry point
 */
 #include "synthConfig.h"
 #include "audioOut/SoundBufferIODevice.h"
@@ -15,7 +16,7 @@
 #include "soundFont/SfSynthPreset.h"
 #include "soundFont/SfSynth.h"
 
-#include "midiFile/MidiFile.h"
+#include "objects/MidiProcessor.h"
 
 #include "SvQml/SvQmlUtils.h"
 
@@ -44,11 +45,15 @@ QAudioOutput *audio;
 
 int main(int argc, char *argv[])
   {
+  //=============================================================================
+  //        Application setup
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
   QGuiApplication app(argc, argv);
 
 
+  //=============================================================================
+  //        QML setup
   //Utilites
   qmlRegisterType<SvQmlUtils>               ("SvQml", 1, 0, "SvQmlUtils" );
 
@@ -69,6 +74,8 @@ int main(int argc, char *argv[])
   engine.rootContext()->setContextProperty( "version", QVariant(VERSION) );
 
 
+  //=============================================================================
+  //        Audio output setup
   //Create audio device for output synthesed audio stream
   QAudioFormat format;
   // Set up the format, eg.
@@ -92,27 +99,48 @@ int main(int argc, char *argv[])
   audio->setNotifyInterval(10);
   audio->setBufferSize(1920*4);
 
+  //...and start audio device
+  //At this point audio device will be output audio stream to the standard
+  //audio output
   audio->start( device );
 
 
+
+  //=============================================================================
+  //        MIDI synthesator setup
   //Start midi synthesator
   SfSynth *synth = new SfSynth();
 
   //Synthesator output connect to SoundBufferIODevice
   synth->connect( synth, &SfSynth::noteOn, device, &SoundBufferIODevice::addNote );
 
-  //Start midi keyboard
-  QThread *midiThread = new QThread();
-  MidiInput *midiInput = new MidiInput( midiThread );
-  midiInput->connect( midiInput, &MidiInput::midi, synth, &SfSynth::midi );
-  midiInput->connect( midiInput, &MidiInput::connectionChanged, synth, &SfSynth::midiConnection );
-  midiThread->start();
-
-
   //Inject synth to visual subsystem
   engine.rootContext()->setContextProperty( "synth", synth );
 
 
+
+  //=============================================================================
+  //        MIDI keyboard setup
+  //Start midi keyboard
+  QThread *midiThread = new QThread();
+  MidiInput *midiInput = new MidiInput( midiThread );
+  //midiInput->connect( midiInput, &MidiInput::midi, synth, &SfSynth::midi );
+  midiInput->connect( midiInput, &MidiInput::connectionChanged, synth, &SfSynth::midiConnection );
+
+
+
+  //=============================================================================
+  //        MIDI processor setup
+  MidiProcessor *midiProcessor = new MidiProcessor( midiThread );
+  //From midi keyborad output connect to midi processor input
+  midiProcessor->connect( midiInput, &MidiInput::midiSignal, midiProcessor, &MidiProcessor::midiSlot );
+  //From midi processor output connect to synthesator input
+  midiProcessor->connect( midiProcessor, &MidiProcessor::midiSignal, synth, &SfSynth::midiSlot );
+
+  midiThread->start();
+
+  //=============================================================================
+  //        At the end we start qml application
   const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
   QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                    &app, [url](QObject *obj, const QUrl &objUrl) {
@@ -121,7 +149,7 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
   engine.load(url);
 
-  MidiFile midi;
+//  MidiFile midi;
   //midi.read( "/home/salilab/midi/white_dove.mid" );
 
   return app.exec();
