@@ -7,9 +7,23 @@
 
 
 QmlKeyboard::QmlKeyboard(QObject *parent) :
-  QAbstractListModel(parent)
+  QAbstractListModel(parent),
+  mDelimiter(48)
   {
 
+  }
+
+void QmlKeyboard::setDelimiter(int delim)
+  {
+  mDelimiter = delim;
+  emit delimiterChanged();
+  }
+
+void QmlKeyboard::setKeyboardWidth(int w)
+  {
+  mWhiteKeyWidth = w / mWhiteKeyCount;
+  emit whiteKeyWidthChanged();
+  emit keyboardWidthChanged();
   }
 
 
@@ -88,6 +102,7 @@ QHash<int, QByteArray> QmlKeyboard::roleNames() const
 
 
 
+
 void QmlKeyboard::indicate(quint8 keyCode, bool set, quint8 colorMask)
   {
   if( mKeyMap.contains(keyCode) ) {
@@ -96,6 +111,11 @@ void QmlKeyboard::indicate(quint8 keyCode, bool set, quint8 colorMask)
     else      mKeyList[ keyIndex ].mColorMask &= ~colorMask;
     //Notify that model changed
     emit dataChanged( index(keyIndex), index(keyIndex), {QML_KEY_COLOR} );
+
+    if( mDelimiter < 0 ) {
+      mDelimiter = keyCode;
+      emit delimiterChanged();
+      }
     }
   }
 
@@ -138,6 +158,8 @@ void QmlKeyboard::build(int count)
           }
         }
       }
+    mWhiteKeyCount = whiteKeyIndex;
+    //mWhiteKeyWidth = 22;
     }
   endResetModel();
   }

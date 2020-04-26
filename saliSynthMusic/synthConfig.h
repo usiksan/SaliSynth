@@ -37,12 +37,15 @@
               v8  Append visual representation of keyborad on model-view basis
               v9  Append press key visualisation on screen
                   Append possibility to play on keyboard by screen representation press
+              v10 Append delimiter function
+                  Append delimiter visual ajust with mouse or midi keyboard
+                  Make keyboard drawing resizeble
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 9
+#define VERSION 10
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

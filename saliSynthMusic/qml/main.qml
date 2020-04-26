@@ -41,6 +41,7 @@ Window {
      ] }
 
   Binding { target: synth;    property: "model";         value: soundFontMap }
+  Binding { target: qmlKeyboard; property: "keyboardWidth"; value: width }
 
 
   //Current mode

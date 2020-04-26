@@ -2,6 +2,7 @@
 #define MIDIPROCESSOR_H
 
 #include "QmlKeyboard.h"
+#include "QmlMidiFile.h"
 
 #include <QObject>
 #include <QThread>
@@ -12,9 +13,8 @@ class MidiProcessor: public QObject
     Q_OBJECT
 
     QmlKeyboard *mQmlKeyboard;   //! Keyboard representation on the screen
-    int          mKeyDelimiter;
+    QmlMidiFile *mQmlMidiFile;   //! QML midi file representation
 
-    Q_PROPERTY(QmlKeyboard* qmlKeyboard READ qmlKeyboard NOTIFY qmlKeyboardChanged)
   public:
     MidiProcessor( QThread *th, QObject *parent = nullptr );
 
@@ -27,6 +27,8 @@ class MidiProcessor: public QObject
     void midiEmit( quint8 cmd, quint8 data0, quint8 data1 );
 
     QmlKeyboard *qmlKeyboard() const { return mQmlKeyboard; }
+
+    QmlMidiFile *qmlMidiFile() const { return mQmlMidiFile; }
   signals:
     void qmlKeyboardChanged();
 
@@ -45,7 +47,9 @@ class MidiProcessor: public QObject
   public slots:
     void onStart();
 
-    void midiSlot( quint8 cmd, quint8 data0, quint8 data1 );
+    void midiKeyboard( quint8 cmd, quint8 data0, quint8 data1 );
+
+    void midiFile( quint8 cmd, quint8 data0, quint8 data1 );
 
   private slots:
     void onTimer();

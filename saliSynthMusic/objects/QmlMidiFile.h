@@ -7,12 +7,13 @@
  Description
    MIDI file
 */
-#ifndef MIDIFILE_H
-#define MIDIFILE_H
+#ifndef QMLMIDIFILE_H
+#define QMLMIDIFILE_H
 
 #include "iff/IffReader.h"
 
 #include <QList>
+#include <QAbstractListModel>
 
 
 struct MidiEvent
@@ -37,7 +38,7 @@ struct MidiTrack
 using MidiTrackVector = QVector<MidiTrack>;
 
 
-class MidiFile : public QObject
+class QmlMidiFile : public QAbstractListModel
   {
     Q_OBJECT
 
@@ -48,7 +49,7 @@ class MidiFile : public QObject
 
     MidiTrackVector mTracks;      //Tracks in midi file
   public:
-    MidiFile();
+    QmlMidiFile( QObject *parent = nullptr );
 
     bool read( QString fname );
 
@@ -64,6 +65,14 @@ class MidiFile : public QObject
     bool    readMthd( IffReader &reader );
     void    readMtrk(IffReader &reader);
     quint32 variableLenValue( IffReader &reader );
+
+    // QAbstractItemModel interface
+  public:
+    virtual int rowCount(const QModelIndex &parent) const override;
+    virtual QVariant data(const QModelIndex &index, int role) const override;
+    virtual bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+    virtual Qt::ItemFlags flags(const QModelIndex &index) const override;
+    virtual QHash<int, QByteArray> roleNames() const override;
   };
 
-#endif // MIDIFILE_H
+#endif // QMLMIDIFILE_H

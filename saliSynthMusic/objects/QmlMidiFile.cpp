@@ -7,11 +7,12 @@
  Description
    MIDI file
 */
-#include "MidiFile.h"
+#include "QmlMidiFile.h"
 
 #include <QDebug>
 
-MidiFile::MidiFile()
+QmlMidiFile::QmlMidiFile(QObject *parent) :
+  QAbstractListModel(parent)
   {
 
   }
@@ -20,7 +21,7 @@ MidiFile::MidiFile()
 
 
 
-bool MidiFile::read(QString fname)
+bool QmlMidiFile::read(QString fname)
   {
   IffReader reader(fname, false);
   if( !reader.isValid() )
@@ -43,12 +44,12 @@ bool MidiFile::read(QString fname)
   return true;
   }
 
-void MidiFile::tick()
+void QmlMidiFile::tick()
   {
 
   }
 
-void MidiFile::seek(quint32 time)
+void QmlMidiFile::seek(quint32 time)
   {
 
   }
@@ -60,7 +61,7 @@ void MidiFile::seek(quint32 time)
 
 
 
-bool MidiFile::readMthd(IffReader &reader)
+bool QmlMidiFile::readMthd(IffReader &reader)
   {
   qDebug() << reader.name();
   mFormat      = reader.getUint16be();
@@ -82,7 +83,7 @@ bool MidiFile::readMthd(IffReader &reader)
 
 
 
-void MidiFile::readMtrk(IffReader &reader)
+void QmlMidiFile::readMtrk(IffReader &reader)
   {
   quint32 time = 0;
   QString trackName;
@@ -160,7 +161,7 @@ void MidiFile::readMtrk(IffReader &reader)
 
 
 
-quint32 MidiFile::variableLenValue(IffReader &reader)
+quint32 QmlMidiFile::variableLenValue(IffReader &reader)
   {
   quint32 value = 0;
   quint8 ch;
@@ -172,4 +173,25 @@ quint32 MidiFile::variableLenValue(IffReader &reader)
   while( ch & 0x80 );
 
   return value;
+  }
+
+
+int QmlMidiFile::rowCount(const QModelIndex &parent) const
+  {
+  }
+
+QVariant QmlMidiFile::data(const QModelIndex &index, int role) const
+  {
+  }
+
+bool QmlMidiFile::setData(const QModelIndex &index, const QVariant &value, int role)
+  {
+  }
+
+Qt::ItemFlags QmlMidiFile::flags(const QModelIndex &index) const
+  {
+  }
+
+QHash<int, QByteArray> QmlMidiFile::roleNames() const
+  {
   }

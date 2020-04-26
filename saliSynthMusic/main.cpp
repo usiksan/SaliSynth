@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
   //        MIDI processor setup
   MidiProcessor *midiProcessor = new MidiProcessor( midiThread );
   //From midi keyborad output connect to midi processor input
-  midiProcessor->connect( midiInput, &MidiInput::midiSignal, midiProcessor, &MidiProcessor::midiSlot );
+  midiProcessor->connect( midiInput, &MidiInput::midiSignal, midiProcessor, &MidiProcessor::midiKeyboard );
   //From midi processor output connect to synthesator input
   midiProcessor->connect( midiProcessor, &MidiProcessor::midiSignal, synth, &SfSynth::midiSlot );
 

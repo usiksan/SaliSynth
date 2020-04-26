@@ -30,10 +30,10 @@ SOURCES += \
         audioOut/SoundPolyphonyManager.cpp \
         iff/IffReader.cpp \
         main.cpp \
-        midiFile/MidiFile.cpp \
         midiInput/MidiInput.cpp \
         objects/MidiProcessor.cpp \
         objects/QmlKeyboard.cpp \
+        objects/QmlMidiFile.cpp \
         soundFont/SfSynth.cpp \
         soundFont/SfSynthNote.cpp \
         soundFont/SfSynthPreset.cpp \
@@ -71,10 +71,10 @@ HEADERS += \
   audioOut/SoundPolyphonyChannel.h \
   audioOut/SoundPolyphonyManager.h \
   iff/IffReader.h \
-  midiFile/MidiFile.h \
   midiInput/MidiInput.h \
   objects/MidiProcessor.h \
   objects/QmlKeyboard.h \
+  objects/QmlMidiFile.h \
   soundFont/SfSynth.h \
   soundFont/SfSynthNote.h \
   soundFont/SfSynthPreset.h \
