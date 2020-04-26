@@ -137,7 +137,11 @@ int main(int argc, char *argv[])
   //From midi processor output connect to synthesator input
   midiProcessor->connect( midiProcessor, &MidiProcessor::midiSignal, synth, &SfSynth::midiSlot );
 
+  //Inject midi processor to visual subsystem
+  engine.rootContext()->setContextProperty( "midiProcessor", midiProcessor );
+
   midiThread->start();
+
 
   //=============================================================================
   //        At the end we start qml application

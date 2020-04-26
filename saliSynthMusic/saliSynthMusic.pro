@@ -33,8 +33,6 @@ SOURCES += \
         midiFile/MidiFile.cpp \
         midiInput/MidiInput.cpp \
         objects/MidiProcessor.cpp \
-        objects/SoundProcessorManager.cpp \
-        objects/SpBase.cpp \
         soundFont/SfSynth.cpp \
         soundFont/SfSynthNote.cpp \
         soundFont/SfSynthPreset.cpp \
@@ -75,8 +73,6 @@ HEADERS += \
   midiFile/MidiFile.h \
   midiInput/MidiInput.h \
   objects/MidiProcessor.h \
-  objects/SoundProcessorManager.h \
-  objects/SpBase.h \
   soundFont/SfSynth.h \
   soundFont/SfSynthNote.h \
   soundFont/SfSynthPreset.h \
