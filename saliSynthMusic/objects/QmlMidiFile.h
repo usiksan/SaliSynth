@@ -14,11 +14,12 @@
 
 #include <QList>
 #include <QAbstractListModel>
+#include <QTimer>
 
 
 struct MidiEvent
   {
-    quint32 mTime = 0;
+    qint32  mTime = 0;
     quint8  mType = 0;
     quint8  mData0 = 0;
     quint8  mData1 = 0;
@@ -31,7 +32,7 @@ struct MidiTrack
   {
     QString       mName;
     MidiEventList mEvents;
-    quint32       mEventIndex;
+    qint32        mEventIndex;
   };
 
 
@@ -42,12 +43,16 @@ class QmlMidiFile : public QAbstractListModel
   {
     Q_OBJECT
 
-    quint16       mFormat;      //Midi file format (0 or 1)
-    quint16       mTrackNumber;
-    quint16       mDivision;
+    quint16         mFormat;      //Midi file format (0 or 1)
+    quint16         mTrackNumber;
+    quint16         mDivision;
     quint32         mTempo;
 
     MidiTrackVector mTracks;      //Tracks in midi file
+
+    QTimer          mTimer;
+    qint32          mTickCount;
+    //qint32          mEventCount;
   public:
     QmlMidiFile( QObject *parent = nullptr );
 

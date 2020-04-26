@@ -156,6 +156,7 @@ int main(int argc, char *argv[])
 
 //  MidiFile midi;
   //midi.read( "/home/salilab/midi/white_dove.mid" );
+  midiProcessor->qmlMidiFile()->read("/home/salilab/midi/nem.mid");
 
   return app.exec();
   }

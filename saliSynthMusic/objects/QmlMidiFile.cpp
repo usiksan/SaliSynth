@@ -12,9 +12,11 @@
 #include <QDebug>
 
 QmlMidiFile::QmlMidiFile(QObject *parent) :
-  QAbstractListModel(parent)
+  QAbstractListModel(parent),
+  mTickCount(-1)
   {
-
+  connect( &mTimer, &QTimer::timeout, this, &QmlMidiFile::tick );
+  mTimer.start( 20 );
   }
 
 
@@ -44,14 +46,36 @@ bool QmlMidiFile::read(QString fname)
   return true;
   }
 
+
+
 void QmlMidiFile::tick()
   {
-
+  if( mTickCount >= 0 ) {
+    int nextTime = mTickCount + 15;
+    for( auto &track : mTracks ) {
+      if( track.mEventIndex < track.mEvents.count() ) {
+        MidiEvent ev = track.mEvents.at( track.mEventIndex );
+        while( mTickCount <= ev.mTime && ev.mTime < nextTime ) {
+          //Event at this moment
+          emit midiEvent( ev.mType, ev.mData0, ev.mData1 );
+          track.mEventIndex++;
+          if( track.mEventIndex >= track.mEvents.count() )
+            break;
+          ev = track.mEvents.at( track.mEventIndex );
+          }
+        }
+      }
+    mTickCount = nextTime;
+    }
   }
+
+
 
 void QmlMidiFile::seek(quint32 time)
   {
-
+  mTickCount = time;
+  for( auto &track : mTracks )
+    track.mEventIndex = 0;
   }
 
 
