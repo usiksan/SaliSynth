@@ -40,12 +40,13 @@
               v10 Append delimiter function
                   Append delimiter visual ajust with mouse or midi keyboard
                   Make keyboard drawing resizeble
+              v11 Append keyboard channel preset name visualisation
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 10
+#define VERSION 11
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

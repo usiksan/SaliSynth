@@ -22,6 +22,9 @@ class SfSynth : public QObject
 
     Q_PROPERTY(SvQmlJsonModel* model READ getModel WRITE setModel NOTIFY modelChanged)
     Q_PROPERTY(bool midiConnected READ getMidiConnected NOTIFY midiConnectedChanged )
+//    Q_PROPERTY(QString channel0Preset READ channel0Preset WRITE setChannel0Preset NOTIFY channel0PresetChanged)
+//    Q_PROPERTY(QString channel1Preset READ channel1Preset WRITE setChannel1Preset NOTIFY channel1PresetChanged)
+//    Q_PROPERTY(QString channel2Preset READ channel2Preset WRITE setChannel2Preset NOTIFY channel2PresetChanged)
   public:
     explicit SfSynth(QObject *parent = nullptr);
 
@@ -32,15 +35,30 @@ class SfSynth : public QObject
     //midiConnected access
     bool            getMidiConnected() const { return mMidiConnected; }
 
+    //channel 0 preset access
+    QString         channel0Preset() const { return mChannels[0]->name(); }
+
     Q_INVOKABLE QStringList presetList( int programm );
 
     Q_INVOKABLE QString     soundFontPath() const;
+
+    Q_INVOKABLE QString     channelPresetName( int channel ) const { return mChannels[channel].isNull() ? QString{} : mChannels[channel]->name(); }
+
+    //Q_INVOKABLE QString     channelPreset()
   signals:
     void noteOn( SfSynthNote *note );
 
     void modelChanged();
 
     void midiConnectedChanged();
+
+//    void channel0PresetChanged();
+
+//    void channel1PresetChanged();
+
+//    void channel2PresetChanged();
+
+    void channelPresetChanged( int channel, QString presetName );
 
   public slots:
     void midiSlot( quint8 cmd, quint8 data0, quint8 data1 );

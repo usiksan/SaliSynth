@@ -21,10 +21,13 @@ class SfSynthPreset : public QObject
   {
     Q_OBJECT
 
-    SfSynthNote  mNotes[128];   //Builded notes for preset
-    SoundFontPtr mSoundFontPtr; //Sound font synth base on
+    QString      mName;         //! Preset name
+    SfSynthNote  mNotes[128];   //! Builded notes for preset
+    SoundFontPtr mSoundFontPtr; //! Sound font synth base on
   public:
     explicit SfSynthPreset(QObject *parent = nullptr);
+
+    QString      name() const { return mName; }
 
     SoundFontPtr soundFontPtr() const { return mSoundFontPtr; }
 

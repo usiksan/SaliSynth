@@ -85,6 +85,8 @@ void SfSynthPreset::build(SoundFontPtr soundFont, int preset)
   for( int i = 0; i < 128; i++ )
     mNotes[i].clear();
 
+  mName = soundFont->presetName(preset);
+
   //Build all notes
   mSoundFontPtr = soundFont;
 

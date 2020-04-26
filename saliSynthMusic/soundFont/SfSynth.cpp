@@ -41,9 +41,11 @@ void SfSynth::setModel(SvQmlJsonModel *md)
     }
 
   //Build default channels
-  for( quint8 i = 0; i < 16; i++ )
+  for( quint8 i = 0; i < 16; i++ ) {
     //Change programm to channel
     mChannels[i] = mProgramms[i];
+    emit channelPresetChanged( i, mChannels[i]->name() );
+    }
   }
 
 
@@ -95,6 +97,10 @@ void SfSynth::setProgramm(int channel, int programm)
   channel &= 0xf;
   programm &= 0x7f;
   mChannels[channel] = mProgramms[programm];
+  emit channelPresetChanged( channel, mChannels[channel]->name() );
+//  if( channel == 0 ) emit channel0PresetChanged();
+//  else if( channel == 1 ) emit channel1PresetChanged();
+//  else if( channel == 2 ) emit channel2PresetChanged();
   }
 
 

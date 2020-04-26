@@ -4,6 +4,8 @@ Item {
   height: qmlKeyboard.whiteKeyWidth * 4
   property int whiteKeyHeight : height - 30
 
+
+
   //Keyboard delimiter
   Rectangle {
     id: leftSide
@@ -23,6 +25,20 @@ Item {
     height: 15
     border.width: 0
     color: "dark green"
+
+    SvText {
+      id: rightSideMainText
+      anchors.centerIn: parent
+      text: synth.channelPresetName(0)
+      color: "white"
+
+      Connections {
+        target: synth
+        onChannelPresetChanged: {
+          if( channel === 0 ) rightSideMainText.text = presetName;
+        }
+      }
+    }
   }
 
   Rectangle {
