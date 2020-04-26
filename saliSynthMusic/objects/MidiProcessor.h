@@ -1,3 +1,11 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+*/
 #ifndef MIDIPROCESSOR_H
 #define MIDIPROCESSOR_H
 
@@ -15,6 +23,8 @@ class MidiProcessor: public QObject
     QmlKeyboard *mQmlKeyboard;   //! Keyboard representation on the screen
     QmlMidiFile *mQmlMidiFile;   //! QML midi file representation
 
+    quint8       mLeftChord[5];   //! 0-3 chord, 4-pressure
+    int          mLeftChordTimer;
   public:
     MidiProcessor( QThread *th, QObject *parent = nullptr );
 
@@ -56,6 +66,9 @@ class MidiProcessor: public QObject
 
   private:
     void keyboardLeft( quint8 cmd, quint8 data0, quint8 data1 );
+    void keyboardLeftOutput( quint8 cmd, quint8 data0, quint8 data1 );
+    void keyboardLeftSimpleChordGenerator( quint8 cmd, qint8 data0, quint8 data1 );
+    void keyboardLeftChordDetector();
     void keyboardRight( quint8 cmd, quint8 data0, quint8 data1 );
   };
 

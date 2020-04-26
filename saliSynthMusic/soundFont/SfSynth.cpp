@@ -28,12 +28,6 @@ void SfSynth::setModel(SvQmlJsonModel *md)
 
   //Fill programms
   for( int i = 0; i < 128; i++ ) {
-    //Create programm
-    SfSynthPresetPtr preset( new SfSynthPreset() );
-    mProgramms[i] = preset;
-    //Connect programm
-    connect( preset.data(), &SfSynthPreset::noteOn, this, &SfSynth::noteOn );
-
     QString soundFont = mModel->asString( i, "soundFontFile" );
     if( !soundFont.isEmpty() )
       //Sound font assigned for this programm slot
@@ -43,8 +37,9 @@ void SfSynth::setModel(SvQmlJsonModel *md)
   //Build default channels
   for( quint8 i = 0; i < 16; i++ ) {
     //Change programm to channel
-    mChannels[i] = mProgramms[i];
-    emit channelPresetChanged( i, mChannels[i]->name() );
+    mChannels[i].clone( mProgramms[i] );
+    mChannelsProgramm[i] = i;
+    emit channelPresetChanged( i, mChannels[i].name() );
     }
   }
 
@@ -55,7 +50,7 @@ void SfSynth::setModel(SvQmlJsonModel *md)
 
 QStringList SfSynth::presetList(int programm)
   {
-  SoundFontPtr soundFontPtr = mProgramms[ programm & 0x7f ]->soundFontPtr();
+  SoundFontPtr soundFontPtr = mProgramms[ programm & 0x7f ].soundFontPtr();
   if( soundFontPtr.isNull() )
     //No sound font assigned to programm
     return QStringList{};
@@ -76,6 +71,14 @@ QString SfSynth::soundFontPath() const
 
 
 
+void SfSynth::emitNoteOn(SfSynthNote *note)
+  {
+  emit noteOn( note );
+  }
+
+
+
+
 
 void SfSynth::midiSlot(quint8 cmd, quint8 data0, quint8 data1)
   {
@@ -86,7 +89,7 @@ void SfSynth::midiSlot(quint8 cmd, quint8 data0, quint8 data1)
     setProgramm( channel, data0 );
   else
     //Common midi
-    mChannels[channel]->midi( cmd, data0, data1 );
+    mChannels[channel].midi( this, cmd, data0, data1 );
   }
 
 
@@ -96,11 +99,9 @@ void SfSynth::setProgramm(int channel, int programm)
   {
   channel &= 0xf;
   programm &= 0x7f;
-  mChannels[channel] = mProgramms[programm];
-  emit channelPresetChanged( channel, mChannels[channel]->name() );
-//  if( channel == 0 ) emit channel0PresetChanged();
-//  else if( channel == 1 ) emit channel1PresetChanged();
-//  else if( channel == 2 ) emit channel2PresetChanged();
+  mChannels[channel].clone( mProgramms[programm] );
+  mChannelsProgramm[channel] = programm;
+  emit channelPresetChanged( channel, mChannels[channel].name() );
   }
 
 
@@ -132,10 +133,11 @@ void SfSynth::applySoundFont(int programm, const QString soundFont, int preset)
     //...and append to map
     mSoundFontMap.insert( soundFont, soundFontPtr );
 
-    mProgramms[programm & 0x7f]->build( soundFontPtr, preset );
+    mProgramms[programm & 0x7f].build( soundFontPtr, preset );
     }
   else
-    mProgramms[programm & 0x7f]->build( mSoundFontMap.value(soundFont).toStrongRef(), preset );
+    mProgramms[programm & 0x7f].build( mSoundFontMap.value(soundFont).toStrongRef(), preset );
+  syncroChannelsWithProgramm( programm );
   mModel->setString( programm, "presetName", mSoundFontMap.value(soundFont).toStrongRef()->presetName(preset) );
   }
 
@@ -145,14 +147,15 @@ void SfSynth::applySoundFont(int programm, const QString soundFont, int preset)
 void SfSynth::applyPreset(int programm, int preset)
   {
   programm &= 0x7f;
-  SoundFontPtr soundFontPtr = mProgramms[ programm & 0x7f ]->soundFontPtr();
+  SoundFontPtr soundFontPtr = mProgramms[ programm & 0x7f ].soundFontPtr();
   if( !soundFontPtr.isNull() ) {
     //No sound font assigned to programm
-    mProgramms[programm]->build(soundFontPtr, preset );
+    mProgramms[programm].build(soundFontPtr, preset );
     //Assign textual name
     mModel->setString( programm, "presetName", soundFontPtr->presetName(preset) );
     //..and preset index
     mModel->setInt( programm, "preset", preset );
+    syncroChannelsWithProgramm( programm );
     }
   }
 
@@ -164,5 +167,14 @@ void SfSynth::addModelRecord(int index, const QString title)
   mModel->addRecord();
   mModel->setString( index, "instrumentTitle", title );
   mModel->setInt( index, "programm", index );
+  }
+
+
+
+void SfSynth::syncroChannelsWithProgramm(int programm)
+  {
+  for( int i = 0; i < 16; i++ )
+    if( mChannelsProgramm[i] == programm )
+      mChannels[i].clone( mProgramms[i] );
   }
 

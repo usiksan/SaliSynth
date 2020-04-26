@@ -8,10 +8,15 @@
 
 QmlKeyboard::QmlKeyboard(QObject *parent) :
   QAbstractListModel(parent),
-  mDelimiter(48)
+  mDelimiter(48),
+  mLeftMode(0),
+  mRightMode(0)
   {
 
   }
+
+
+
 
 void QmlKeyboard::setDelimiter(int delim)
   {
@@ -19,11 +24,33 @@ void QmlKeyboard::setDelimiter(int delim)
   emit delimiterChanged();
   }
 
+
+
+
+
 void QmlKeyboard::setKeyboardWidth(int w)
   {
   mWhiteKeyWidth = w / mWhiteKeyCount;
   emit whiteKeyWidthChanged();
   emit keyboardWidthChanged();
+  }
+
+
+
+
+void QmlKeyboard::setLeftMode(int mode)
+  {
+  mLeftMode = mode;
+  emit leftModeChanged();
+  }
+
+
+
+
+void QmlKeyboard::setRightMode(int mode)
+  {
+  mRightMode = mode;
+  emit rightModeChanged();
   }
 
 

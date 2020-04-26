@@ -10,14 +10,14 @@
 */
 #include "SfSynthPreset.h"
 #include "SoundFontMap.h"
+#include "SfSynth.h"
 
 #include <math.h>
 #include <QDebug>
 
 
 
-SfSynthPreset::SfSynthPreset(QObject *parent) :
-  QObject(parent)
+SfSynthPreset::SfSynthPreset()
   {
   for( int i = 0; i < 128; i++ )
     mNotes[i].setNote(i);
@@ -29,7 +29,7 @@ SfSynthPreset::SfSynthPreset(QObject *parent) :
 
 
 //Action on midi event
-void SfSynthPreset::midi(quint8 cmd, quint8 data0, quint8 data1)
+void SfSynthPreset::midi(SfSynth *synth, quint8 cmd, quint8 data0, quint8 data1)
   {
   cmd = ((cmd >> 4) & 0x7);
   switch( cmd ) {
@@ -40,7 +40,7 @@ void SfSynthPreset::midi(quint8 cmd, quint8 data0, quint8 data1)
     case 1 :
       //Note on [note pressure]
       if( mNotes[data0].noteOn( data1 ) )
-        emit noteOn( mNotes + data0 );
+        synth->emitNoteOn( mNotes + data0 );
       break;
     case 2 :
       //Polyphonic key pressure [note pressure]
@@ -119,6 +119,18 @@ void SfSynthPreset::build(SoundFontPtr soundFont, int preset)
         return false;
     return true;
     });
+  }
+
+
+
+void SfSynthPreset::clone(const SfSynthPreset &src)
+  {
+  mName = src.mName;
+  for( int i = 0; i < 128; i++ ) {
+    mNotes[i].clear();
+    mNotes[i] = src.mNotes[i];
+    }
+  mSoundFontPtr = src.mSoundFontPtr;
   }
 
 

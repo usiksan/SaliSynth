@@ -41,12 +41,16 @@
                   Append delimiter visual ajust with mouse or midi keyboard
                   Make keyboard drawing resizeble
               v11 Append keyboard channel preset name visualisation
+              v12 Refactoring preset list. At now it has become an array of objects, not pointers.
+                  Also array ob objects become channels.
+              v13 Append yamaha simple chord generator
+                  Append mode for left and right sides of keyboard
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 11
+#define VERSION 13
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

@@ -13,8 +13,9 @@ class SfSynth : public QObject
   {
     Q_OBJECT
 
-    SfSynthPresetPtr               mChannels[16];
-    SfSynthPresetPtr               mProgramms[128];
+    SfSynthPreset                  mChannels[16];         //Preset of channel
+    int                            mChannelsProgramm[16]; //ID of programm of appropriate channel
+    SfSynthPreset                  mProgramms[128];
     QMap<QString,SoundFontWeakPtr> mSoundFontMap;
 
     SvQmlJsonModel                *mModel;
@@ -36,14 +37,15 @@ class SfSynth : public QObject
     bool            getMidiConnected() const { return mMidiConnected; }
 
     //channel 0 preset access
-    QString         channel0Preset() const { return mChannels[0]->name(); }
+    QString         channel0Preset() const { return mChannels[0].name(); }
 
     Q_INVOKABLE QStringList presetList( int programm );
 
     Q_INVOKABLE QString     soundFontPath() const;
 
-    Q_INVOKABLE QString     channelPresetName( int channel ) const { return mChannels[channel].isNull() ? QString{} : mChannels[channel]->name(); }
+    Q_INVOKABLE QString     channelPresetName( int channel ) const { return mChannels[channel].name(); }
 
+    void                    emitNoteOn( SfSynthNote *note );
     //Q_INVOKABLE QString     channelPreset()
   signals:
     void noteOn( SfSynthNote *note );
@@ -73,6 +75,8 @@ class SfSynth : public QObject
 
   private:
     void addModelRecord( int index, const QString title );
+
+    void syncroChannelsWithProgramm( int programm );
   };
 
 #endif // SFSYNTH_H

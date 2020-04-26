@@ -16,36 +16,31 @@
 
 #include <QObject>
 
+class SfSynth;
 
-class SfSynthPreset : public QObject
+class SfSynthPreset
   {
-    Q_OBJECT
-
     QString      mName;         //! Preset name
     SfSynthNote  mNotes[128];   //! Builded notes for preset
     SoundFontPtr mSoundFontPtr; //! Sound font synth base on
   public:
-    explicit SfSynthPreset(QObject *parent = nullptr);
+    explicit SfSynthPreset();
 
     QString      name() const { return mName; }
 
     SoundFontPtr soundFontPtr() const { return mSoundFontPtr; }
 
-  signals:
-    //Append note to audio output to synth it
-    void noteOn( SfSynthNote *note );
-
-  public slots:
     //Action on midi event
-    void midi( quint8 cmd, quint8 data0, quint8 data1 );
+    void         midi( SfSynth *synth, quint8 cmd, quint8 data0, quint8 data1 );
 
     //Change current programm of preset
-    void programm( quint8 prg );
+    void         programm( quint8 prg );
 
-    void build( SoundFontPtr soundFont, int preset );
+    void         build( SoundFontPtr soundFont, int preset );
+
+    void         clone( const SfSynthPreset &src );
 
   };
 
-using SfSynthPresetPtr = QSharedPointer<SfSynthPreset>;
 
 #endif // SFSYNTHPRESET_H

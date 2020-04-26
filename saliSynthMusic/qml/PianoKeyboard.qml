@@ -89,6 +89,19 @@ Item {
         color: "green"
       }
 
+      //Chord indication
+      Rectangle {
+        visible: keyColor & 4
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 14
+        width: 8
+        height: 8
+        radius: 4
+        border.width: 0
+        color: "red"
+      }
+
       MouseArea {
         anchors.fill: parent
         onPressed: keyColor = true
@@ -121,6 +134,20 @@ Item {
         radius: 4
         border.width: 0
         color: "green"
+      }
+
+
+      //Chord indication
+      Rectangle {
+        visible: keyColor & 4
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 14
+        width: 8
+        height: 8
+        radius: 4
+        border.width: 0
+        color: "red"
       }
 
       MouseArea {
