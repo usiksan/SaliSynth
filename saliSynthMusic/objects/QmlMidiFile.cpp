@@ -12,7 +12,7 @@
 #include <QDebug>
 
 QmlMidiFile::QmlMidiFile(QObject *parent) :
-  QAbstractListModel(parent),
+  QObject(parent),
   mTickCount(-1)
   {
   connect( &mTimer, &QTimer::timeout, this, &QmlMidiFile::tick );
@@ -51,7 +51,7 @@ bool QmlMidiFile::read(QString fname)
 void QmlMidiFile::tick()
   {
   if( mTickCount >= 0 ) {
-    int nextTime = mTickCount + 15;
+    int nextTime = mTickCount + 1;
     for( auto &track : mTracks ) {
       if( track.mEventIndex < track.mEvents.count() ) {
         MidiEvent ev = track.mEvents.at( track.mEventIndex );
@@ -111,6 +111,13 @@ void QmlMidiFile::readMtrk(IffReader &reader)
   {
   quint32 time = 0;
   QString trackName;
+  quint16 sequenceId = 0;
+  QString copyright;
+  QString instrumentName;
+  QString lyric;
+  QString marker;
+  quint8  groupStatusByte = 0;
+  int     channelIndex = 0;
   while( !reader.isEnd() ) {
     //Read midi event
 
@@ -127,9 +134,65 @@ void QmlMidiFile::readMtrk(IffReader &reader)
         ar[i] = reader.getInt8();
       qDebug() << "meta" << metaEvent << len << ar;
 
-      if( metaEvent == 3 )
+      if( metaEvent == 0 ) {
+        //sequence id
+        sequenceId = static_cast<quint16>(
+                       (static_cast<unsigned>(ar[0] & 0xff) << 8) |
+                       static_cast<unsigned>(ar[1] & 0xff) );
+        }
+
+      else if( metaEvent == 1 ) {
+        //text
+        QString str = QString::fromLocal8Bit( ar );
+        }
+
+      else if( metaEvent == 2 ) {
+        //Copyright
+        copyright = QString::fromLatin1( ar );
+        }
+
+      else if( metaEvent == 3 )
         //Track name
         trackName = QString::fromUtf8( ar );
+
+      else if( metaEvent == 4 ) {
+        //Instrument name
+        instrumentName = QString::fromLatin1( ar );
+        }
+
+      else if( metaEvent == 5 ) {
+        //Lyric
+        lyric = QString::fromUtf8( ar );
+        }
+
+      else if( metaEvent == 6 ) {
+        //Marker
+        marker = QString::fromLatin1( ar );
+        }
+
+      else if( metaEvent == 7 ) {
+        //Cue point
+
+        }
+
+      else if( metaEvent == 8 ) {
+        //Programm name
+
+        }
+
+      else if( metaEvent == 9 ) {
+        //Device name
+
+        }
+
+      else if( metaEvent == 0x20 ) {
+        //MIDI channel prefix
+        channelIndex = static_cast<int>(ar[0] & 0xff);
+        }
+
+      else if( metaEvent == 0x2f ) {
+        //End of track
+        }
 
       else if( metaEvent == 0x51 ) {
         //Set tempo
@@ -139,8 +202,18 @@ void QmlMidiFile::readMtrk(IffReader &reader)
                    static_cast<unsigned>(ar[2] & 0xff) );
         }
 
+      else if( metaEvent == 0x54 ) {
+        //SMPTE offset
+
+        }
+
       else if( metaEvent == 0x58 ) {
         //Time signature
+
+        }
+
+      else if( metaEvent == 0x59 ) {
+        //Key signature
 
         }
 
@@ -160,23 +233,41 @@ void QmlMidiFile::readMtrk(IffReader &reader)
       //Midi-event
       MidiEvent event;
       event.mTime = time;
-      event.mType = statusByte;
-      if( (statusByte & 0xf0) == 0xc0 || (statusByte & 0xf0) == 0xd0 ) {
-        //Programm change or Channel pressure
-        event.mData0 = reader.getUint8();
-        qDebug("midi-1 %x %d", statusByte, event.mData0 );
+      if( statusByte & 0x80 ) {
+        //Real status byte
+        groupStatusByte = statusByte;
+        event.mType = statusByte;
+
+        if( (statusByte & 0xf0) == 0xc0 || (statusByte & 0xf0) == 0xd0 ) {
+          //Programm change or Channel pressure
+          event.mData0 = reader.getUint8();
+          event.mData1 = 0;
+          qDebug("midi-1 %x %d", statusByte, event.mData0 );
+          }
+        else {
+          event.mData0 = reader.getUint8();
+          event.mData1 = reader.getUint8();
+          qDebug("midi-2 %x %d %d", statusByte, event.mData0, event.mData1 );
+          }
         }
       else {
-        event.mData0 = reader.getUint8();
-        event.mData1 = reader.getUint8();
-        qDebug("midi-2 %x %d %d", statusByte, event.mData0, event.mData1 );
+        //Group data
+        event.mType = groupStatusByte;
+        if( (groupStatusByte & 0xf0) == 0xc0 || (groupStatusByte & 0xf0) == 0xd0 ) {
+          //Programm change or Channel pressure
+          event.mData0 = statusByte;
+          event.mData1 = 0;
+          qDebug("group midi-1 %x %d", event.mType, event.mData0 );
+          }
+        else {
+          event.mData0 = statusByte;
+          event.mData1 = reader.getUint8();
+          qDebug("midi-2 %x %d %d", event.mType, event.mData0, event.mData1 );
+          }
         }
-      int trackIndex = statusByte & 0xf;
-      if( !trackName.isEmpty() ) {
-        mTracks[trackIndex].mName = trackName;
-        trackName.clear();
-        }
-      mTracks[trackIndex].mEvents.append( event );
+
+      channelIndex = groupStatusByte & 0xf;
+      mTracks[channelIndex].mEvents.append( event );
       }
     }
   }
@@ -199,23 +290,3 @@ quint32 QmlMidiFile::variableLenValue(IffReader &reader)
   return value;
   }
 
-
-int QmlMidiFile::rowCount(const QModelIndex &parent) const
-  {
-  }
-
-QVariant QmlMidiFile::data(const QModelIndex &index, int role) const
-  {
-  }
-
-bool QmlMidiFile::setData(const QModelIndex &index, const QVariant &value, int role)
-  {
-  }
-
-Qt::ItemFlags QmlMidiFile::flags(const QModelIndex &index) const
-  {
-  }
-
-QHash<int, QByteArray> QmlMidiFile::roleNames() const
-  {
-  }

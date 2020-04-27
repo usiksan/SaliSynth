@@ -34,6 +34,7 @@ SOURCES += \
         objects/MidiProcessor.cpp \
         objects/QmlKeyboard.cpp \
         objects/QmlMidiFile.cpp \
+        objects/QmlMidiTrack.cpp \
         soundFont/SfSynth.cpp \
         soundFont/SfSynthNote.cpp \
         soundFont/SfSynthPreset.cpp \
@@ -75,6 +76,7 @@ HEADERS += \
   objects/MidiProcessor.h \
   objects/QmlKeyboard.h \
   objects/QmlMidiFile.h \
+  objects/QmlMidiTrack.h \
   soundFont/SfSynth.h \
   soundFont/SfSynthNote.h \
   soundFont/SfSynthPreset.h \

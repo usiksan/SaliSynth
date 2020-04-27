@@ -9,7 +9,7 @@
 QmlKeyboard::QmlKeyboard(QObject *parent) :
   QAbstractListModel(parent),
   mDelimiter(48),
-  mLeftMode(0),
+  mLeftMode(1),
   mRightMode(0)
   {
 

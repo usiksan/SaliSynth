@@ -46,12 +46,14 @@
               v13 Append yamaha simple chord generator
                   Append mode for left and right sides of keyboard
               v14 First time of midi file play
+   27.04.2020 v15 MIDI file read error: group events
+                  QmlMidiFile at now object and tracks are listModels
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 14
+#define VERSION 15
 
 //Polyphony count
 #define POLYPHONY_COUNT 128
