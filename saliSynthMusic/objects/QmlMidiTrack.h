@@ -2,15 +2,60 @@
 #define QMLMIDITRACK_H
 
 #include <QAbstractListModel>
+#include <QList>
+#include <QMap>
+
+
+struct QmlMidiEvent {
+    qint32 mTime;
+    union {
+        qint16 mLenght;
+        qint16 mTextIndex;
+      };
+    qint16 mType;
+    quint8 mData0;
+    quint8 mData1;
+  };
+
+
+
+using QmlMidiEventList = QList<QmlMidiEvent>;
+
+
 
 class QmlMidiTrack : public QAbstractListModel
   {
     Q_OBJECT
+
+    QString          mTrackName;
+    QString          mInstrumentName;
+
+    QmlMidiEventList mMidiList;
+    QStringList      mTextList;
+    QMap<quint8,int> mActiveNotesMap;
+
+    Q_PROPERTY(QString trackName READ trackName WRITE setTrackName NOTIFY trackNameChanged)
+    Q_PROPERTY(QString instrumentName READ instrumentName WRITE setInstrumentName NOTIFY instrumentNameChanged)
   public:
     QmlMidiTrack();
 
     void beginReadTrack();
     void endReadTrack();
+    void addMidiEvent( quint32 time, quint8 statusByte, quint8 data0, quint8 data1 = 0 );
+    void addMidiText( quint32 time, qint16 type, const QString text );
+
+    //Track name access
+    QString trackName() const { return mTrackName; }
+    void    setTrackName( const QString nm );
+
+    //Instrument name access
+    QString instrumentName() const { return mInstrumentName; }
+    void    setInstrumentName( const QString nm );
+
+
+  signals:
+    void trackNameChanged();
+    void instrumentNameChanged();
 
     // QAbstractItemModel interface
   public:
