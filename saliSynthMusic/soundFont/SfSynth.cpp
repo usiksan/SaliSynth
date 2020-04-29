@@ -230,6 +230,7 @@ void SfSynth::channelSetVoiceRow(int channel, int voiceRow)
     mChannelList->setInt( channel, QString("channelBankMsb"), (voiceId >> 14) & 0x7f );
     mChannelList->setInt( channel, QString("channelBankLsb"), (voiceId >> 7) & 0x7f );
     mChannelList->setInt( channel, QString("channelProgram"), (voiceId) & 0x7f );
+    mChannelList->setInt( channel, QString("channelVoiceId"), voiceId );
     }
   }
 
@@ -244,6 +245,52 @@ void SfSynth::voiceAdd()
   mVoiceList->setInt( row, "voiceBankLsb", 128 );
   mVoiceList->setInt( row, "voiceProgram", 128 );
   mVoiceList->setInt( row, "voiceId", -1 );
+  }
+
+
+
+
+
+void SfSynth::voiceDuplicate(int voiceRow)
+  {
+  int row = mVoiceList->count();
+  mVoiceList->addRecord();
+  mVoiceList->setInt( row, "voiceBankMsb", mVoiceList->asInt(voiceRow, "voiceBankMsb") );
+  mVoiceList->setInt( row, "voiceBankLsb", mVoiceList->asInt(voiceRow, "voiceBankLsb") );
+  mVoiceList->setInt( row, "voiceProgram", 128 );
+  mVoiceList->setInt( row, "voiceId", -1 );
+
+  mVoiceList->setString( row, QString("voiceSoundFontFile"), mVoiceList->asString( voiceRow, QString("voiceSoundFontFile")) );
+  mVoiceList->setString( row, QString("voiceSoundFontPresetName"), mVoiceList->asString( voiceRow, QString("voiceSoundFontPresetName")) );
+  mVoiceList->setInt( row, QString("voiceSoundFontPreset"), mVoiceList->asInt( voiceRow, QString("voiceSoundFontPreset")) );
+  mVoiceList->setString( row, QString("voiceName"), mVoiceList->asString( voiceRow, QString("voiceName")) );
+  }
+
+
+
+bool SfSynth::voiceSettings(int voiceRow, int bankMsb, int bankLsb, int prog)
+  {
+  if( (bankMsb & 0xffffff80) == 0 && (bankLsb & 0xffffff80) == 0 && (prog & 0xffffff80) == 0  ) {
+    //Valid voice id
+    //Check if voice already defined
+    if( !containsVoice( bankMsb, bankLsb, prog ) ) {
+      //No voice with thease id's
+      int id = voiceId( bankMsb, bankLsb, prog );
+
+      mVoiceList->setInt( voiceRow, "voiceBankMsb", bankMsb );
+      mVoiceList->setInt( voiceRow, "voiceBankLsb", bankLsb );
+      mVoiceList->setInt( voiceRow, "voiceProgram", prog );
+      mVoiceList->setInt( voiceRow, "voiceId", id );
+      }
+    else return false;
+    }
+  else {
+    mVoiceList->setInt( voiceRow, "voiceBankMsb", bankMsb );
+    mVoiceList->setInt( voiceRow, "voiceBankLsb", bankLsb );
+    mVoiceList->setInt( voiceRow, "voiceProgram", prog );
+    mVoiceList->setInt( voiceRow, "voiceId", -1 );
+    }
+  return true;
   }
 
 

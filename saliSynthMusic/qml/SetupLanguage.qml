@@ -62,7 +62,7 @@ SvTabViewItem {
             Layout.alignment: Qt.AlignHCenter
             Layout.fillHeight: true
             Layout.fillWidth: true
-            color: "white"
+            color: "black"
           }
         }
       }

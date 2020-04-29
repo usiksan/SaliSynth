@@ -9,6 +9,7 @@
 */
 import QtQuick 2.8
 import Qt.labs.folderlistmodel 2.1
+import QtQuick.Controls 2.5
 
 ModeBase {
   id: soundFontLoader
@@ -23,19 +24,6 @@ ModeBase {
     anchors.horizontalCenter: parent.horizontalCenter
     horizontalAlignment: Qt.AlignHCenter
     y: 3
-  }
-
-  //Close icon
-  Image {
-    anchors.right: parent.right
-    anchors.top: parent.top
-    anchors.rightMargin: 5
-    anchors.topMargin: 5
-    source: "qrc:/img/iconClose.png"
-    MouseArea {
-      anchors.fill: parent
-      onClicked: soundFontLoader.visible = false
-    }
   }
 
   signal selected( string str );
@@ -66,7 +54,7 @@ ModeBase {
       Rectangle {
         id: wrapper
         width: list.width - 30
-        height: 50
+        height: 30
         color: "transparent"
 
         SvText {
@@ -114,4 +102,36 @@ ModeBase {
 
     }
   }
+
+  //Local menu
+  Row {
+    anchors.top: parent.top
+    anchors.right: parent.right
+    height: 24
+    spacing: 5
+
+    //Apply current font
+//    ToolButton {
+//      icon.source: "qrc:/img/yes.png"
+//      icon.color: "transparent"
+//      ToolTip.text: qsTr("Apply current font")
+//      ToolTip.visible: hovered
+//      ToolTip.delay: 300
+
+//      onClicked: synth.voiceAdd();
+//    }
+
+    //Close selector
+    ToolButton {
+      icon.source: "qrc:/img/close.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Close font selector without any changes")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: soundFontLoader.visible = false
+    }
+
+  }
+
 }

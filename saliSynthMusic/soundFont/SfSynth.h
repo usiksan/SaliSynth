@@ -81,8 +81,12 @@ class SfSynth : public QObject
 
     void channelSetVoiceRow( int channel, int voiceRow );
 
-  private:
     void voiceAdd();
+
+    void voiceDuplicate( int voiceRow );
+
+    bool voiceSettings( int voiceRow, int bankMsb, int bankLsb, int prog );
+  private:
 
     void syncroChannelsWithProgramm( int programm );
 

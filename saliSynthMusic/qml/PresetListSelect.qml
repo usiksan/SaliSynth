@@ -9,6 +9,7 @@
    Allow to select single preset from list
 */
 import QtQuick 2.8
+import QtQuick.Controls 2.5
 
 ModeBase {
   id: presetSelector
@@ -19,23 +20,10 @@ ModeBase {
     font.bold: true
     font.pointSize: 16
     text: qsTr("Select preset to assign to current programm")
-    color: 'white'
+    color: 'black'
     anchors.horizontalCenter: parent.horizontalCenter
     horizontalAlignment: Qt.AlignHCenter
     y: 3
-  }
-
-  //Close icon
-  Image {
-    anchors.right: parent.right
-    anchors.top: parent.top
-    anchors.rightMargin: 5
-    anchors.topMargin: 5
-    source: "qrc:/img/iconClose.png"
-    MouseArea {
-      anchors.fill: parent
-      onClicked: presetSelector.visible = false
-    }
   }
 
   //Calling when user selected preset
@@ -76,7 +64,7 @@ ModeBase {
       Rectangle {
         id: wrapper
         width: list.width - 30
-        height: 50
+        height: 30
         color: "transparent"
 
         SvText {
@@ -124,4 +112,36 @@ ModeBase {
 
     }
   }
+
+  //Local menu
+  Row {
+    anchors.top: parent.top
+    anchors.right: parent.right
+    height: 24
+    spacing: 5
+
+    //Apply current font
+//    ToolButton {
+//      icon.source: "qrc:/img/yes.png"
+//      icon.color: "transparent"
+//      ToolTip.text: qsTr("Apply current font")
+//      ToolTip.visible: hovered
+//      ToolTip.delay: 300
+
+//      onClicked: synth.voiceAdd();
+//    }
+
+    //Close selector
+    ToolButton {
+      icon.source: "qrc:/img/close.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Close preset selector without any changes")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: presetSelector.visible = false
+    }
+
+  }
+
 }

@@ -29,13 +29,13 @@ SvModalItem {
   //Функция вывода информационного сообщения
   function info( msg, ok ) {
     //Вывести сообщение на экран с предопределенным заголовком
-    show( qsTr("Внимание"), msg, ok );
+    show( qsTr("Warning"), msg, ok );
   }
 
   //Функция вывода ошибки
   function error( msg, ok ) {
     //Вывести сообщение на экран с предопределенным заголовком
-    show( qsTr("Ошибка"), msg, ok );
+    show( qsTr("Error"), msg, ok );
   }
 
 

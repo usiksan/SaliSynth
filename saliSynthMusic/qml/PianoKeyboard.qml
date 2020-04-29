@@ -1,4 +1,14 @@
-import QtQuick 2.0
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   Display keyboard with press visualisation and mouse operations
+*/
+import QtQuick 2.8
+import QtQuick.Controls 2.5
 
 Item {
   height: qmlKeyboard.whiteKeyWidth * 4
@@ -15,6 +25,23 @@ Item {
     height: parent.height - y
     border.width: 0
     color: "yellow"
+
+    //Select voice for this part
+    ToolButton {
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.topMargin: 5
+      width: 24
+      height: 15
+      padding: 0
+      icon.source: "qrc:/img/select.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Select voice for left part")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: voiceSelector.selectVoice( channelList.asInt( 1, "channelVoiceId" ), null )
+    }
   }
 
   Rectangle {

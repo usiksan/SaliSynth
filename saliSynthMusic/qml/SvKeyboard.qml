@@ -55,7 +55,7 @@ SvModalItem {
       //Закрыть окно
       box.visible = false;
       //Вернуть значение
-      if( applyFunction != null )
+      if( applyFunction !== null )
         applyFunction( field.text )
     }
 

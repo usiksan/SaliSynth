@@ -11,8 +11,8 @@ import QtQuick 2.8
 
 Item {
   //Цвет элементов
-  property color  frontColor: "#9cf2f2"
-  property color  backColor: "#26324B"
+  property color  frontColor: "black"
+  property color  backColor: "white"
 
   //Табулятор
   property color  tabButtonBackDefault : backColor

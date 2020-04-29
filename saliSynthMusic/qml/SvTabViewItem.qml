@@ -20,30 +20,13 @@ Item {
   property string tabName: pageName
   //Путь к картинке для панели вкладок
   property string tabImage
-  //Наименование функции, выполняющейся при входе на вкладку
-  property string enterFunctionForward: ""
-  property string enterFunctionBackward: enterFunctionForward
-
-
-  //Механизм проверки возможности перехода к следующему шагу
-  property bool isNextEnable : true
-  signal testNextEnable()
-
-  function testCover() {
-    if( !isCoverClosed ) {
-      isNextEnable = false;
-      messageBox.info( qsTr("Закройте крышку и повторите"), null );
-      return false;
-    }
-    return true;
-  }
 
   //Вывести подпись названия вкладки на экране
-  Text {
+  SvText {
     font.bold: true
     font.pointSize: 16
     text: pageName
-    color: 'white'
+    color: 'black'
     anchors.horizontalCenter: parent.horizontalCenter
     horizontalAlignment: Qt.AlignHCenter
     y: pageNameY

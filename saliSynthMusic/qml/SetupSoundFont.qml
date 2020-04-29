@@ -9,11 +9,12 @@
    Sound font table management
 */
 import QtQuick 2.8
+import QtQuick.Controls 2.5
 
 SvTabViewItem {
   //Fields with
 //  property int widthMarker: 50
-  property int widthNpp: 50
+  property int widthNpp: 40
   property int widthIcon: 64
   property int widthTitle: 150
   property int widthPreset: 150
@@ -27,16 +28,16 @@ SvTabViewItem {
   }
 
 
-   //Table title
+  //Table title
   Row {
     id: idTitle
     anchors.top: parent.top
-    anchors.topMargin: 35
+    anchors.topMargin: 40
     anchors.left: parent.left
     anchors.leftMargin: 5
     anchors.right: parent.right
     anchors.rightMargin: 5
-    height: 64
+    height: 48
 
     spacing: 2
     //Select instrument
@@ -46,7 +47,7 @@ SvTabViewItem {
 //    }
     //Programm number
     SvTableHeader {
-      text: qsTr("Nprog")
+      text: qsTr("№")
       width: widthNpp
     }
     //Instrument icon
@@ -54,12 +55,27 @@ SvTabViewItem {
       //text: qsTr("")
       width: widthIcon
     }
-    //Programm title
+    //Bank MSB
+    SvTableHeader {
+      text: qsTr("Bank\nMSB")
+      width: widthNpp
+    }
+    //Bank LSB
+    SvTableHeader {
+      text: qsTr("Bank\nLSB")
+      width: widthNpp
+    }
+    //Midi programm
+    SvTableHeader {
+      text: qsTr("Prog")
+      width: widthNpp
+    }
+    //Voice name
     SvTableHeader {
       text: qsTr("Title")
       width: widthTitle
     }
-    //Preset
+    //Preset name
     SvTableHeader {
       text: qsTr("Preset")
       width: widthPreset
@@ -71,11 +87,17 @@ SvTabViewItem {
     }
   }
 
-//  "iconName",        //visual icon name for instrument
-//  "instrumentTitle", //instrument visual title
-//  "soundFontFile",   //Sound font file name
-//  "preset",          //Preset in sound font file
-//  "programm"         //Programm which associates with this preset and sound font file
+  //Preset from sound font
+//  "voiceIconName",            //visual icon name for instrument
+//  "voiceSoundFontFile",       //Sound font file name
+//  "voiceSoundFontPreset",     //Preset in sound font file
+//  "voiceSoundFontPresetName", //Preset name in sound font file
+
+  //The voice that the preset is associated with
+//  "voiceName",                //Arbitrary voice name
+//  "voiceBankMsb",             //Voice bank MSB
+//  "voiceBankLsb",             //Voice bank LSB
+//  "voiceProgram",             //Voice bank midi program
   //Table contents
   ListView {
     anchors.top: idTitle.bottom
@@ -89,30 +111,34 @@ SvTabViewItem {
 
     clip: true
 
-    model: soundFontMap
+    model: voiceList
 
     delegate: Item {
       width: parent.width
-      height: 64
+      height: 24
       Rectangle {
         anchors.fill: parent
+        anchors.topMargin: -3
         visible: index === currentRow
-        color: Qt.lighter( svStyle.backColor )
+        color: Qt.lighter( "green" )
       }
       Row {
         spacing: 2
         anchors.verticalCenter: parent.verticalCenter
-        //Programm number
+
+        //Voice number
         SvFieldText {
-          text: programm
+          text: index + 1
           width: widthNpp
           editable: false
           onLeftButton: setCurrentRow(index);
         }
+
+        //Voice icon
         Image {
           width: widthIcon
-          height: 64
-          source: iconName
+          height: 24
+          source: voiceIconName
           MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
@@ -122,27 +148,60 @@ SvTabViewItem {
             }
           }
         }
-        //Instrument title
+
+        //Bank MSB
         SvFieldText {
-          text: instrumentTitle
+          text: voiceBankMsb
+          width: widthNpp
+          editable: true
+          onLeftButton: setCurrentRow(index);
+          onApply: {
+            if( !synth.voiceSettings( index, str, voiceBankLsb, voiceProgram ) )
+              messageBox.error( qsTr("Duplicate voice, enter another bank msb value"), null )
+          }
+        }
+
+        //Bank LSB
+        SvFieldText {
+          text: voiceBankLsb
+          width: widthNpp
+          editable: true
+          onLeftButton: setCurrentRow(index);
+          onApply: synth.voiceSettings( index, voiceBankMsb, str, voiceProgram )
+        }
+
+        //Midi programm
+        SvFieldText {
+          text: voiceProgram
+          width: widthNpp
+          editable: true
+          onLeftButton: setCurrentRow(index);
+          onApply: synth.voiceSettings( index, voiceBankMsb, voiceBankLsb, str )
+        }
+
+        //Voice name
+        SvFieldText {
+          text: voiceName
           width: widthTitle
           editable: true
           onLeftButton: setCurrentRow(index);
           onApply: instrumentTitle = str;
         }
-        //Preset number
+
+        //Preset name
         SvFieldText {
-          text: presetName
+          text: voiceSoundFontPresetName
           width: widthPreset
           editable: false
           onLeftButton: {
             setCurrentRow(index);
-            presetListSelector.presetSelect( index, preset );
+            presetListSelector.presetSelect( index, voiceSoundFontPreset );
           }
         }
+
         //Sound font file
         SvFieldText {
-          text: soundFontFile
+          text: voiceSoundFontFile
           width: widthFontName
           editable: false
           onLeftButton: {
@@ -153,6 +212,49 @@ SvTabViewItem {
       }
     }
   }
+
+  //Local menu
+  Row {
+    anchors.top: parent.top
+    anchors.right: parent.right
+    height: 24
+    spacing: 5
+
+    //Append new record
+    ToolButton {
+      icon.source: "qrc:/img/plus_red.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Add new record to the voice list")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: synth.voiceAdd();
+    }
+
+    //Duplicate current record
+    ToolButton {
+      icon.source: "qrc:/img/copy.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Duplicate current record")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: synth.voiceDuplicate(currentRow);
+    }
+
+    //Delete current record
+    ToolButton {
+      icon.source: "qrc:/img/delete_red.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Remove current record from voice list")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: voiceMap.removeRecord( currentRow );
+    }
+
+  }
+
 
   SoundFontLoad {
     id: soundFontSelector

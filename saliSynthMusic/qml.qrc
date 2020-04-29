@@ -75,5 +75,16 @@
         <file>qml/PianoKeyboard.qml</file>
         <file>img/delimiter.png</file>
         <file>qml/VoiceSelect.qml</file>
+        <file>img/tools.png</file>
+        <file>img/arrow_plain_blue_W.png</file>
+        <file>img/delete_red.png</file>
+        <file>img/plus_red.png</file>
+        <file>img/copy.png</file>
+        <file>img/no.png</file>
+        <file>img/yes.png</file>
+        <file>img/select.png</file>
+        <file>img/settings.png</file>
+        <file>img/close.png</file>
+        <file>img/play.png</file>
     </qresource>
 </RCC>

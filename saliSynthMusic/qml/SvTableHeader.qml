@@ -15,4 +15,5 @@ SvFieldName {
   //Размер текста
   font.pixelSize: svStyle.fieldSize
   horizontalAlignment: Text.AlignHCenter
+  verticalAlignment: Text.AlignVCenter
 }

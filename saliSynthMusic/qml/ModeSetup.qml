@@ -9,6 +9,7 @@
 */
 import QtQuick 2.8
 import QtQml.Models 2.2
+import QtQuick.Controls 2.5
 import SvQml 1.0
 
 ModeBase {
@@ -62,5 +63,26 @@ ModeBase {
 //      }
     }
   }
+
+  //Top menu
+  Row {
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 24
+    spacing: 5
+
+    //Settings
+    ToolButton {
+      icon.source: "qrc:/img/arrow_plain_blue_W.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Back to work mode")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: currentMode = 2
+    }
+  }
+
 
 }

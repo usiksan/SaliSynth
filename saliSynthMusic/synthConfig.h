@@ -48,12 +48,16 @@
               v14 First time of midi file play
    27.04.2020 v15 MIDI file read error: group events
                   QmlMidiFile at now object and tracks are listModels
+   29.04.2020 v16 Refactoring voice list
+                  Refactoring qml pages to select sound font, select preset
+                  Append qml page to select voice
+                  Append some icons
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 15
+#define VERSION 16
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

@@ -67,12 +67,12 @@ Image {
   MouseArea {
     anchors.fill: parent
     enabled: enable
-    onPressed: {
+    onClicked: {
       pressAnim.start();
       click();
-      press()
+      //press()
     }
-    onReleased: release()
+    //onReleased: release()
   }
 
 }

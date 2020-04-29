@@ -1,18 +1,47 @@
-import QtQuick 2.0
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   Display preset names list
+   Allow to select single preset from list
+*/
+import QtQuick 2.8
+import QtQuick.Controls 2.5
 
 Item {
+  id: voiceSelector
   anchors.fill: parent
 
+  visible: false
+
   property int widthNpp: 50
+  property int widthId: 70
   property int widthIcon: 64
   property int widthTitle: 150
   property int widthPreset: 150
   property int widthFontName: 250
 
   property int currentRow : 0
+  property var voiceApplyFunction : null
 
   function selectVoice( voiceId, applyFunction ) {
+    voiceSelector.visible = true
+    currentRow = synth.voiceRowById(voiceId)
+    voiceApplyFunction = applyFunction
+  }
 
+  //Title
+  Text {
+    font.bold: true
+    font.pointSize: 16
+    text: qsTr("Select voice")
+    color: 'black'
+    anchors.horizontalCenter: parent.horizontalCenter
+    horizontalAlignment: Qt.AlignHCenter
+    y: 3
   }
 
   function setCurrentRow( row ) {
@@ -88,15 +117,15 @@ Item {
 
     clip: true
 
-    model: soundFontMap
+    model: voiceList
 
     delegate: Item {
       width: parent.width
-      height: 64
+      height: 30
       Rectangle {
         anchors.fill: parent
         visible: index === currentRow
-        color: Qt.lighter( svStyle.backColor )
+        color: Qt.lighter( "green" )
       }
       Row {
         spacing: 2
@@ -150,4 +179,42 @@ Item {
       }
     }
   }
+
+
+  //Local menu
+  Row {
+    anchors.top: parent.top
+    anchors.right: parent.right
+    height: 24
+    spacing: 5
+
+    //Apply current selected voice
+    ToolButton {
+      icon.source: "qrc:/img/yes.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Apply current selected voice")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: {
+        if( voiceApplyFunction !== null )
+          voiceApplyFunction( currentRow );
+        voiceSelector.visible = false
+      }
+    }
+
+    //Close selector
+    ToolButton {
+      icon.source: "qrc:/img/close.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Close voice selector without any changes")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: voiceSelector.visible = false
+    }
+
+  }
+
+
 }

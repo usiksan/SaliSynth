@@ -33,7 +33,7 @@ Window {
   //Voice map
   //It associate single preset from single sound font to cell of voice
   //Cell of voice consist from bank (MSB and LSB) and program number inside bank
-  SvQmlJsonModel { id: voiceMap; file: settings; jsonName: "voiceMap"; fields: [
+  SvQmlJsonModel { id: voiceList; file: settings; jsonName: "voiceList"; fields: [
       //Preset from sound font
       "voiceIconName",            //visual icon name for instrument
       "voiceSoundFontFile",       //Sound font file name
@@ -53,7 +53,8 @@ Window {
       "channelVoiceName",
       "channelBankMsb",
       "channelBankLsb",
-      "channelProgram"
+      "channelProgram",
+      "channelVoiceId"
     ] }
 
 
