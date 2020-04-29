@@ -9,7 +9,6 @@
    Preset sounds when you press a key (midi event from keyboard or midi file or accompaniment)
 */
 #include "SfSynthPreset.h"
-#include "SoundFontMap.h"
 #include "SfSynth.h"
 
 #include <math.h>
@@ -50,7 +49,7 @@ void SfSynthPreset::midi(SfSynth *synth, quint8 cmd, quint8 data0, quint8 data1)
       break;
     case 4 :
       //Programm change (programm number)
-      programm( data0 );
+      qFatal("Programm change from SfSynthPreset inside");
       break;
     case 5 :
       //Channel pressure (pressure)
@@ -58,7 +57,6 @@ void SfSynthPreset::midi(SfSynth *synth, quint8 cmd, quint8 data0, quint8 data1)
     case 6 :
       //Pitch wheel change (lsb) (msb)
       break;
-
     }
   if( cmd != 7 )
     qDebug() << "cmd " << cmd << data0 << data1;
@@ -79,11 +77,13 @@ inline int delay( quint16 time ) {
 
 
 
-void SfSynthPreset::build(SoundFontPtr soundFont, int preset)
+void SfSynthPreset::build(int id, SoundFontPtr soundFont, int preset)
   {
   //Stop all notes
   for( int i = 0; i < 128; i++ )
     mNotes[i].clear();
+
+  mId = id;
 
   mName = soundFont->presetName(preset);
 
@@ -123,22 +123,17 @@ void SfSynthPreset::build(SoundFontPtr soundFont, int preset)
 
 
 
-void SfSynthPreset::clone(const SfSynthPreset &src)
+void SfSynthPreset::clone(const SfSynthPreset *src)
   {
-  mName = src.mName;
+  mName = src->mName;
   for( int i = 0; i < 128; i++ ) {
     mNotes[i].clear();
-    mNotes[i] = src.mNotes[i];
+    mNotes[i] = src->mNotes[i];
     }
-  mSoundFontPtr = src.mSoundFontPtr;
+  mSoundFontPtr = src->mSoundFontPtr;
+  mId = src->mId;
   }
 
 
 
 
-//Change current programm of preset
-void SfSynthPreset::programm(quint8 prg)
-  {
-  SoundFontMap map = SoundFontMap::map( 0, prg );
-  build( map.mSoundFontPtr, map.mSoundFontPreset );
-  }

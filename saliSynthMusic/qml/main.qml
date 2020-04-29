@@ -30,17 +30,35 @@ Window {
   //Settings
   SvQmlJsonFile { id: settings; file: "settings.cfg"; path: utils.homePath + "saliSynthMusic/"; autoSave: 1000 }
 
-  //Sound font map
-  SvQmlJsonModel { id: soundFontMap; file: settings; jsonName: "soundFontMap"; fields: [
-      "iconName",        //visual icon name for instrument
-      "instrumentTitle", //instrument visual title
-      "soundFontFile",   //Sound font file name
-      "preset",          //Preset in sound font file
-      "presetName",      //Preset name in sound font file
-      "programm"         //Programm which associates with this preset and sound font file
+  //Voice map
+  //It associate single preset from single sound font to cell of voice
+  //Cell of voice consist from bank (MSB and LSB) and program number inside bank
+  SvQmlJsonModel { id: voiceMap; file: settings; jsonName: "voiceMap"; fields: [
+      //Preset from sound font
+      "voiceIconName",            //visual icon name for instrument
+      "voiceSoundFontFile",       //Sound font file name
+      "voiceSoundFontPreset",     //Preset in sound font file
+      "voiceSoundFontPresetName", //Preset name in sound font file
+
+      //The voice that the preset is associated with
+      "voiceName",                //Arbitrary voice name
+      "voiceBankMsb",             //Voice bank MSB
+      "voiceBankLsb",             //Voice bank LSB
+      "voiceProgram",             //Voice bank midi program
+      "voiceId"                   //Voice id is concatenation of [bank msb][bank lsb][program]
      ] }
 
-  Binding { target: synth;    property: "model";         value: soundFontMap }
+  //Channels associations
+  SvQmlJsonModel { id: channelList; file: settings; jsonName: "channelList"; fields: [
+      "channelVoiceName",
+      "channelBankMsb",
+      "channelBankLsb",
+      "channelProgram"
+    ] }
+
+
+  Binding { target: synth;       property: "voiceList";     value: voiceList }
+  Binding { target: synth;       property: "channelList";   value: channelList }
   Binding { target: qmlKeyboard; property: "keyboardWidth"; value: width }
 
 

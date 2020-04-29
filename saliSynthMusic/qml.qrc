@@ -74,5 +74,6 @@
         <file>qml/SetupMidiKeyboard.qml</file>
         <file>qml/PianoKeyboard.qml</file>
         <file>img/delimiter.png</file>
+        <file>qml/VoiceSelect.qml</file>
     </qresource>
 </RCC>

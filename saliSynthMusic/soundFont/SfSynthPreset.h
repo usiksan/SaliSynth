@@ -23,22 +23,22 @@ class SfSynthPreset
     QString      mName;         //! Preset name
     SfSynthNote  mNotes[128];   //! Builded notes for preset
     SoundFontPtr mSoundFontPtr; //! Sound font synth base on
+    int          mId;           //! Id of current preset
   public:
     explicit SfSynthPreset();
 
     QString      name() const { return mName; }
+
+    int          id() const { return mId; }
 
     SoundFontPtr soundFontPtr() const { return mSoundFontPtr; }
 
     //Action on midi event
     void         midi( SfSynth *synth, quint8 cmd, quint8 data0, quint8 data1 );
 
-    //Change current programm of preset
-    void         programm( quint8 prg );
+    void         build( int id, SoundFontPtr soundFont, int preset );
 
-    void         build( SoundFontPtr soundFont, int preset );
-
-    void         clone( const SfSynthPreset &src );
+    void         clone(const SfSynthPreset *src );
 
   };
 

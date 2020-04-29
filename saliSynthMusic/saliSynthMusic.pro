@@ -39,8 +39,7 @@ SOURCES += \
         soundFont/SfSynthNote.cpp \
         soundFont/SfSynthPreset.cpp \
         soundFont/SfSynthTrack.cpp \
-        soundFont/SoundFont.cpp \
-        soundFont/SoundFontMap.cpp
+        soundFont/SoundFont.cpp
 
 RESOURCES += qml.qrc
 
@@ -82,5 +81,4 @@ HEADERS += \
   soundFont/SfSynthPreset.h \
   soundFont/SfSynthTrack.h \
   soundFont/SoundFont.h \
-  soundFont/SoundFontMap.h \
   synthConfig.h

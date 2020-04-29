@@ -5,41 +5,52 @@
 #include <QDebug>
 
 
+static int voiceId( int bankMsb, int bankLsb, int midiProgram )
+  {
+  return ((bankMsb & 0x7f) << 14) | ((bankLsb & 0x7f) << 7) | (midiProgram & 0x7f);
+  }
+
+//static int voiceBankMsb
+
+
 SfSynth::SfSynth(QObject *parent) :
   QObject(parent),
-  mModel(nullptr),
+  mVoiceList(nullptr),
+  mChannelList(nullptr),
   mMidiConnected(false)
   {
   }
 
 
 
-
-void SfSynth::setModel(SvQmlJsonModel *md)
+void SfSynth::setVoiceList(SvQmlJsonModel *md)
   {
-  mModel = md;
+  mVoiceList = md;
+  }
 
-  //Test if model empty then initialize model
-  if( mModel->count() == 0 ) {
-    //Initialize model
-    for( int i = 0; i < 128; i++ )
-      addModelRecord( i, QString("Instrument %1").arg(i) );
+
+
+void SfSynth::setChannelList(SvQmlJsonModel *md)
+  {
+  mChannelList = md;
+
+  if( mChannelList->count() == 0 ) {
+    //Create channel list
+    for( int i = 0; i < 16; i++ ) {
+      mChannelList->addRecord();
+      mChannelList->setInt( i, QString("channelBankMsb"), 0 );
+      mChannelList->setInt( i, QString("channelBankLsb"), 0 );
+      mChannelList->setInt( i, QString("channelProgram"), i );
+      }
     }
 
-  //Fill programms
-  for( int i = 0; i < 128; i++ ) {
-    QString soundFont = mModel->asString( i, "soundFontFile" );
-    if( !soundFont.isEmpty() )
-      //Sound font assigned for this programm slot
-      applySoundFont( i, soundFont, mModel->asInt( i, "preset" ) );
-    }
-
-  //Build default channels
-  for( quint8 i = 0; i < 16; i++ ) {
-    //Change programm to channel
-    mChannels[i].clone( mProgramms[i] );
-    mChannelsProgramm[i] = i;
-    emit channelPresetChanged( i, mChannels[i].name() );
+  if( mVoiceList ) {
+    for( int i = 0; i < 16; i++ ) {
+      int bankMsb = mChannelList->asInt( i, QString("channelBankMsb") );
+      int bankLsb = mChannelList->asInt( i, QString("channelBankLsb") );
+      int program = mChannelList->asInt( i, QString("channelProgram") );
+      channelSetVoiceId( i, voiceId( bankMsb, bankLsb, program ) );
+      }
     }
   }
 
@@ -48,9 +59,13 @@ void SfSynth::setModel(SvQmlJsonModel *md)
 
 
 
-QStringList SfSynth::presetList(int programm)
+
+
+
+
+QStringList SfSynth::presetList(int voiceRow)
   {
-  SoundFontPtr soundFontPtr = mProgramms[ programm & 0x7f ].soundFontPtr();
+  SoundFontPtr soundFontPtr = soundFont( mVoiceList->asString( voiceRow, QString("voiceSoundFontFile")) );
   if( soundFontPtr.isNull() )
     //No sound font assigned to programm
     return QStringList{};
@@ -71,6 +86,32 @@ QString SfSynth::soundFontPath() const
 
 
 
+bool SfSynth::containsVoice(int bankMsb, int bankLsb, int midiProgram)
+  {
+  return voiceRow( bankMsb, bankLsb, midiProgram ) >= 0;
+  }
+
+
+
+int SfSynth::voiceRow(int bankMsb, int bankLsb, int midiProgram)
+  {
+  return voiceRowById( voiceId( bankMsb, bankLsb, midiProgram ) );
+  }
+
+
+
+
+int SfSynth::voiceRowById(int voiceId)
+  {
+  for( int i = 0; i < mVoiceList->count(); i++ )
+    if( mVoiceList->asInt( i, "voiceId") == voiceId )
+      return i;
+  return -1;
+  }
+
+
+
+
 void SfSynth::emitNoteOn(SfSynthNote *note)
   {
   emit noteOn( note );
@@ -82,11 +123,19 @@ void SfSynth::emitNoteOn(SfSynthNote *note)
 
 void SfSynth::midiSlot(quint8 cmd, quint8 data0, quint8 data1)
   {
-  if( mModel == nullptr ) return;
+  if( mVoiceList == nullptr ) return;
   int channel = cmd & 0xf;
   if( (cmd & 0x70) == 0x40 )
     //Change programm
     setProgramm( channel, data0 );
+  else if( (cmd & 0x70) == 0x30 && (data0 == 0 || data0 == 0x20) ) {
+    if( data0 == 0 )
+      //Bank MSB
+      mChannelList->setInt( channel, QString("channelBankMsb"), data1 & 0x7f );
+    else
+      //Bank LSB
+      mChannelList->setInt( channel, QString("channelBankLsb"), data1 & 0x7f );
+    }
   else
     //Common midi
     mChannels[channel].midi( this, cmd, data0, data1 );
@@ -99,9 +148,9 @@ void SfSynth::setProgramm(int channel, int programm)
   {
   channel &= 0xf;
   programm &= 0x7f;
-  mChannels[channel].clone( mProgramms[programm] );
-  mChannelsProgramm[channel] = programm;
-  emit channelPresetChanged( channel, mChannels[channel].name() );
+  int bankMsb = mChannelList->asInt( channel, QString("channelBankMsb") );
+  int bankLsb = mChannelList->asInt( channel, QString("channelBankLsb") );
+  channelSetVoiceId( channel, voiceId( bankMsb, bankLsb, programm ) );
   }
 
 
@@ -118,63 +167,102 @@ void SfSynth::midiConnection(bool on)
 
 
 
-void SfSynth::applySoundFont(int programm, const QString soundFont, int preset)
+void SfSynth::applySoundFont(int voiceRow, const QString soundFont, int preset)
   {
-  mModel->setString( programm, "soundFontFile", soundFont );
-  mModel->setInt( programm, "preset", preset );
-  qDebug() << "sound font" << soundFont;
-  //Check if it new file
-  if( !mSoundFontMap.contains( soundFont ) || mSoundFontMap.value(soundFont).isNull() ) {
-    //Sound font not yet loaded
-    //We creating sound font
-    SoundFontPtr soundFontPtr( new SoundFont );
-    //...load it
-    soundFontPtr->read( soundFontPath() + soundFont + ".sf2" );
-    //...and append to map
-    mSoundFontMap.insert( soundFont, soundFontPtr );
-
-    mProgramms[programm & 0x7f].build( soundFontPtr, preset );
-    }
-  else
-    mProgramms[programm & 0x7f].build( mSoundFontMap.value(soundFont).toStrongRef(), preset );
-  syncroChannelsWithProgramm( programm );
-  mModel->setString( programm, "presetName", mSoundFontMap.value(soundFont).toStrongRef()->presetName(preset) );
+  mVoiceList->setString( voiceRow, QString("voiceSoundFontFile"), soundFont );
+  applyPreset( voiceRow, preset );
   }
 
 
 
 
-void SfSynth::applyPreset(int programm, int preset)
+void SfSynth::applyPreset(int voiceRow, int preset)
   {
-  programm &= 0x7f;
-  SoundFontPtr soundFontPtr = mProgramms[ programm & 0x7f ].soundFontPtr();
+  SoundFontPtr soundFontPtr = soundFont( mVoiceList->asString( voiceRow, QString("voiceSoundFontFile")) );
   if( !soundFontPtr.isNull() ) {
-    //No sound font assigned to programm
-    mProgramms[programm].build(soundFontPtr, preset );
     //Assign textual name
-    mModel->setString( programm, "presetName", soundFontPtr->presetName(preset) );
+    mVoiceList->setString( voiceRow, QString("voiceSoundFontPresetName"), soundFontPtr->presetName(preset) );
     //..and preset index
-    mModel->setInt( programm, "preset", preset );
-    syncroChannelsWithProgramm( programm );
+    mVoiceList->setInt( voiceRow, QString("voiceSoundFontPreset"), preset );
+    //By default visual voice name is a same as preset if it previously not assigned
+    if( mVoiceList->asString( voiceRow, QString("voiceName")).isEmpty() )
+      mVoiceList->setString( voiceRow, QString("voiceName"), soundFontPtr->presetName(preset) );
+
+    //Because font and/or preset changed we must rebuild all appropriate presets
+    int id = mVoiceList->asInt( voiceRow, QString("voiceId") );
+    if( mPresetCache.contains(id) )
+      mPresetCache.object(id)->build( id, soundFontPtr, preset );
+    for( int i = 0; i < 16; i++ )
+      if( mChannels[i].id() == id )
+        channelSetVoiceRow( i, voiceRow );
+    }
+  }
+
+
+
+void SfSynth::channelSetVoiceId(int channel, int voiceId)
+  {
+  channelSetVoiceRow( channel, voiceRowById(voiceId) );
+  }
+
+
+
+
+void SfSynth::channelSetVoiceRow(int channel, int voiceRow)
+  {
+  channel &= 0xf;
+  if( mVoiceList != nullptr && voiceRow >= 0 && voiceRow < mVoiceList->count() ) {
+    int voiceId = mVoiceList->asInt( voiceRow, QString("voiceId") );
+    //Check if there voice in cache
+    if( !mPresetCache.contains(voiceId) ) {
+      //No voice in cache, create
+      SfSynthPreset *presetPtr = new SfSynthPreset();
+      presetPtr->build( voiceId, soundFont(mVoiceList->asString( voiceRow, QString("voiceSoundFontFile"))), mVoiceList->asInt( voiceRow, QString("voiceSoundFontPreset")) );
+      //... and append to the cache
+      mPresetCache.insert( voiceId, presetPtr, 5 );
+      }
+
+    //At this moment preset exactly in the cache
+    mChannels[channel].clone( mPresetCache.object(voiceId) );
+
+    //Update visual channel list
+    mChannelList->setString( channel, QString("channelVoiceName"), mChannels[channel].name() );
+    mChannelList->setInt( channel, QString("channelBankMsb"), (voiceId >> 14) & 0x7f );
+    mChannelList->setInt( channel, QString("channelBankLsb"), (voiceId >> 7) & 0x7f );
+    mChannelList->setInt( channel, QString("channelProgram"), (voiceId) & 0x7f );
     }
   }
 
 
 
 
-void SfSynth::addModelRecord(int index, const QString title)
+void SfSynth::voiceAdd()
   {
-  mModel->addRecord();
-  mModel->setString( index, "instrumentTitle", title );
-  mModel->setInt( index, "programm", index );
+  int row = mVoiceList->count();
+  mVoiceList->addRecord();
+  mVoiceList->setInt( row, "voiceBankMsb", 128 );
+  mVoiceList->setInt( row, "voiceBankLsb", 128 );
+  mVoiceList->setInt( row, "voiceProgram", 128 );
+  mVoiceList->setInt( row, "voiceId", -1 );
   }
 
 
 
-void SfSynth::syncroChannelsWithProgramm(int programm)
+
+SoundFontPtr SfSynth::soundFont(const QString fontName)
   {
-  for( int i = 0; i < 16; i++ )
-    if( mChannelsProgramm[i] == programm )
-      mChannels[i].clone( mProgramms[i] );
+  if( mSoundFontMap.contains(fontName) ) {
+    if( !mSoundFontMap.value(fontName).isNull() )
+      return mSoundFontMap.value(fontName).toStrongRef();
+    mSoundFontMap.remove(fontName);
+    }
+  //Sound font not yet loaded
+  //We creating sound font
+  SoundFontPtr soundFontPtr( new SoundFont );
+  //...load it
+  soundFontPtr->read( soundFontPath() + fontName + ".sf2" );
+  //...and append to map
+  mSoundFontMap.insert( fontName, soundFontPtr );
+  return soundFontPtr;
   }
 
