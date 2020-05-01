@@ -52,12 +52,14 @@
                   Refactoring qml pages to select sound font, select preset
                   Append qml page to select voice
                   Append some icons
+   01.05.2020 v17 Fix error: not edited voice name
+                  Append location font selector font to current font
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 16
+#define VERSION 17
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

@@ -28,6 +28,18 @@ ModeBase {
 
   signal selected( string str );
 
+  function selectFont( currentFont ) {
+    soundFontLoader.visible = true;
+    //Find index of current font in file list
+    var index = files.indexOf( "file://" + synth.soundFontPath() + currentFont + ".sf2" );
+    //If file found then make it current
+    if( index >= 0 ) {
+      view.currentIndex = index;
+      //Make current index visible
+      view.positionViewAtIndex( index, ListView.Contain );
+    }
+  }
+
   //Sound font list
   Rectangle {
     id: list

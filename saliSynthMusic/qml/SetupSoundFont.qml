@@ -167,7 +167,10 @@ SvTabViewItem {
           width: widthNpp
           editable: true
           onLeftButton: setCurrentRow(index);
-          onApply: synth.voiceSettings( index, voiceBankMsb, str, voiceProgram )
+          onApply: {
+            if( !synth.voiceSettings( index, voiceBankMsb, str, voiceProgram ) )
+              messageBox.error( qsTr("Duplicate voice, enter another bank lsb value"), null )
+          }
         }
 
         //Midi programm
@@ -176,7 +179,10 @@ SvTabViewItem {
           width: widthNpp
           editable: true
           onLeftButton: setCurrentRow(index);
-          onApply: synth.voiceSettings( index, voiceBankMsb, voiceBankLsb, str )
+          onApply: {
+            if( !synth.voiceSettings( index, voiceBankMsb, voiceBankLsb, str ) )
+              messageBox.error( qsTr("Duplicate voice, enter another programm value"), null )
+          }
         }
 
         //Voice name
@@ -185,7 +191,7 @@ SvTabViewItem {
           width: widthTitle
           editable: true
           onLeftButton: setCurrentRow(index);
-          onApply: instrumentTitle = str;
+          onApply: voiceName = str;
         }
 
         //Preset name
@@ -206,7 +212,7 @@ SvTabViewItem {
           editable: false
           onLeftButton: {
             setCurrentRow(index);
-            soundFontSelector.visible = true
+            soundFontSelector.selectFont(voiceSoundFontFile)
           }
         }
       }
