@@ -10,7 +10,8 @@ QmlKeyboard::QmlKeyboard(QObject *parent) :
   QAbstractListModel(parent),
   mDelimiter(48),
   mLeftMode(1),
-  mRightMode(0)
+  mRightMode(0),
+  mSettings(nullptr)
   {
 
   }
@@ -22,6 +23,8 @@ void QmlKeyboard::setDelimiter(int delim)
   {
   mDelimiter = delim;
   emit delimiterChanged();
+  if( mSettings )
+    mSettings->setInt( QStringLiteral("delimiter"), mDelimiter );
   }
 
 
@@ -42,6 +45,8 @@ void QmlKeyboard::setLeftMode(int mode)
   {
   mLeftMode = mode;
   emit leftModeChanged();
+  if( mSettings )
+    mSettings->setInt( QStringLiteral("left mode"), mLeftMode );
   }
 
 
@@ -51,7 +56,27 @@ void QmlKeyboard::setRightMode(int mode)
   {
   mRightMode = mode;
   emit rightModeChanged();
+  if( mSettings )
+    mSettings->setInt( QStringLiteral("right mode"), mRightMode );
   }
+
+
+
+
+void QmlKeyboard::setSettings(SvQmlJsonFile *settings)
+  {
+  //Read settings
+  build( settings->asIntDefault( QStringLiteral("keyboard keys"), 61 ) );
+
+  setDelimiter( settings->asIntDefault( QStringLiteral("delimiter"), 48 ) );
+
+  setLeftMode( settings->asIntDefault( QStringLiteral("left mode"), 1 ) );
+
+  setRightMode( settings->asIntDefault( QStringLiteral("right mode"), 0 ) );
+
+  mSettings = settings;
+  }
+
 
 
 int QmlKeyboard::rowCount(const QModelIndex &parent) const
@@ -139,10 +164,8 @@ void QmlKeyboard::indicate(quint8 keyCode, bool set, quint8 colorMask)
     //Notify that model changed
     emit dataChanged( index(keyIndex), index(keyIndex), {QML_KEY_COLOR} );
 
-    if( mDelimiter < 0 ) {
-      mDelimiter = keyCode;
-      emit delimiterChanged();
-      }
+    if( mDelimiter < 0 )
+      setDelimiter( keyCode );
     }
   }
 
@@ -151,6 +174,9 @@ void QmlKeyboard::indicate(quint8 keyCode, bool set, quint8 colorMask)
 
 void QmlKeyboard::build(int count)
   {
+  if( mSettings )
+    mSettings->setInt( QStringLiteral("keyboard keys"), count );
+
   beginResetModel();
   mKeyList.clear();
   mKeyMap.clear();

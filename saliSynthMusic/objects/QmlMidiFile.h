@@ -43,6 +43,7 @@ class QmlMidiFile : public QObject
   {
     Q_OBJECT
 
+  protected:
     quint16         mFormat;      //Midi file format (0 or 1)
     quint16         mTrackNumber;
     quint16         mDivision;
@@ -67,9 +68,10 @@ class QmlMidiFile : public QObject
     void seek( quint32 time );
 
   private:
-    bool    readMthd( IffReader &reader );
-    void    readMtrk(IffReader &reader);
-    quint32 variableLenValue( IffReader &reader );
+    bool         readMthd( IffReader &reader );
+    void         readMtrk( IffReader &reader );
+    virtual void readExtension( IffReader &reader );
+    quint32      variableLenValue( IffReader &reader );
 
   };
 

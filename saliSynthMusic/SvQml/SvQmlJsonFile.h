@@ -119,6 +119,7 @@ class SvQmlJsonFile : public QObject
     //Доступ через целое
     int          asInt( const QString name ) const { return asString(name).toInt(); }
     void         setInt( const QString name, int val ) { setString( name, QString::number(val ) ); }
+    int          asIntDefault( const QString name, int defVal );
 
     //Доступ через double
     double       asReal( const QString name ) const;

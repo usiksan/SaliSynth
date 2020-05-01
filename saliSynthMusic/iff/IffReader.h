@@ -44,6 +44,8 @@ class IffReader
 
     quint32     chunkFour() const { return IFF_FOUR(mChunkName[0],mChunkName[1],mChunkName[2],mChunkName[3]); }
 
+    quint32     chunkLenght() const { return mChunkLength; }
+
     IffReader   getChunk();
 
     bool        readChunk( const char *name, std::function<bool( IffReader &reader )> fun1 );

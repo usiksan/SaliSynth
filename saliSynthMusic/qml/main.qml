@@ -57,6 +57,7 @@ Window {
   Binding { target: synth;       property: "voiceList";     value: voiceList }
   Binding { target: synth;       property: "channelList";   value: channelList }
   Binding { target: qmlKeyboard; property: "keyboardWidth"; value: width }
+  Binding { target: qmlKeyboard; property: "settings";      value: settings }
 
 
   //Current mode

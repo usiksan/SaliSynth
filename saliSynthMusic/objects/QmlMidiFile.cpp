@@ -37,11 +37,12 @@ bool QmlMidiFile::read(QString fname)
   int trackIndex = 0;
   while( !reader.isEnd() ) {
     IffReader track = reader.getChunk();
-    qDebug() << track.name();
+    qDebug() << "midi reader chunk" << track.name();
     if( track.compareChunkName("MTrk") ) {
       readMtrk( track );
       trackIndex++;
       }
+    else readExtension( track );
     }
   return true;
   }
@@ -271,6 +272,19 @@ void QmlMidiFile::readMtrk(IffReader &reader)
       }
     }
   }
+
+
+
+
+void QmlMidiFile::readExtension(IffReader &reader)
+  {
+  Q_UNUSED(reader)
+  }
+
+
+
+
+
 
 
 

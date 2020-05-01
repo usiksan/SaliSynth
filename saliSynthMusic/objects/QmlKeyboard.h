@@ -24,6 +24,8 @@
 #ifndef QMLKEYBOARD_H
 #define QMLKEYBOARD_H
 
+#include "SvQml/SvQmlJsonFile.h"
+
 #include <QAbstractListModel>
 #include <QList>
 #include <QMap>
@@ -47,8 +49,8 @@ class QmlKeyboard : public QAbstractListModel
     Q_OBJECT
 
     QList<QmlKey>    mKeyList;
-    QMap<quint8,int> mKeyMap;
-    int              mDelimiter;
+    QMap<quint8,int> mKeyMap;        //! Key code association to index in the mKeyList
+    int              mDelimiter;     //! Key (key code) which is left of right part of keyboard
     int              mWhiteKeyWidth;
     int              mWhiteKeyCount;
     int              mKeyboardWidth;
@@ -56,12 +58,14 @@ class QmlKeyboard : public QAbstractListModel
     int              mRightMode;
     int              mLeftOffset;
     int              mRightOffset;
+    SvQmlJsonFile   *mSettings;
 
     Q_PROPERTY(int delimiter READ delimiter WRITE setDelimiter NOTIFY delimiterChanged)
     Q_PROPERTY(int whiteKeyWidth READ whiteKeyWidth NOTIFY whiteKeyWidthChanged)
     Q_PROPERTY(int keyboardWidth READ keyboardWidth WRITE setKeyboardWidth NOTIFY keyboardWidthChanged)
     Q_PROPERTY(int leftMode READ leftMode WRITE setLeftMode NOTIFY leftModeChanged)
     Q_PROPERTY(int rightMode READ rightMode WRITE setRightMode NOTIFY rightModeChanged)
+    Q_PROPERTY(SvQmlJsonFile* settings READ settings WRITE setSettings NOTIFY settingsChanged)
 
   public:
     QmlKeyboard( QObject *parent = nullptr );
@@ -77,11 +81,16 @@ class QmlKeyboard : public QAbstractListModel
     int     keyboardWidth() const { return mWhiteKeyWidth * mWhiteKeyCount; }
     void    setKeyboardWidth( int w );
 
-    int     leftMode() const { return mLeftMode; }
-    void    setLeftMode( int mode );
+    //Left part of keyboard mode
+    int            leftMode() const { return mLeftMode; }
+    void           setLeftMode( int mode );
 
-    int     rightMode() const { return mRightMode; }
-    void    setRightMode( int mode );
+    //Right part of keyboard mode
+    int            rightMode() const { return mRightMode; }
+    void           setRightMode( int mode );
+
+    SvQmlJsonFile *settings() const { return mSettings; }
+    void           setSettings( SvQmlJsonFile *settings );
 
     // QAbstractItemModel interface
   public:
@@ -97,6 +106,7 @@ class QmlKeyboard : public QAbstractListModel
     void keyboardWidthChanged();
     void leftModeChanged();
     void rightModeChanged();
+    void settingsChanged();
 
     void keyEvent( quint8 cmd, quint8 data0, quint8 data1 );
   public slots:

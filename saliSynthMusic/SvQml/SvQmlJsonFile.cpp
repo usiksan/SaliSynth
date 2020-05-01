@@ -310,6 +310,15 @@ void SvQmlJsonFile::setJsonArray(const QString name, QJsonArray ar)
 
 
 
+int SvQmlJsonFile::asIntDefault(const QString name, int defVal)
+  {
+  if( !mContens.contains(name) )
+    setInt( name, defVal );
+  return asInt( name );
+  }
+
+
+
 double SvQmlJsonFile::asReal(const QString name) const
   {
   //Заменить запятые на точки

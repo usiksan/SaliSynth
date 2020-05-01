@@ -11,6 +11,7 @@
 
 #include "QmlKeyboard.h"
 #include "QmlMidiFile.h"
+#include "QmlStyleFile.h"
 
 #include <QObject>
 #include <QThread>
@@ -20,11 +21,12 @@ class MidiProcessor: public QObject
   {
     Q_OBJECT
 
-    QmlKeyboard *mQmlKeyboard;   //! Keyboard representation on the screen
-    QmlMidiFile *mQmlMidiFile;   //! QML midi file representation
+    QmlKeyboard  *mQmlKeyboard;    //! Keyboard representation on the screen
+    QmlMidiFile  *mQmlMidiFile;    //! QML midi file representation
+    QmlStyleFile *mQmlStyleFile;   //! QML autoacompaniment style file representation
 
-    quint8       mLeftChord[5];   //! 0-3 chord, 4-pressure
-    int          mLeftChordTimer;
+    quint8        mLeftChord[5];   //! 0-3 chord, 4-pressure
+    int           mLeftChordTimer;
   public:
     MidiProcessor( QThread *th, QObject *parent = nullptr );
 
@@ -36,9 +38,11 @@ class MidiProcessor: public QObject
     //!
     void midiEmit( quint8 cmd, quint8 data0, quint8 data1 );
 
-    QmlKeyboard *qmlKeyboard() const { return mQmlKeyboard; }
+    QmlKeyboard  *qmlKeyboard() const { return mQmlKeyboard; }
 
-    QmlMidiFile *qmlMidiFile() const { return mQmlMidiFile; }
+    QmlMidiFile  *qmlMidiFile() const { return mQmlMidiFile; }
+
+    QmlStyleFile *qmlStyleFile() const { return mQmlStyleFile; }
   signals:
     void qmlKeyboardChanged();
 

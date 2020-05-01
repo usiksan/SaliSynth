@@ -60,12 +60,14 @@
               v19 Append mode selection for all keyboard parts
                   Fix error: right keyboard slave channel conversion
                   Append icons for keyboard mode selection
+              v20 Begin parsing style file
+              v21 Append save keyboard state to settings
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 19
+#define VERSION 21
 
 //Polyphony count
 #define POLYPHONY_COUNT 128
