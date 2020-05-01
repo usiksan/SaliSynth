@@ -36,8 +36,9 @@ Item {
     //Select voice for this part
     MouseArea {
       anchors.fill: parent
-      onClicked: voiceSelector.selectVoice( synth.channelVoiceId(1), function (voiceRow) {
+      onClicked: voiceSelector.selectVoice( true, qmlKeyboard.leftMode, synth.channelVoiceId(1), function (mode,voiceRow) {
         synth.channelSetVoiceRow( 1, voiceRow );
+        qmlKeyboard.leftMode = mode;
       } );
     }
 
@@ -62,8 +63,9 @@ Item {
     //Select voice for this part
     MouseArea {
       anchors.fill: parent
-      onClicked: voiceSelector.selectVoice( synth.channelVoiceId(0), function (voiceRow) {
+      onClicked: voiceSelector.selectVoice( false, qmlKeyboard.rightMode, synth.channelVoiceId(0), function ( mode, voiceRow ) {
         synth.channelSetVoiceRow( 0, voiceRow );
+        qmlKeyboard.rightMode = mode;
       } );
     }
   }
@@ -87,8 +89,9 @@ Item {
     //Select voice for this part
     MouseArea {
       anchors.fill: parent
-      onClicked: voiceSelector.selectVoice( synth.channelVoiceId(2), function (voiceRow) {
+      onClicked: voiceSelector.selectVoice( false, qmlKeyboard.rightMode, synth.channelVoiceId(2), function ( mode, voiceRow ) {
         synth.channelSetVoiceRow( 2, voiceRow );
+        qmlKeyboard.rightMode = mode;
       } );
     }
   }

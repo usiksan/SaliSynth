@@ -263,7 +263,7 @@ void SfSynth::voiceFontExtractAll(int voiceRow)
   QString soundFontName = mVoiceList->asString( voiceRow, QString("voiceSoundFontFile"));
   SoundFontPtr soundFontPtr = soundFont( soundFontName );
   if( !soundFontPtr.isNull() ) {
-    int presetCount = soundFontPtr->presetCount();
+    int presetCount = soundFontPtr->presetCount() - 1;
     for( int i = mVoiceList->asInt( voiceRow, "voiceSoundFontPreset" ) + 1; i < presetCount; i++ ) {
       //Append row
       voiceAdd();

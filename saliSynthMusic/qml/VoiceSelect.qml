@@ -19,6 +19,8 @@ Rectangle {
 
   visible: false
 
+  property bool keyboardLeft
+
   property int widthNpp: 50
   property int widthId: 70
   property int widthIcon: 64
@@ -27,9 +29,12 @@ Rectangle {
   property int widthFontName: 250
 
   property int currentRow : 0
+  property int currentMode : 0
   property var voiceApplyFunction : null
 
-  function selectVoice( voiceId, applyFunction ) {
+  function selectVoice( isLeft, mode, voiceId, applyFunction ) {
+    keyboardLeft = isLeft
+    currentMode = mode
     voiceSelector.visible = true
     currentRow = synth.voiceRowById(voiceId)
     voiceApplyFunction = applyFunction
@@ -195,6 +200,87 @@ Rectangle {
     height: 24
     spacing: 5
 
+    //Left keyboard mode buttons
+    //Selection acompaniment or simple voice mode
+    ToolButton {
+      visible: keyboardLeft
+      checkable: true
+      checked: currentMode & 2
+      icon.source: "qrc:/img/acompaniment.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Accompaniment mode")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: currentMode |= 2;
+    }
+    ToolButton {
+      visible: keyboardLeft
+      checkable: true
+      checked: (currentMode & 2) == 0
+      icon.source: "qrc:/img/voice.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Voice mode")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: currentMode &= ~2;
+    }
+
+    //Selection simple key or chord mode
+    ToolButton {
+      visible: keyboardLeft
+      checkable: true
+      checked: currentMode & 1
+      icon.source: "qrc:/img/chord.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Chord mode")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: currentMode |= 1;
+    }
+    ToolButton {
+      visible: keyboardLeft
+      checkable: true
+      checked: (currentMode & 1) == 0
+      icon.source: "qrc:/img/singleKey.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Simple key mode")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: currentMode &= ~1;
+    }
+
+
+    //Right keyboard modes
+    ToolButton {
+      visible: !keyboardLeft
+      checkable: true
+      checked: currentMode & 2
+      icon.source: "qrc:/img/doubleVoice.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Double voice mode")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: currentMode |= 2;
+    }
+    ToolButton {
+      visible: !keyboardLeft
+      checkable: true
+      checked: (currentMode & 2) == 0
+      icon.source: "qrc:/img/voice.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Single voice mode")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: currentMode &= ~2;
+    }
+
+
     //Apply current selected voice
     ToolButton {
       icon.source: "qrc:/img/yes.png"
@@ -205,7 +291,7 @@ Rectangle {
 
       onClicked: {
         if( voiceApplyFunction !== null )
-          voiceApplyFunction( currentRow );
+          voiceApplyFunction( currentMode, currentRow );
         voiceSelector.visible = false
       }
     }

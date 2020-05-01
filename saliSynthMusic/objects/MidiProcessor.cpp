@@ -103,10 +103,9 @@ void MidiProcessor::midiKeyboard(quint8 cmd, quint8 data0, quint8 data1)
     if( data0 < mQmlKeyboard->delimiterCode() ) keyboardLeft( cmd, data0, data1 );
     else                                        keyboardRight( cmd, data0, data1 );
     emit keyIndicate( data0, data1 != 0, 2 );
-    //mQmlMidiFile->seek(0);
     }
-  else
-    emit midiSignal( cmd, data0, data1 );
+//  else
+//    emit midiSignal( cmd, data0, data1 );
   }
 
 
@@ -141,7 +140,7 @@ void MidiProcessor::keyboardLeft(quint8 cmd, quint8 data0, quint8 data1)
     keyboardLeftSimpleChordGenerator( cmd, data0, data1 );
   else
     //Through play
-    keyboardLeftOutput( cmd, data0, data1 );
+    keyboardLeftOutput( (cmd & 0xf0) | 1, data0, data1 );
 //  quint8 offset = data0 - mQmlKeyboard->leftCode();
   //  emit midiSignal( cmd + 1, offset + 60, data1 );
   }
@@ -226,4 +225,7 @@ void MidiProcessor::keyboardLeftChordDetector()
 void MidiProcessor::keyboardRight(quint8 cmd, quint8 data0, quint8 data1)
   {
   emit midiSignal( cmd, data0, data1 );
+  if( mQmlKeyboard->rightMode() & 2 )
+    //Duplicate voice on second channel
+    emit midiSignal( (cmd & 0xf0) | 2, data0, data1 );
   }

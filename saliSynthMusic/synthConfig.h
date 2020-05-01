@@ -57,12 +57,15 @@
               v18 Append selection voices for all keyboard parts
                   Append packet preset appendion
                   Fix error: deleting voice row
+              v19 Append mode selection for all keyboard parts
+                  Fix error: right keyboard slave channel conversion
+                  Append icons for keyboard mode selection
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 18
+#define VERSION 19
 
 //Polyphony count
 #define POLYPHONY_COUNT 128
