@@ -50,10 +50,6 @@ Window {
 
   //Channels associations
   SvQmlJsonModel { id: channelList; file: settings; jsonName: "channelList"; fields: [
-      "channelVoiceName",
-      "channelBankMsb",
-      "channelBankLsb",
-      "channelProgram",
       "channelVoiceId"
     ] }
 

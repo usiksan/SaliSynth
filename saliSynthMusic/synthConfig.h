@@ -54,12 +54,15 @@
                   Append some icons
    01.05.2020 v17 Fix error: not edited voice name
                   Append location font selector font to current font
+              v18 Append selection voices for all keyboard parts
+                  Append packet preset appendion
+                  Fix error: deleting voice row
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 17
+#define VERSION 18
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

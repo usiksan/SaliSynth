@@ -11,9 +11,11 @@
 import QtQuick 2.8
 import QtQuick.Controls 2.5
 
-Item {
+Rectangle {
   id: voiceSelector
-  anchors.fill: parent
+  border.width: 0
+  color: "white"
+//  anchors.fill: parent
 
   visible: false
 
@@ -31,6 +33,11 @@ Item {
     voiceSelector.visible = true
     currentRow = synth.voiceRowById(voiceId)
     voiceApplyFunction = applyFunction
+  }
+
+  //Exclude press on z-bottom elements
+  MouseArea {
+    anchors.fill: parent
   }
 
   //Title

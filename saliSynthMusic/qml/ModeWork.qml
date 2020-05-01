@@ -28,6 +28,7 @@ Item {
 
 
   PianoKeyboard {
+    id: pianoKeyboard
     anchors.left: parent.left
     anchors.leftMargin: 3
     anchors.right: parent.right
@@ -36,5 +37,7 @@ Item {
 
   VoiceSelect {
     id: voiceSelector
+    anchors.fill: parent
+    anchors.bottomMargin: pianoKeyboard.height
   }
 }

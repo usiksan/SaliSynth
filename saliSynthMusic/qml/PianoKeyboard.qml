@@ -26,22 +26,21 @@ Item {
     border.width: 0
     color: "yellow"
 
-    //Select voice for this part
-    ToolButton {
-      anchors.left: parent.left
-      anchors.top: parent.top
-      anchors.topMargin: 5
-      width: 24
-      height: 15
-      padding: 0
-      icon.source: "qrc:/img/select.png"
-      icon.color: "transparent"
-      ToolTip.text: qsTr("Select voice for left part")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
-
-      onClicked: voiceSelector.selectVoice( channelList.asInt( 1, "channelVoiceId" ), null )
+    //Left keyboard mode
+    SvText {
+      anchors.centerIn: parent
+      text: (qmlKeyboard.leftMode & 1 ? qsTr("[Chord mode]") : qsTr("[Key mode]") ) +
+            (qmlKeyboard.leftMode & 2 ? qsTr("Accomp style:\n")  : qsTr("Voice:\n") + synth.leftVoice)
     }
+
+    //Select voice for this part
+    MouseArea {
+      anchors.fill: parent
+      onClicked: voiceSelector.selectVoice( synth.channelVoiceId(1), function (voiceRow) {
+        synth.channelSetVoiceRow( 1, voiceRow );
+      } );
+    }
+
   }
 
   Rectangle {
@@ -53,18 +52,19 @@ Item {
     border.width: 0
     color: "dark green"
 
+    //Right main keyboard mode
     SvText {
-      id: rightSideMainText
       anchors.centerIn: parent
-      text: synth.channelPresetName(0)
+      text: (qmlKeyboard.rightMode & 1 ? qsTr("[Chord mode]") : qsTr("[Key mode]") ) + synth.rightMainVoice
       color: "white"
+    }
 
-      Connections {
-        target: synth
-        onChannelPresetChanged: {
-          if( channel === 0 ) rightSideMainText.text = presetName;
-        }
-      }
+    //Select voice for this part
+    MouseArea {
+      anchors.fill: parent
+      onClicked: voiceSelector.selectVoice( synth.channelVoiceId(0), function (voiceRow) {
+        synth.channelSetVoiceRow( 0, voiceRow );
+      } );
     }
   }
 
@@ -76,6 +76,21 @@ Item {
     height: rightSideMain.height
     border.width: 0
     color: "dark blue"
+
+    //Right slave keyboard mode
+    SvText {
+      anchors.centerIn: parent
+      text: (qmlKeyboard.rightMode & 2 ? synth.rightSlaveVoice : "---------" )
+      color: "white"
+    }
+
+    //Select voice for this part
+    MouseArea {
+      anchors.fill: parent
+      onClicked: voiceSelector.selectVoice( synth.channelVoiceId(2), function (voiceRow) {
+        synth.channelSetVoiceRow( 2, voiceRow );
+      } );
+    }
   }
 
   Image {

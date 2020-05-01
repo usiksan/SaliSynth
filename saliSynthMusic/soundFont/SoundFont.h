@@ -183,6 +183,9 @@ class SoundFont
     //Preset name list
     QStringList presetList() const;
 
+    //Preset count in sound font
+    int         presetCount() const { return mPresets.count(); }
+
     //Preset name by index
     QString     presetName( int preset ) const;
 

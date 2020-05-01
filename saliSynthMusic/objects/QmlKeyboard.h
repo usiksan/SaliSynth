@@ -54,6 +54,8 @@ class QmlKeyboard : public QAbstractListModel
     int              mKeyboardWidth;
     int              mLeftMode;
     int              mRightMode;
+    int              mLeftOffset;
+    int              mRightOffset;
 
     Q_PROPERTY(int delimiter READ delimiter WRITE setDelimiter NOTIFY delimiterChanged)
     Q_PROPERTY(int whiteKeyWidth READ whiteKeyWidth NOTIFY whiteKeyWidthChanged)
@@ -64,22 +66,22 @@ class QmlKeyboard : public QAbstractListModel
   public:
     QmlKeyboard( QObject *parent = nullptr );
 
-    qint8 leftCode() const { return mKeyList.at(0).mCode; }
+    qint8   leftCode() const { return mKeyList.at(0).mCode; }
 
-    int  delimiterCode() const { return mDelimiter; }
-    int  delimiter() const { return mKeyMap.contains(mDelimiter) ? mKeyList.at(mKeyMap.value(mDelimiter)).mIndex : 0; }
-    void setDelimiter( int delim );
+    int     delimiterCode() const { return mDelimiter; }
+    int     delimiter() const { return mKeyMap.contains(mDelimiter) ? mKeyList.at(mKeyMap.value(mDelimiter)).mIndex : 0; }
+    void    setDelimiter( int delim );
 
-    int  whiteKeyWidth() const { return mWhiteKeyWidth; }
+    int     whiteKeyWidth() const { return mWhiteKeyWidth; }
 
-    int  keyboardWidth() const { return mWhiteKeyWidth * mWhiteKeyCount; }
-    void setKeyboardWidth( int w );
+    int     keyboardWidth() const { return mWhiteKeyWidth * mWhiteKeyCount; }
+    void    setKeyboardWidth( int w );
 
-    int  leftMode() const { return mLeftMode; }
-    void setLeftMode( int mode );
+    int     leftMode() const { return mLeftMode; }
+    void    setLeftMode( int mode );
 
-    int  rightMode() const { return mRightMode; }
-    void setRightMode( int mode );
+    int     rightMode() const { return mRightMode; }
+    void    setRightMode( int mode );
 
     // QAbstractItemModel interface
   public:

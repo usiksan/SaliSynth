@@ -248,6 +248,17 @@ SvTabViewItem {
       onClicked: synth.voiceDuplicate(currentRow);
     }
 
+    //Continuously extract all presets
+    ToolButton {
+      icon.source: "qrc:/img/extract.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Continuously extract all presets")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: synth.voiceFontExtractAll(currentRow);
+    }
+
     //Delete current record
     ToolButton {
       icon.source: "qrc:/img/delete_red.png"
@@ -256,7 +267,7 @@ SvTabViewItem {
       ToolTip.visible: hovered
       ToolTip.delay: 300
 
-      onClicked: voiceMap.removeRecord( currentRow );
+      onClicked: voiceList.removeRecord( currentRow );
     }
 
   }

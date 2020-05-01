@@ -26,6 +26,12 @@ SfSynth::SfSynth(QObject *parent) :
 void SfSynth::setVoiceList(SvQmlJsonModel *md)
   {
   mVoiceList = md;
+
+  if( mChannelList ) {
+    //On base current channel list restores channels
+    for( int i = 0; i < 16; i++ )
+      channelSetVoiceId( i, mChannelList->asInt( i, QString("channelVoiceId") ) );
+    }
   }
 
 
@@ -38,19 +44,14 @@ void SfSynth::setChannelList(SvQmlJsonModel *md)
     //Create channel list
     for( int i = 0; i < 16; i++ ) {
       mChannelList->addRecord();
-      mChannelList->setInt( i, QString("channelBankMsb"), 0 );
-      mChannelList->setInt( i, QString("channelBankLsb"), 0 );
-      mChannelList->setInt( i, QString("channelProgram"), i );
+      mChannelList->setInt( i, QString("channelVoiceId"), i );
       }
     }
 
   if( mVoiceList ) {
-    for( int i = 0; i < 16; i++ ) {
-      int bankMsb = mChannelList->asInt( i, QString("channelBankMsb") );
-      int bankLsb = mChannelList->asInt( i, QString("channelBankLsb") );
-      int program = mChannelList->asInt( i, QString("channelProgram") );
-      channelSetVoiceId( i, voiceId( bankMsb, bankLsb, program ) );
-      }
+    //On base current channel list restores channels
+    for( int i = 0; i < 16; i++ )
+      channelSetVoiceId( i, mChannelList->asInt( i, QString("channelVoiceId") ) );
     }
   }
 
@@ -179,23 +180,8 @@ void SfSynth::applySoundFont(int voiceRow, const QString soundFont, int preset)
 void SfSynth::applyPreset(int voiceRow, int preset)
   {
   SoundFontPtr soundFontPtr = soundFont( mVoiceList->asString( voiceRow, QString("voiceSoundFontFile")) );
-  if( !soundFontPtr.isNull() ) {
-    //Assign textual name
-    mVoiceList->setString( voiceRow, QString("voiceSoundFontPresetName"), soundFontPtr->presetName(preset) );
-    //..and preset index
-    mVoiceList->setInt( voiceRow, QString("voiceSoundFontPreset"), preset );
-    //By default visual voice name is a same as preset if it previously not assigned
-    if( mVoiceList->asString( voiceRow, QString("voiceName")).isEmpty() )
-      mVoiceList->setString( voiceRow, QString("voiceName"), soundFontPtr->presetName(preset) );
-
-    //Because font and/or preset changed we must rebuild all appropriate presets
-    int id = mVoiceList->asInt( voiceRow, QString("voiceId") );
-    if( mPresetCache.contains(id) )
-      mPresetCache.object(id)->build( id, soundFontPtr, preset );
-    for( int i = 0; i < 16; i++ )
-      if( mChannels[i].id() == id )
-        channelSetVoiceRow( i, voiceRow );
-    }
+  if( !soundFontPtr.isNull() )
+    applyPresetFromFont( voiceRow, soundFontPtr, preset );
   }
 
 
@@ -217,19 +203,20 @@ void SfSynth::channelSetVoiceRow(int channel, int voiceRow)
     if( !mPresetCache.contains(voiceId) ) {
       //No voice in cache, create
       SfSynthPreset *presetPtr = new SfSynthPreset();
-      presetPtr->build( voiceId, soundFont(mVoiceList->asString( voiceRow, QString("voiceSoundFontFile"))), mVoiceList->asInt( voiceRow, QString("voiceSoundFontPreset")) );
+      presetPtr->build( voiceId, mVoiceList->asString( voiceRow, QString("voiceName")),
+                        soundFont(mVoiceList->asString( voiceRow, QString("voiceSoundFontFile"))),
+                        mVoiceList->asInt( voiceRow, QString("voiceSoundFontPreset")) );
       //... and append to the cache
       mPresetCache.insert( voiceId, presetPtr, 5 );
       }
 
     //At this moment preset exactly in the cache
     mChannels[channel].clone( mPresetCache.object(voiceId) );
+    if( channel == 0 ) emit rightMainVoiceChanged();
+    else if( channel == 1 ) emit leftVoiceChanged();
+    else if( channel == 2 ) emit rightSlaveVoiceChanged();
 
     //Update visual channel list
-    mChannelList->setString( channel, QString("channelVoiceName"), mChannels[channel].name() );
-    mChannelList->setInt( channel, QString("channelBankMsb"), (voiceId >> 14) & 0x7f );
-    mChannelList->setInt( channel, QString("channelBankLsb"), (voiceId >> 7) & 0x7f );
-    mChannelList->setInt( channel, QString("channelProgram"), (voiceId) & 0x7f );
     mChannelList->setInt( channel, QString("channelVoiceId"), voiceId );
     }
   }
@@ -268,6 +255,40 @@ void SfSynth::voiceDuplicate(int voiceRow)
 
 
 
+
+void SfSynth::voiceFontExtractAll(int voiceRow)
+  {
+  int voiceId = mVoiceList->asInt( voiceRow, "voiceId" );
+  if( voiceId < 0 ) return;
+  QString soundFontName = mVoiceList->asString( voiceRow, QString("voiceSoundFontFile"));
+  SoundFontPtr soundFontPtr = soundFont( soundFontName );
+  if( !soundFontPtr.isNull() ) {
+    int presetCount = soundFontPtr->presetCount();
+    for( int i = mVoiceList->asInt( voiceRow, "voiceSoundFontPreset" ) + 1; i < presetCount; i++ ) {
+      //Append row
+      voiceAdd();
+      //Take next id and test if voice not exist
+      for( voiceId++; voiceRowById(voiceId) >= 0; voiceId++ );
+      //No available slots
+      if( voiceId >= 127 * 127 * 127 ) return;
+      int row = mVoiceList->count() - 1;
+      //Fill info
+      mVoiceList->setString( row, QString("voiceSoundFontFile"), soundFontName );
+
+      mVoiceList->setInt( row, "voiceBankMsb", (voiceId >> 14) & 0x7f );
+      mVoiceList->setInt( row, "voiceBankLsb", (voiceId >> 7) & 0x7f );
+      mVoiceList->setInt( row, "voiceProgram", (voiceId) & 0x7f );
+      mVoiceList->setInt( row, "voiceId", voiceId );
+
+      //At end we apply preset
+      applyPresetFromFont( row, soundFontPtr, i );
+      }
+    }
+
+  }
+
+
+
 bool SfSynth::voiceSettings(int voiceRow, int bankMsb, int bankLsb, int prog)
   {
   if( (bankMsb & 0xffffff80) == 0 && (bankLsb & 0xffffff80) == 0 && (prog & 0xffffff80) == 0  ) {
@@ -291,6 +312,27 @@ bool SfSynth::voiceSettings(int voiceRow, int bankMsb, int bankLsb, int prog)
     mVoiceList->setInt( voiceRow, "voiceId", -1 );
     }
   return true;
+  }
+
+
+
+void SfSynth::applyPresetFromFont(int voiceRow, SoundFontPtr soundFontPtr, int preset)
+  {
+  //Assign textual name
+  mVoiceList->setString( voiceRow, QString("voiceSoundFontPresetName"), soundFontPtr->presetName(preset) );
+  //..and preset index
+  mVoiceList->setInt( voiceRow, QString("voiceSoundFontPreset"), preset );
+  //By default visual voice name is a same as preset if it previously not assigned
+  if( mVoiceList->asString( voiceRow, QString("voiceName")).isEmpty() )
+    mVoiceList->setString( voiceRow, QString("voiceName"), soundFontPtr->presetName(preset) );
+
+  //Because font and/or preset changed we must rebuild all appropriate presets
+  int id = mVoiceList->asInt( voiceRow, QString("voiceId") );
+  if( mPresetCache.contains(id) )
+    mPresetCache.object(id)->build( id, mVoiceList->asString( voiceRow, QString("voiceName")), soundFontPtr, preset );
+  for( int i = 0; i < 16; i++ )
+    if( mChannels[i].voiceId() == id )
+      channelSetVoiceRow( i, voiceRow );
   }
 
 

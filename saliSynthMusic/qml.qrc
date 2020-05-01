@@ -41,7 +41,6 @@
         <file>qml/SvTabViewItem.qml</file>
         <file>qml/SvText.qml</file>
         <file>qml/SvToolTip.qml</file>
-        <file>img/backMain.png</file>
         <file>qml/ModeIntro.qml</file>
         <file>qml/ModeWork.qml</file>
         <file>qml/ModeSetup.qml</file>
@@ -86,5 +85,6 @@
         <file>img/settings.png</file>
         <file>img/close.png</file>
         <file>img/play.png</file>
+        <file>img/extract.png</file>
     </qresource>
 </RCC>

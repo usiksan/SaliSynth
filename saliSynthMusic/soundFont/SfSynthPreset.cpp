@@ -77,15 +77,15 @@ inline int delay( quint16 time ) {
 
 
 
-void SfSynthPreset::build(int id, SoundFontPtr soundFont, int preset)
+void SfSynthPreset::build( int voiceId, const QString voiceName, SoundFontPtr soundFont, int preset )
   {
   //Stop all notes
   for( int i = 0; i < 128; i++ )
     mNotes[i].clear();
 
-  mId = id;
+  mVoiceId = voiceId;
 
-  mName = soundFont->presetName(preset);
+  mVoiceName = voiceName;
 
   //Build all notes
   mSoundFontPtr = soundFont;
@@ -125,13 +125,13 @@ void SfSynthPreset::build(int id, SoundFontPtr soundFont, int preset)
 
 void SfSynthPreset::clone(const SfSynthPreset *src)
   {
-  mName = src->mName;
+  mVoiceName = src->mVoiceName;
   for( int i = 0; i < 128; i++ ) {
     mNotes[i].clear();
     mNotes[i] = src->mNotes[i];
     }
   mSoundFontPtr = src->mSoundFontPtr;
-  mId = src->mId;
+  mVoiceId = src->mVoiceId;
   }
 
 
