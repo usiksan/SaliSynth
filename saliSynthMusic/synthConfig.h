@@ -69,12 +69,14 @@
                   Append selection voice for track
                   Append changes track title and save it to the config file
               v24 Append on-off possibility for sound of the track
+              v25 Remove previously MidiTrack structures and replace them by QmlMidiTrack structure that
+                  support visual representation
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 24
+#define VERSION 25
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

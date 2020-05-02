@@ -22,6 +22,14 @@ struct QmlMidiEvent {
     qint16 mType;
     quint8 mData0;
     quint8 mData1;
+
+    bool isNote() const { return mType == 0x10; }
+
+    bool isMidi() const { return (mType & 0xff00) == 0; }
+
+    bool isStartInside( int firstTime, int lastTime ) const { return firstTime <= mTime && mTime < lastTime; }
+
+    bool isStopInside( int lastTime ) const { return (mTime + mLenght) < lastTime; }
   };
 
 
@@ -40,10 +48,9 @@ class QmlMidiTrack : public QAbstractListModel
     QmlMidiEventList mMidiList;
     QStringList      mTextList;
     QMap<quint8,int> mActiveNotesMap;
+    QList<int>       mActiveNoteList;
+    qint32           mEventIndex;
     quint8           mChannel;
-
-  public:
-    int              mModelRow;
 
     Q_PROPERTY(QString trackName READ trackName WRITE setTrackName NOTIFY trackNameChanged)
     Q_PROPERTY(QString instrumentName READ instrumentName WRITE setInstrumentName NOTIFY instrumentNameChanged)
@@ -73,9 +80,18 @@ class QmlMidiTrack : public QAbstractListModel
     void    setChannel( quint8 ch ) { mChannel = ch; }
 
     bool    isActive() const { return mMidiList.count() != 0; }
+
+    void    seek( int time );
+
+    void    stop();
+
+    void    tick( int prevTime, int nextTime, bool soundOn );
+
   signals:
     void trackNameChanged();
     void instrumentNameChanged();
+
+    void midiEvent( quint8 cmd, quint8 data0, quint8 data1 );
 
     // QAbstractItemModel interface
   public:

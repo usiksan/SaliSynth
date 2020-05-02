@@ -51,6 +51,17 @@ Item {
       onClicked: qmlMidiFile.configWrite()
     }
 
+    //Play music
+    ToolButton {
+      icon.source: "qrc:/img/play.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Midi file play")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: qmlMidiFile.play()
+    }
+
   }
 
   //Work area

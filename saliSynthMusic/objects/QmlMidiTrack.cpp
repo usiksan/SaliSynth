@@ -119,6 +119,63 @@ void QmlMidiTrack::setInstrumentName(const QString nm)
   }
 
 
+
+void QmlMidiTrack::seek(int time)
+  {
+  //Find event index greater or equal time
+  for( mEventIndex = 0; mEventIndex < mMidiList.count(); mEventIndex++ )
+    if( mMidiList.at(mEventIndex).mTime >= time ) break;
+  }
+
+
+
+
+void QmlMidiTrack::stop()
+  {
+  //We stops all active notes
+  for( int i = mActiveNoteList.count() - 1; i >= 0; i-- )
+    //Stop note
+    emit midiEvent( 0x10 | mChannel, mMidiList.at( mActiveNoteList.at(i) ).mData0, 0 );
+  //... and clear active note list
+  mActiveNoteList.clear();
+  }
+
+
+
+void QmlMidiTrack::tick(int prevTime, int nextTime, bool soundOn)
+  {
+  //Test open notes
+  for( int i = mActiveNoteList.count() - 1; i >= 0; i-- ) {
+    int eventIndex = mActiveNoteList.at(i);
+    if( mMidiList.at( eventIndex ).isStopInside(nextTime) ) {
+      //This note is ended
+      emit midiEvent( 0x10 | mChannel, mMidiList.at( eventIndex ).mData0, 0 );
+      //Remove note from active list
+      mActiveNoteList.removeAt(i);
+      }
+    }
+
+  //Test next events
+  while( mEventIndex < mMidiList.count() && mMidiList.at(mEventIndex).isStartInside( prevTime, nextTime ) ) {
+    //This event may be executed
+    if( soundOn ) {
+      if( mMidiList.at(mEventIndex).isNote() ) {
+        //This is note. Start it
+        emit midiEvent( 0x10 | mChannel, mMidiList.at( mEventIndex ).mData0, mMidiList.at( mEventIndex ).mData1 );
+        //... and append note to the active note list
+        mActiveNoteList.append(mEventIndex);
+        }
+      else {
+        //Simple send command
+        if( mMidiList.at(mEventIndex).isMidi() )
+          emit midiEvent( mMidiList.at( mEventIndex ).mType | mChannel, mMidiList.at( mEventIndex ).mData0, mMidiList.at( mEventIndex ).mData1 );
+        }
+      }
+    mEventIndex++;
+    }
+  }
+
+
 int QmlMidiTrack::rowCount(const QModelIndex &parent) const
   {
   Q_UNUSED(parent)

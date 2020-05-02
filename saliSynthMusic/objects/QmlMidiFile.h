@@ -19,28 +19,6 @@
 #include <QTimer>
 
 
-struct MidiEvent
-  {
-    qint32  mTime = 0;
-    quint8  mType = 0;
-    quint8  mData0 = 0;
-    quint8  mData1 = 0;
-  };
-
-using MidiEventList = QList<MidiEvent>;
-
-
-struct MidiTrack
-  {
-    QString       mName;
-    MidiEventList mEvents;
-    qint32        mEventIndex;
-  };
-
-
-using MidiTrackVector = QVector<MidiTrack>;
-
-
 class QmlMidiFile : public QObject
   {
     Q_OBJECT
@@ -50,8 +28,6 @@ class QmlMidiFile : public QObject
     quint16         mTrackNumber;
     quint16         mDivision;
     quint32         mTempo;
-
-    MidiTrackVector mTracks;      //Tracks in midi file
 
     QmlMidiTrack    mQmlTrack[16];  //Track in midi file with visual representation
     SvQmlJsonModel  mQmlTrackModel; //! Model represents visual info about midi file tracks
@@ -73,16 +49,18 @@ class QmlMidiFile : public QObject
   signals:
     void midiEvent( quint8 cmd, quint8 data0, quint8 data1 );
 
+    void voiceSetup( quint8 channel, int voiceId );
+
   public slots:
     void tick();
 
     void seek( quint32 time );
 
+    void play();
+
     bool read( QString fname );
 
     void configWrite();
-
-    void setVoice( int trackIndex, int voiceId );
 
   private:
     bool         readMthd( IffReader &reader );

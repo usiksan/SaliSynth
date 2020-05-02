@@ -40,7 +40,6 @@ Item {
           onClicked: voiceSelector.selectVoiceEx( trackId, function ( mode, row ) {
             trackId = voiceList.asInt( row, "voiceId" );
             trackName = voiceList.asString( row, "voiceName")
-            qmlMidiFile.setVoice( trackIndex, trackId );
           } );
         }
 

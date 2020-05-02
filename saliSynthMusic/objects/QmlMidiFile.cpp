@@ -31,6 +31,9 @@ QmlMidiFile::QmlMidiFile(QObject *parent) :
   mQmlTrackModel.setFields( { TRACK_ID, TRACK_NAME, TRACK_INDEX, TRACK_ON } );
   connect( &mQmlTrackModel, &SvQmlJsonModel::afterModelChanged, this, [this] () { mConfigDirty = true; } );
 
+  for( int i = 0; i < 16; i++ )
+    connect( mQmlTrack + i, &QmlMidiTrack::midiEvent, this, &QmlMidiFile::midiEvent );
+
 //  mQmlTrackModel.clear();
 //  mQmlTrackModel.addRecord();
 //  mQmlTrackModel.setInt( 0, TRACK_ID, 0 );
@@ -46,10 +49,6 @@ QmlMidiFile::QmlMidiFile(QObject *parent) :
 
 bool QmlMidiFile::read(QString fname)
   {
-  qDebug() << "midi read" << fname;
-//  if( mConfigDirty )
-//    configWrite();
-
   IffReader reader(fname, false);
   if( !reader.isValid() )
     return false;
@@ -86,14 +85,13 @@ bool QmlMidiFile::read(QString fname)
 
       //Setup visual representation for track info
       int r = mQmlTrackModel.count();
-      mQmlTrack[i].mModelRow = r;
-
       mQmlTrackModel.addRecord();
       mQmlTrackModel.setInt( r, TRACK_ID, mQmlTrack[i].voiceId() );
       mQmlTrackModel.setString( r, TRACK_NAME, mQmlTrack[i].trackName() );
       mQmlTrackModel.setInt( r, TRACK_INDEX, i );
       mQmlTrackModel.setInt( r, TRACK_ON, 1 );
       }
+    if( channel >= 16 ) break;
     }
 
   //Read config file if present
@@ -148,31 +146,15 @@ void QmlMidiFile::configWrite()
 
 
 
-void QmlMidiFile::setVoice(int trackIndex, int voiceId)
-  {
-  trackIndex &= 0xf;
-  mQmlTrack[trackIndex].setVoiceId( voiceId );
-  mQmlTrackModel.setInt( mQmlTrack[trackIndex].mModelRow, TRACK_ID, voiceId );
-  }
-
-
 
 void QmlMidiFile::tick()
   {
   if( mTickCount >= 0 ) {
     int nextTime = mTickCount + 1;
-    for( auto &track : mTracks ) {
-      if( track.mEventIndex < track.mEvents.count() ) {
-        MidiEvent ev = track.mEvents.at( track.mEventIndex );
-        while( mTickCount <= ev.mTime && ev.mTime < nextTime ) {
-          //Event at this moment
-          emit midiEvent( ev.mType, ev.mData0, ev.mData1 );
-          track.mEventIndex++;
-          if( track.mEventIndex >= track.mEvents.count() )
-            break;
-          ev = track.mEvents.at( track.mEventIndex );
-          }
-        }
+    for( int i = 0; i < mQmlTrackModel.count(); i++ ) {
+      int trackIndex = mQmlTrackModel.asInt( i, TRACK_INDEX );
+      bool soundOn = mQmlTrackModel.asInt( i, TRACK_ON );
+      mQmlTrack[trackIndex].tick( mTickCount, nextTime, soundOn );
       }
     mTickCount = nextTime;
     }
@@ -183,12 +165,24 @@ void QmlMidiFile::tick()
 void QmlMidiFile::seek(quint32 time)
   {
   mTickCount = time;
-  for( auto &track : mTracks )
-    track.mEventIndex = 0;
+  for( int i = 0; i < 16; i++ )
+    mQmlTrack[i].seek( time );
   }
 
 
 
+
+
+void QmlMidiFile::play()
+  {
+  //Setup all voices
+  for( int i = 0; i < mQmlTrackModel.count(); i++ ) {
+    int trackIndex = mQmlTrackModel.asInt( i, TRACK_INDEX );
+    emit voiceSetup( mQmlTrack[trackIndex].channel(), mQmlTrackModel.asInt( i, TRACK_ID ) );
+    }
+
+  seek(0);
+  }
 
 
 
@@ -200,11 +194,6 @@ bool QmlMidiFile::readMthd(IffReader &reader)
   mFormat      = reader.getUint16be();
   mTrackNumber = reader.getUint16be();
   mDivision    = reader.getUint16be();
-
-  //Build track vector
-  mTracks.clear();
-  //Single track in midi with some channels
-  mTracks.resize(16);
 
   qDebug() << mFormat << mTrackNumber << mDivision;
   return true;
@@ -348,44 +337,40 @@ void QmlMidiFile::readMtrk(IffReader &reader)
       }
     else {
       //Midi-event
-      MidiEvent event;
-      event.mTime = time;
+      quint8 data0, data1;
       if( statusByte & 0x80 ) {
         //Real status byte
         groupStatusByte = statusByte;
-        event.mType = statusByte;
 
         if( (statusByte & 0xf0) == 0xc0 || (statusByte & 0xf0) == 0xd0 ) {
           //Programm change or Channel pressure
-          event.mData0 = reader.getUint8();
-          event.mData1 = 0;
+          data0 = reader.getUint8();
+          data1 = 0;
           //qDebug("midi-1 %x %d", statusByte, event.mData0 );
           }
         else {
-          event.mData0 = reader.getUint8();
-          event.mData1 = reader.getUint8();
+          data0 = reader.getUint8();
+          data1 = reader.getUint8();
           //qDebug("midi-2 %x %d %d", statusByte, event.mData0, event.mData1 );
           }
         }
       else {
         //Group data
-        event.mType = groupStatusByte;
         if( (groupStatusByte & 0xf0) == 0xc0 || (groupStatusByte & 0xf0) == 0xd0 ) {
           //Programm change or Channel pressure
-          event.mData0 = statusByte;
-          event.mData1 = 0;
+          data0 = statusByte;
+          data1 = 0;
           //qDebug("group midi-1 %x %d", event.mType, event.mData0 );
           }
         else {
-          event.mData0 = statusByte;
-          event.mData1 = reader.getUint8();
+          data0 = statusByte;
+          data1 = reader.getUint8();
           //qDebug("midi-2 %x %d %d", event.mType, event.mData0, event.mData1 );
           }
         }
 
       channelIndex = groupStatusByte & 0xf;
-      mTracks[channelIndex].mEvents.append( event );
-      mQmlTrack[channelIndex].addMidiEvent( event.mTime, event.mType, event.mData0, event.mData1 );
+      mQmlTrack[channelIndex].addMidiEvent( time, groupStatusByte, data0, data1 );
       }
     }
 
