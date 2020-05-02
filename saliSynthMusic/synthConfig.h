@@ -68,12 +68,13 @@
                   so need not to save midi while
                   Append selection voice for track
                   Append changes track title and save it to the config file
+              v24 Append on-off possibility for sound of the track
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 23
+#define VERSION 24
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

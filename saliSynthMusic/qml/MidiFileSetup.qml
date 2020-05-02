@@ -44,6 +44,29 @@ Item {
           } );
         }
 
+        //On-off track sound
+        Button {
+          width: 28
+          height: 28
+          anchors.top: parent.top
+          anchors.topMargin: 3
+          anchors.right: parent.right
+          anchors.rightMargin: 3
+          padding: 0
+          contentItem: Image {
+            width: 24
+            height: 24
+            source: trackOn != 0 ? "qrc:/img/sound.png" : "qrc:/img/soundOff.png"
+            fillMode: Image.PreserveAspectFit
+          }
+          ToolTip.text: qsTr("On-off sound track. Press to switch")
+          ToolTip.visible: hovered
+          ToolTip.delay: 300
+
+          onClicked: trackOn = trackOn != 0 ? 0 : 1;
+        }
+
+
 
         //Track title
         SvFieldText {

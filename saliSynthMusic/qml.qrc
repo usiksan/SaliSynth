@@ -101,5 +101,7 @@
         <file>img/iconFile.png</file>
         <file>qml/MidiFileSetup.qml</file>
         <file>img/fileSave.png</file>
+        <file>img/sound.png</file>
+        <file>img/soundOff.png</file>
     </qresource>
 </RCC>
