@@ -140,6 +140,14 @@ int main(int argc, char *argv[])
   //Inject midi processor to visual subsystem
   //engine.rootContext()->setContextProperty( "midiProcessor", midiProcessor );
   engine.rootContext()->setContextProperty( "qmlKeyboard", midiProcessor->qmlKeyboard() );
+  engine.rootContext()->setContextProperty( "qmlMidiFile", midiProcessor->qmlMidiFile() );
+  for( int i = 0; i < 16; i++ )
+    engine.rootContext()->setContextProperty( QString("qmlMidiTrack%1").arg(0), midiProcessor->qmlMidiFile()->qmlMidiTrack(i) );
+
+  //=============================================================================
+  //        MIDI file setup
+
+
 
   midiThread->start();
 

@@ -152,9 +152,11 @@ void QmlMidiFile::readMtrk(IffReader &reader)
         copyright = QString::fromLatin1( ar );
         }
 
-      else if( metaEvent == 3 )
+      else if( metaEvent == 3 ) {
         //Track name
         trackName = QString::fromUtf8( ar );
+        mQmlTrack[channelIndex].setTrackName( trackName );
+        }
 
       else if( metaEvent == 4 ) {
         //Instrument name

@@ -139,12 +139,13 @@ SvTabViewItem {
           width: widthIcon
           height: 24
           source: voiceIconName
+          fillMode: Image.PreserveAspectFit
           MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: {
               setCurrentRow(index);
-              instrumentIconSelector.instrumentIconSelect( iconName, function (str) { iconName = str; } )
+              instrumentIconSelector.instrumentIconSelect( voiceIconName, function (str) { voiceIconName = str; } )
             }
           }
         }

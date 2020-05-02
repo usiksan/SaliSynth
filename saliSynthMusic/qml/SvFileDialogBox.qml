@@ -43,9 +43,7 @@ SvModalItem {
 
   //Область диалога
   Rectangle {
-    anchors.centerIn: parent
-    width: 1000
-    height: parent.height * 0.9
+    anchors.fill: parent
     border.color: svStyle.frontColor
     color: "gray"
 

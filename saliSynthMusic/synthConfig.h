@@ -62,12 +62,13 @@
                   Append icons for keyboard mode selection
               v20 Begin parsing style file
               v21 Append save keyboard state to settings
+              v22 Restore instrument icon selector
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 21
+#define VERSION 22
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

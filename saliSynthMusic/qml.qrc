@@ -91,5 +91,15 @@
         <file>img/chord.png</file>
         <file>img/singleKey.png</file>
         <file>img/doubleVoice.png</file>
+        <file>img/instrumentAccordion.png</file>
+        <file>img/instrumentClarinet.png</file>
+        <file>img/instrumentClavinet.png</file>
+        <file>img/instrumentDrum.png</file>
+        <file>img/instrumentHorn.png</file>
+        <file>img/fileOpen.png</file>
+        <file>img/iconDir.png</file>
+        <file>img/iconFile.png</file>
+        <file>qml/MidiFileSetup.qml</file>
+        <file>qml/MidiTrackInfo.qml</file>
     </qresource>
 </RCC>

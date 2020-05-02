@@ -11,6 +11,8 @@
 #define QMLMIDIFILE_H
 
 #include "iff/IffReader.h"
+#include "QmlMidiTrack.h"
+#include "SvQml/SvQmlJsonModel.h"
 
 #include <QList>
 #include <QAbstractListModel>
@@ -51,6 +53,9 @@ class QmlMidiFile : public QObject
 
     MidiTrackVector mTracks;      //Tracks in midi file
 
+    QmlMidiTrack    mQmlTrack[16];  //Track in midi file with visual representation
+    SvQmlJsonModel  mQmlTrackModel; //! Model represents visual info about midi file tracks
+
     QTimer          mTimer;
     qint32          mTickCount;
     //qint32          mEventCount;
@@ -59,6 +64,9 @@ class QmlMidiFile : public QObject
 
     bool read( QString fname );
 
+    Q_INVOKABLE QmlMidiTrack *qmlMidiTrack( int track ) { return mQmlTrack + (track & 0xf); }
+
+    Q_INVOKABLE SvQmlJsonModel *qmlMidiTrackModel() { return &mQmlTrackModel; }
   signals:
     void midiEvent( quint8 cmd, quint8 data0, quint8 data1 );
 

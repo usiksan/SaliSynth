@@ -69,6 +69,9 @@ Window {
   //Instrument icon selector
   InstrumentIconSelect { id: instrumentIconSelector }
 
+  //File open dialog
+  SvFileDialogBox { id: fileDialogBox }
+
   //Digital input pad
   SvNumPad { id: numPad }
 
