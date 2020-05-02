@@ -282,7 +282,7 @@ void QmlMidiFile::readMtrk(IffReader &reader)
 
       else if( metaEvent == 3 ) {
         //Track name
-        trackName = QString::fromUtf8( ar );
+        trackName = QString::fromLocal8Bit( ar );
         }
 
       else if( metaEvent == 4 ) {

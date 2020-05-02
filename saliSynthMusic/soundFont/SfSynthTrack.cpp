@@ -156,8 +156,11 @@ int SfSynthTrack::sample(bool &stopped)
     return nextSample() * ( mVolume * mAttenuator[mVolSustainLevel] >> 15 ) >> 15;
 
   if( mVolumePhase == vpRelease ) {
-    if( (mVolumeTick & 0x3f) == 0 )
+    if( mVolReleaseEnvelope < 64 )
       mAttenuation += mAttenuationStep;
+    else if( (mVolumeTick & 0x3f) == 0 )
+      mAttenuation += mAttenuationStep;
+    if( mAttenuation > (1000 << 15) ) mAttenuation = (1000 << 15);
     if( mVolumeTick >= mVolReleaseEnvelope )
       mVolumePhase = vpStop;
     return nextSample() * ( mVolume * mAttenuator[(mAttenuation >> 15) & 0x3ff] >> 15 ) >> 15;
@@ -194,10 +197,13 @@ void SfSynthTrack::noteOff(quint8 pressure)
     case vpRelease :
       //Start release phase
       if( mAttenuation > (1000 << 15) ) mAttenuation = (1000 << 15);
-      if( mVolReleaseEnvelope < 64 )
+      if( mVolReleaseEnvelope == 0 )
         mAttenuationStep = ((1000 << 15) - mAttenuation);
+      else if( mVolReleaseEnvelope < 64 )
+        mAttenuationStep = ((1000 << 15) - mAttenuation) / mVolReleaseEnvelope;
       else
         mAttenuationStep = ((1000 << 15) - mAttenuation) / (mVolReleaseEnvelope >> 6);
+      //qDebug() << "start release phase" << mAttenuation << mAttenuationStep << mVolReleaseEnvelope;
       mVolumeTick = 0;
       mVolumePhase = vpRelease;
       break;

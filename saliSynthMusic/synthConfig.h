@@ -75,12 +75,13 @@
               v26 Append start-stop midi play functionality
               v27 Append plaing tempo changing and store it to the config
                   Try parse track names from markers
+              v28 Enhanse release note phase with short release time
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 27
+#define VERSION 28
 
 //Polyphony count
 #define POLYPHONY_COUNT 128
