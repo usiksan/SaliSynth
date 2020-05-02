@@ -18,17 +18,19 @@
 #include <QFileInfo>
 #include <QDebug>
 
-#define TRACK_ID    QStringLiteral("trackId")
-#define TRACK_NAME  QStringLiteral("trackName")
-#define TRACK_INDEX QStringLiteral("trackIndex")
-#define TRACK_ON    QStringLiteral("trackOn")
+#define TRACK_ID     QStringLiteral("trackId")
+#define TRACK_NAME   QStringLiteral("trackName")
+#define TRACK_INDEX  QStringLiteral("trackIndex")
+#define TRACK_ON     QStringLiteral("trackOn")
+#define TRACK_REMARK QStringLiteral("trackRemark")
 
 QmlMidiFile::QmlMidiFile(QObject *parent) :
   QObject(parent),
   mConfigDirty(false),
-  mTickCount(-1)
+  mTickCount(-1),
+  mTickStep(16)
   {
-  mQmlTrackModel.setFields( { TRACK_ID, TRACK_NAME, TRACK_INDEX, TRACK_ON } );
+  mQmlTrackModel.setFields( { TRACK_ID, TRACK_NAME, TRACK_INDEX, TRACK_ON, TRACK_REMARK } );
   connect( &mQmlTrackModel, &SvQmlJsonModel::afterModelChanged, this, [this] () { mConfigDirty = true; } );
 
   for( int i = 0; i < 16; i++ )
@@ -90,6 +92,7 @@ bool QmlMidiFile::read(QString fname)
       mQmlTrackModel.setString( r, TRACK_NAME, mQmlTrack[i].trackName() );
       mQmlTrackModel.setInt( r, TRACK_INDEX, i );
       mQmlTrackModel.setInt( r, TRACK_ON, 1 );
+      mQmlTrackModel.setString( r, TRACK_REMARK, mQmlTrack[i].mRemark );
       }
     if( channel >= 16 ) break;
     }
@@ -122,10 +125,21 @@ void QmlMidiFile::configRead(QString fname)
     QFile file(mConfigFile);
     if( file.open(QIODevice::ReadOnly) ) {
       qDebug() << "midi config read" << mConfigFile;
-      mQmlTrackModel.setArray( QJsonDocument::fromJson(file.readAll()).array() );
+      QJsonObject obj = QJsonDocument::fromJson(file.readAll()).object();
+      mTickStep = obj.value( QStringLiteral("tickStep") ).toInt();
+      mQmlTrackModel.setArray( obj.value( QStringLiteral("tracks") ).toArray() );
       mConfigDirty = false;
       }
     }
+  }
+
+
+
+
+void QmlMidiFile::setTickStep(int stp)
+  {
+  mTickStep = stp;
+  emit tickStepChanged();
   }
 
 
@@ -137,7 +151,10 @@ void QmlMidiFile::configWrite()
     QFile file( mConfigFile );
     if( file.open(QIODevice::WriteOnly) ) {
       qDebug() << "midi config write" << mConfigFile;
-      file.write( QJsonDocument(mQmlTrackModel.array()).toJson() );
+      QJsonObject obj;
+      obj.insert( QStringLiteral("tickStep"), mTickStep );
+      obj.insert( QStringLiteral("tracks"), mQmlTrackModel.array() );
+      file.write( QJsonDocument( obj ).toJson() );
       mConfigDirty = false;
       }
     }
@@ -150,11 +167,13 @@ void QmlMidiFile::configWrite()
 void QmlMidiFile::tick()
   {
   if( mTickCount >= 0 ) {
-    int nextTime = mTickCount + 1;
-    for( int i = 0; i < mQmlTrackModel.count(); i++ ) {
-      int trackIndex = mQmlTrackModel.asInt( i, TRACK_INDEX );
-      bool soundOn = mQmlTrackModel.asInt( i, TRACK_ON );
-      mQmlTrack[trackIndex].tick( mTickCount, nextTime, soundOn );
+    int nextTime = mTickCount + mTickStep;
+    if( (nextTime & 0xfffffff0) != (mTickCount & 0xfffffff0) ) {
+      for( int i = 0; i < mQmlTrackModel.count(); i++ ) {
+        int trackIndex = mQmlTrackModel.asInt( i, TRACK_INDEX );
+        bool soundOn = mQmlTrackModel.asInt( i, TRACK_ON );
+        mQmlTrack[trackIndex].tick( mTickCount >> 4, nextTime >> 4, soundOn );
+        }
       }
     mTickCount = nextTime;
     }
@@ -164,7 +183,7 @@ void QmlMidiFile::tick()
 
 void QmlMidiFile::seek(quint32 time)
   {
-  mTickCount = time;
+  mTickCount = time << 4;
   for( int i = 0; i < 16; i++ )
     mQmlTrack[i].seek( time );
   }
@@ -264,8 +283,6 @@ void QmlMidiFile::readMtrk(IffReader &reader)
       else if( metaEvent == 3 ) {
         //Track name
         trackName = QString::fromUtf8( ar );
-        mQmlTrack[channelIndex].setTrackName( trackName );
-        qDebug() << "midi track name" << channelIndex << trackName;
         }
 
       else if( metaEvent == 4 ) {
@@ -283,6 +300,20 @@ void QmlMidiFile::readMtrk(IffReader &reader)
       else if( metaEvent == 6 ) {
         //Marker
         marker = QString::fromLatin1( ar );
+        if( marker.length() > 3 ) {
+          if( marker.at(0).isDigit() ) {
+            if( marker.at(1) == QChar(' ') ) {
+              int track = marker.mid( 0, 1 ).toInt() - 1;
+              if( track >= 0 )
+                mQmlTrack[track].mRemark = marker.mid( 2 );
+              }
+            else if( marker.at(1).isDigit() && marker.at(2) == QChar(' ') ) {
+              int track = marker.mid( 0, 2 ).toInt() - 1;
+              if( track >= 0 )
+                mQmlTrack[track].mRemark = marker.mid( 3 );
+              }
+            }
+          }
         qDebug() << "marker" << marker;
         }
 
@@ -385,6 +416,8 @@ void QmlMidiFile::readMtrk(IffReader &reader)
       }
     }
 
+  mQmlTrack[channelIndex].setTrackName( trackName );
+  mQmlTrack[channelIndex].setInstrumentName( instrumentName );
   }
 
 

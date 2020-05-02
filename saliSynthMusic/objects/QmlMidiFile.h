@@ -37,16 +37,23 @@ class QmlMidiFile : public QObject
 
     QTimer          mTimer;
     qint32          mTickCount;
-    //qint32          mEventCount;
+    qint32          mTickStep;
+
+    Q_PROPERTY(int tickStep READ tickStep WRITE setTickStep NOTIFY tickStepChanged)
   public:
     QmlMidiFile( QObject *parent = nullptr );
 
     void configRead( QString fname );
 
+    int  tickStep() const { return mTickStep; }
+    void setTickStep( int stp );
+
     Q_INVOKABLE QmlMidiTrack *qmlMidiTrack( int track ) { return mQmlTrack + (track & 0xf); }
 
     Q_INVOKABLE SvQmlJsonModel *qmlMidiTrackModel() { return &mQmlTrackModel; }
   signals:
+    void tickStepChanged();
+
     void midiEvent( quint8 cmd, quint8 data0, quint8 data1 );
 
     void voiceSetup( quint8 channel, int voiceId );

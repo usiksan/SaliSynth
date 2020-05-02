@@ -55,6 +55,7 @@ class QmlMidiTrack : public QAbstractListModel
     Q_PROPERTY(QString trackName READ trackName WRITE setTrackName NOTIFY trackNameChanged)
     Q_PROPERTY(QString instrumentName READ instrumentName WRITE setInstrumentName NOTIFY instrumentNameChanged)
   public:
+    QString          mRemark;
 
     QmlMidiTrack();
 

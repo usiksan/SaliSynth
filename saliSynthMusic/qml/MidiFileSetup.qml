@@ -66,9 +66,21 @@ Item {
         }
 
 
+        //Track remark
+        SvFieldText {
+          text: trackRemark
+          editable: true
+          anchors.left: parent.left
+          anchors.right: parent.right
+          anchors.bottom: trackTitle.top
+          anchors.margins: 3
+          onApply: trackRemark = str;
+        }
+
 
         //Track title
         SvFieldText {
+          id: trackTitle
           text: trackName
           editable: true
           anchors.left: parent.left

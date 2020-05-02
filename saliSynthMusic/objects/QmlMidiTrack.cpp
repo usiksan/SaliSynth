@@ -22,6 +22,7 @@ void QmlMidiTrack::beginReadTrack()
   {
   setTrackName( QString{} );
   setInstrumentName( QString{} );
+  mRemark.clear();
 
   beginResetModel();
   mMidiList.clear();

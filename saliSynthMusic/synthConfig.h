@@ -73,12 +73,14 @@
                   support visual representation
                   Append separate signal for setup voice id for channel
               v26 Append start-stop midi play functionality
+              v27 Append plaing tempo changing and store it to the config
+                  Try parse track names from markers
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 26
+#define VERSION 27
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

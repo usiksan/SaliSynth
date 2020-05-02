@@ -13,7 +13,7 @@ Item {
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
-    height: 35
+    height: 45
     spacing: 5
 
     //Settings
@@ -37,6 +37,8 @@ Item {
 
       onClicked: fileDialogBox.openLoad( qsTr("Open midi file"), synth.midiPath(), ["*.mid","*.kar"], function (fname) {
         qmlMidiFile.read( fname );
+        //Setup tempo as in midi file
+        spinTempo.value = qmlMidiFile.tickStep;
       } );
     }
 
@@ -71,6 +73,19 @@ Item {
       ToolTip.delay: 300
 
       onClicked: qmlMidiFile.play()
+    }
+
+    //Tempo
+    SpinBox {
+      id: spinTempo
+      from: 1
+      to: 512
+      value: 16
+      ToolTip.text: qsTr("Midi play tempo")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      Binding { target: qmlMidiFile; property: "tickStep"; value: spinTempo.value }
     }
 
   }

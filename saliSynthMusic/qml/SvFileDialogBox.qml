@@ -98,7 +98,7 @@ SvModalItem {
       FolderListModel {
         id: files
         //folder: "file://" + compLib.path;
-        nameFilters: [ "*" + partExtension ]
+        nameFilters: [ "*.kar" ]
         showDirs: true
         showDirsFirst: true
         showDotAndDotDot: true
