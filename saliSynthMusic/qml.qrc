@@ -103,5 +103,6 @@
         <file>img/fileSave.png</file>
         <file>img/sound.png</file>
         <file>img/soundOff.png</file>
+        <file>img/stop.png</file>
     </qresource>
 </RCC>

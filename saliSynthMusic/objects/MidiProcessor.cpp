@@ -73,7 +73,8 @@ MidiProcessor::MidiProcessor(QThread *th, QObject *parent) :
   connect( this, &MidiProcessor::keyIndicate, mQmlKeyboard, &QmlKeyboard::indicate );
 
   mQmlMidiFile = new QmlMidiFile();
-  connect( mQmlMidiFile, &QmlMidiFile::midiEvent, this, &MidiProcessor::midiFile );
+  connect( mQmlMidiFile, &QmlMidiFile::midiEvent, this, &MidiProcessor::midiSignal );
+  connect( mQmlMidiFile, &QmlMidiFile::voiceSetup, this, &MidiProcessor::voiceSetup );
 
   mQmlStyleFile = new QmlStyleFile();
   //mQmlStyleFile->read( QString("/home/salilab/saliSynthMusic/styles/8BEATPOP.sty") );

@@ -55,6 +55,12 @@ class MidiProcessor: public QObject
     //!
     void midiSignal( quint8 cmd, quint8 data0, quint8 data1 );
 
+    //!
+    //! \brief voiceSetup Set specify voice on channel
+    //! \param channel    Channel on which need to setup voice
+    //! \param voiceId    Voice ident which need to set to channel
+    //!
+    void voiceSetup( quint8 channel, int voiceId );
 
     void keyIndicate( quint8 keyCode, bool set, quint8 colorMask );
 

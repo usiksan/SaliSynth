@@ -186,6 +186,17 @@ void QmlMidiFile::play()
 
 
 
+void QmlMidiFile::stop()
+  {
+  //End all continuously notes
+  for( int i = 0; i < mQmlTrackModel.count(); i++ )
+    mQmlTrack[mQmlTrackModel.asInt( i, TRACK_INDEX )].stop();
+
+  mTickCount = -1;
+  }
+
+
+
 
 
 bool QmlMidiFile::readMthd(IffReader &reader)

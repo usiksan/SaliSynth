@@ -28,7 +28,7 @@ void SfSynth::setVoiceList(SvQmlJsonModel *md)
 
   if( mChannelList ) {
     //On base current channel list restores channels
-    for( int i = 0; i < 16; i++ )
+    for( quint8 i = 0; i < 16; i++ )
       channelSetVoiceId( i, mChannelList->asInt( i, QStringLiteral("channelVoiceId") ) );
     }
   }
@@ -49,7 +49,7 @@ void SfSynth::setChannelList(SvQmlJsonModel *md)
 
   if( mVoiceList ) {
     //On base current channel list restores channels
-    for( int i = 0; i < 16; i++ )
+    for( quint8 i = 0; i < 16; i++ )
       channelSetVoiceId( i, mChannelList->asInt( i, QStringLiteral("channelVoiceId") ) );
     }
   }
@@ -190,7 +190,7 @@ void SfSynth::applyPreset(int voiceRow, int preset)
 
 
 
-void SfSynth::channelSetVoiceId(int channel, int voiceId)
+void SfSynth::channelSetVoiceId(quint8 channel, int voiceId)
   {
   channelSetVoiceRow( channel, voiceRowById(voiceId) );
   }

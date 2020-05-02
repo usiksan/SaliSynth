@@ -51,6 +51,17 @@ Item {
       onClicked: qmlMidiFile.configWrite()
     }
 
+    //Stop music
+    ToolButton {
+      icon.source: "qrc:/img/stop.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Stop midi file play")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: qmlMidiFile.stop()
+    }
+
     //Play music
     ToolButton {
       icon.source: "qrc:/img/play.png"

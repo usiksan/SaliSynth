@@ -136,6 +136,7 @@ int main(int argc, char *argv[])
   midiProcessor->connect( midiInput, &MidiInput::midiSignal, midiProcessor, &MidiProcessor::midiKeyboard );
   //From midi processor output connect to synthesator input
   midiProcessor->connect( midiProcessor, &MidiProcessor::midiSignal, synth, &SfSynth::midiSlot );
+  midiProcessor->connect( midiProcessor, &MidiProcessor::voiceSetup, synth, &SfSynth::channelSetVoiceId );
 
   //Inject midi processor to visual subsystem
   //engine.rootContext()->setContextProperty( "midiProcessor", midiProcessor );

@@ -58,6 +58,8 @@ class QmlMidiFile : public QObject
 
     void play();
 
+    void stop();
+
     bool read( QString fname );
 
     void configWrite();

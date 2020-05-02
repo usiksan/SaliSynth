@@ -111,7 +111,7 @@ class SfSynth : public QObject
 
     void applyPreset( int voiceRow, int preset );
 
-    void channelSetVoiceId( int channel, int voiceId );
+    void channelSetVoiceId( quint8 channel, int voiceId );
 
     void channelSetVoiceRow( int channel, int voiceRow );
 
