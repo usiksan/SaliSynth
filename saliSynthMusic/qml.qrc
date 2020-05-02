@@ -100,6 +100,6 @@
         <file>img/iconDir.png</file>
         <file>img/iconFile.png</file>
         <file>qml/MidiFileSetup.qml</file>
-        <file>qml/MidiTrackInfo.qml</file>
+        <file>img/fileSave.png</file>
     </qresource>
 </RCC>

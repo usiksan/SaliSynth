@@ -35,7 +35,20 @@ Item {
       ToolTip.visible: hovered
       ToolTip.delay: 300
 
-      onClicked: fileDialogBox.openLoad( qsTr("Open midi file"), synth.midiPath(), ["*.mid","*.kar"], null );
+      onClicked: fileDialogBox.openLoad( qsTr("Open midi file"), synth.midiPath(), ["*.mid","*.kar"], function (fname) {
+        qmlMidiFile.read( fname );
+      } );
+    }
+
+    //Midi config file save
+    ToolButton {
+      icon.source: "qrc:/img/fileSave.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Midi config file save")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: qmlMidiFile.configWrite()
     }
 
   }

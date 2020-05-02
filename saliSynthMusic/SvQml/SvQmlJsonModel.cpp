@@ -90,6 +90,19 @@ void SvQmlJsonModel::setIgnoredFields(QStringList f)
 
 
 
+void SvQmlJsonModel::setArray(const QJsonArray ar)
+  {
+  beginResetModel();
+  mTable = ar;
+  endResetModel();
+  //Сообщить об изменении модели
+  emit afterModelChanged();
+  //Сообщить об изменении количества записей
+  emit countChanged();
+  }
+
+
+
 //Количество записей в таблице
 int SvQmlJsonModel::rowCount(const QModelIndex &parent) const
   {
@@ -152,6 +165,8 @@ bool SvQmlJsonModel::insertRows(int row, int count, const QModelIndex &parent)
 
   //Сообщить об изменении модели
   emit afterModelChanged();
+  //Сообщить об изменении количества записей
+  emit countChanged();
 
   return true;
   }
@@ -176,6 +191,8 @@ bool SvQmlJsonModel::removeRows(int row, int count, const QModelIndex &parent)
 
   //Сообщить об изменении модели
   emit afterModelChanged();
+  //Сообщить об изменении количества записей
+  emit countChanged();
 
   return true;
   }
@@ -206,13 +223,8 @@ QHash<int, QByteArray> SvQmlJsonModel::roleNames() const
 
 void SvQmlJsonModel::onLoadJson()
   {
-  if( mFile != nullptr ) {
-    beginResetModel();
-    mTable = mFile->asJsonArray( mJsonName );
-    endResetModel();
-    //Сообщить об изменении модели
-    emit afterModelChanged();
-    }
+  if( mFile != nullptr )
+    setArray( mFile->asJsonArray( mJsonName ) );
   }
 
 
@@ -366,6 +378,9 @@ void SvQmlJsonModel::clear()
 
   //Сообщить об изменении модели
   emit afterModelChanged();
+
+  //Сообщить об изменении количества записей
+  emit countChanged();
   }
 
 

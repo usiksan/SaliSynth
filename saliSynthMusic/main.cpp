@@ -141,8 +141,7 @@ int main(int argc, char *argv[])
   //engine.rootContext()->setContextProperty( "midiProcessor", midiProcessor );
   engine.rootContext()->setContextProperty( "qmlKeyboard", midiProcessor->qmlKeyboard() );
   engine.rootContext()->setContextProperty( "qmlMidiFile", midiProcessor->qmlMidiFile() );
-  for( int i = 0; i < 16; i++ )
-    engine.rootContext()->setContextProperty( QString("qmlMidiTrack%1").arg(0), midiProcessor->qmlMidiFile()->qmlMidiTrack(i) );
+  engine.rootContext()->setContextProperty( "qmlMidiFileTrackModel", midiProcessor->qmlMidiFile()->qmlMidiTrackModel() );
 
   //=============================================================================
   //        MIDI file setup

@@ -76,7 +76,7 @@ MidiProcessor::MidiProcessor(QThread *th, QObject *parent) :
   connect( mQmlMidiFile, &QmlMidiFile::midiEvent, this, &MidiProcessor::midiFile );
 
   mQmlStyleFile = new QmlStyleFile();
-  mQmlStyleFile->read( QString("/home/salilab/saliSynthMusic/styles/8BEATPOP.sty") );
+  //mQmlStyleFile->read( QString("/home/salilab/saliSynthMusic/styles/8BEATPOP.sty") );
 
   moveToThread( th );
   connect( th, &QThread::started, this, &MidiProcessor::onStart );

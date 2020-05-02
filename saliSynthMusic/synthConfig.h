@@ -63,12 +63,17 @@
               v20 Begin parsing style file
               v21 Append save keyboard state to settings
               v22 Restore instrument icon selector
+   02.05.2020 v23 Design midi track info viewing through used track model
+                  Append changes to the midi file through config file saved with original midi,
+                  so need not to save midi while
+                  Append selection voice for track
+                  Append changes track title and save it to the config file
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 22
+#define VERSION 23
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

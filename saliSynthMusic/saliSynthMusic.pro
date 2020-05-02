@@ -82,5 +82,6 @@ HEADERS += \
   soundFont/SfSynthNote.h \
   soundFont/SfSynthPreset.h \
   soundFont/SfSynthTrack.h \
+  soundFont/SfVoiceId.h \
   soundFont/SoundFont.h \
   synthConfig.h

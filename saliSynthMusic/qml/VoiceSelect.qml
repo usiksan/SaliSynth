@@ -20,6 +20,7 @@ Rectangle {
   visible: false
 
   property bool keyboardLeft
+  property bool keyboardRight
 
   property int widthNpp: 50
   property int widthId: 70
@@ -34,7 +35,17 @@ Rectangle {
 
   function selectVoice( isLeft, mode, voiceId, applyFunction ) {
     keyboardLeft = isLeft
+    keyboardRight = !isLeft
     currentMode = mode
+    voiceSelector.visible = true
+    currentRow = synth.voiceRowById(voiceId)
+    voiceApplyFunction = applyFunction
+  }
+
+  function selectVoiceEx( voiceId, applyFunction ) {
+    keyboardLeft = false
+    keyboardRight = false
+    currentMode = 0
     voiceSelector.visible = true
     currentRow = synth.voiceRowById(voiceId)
     voiceApplyFunction = applyFunction
@@ -256,7 +267,7 @@ Rectangle {
 
     //Right keyboard modes
     ToolButton {
-      visible: !keyboardLeft
+      visible: keyboardRight
       checkable: true
       checked: currentMode & 2
       icon.source: "qrc:/img/doubleVoice.png"
@@ -268,7 +279,7 @@ Rectangle {
       onClicked: currentMode |= 2;
     }
     ToolButton {
-      visible: !keyboardLeft
+      visible: keyboardRight
       checkable: true
       checked: (currentMode & 2) == 0
       icon.source: "qrc:/img/voice.png"

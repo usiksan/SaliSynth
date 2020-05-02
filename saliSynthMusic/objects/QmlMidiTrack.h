@@ -1,9 +1,16 @@
 #ifndef QMLMIDITRACK_H
 #define QMLMIDITRACK_H
 
+#include "soundFont/SfVoiceId.h"
+
 #include <QAbstractListModel>
 #include <QList>
 #include <QMap>
+
+#define MEV_CMD    0
+#define MEV_MARKER 0x100
+#define MEV_TEXT   0x200
+#define MEV_LYRIC  0x200
 
 
 struct QmlMidiEvent {
@@ -18,7 +25,6 @@ struct QmlMidiEvent {
   };
 
 
-
 using QmlMidiEventList = QList<QmlMidiEvent>;
 
 
@@ -29,14 +35,20 @@ class QmlMidiTrack : public QAbstractListModel
 
     QString          mTrackName;
     QString          mInstrumentName;
+    SfVoiceId        mVoiceId;
 
     QmlMidiEventList mMidiList;
     QStringList      mTextList;
     QMap<quint8,int> mActiveNotesMap;
+    quint8           mChannel;
+
+  public:
+    int              mModelRow;
 
     Q_PROPERTY(QString trackName READ trackName WRITE setTrackName NOTIFY trackNameChanged)
     Q_PROPERTY(QString instrumentName READ instrumentName WRITE setInstrumentName NOTIFY instrumentNameChanged)
   public:
+
     QmlMidiTrack();
 
     void beginReadTrack();
@@ -52,7 +64,15 @@ class QmlMidiTrack : public QAbstractListModel
     QString instrumentName() const { return mInstrumentName; }
     void    setInstrumentName( const QString nm );
 
+    //Voice id access
+    int     voiceId() const { return mVoiceId.mVoiceId; }
+    void    setVoiceId( int id ) { mVoiceId.mVoiceId = id; }
 
+    //Channel
+    quint8  channel() const { return mChannel; }
+    void    setChannel( quint8 ch ) { mChannel = ch; }
+
+    bool    isActive() const { return mMidiList.count() != 0; }
   signals:
     void trackNameChanged();
     void instrumentNameChanged();

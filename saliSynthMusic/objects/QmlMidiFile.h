@@ -56,13 +56,16 @@ class QmlMidiFile : public QObject
     QmlMidiTrack    mQmlTrack[16];  //Track in midi file with visual representation
     SvQmlJsonModel  mQmlTrackModel; //! Model represents visual info about midi file tracks
 
+    QString         mConfigFile;
+    bool            mConfigDirty;
+
     QTimer          mTimer;
     qint32          mTickCount;
     //qint32          mEventCount;
   public:
     QmlMidiFile( QObject *parent = nullptr );
 
-    bool read( QString fname );
+    void configRead( QString fname );
 
     Q_INVOKABLE QmlMidiTrack *qmlMidiTrack( int track ) { return mQmlTrack + (track & 0xf); }
 
@@ -74,6 +77,12 @@ class QmlMidiFile : public QObject
     void tick();
 
     void seek( quint32 time );
+
+    bool read( QString fname );
+
+    void configWrite();
+
+    void setVoice( int trackIndex, int voiceId );
 
   private:
     bool         readMthd( IffReader &reader );

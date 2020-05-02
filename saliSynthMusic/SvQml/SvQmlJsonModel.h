@@ -35,6 +35,7 @@ class SvQmlJsonModel : public QAbstractListModel
     Q_PROPERTY(QString jsonName READ jsonName WRITE setJsonName NOTIFY jsonNameChanged)
     Q_PROPERTY(QStringList fields READ fields WRITE setFields NOTIFY fieldsChanged)
     Q_PROPERTY(QStringList ignoredFields READ ignoredFields WRITE setIgnoredFields NOTIFY ignoredFieldsChanged)
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
   public:
     SvQmlJsonModel( QObject *parent = nullptr );
     ~SvQmlJsonModel() override;
@@ -52,8 +53,16 @@ class SvQmlJsonModel : public QAbstractListModel
     void           setFields( QStringList f );
 
     //Доступ к списку игнорируемых полей
-    QStringList    ignoredFields() const { return mIgnored.toList(); }
+    QStringList    ignoredFields() const { return mIgnored.values(); }
     void           setIgnoredFields( QStringList f );
+
+    //Доступ к JSON array
+    QJsonArray     array() const { return mTable; }
+    void           setArray( const QJsonArray ar );
+
+
+    //Доступ к количеству записей в базе
+    int            count() const { return mTable.count(); }
 
   signals:
     //Вызывается при изменении файла, к которому подключено свойство
@@ -73,6 +82,9 @@ class SvQmlJsonModel : public QAbstractListModel
 
     //После изменения модели (загрузка, добавление и удаление рядов)
     void afterModelChanged();
+
+    //При изменении количества записей в базе
+    void countChanged();
 
     // QAbstractItemModel interface
   public:
@@ -111,9 +123,6 @@ class SvQmlJsonModel : public QAbstractListModel
     double  asReal(int row, const QString nm) const;
     int     asFloat1000Int( int row, const QString name ) const { return static_cast<int>(asReal( row, name ) * 1000.0); }
     void    setIntAsReal( int row, const QString nm, int val, int factor );
-
-    //Количество записей в базе
-    int     count() const { return mTable.count(); }
 
     //Очистить базу данных
     void    clear();

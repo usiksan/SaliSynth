@@ -6,15 +6,36 @@
    SaliLab.com
  Description
    MIDI file
+
+   login: usiksan
+   Password: auz9P7sLG8Cj44q
 */
 #include "QmlMidiFile.h"
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QFileInfo>
 #include <QDebug>
+
+#define TRACK_ID    QStringLiteral("trackId")
+#define TRACK_NAME  QStringLiteral("trackName")
+#define TRACK_INDEX QStringLiteral("trackIndex")
+#define TRACK_ON    QStringLiteral("trackOn")
 
 QmlMidiFile::QmlMidiFile(QObject *parent) :
   QObject(parent),
+  mConfigDirty(false),
   mTickCount(-1)
   {
+  mQmlTrackModel.setFields( { TRACK_ID, TRACK_NAME, TRACK_INDEX, TRACK_ON } );
+  connect( &mQmlTrackModel, &SvQmlJsonModel::afterModelChanged, this, [this] () { mConfigDirty = true; } );
+
+//  mQmlTrackModel.clear();
+//  mQmlTrackModel.addRecord();
+//  mQmlTrackModel.setInt( 0, TRACK_ID, 0 );
+//  mQmlTrackModel.setString( 0, TRACK_NAME, "Track test name" );
+
   connect( &mTimer, &QTimer::timeout, this, &QmlMidiFile::tick );
   mTimer.start( 20 );
   }
@@ -25,6 +46,10 @@ QmlMidiFile::QmlMidiFile(QObject *parent) :
 
 bool QmlMidiFile::read(QString fname)
   {
+  qDebug() << "midi read" << fname;
+//  if( mConfigDirty )
+//    configWrite();
+
   IffReader reader(fname, false);
   if( !reader.isValid() )
     return false;
@@ -32,6 +57,10 @@ bool QmlMidiFile::read(QString fname)
   //Header
   if( !reader.readChunk( "MThd", [this] (IffReader &reader) -> bool { return readMthd(reader); }) )
     return false;
+
+  //Clear all tracks
+  for( int i = 0; i < 16; i++ )
+    mQmlTrack[i].beginReadTrack();
 
   //Repeated tracks
   int trackIndex = 0;
@@ -44,7 +73,86 @@ bool QmlMidiFile::read(QString fname)
       }
     else readExtension( track );
     }
+
+  //Clear all tracks
+  quint8 channel = 4;
+  mQmlTrackModel.clear();
+  for( int i = 0; i < 16; i++ ) {
+    mQmlTrack[i].endReadTrack();
+    if( mQmlTrack[i].isActive() ) {
+
+      //Setup channel for track
+      mQmlTrack[i].setChannel( channel++ );
+
+      //Setup visual representation for track info
+      int r = mQmlTrackModel.count();
+      mQmlTrack[i].mModelRow = r;
+
+      mQmlTrackModel.addRecord();
+      mQmlTrackModel.setInt( r, TRACK_ID, mQmlTrack[i].voiceId() );
+      mQmlTrackModel.setString( r, TRACK_NAME, mQmlTrack[i].trackName() );
+      mQmlTrackModel.setInt( r, TRACK_INDEX, i );
+      mQmlTrackModel.setInt( r, TRACK_ON, 1 );
+      }
+    }
+
+  //Read config file if present
+  configRead( fname );
+
   return true;
+  }
+
+
+
+
+
+void QmlMidiFile::configRead(QString fname)
+  {
+  //Construct cfg file name from midi file name
+  QFileInfo info(fname);
+  mConfigFile = info.absolutePath();
+  if( !mConfigFile.endsWith(QChar('/')) )
+    mConfigFile.append( QChar('/') );
+  mConfigFile += info.completeBaseName() + QString(".cfg");
+
+  qDebug() << "midi config" << mConfigFile;
+
+  mConfigDirty = true;
+
+  //Test if config file exist
+  if( QFile::exists(mConfigFile) ) {
+    QFile file(mConfigFile);
+    if( file.open(QIODevice::ReadOnly) ) {
+      qDebug() << "midi config read" << mConfigFile;
+      mQmlTrackModel.setArray( QJsonDocument::fromJson(file.readAll()).array() );
+      mConfigDirty = false;
+      }
+    }
+  }
+
+
+
+
+void QmlMidiFile::configWrite()
+  {
+  if( !mConfigFile.isEmpty() ) {
+    QFile file( mConfigFile );
+    if( file.open(QIODevice::WriteOnly) ) {
+      qDebug() << "midi config write" << mConfigFile;
+      file.write( QJsonDocument(mQmlTrackModel.array()).toJson() );
+      mConfigDirty = false;
+      }
+    }
+  }
+
+
+
+
+void QmlMidiFile::setVoice(int trackIndex, int voiceId)
+  {
+  trackIndex &= 0xf;
+  mQmlTrack[trackIndex].setVoiceId( voiceId );
+  mQmlTrackModel.setInt( mQmlTrack[trackIndex].mModelRow, TRACK_ID, voiceId );
   }
 
 
@@ -125,7 +233,7 @@ void QmlMidiFile::readMtrk(IffReader &reader)
     quint32 timeOffset = variableLenValue(reader);
     quint8 statusByte = reader.getUint8();
     time += timeOffset;
-    qDebug() << timeOffset << statusByte;
+    //qDebug() << timeOffset << statusByte;
     if( statusByte == 0xff ) {
       //Meta-event
       quint8 metaEvent = reader.getUint8();
@@ -145,6 +253,7 @@ void QmlMidiFile::readMtrk(IffReader &reader)
       else if( metaEvent == 1 ) {
         //text
         QString str = QString::fromLocal8Bit( ar );
+        qDebug() << "text" << str;
         }
 
       else if( metaEvent == 2 ) {
@@ -156,21 +265,25 @@ void QmlMidiFile::readMtrk(IffReader &reader)
         //Track name
         trackName = QString::fromUtf8( ar );
         mQmlTrack[channelIndex].setTrackName( trackName );
+        qDebug() << "midi track name" << channelIndex << trackName;
         }
 
       else if( metaEvent == 4 ) {
         //Instrument name
         instrumentName = QString::fromLatin1( ar );
+        qDebug() << "midi instrument name" << channelIndex << trackName;
         }
 
       else if( metaEvent == 5 ) {
         //Lyric
         lyric = QString::fromUtf8( ar );
+        qDebug() << "lyric" << lyric;
         }
 
       else if( metaEvent == 6 ) {
         //Marker
         marker = QString::fromLatin1( ar );
+        qDebug() << "marker" << marker;
         }
 
       else if( metaEvent == 7 ) {
@@ -195,6 +308,7 @@ void QmlMidiFile::readMtrk(IffReader &reader)
 
       else if( metaEvent == 0x2f ) {
         //End of track
+        break;
         }
 
       else if( metaEvent == 0x51 ) {
@@ -245,12 +359,12 @@ void QmlMidiFile::readMtrk(IffReader &reader)
           //Programm change or Channel pressure
           event.mData0 = reader.getUint8();
           event.mData1 = 0;
-          qDebug("midi-1 %x %d", statusByte, event.mData0 );
+          //qDebug("midi-1 %x %d", statusByte, event.mData0 );
           }
         else {
           event.mData0 = reader.getUint8();
           event.mData1 = reader.getUint8();
-          qDebug("midi-2 %x %d %d", statusByte, event.mData0, event.mData1 );
+          //qDebug("midi-2 %x %d %d", statusByte, event.mData0, event.mData1 );
           }
         }
       else {
@@ -260,19 +374,21 @@ void QmlMidiFile::readMtrk(IffReader &reader)
           //Programm change or Channel pressure
           event.mData0 = statusByte;
           event.mData1 = 0;
-          qDebug("group midi-1 %x %d", event.mType, event.mData0 );
+          //qDebug("group midi-1 %x %d", event.mType, event.mData0 );
           }
         else {
           event.mData0 = statusByte;
           event.mData1 = reader.getUint8();
-          qDebug("midi-2 %x %d %d", event.mType, event.mData0, event.mData1 );
+          //qDebug("midi-2 %x %d %d", event.mType, event.mData0, event.mData1 );
           }
         }
 
       channelIndex = groupStatusByte & 0xf;
       mTracks[channelIndex].mEvents.append( event );
+      mQmlTrack[channelIndex].addMidiEvent( event.mTime, event.mType, event.mData0, event.mData1 );
       }
     }
+
   }
 
 

@@ -29,13 +29,18 @@ void QmlMidiTrack::beginReadTrack()
 
   }
 
+void QmlMidiTrack::endReadTrack()
+  {
+  endResetModel();
+  }
+
 
 
 
 void QmlMidiTrack::addMidiEvent(quint32 time, quint8 statusByte, quint8 data0, quint8 data1)
   {
   quint8 cmd = statusByte & 0x70;
-  if( cmd == 0 || (cmd == 1 && data1 == 0) ) {
+  if( cmd == 0 || (cmd == 0x10 && data1 == 0) ) {
     //Note off
     if( mActiveNotesMap.contains(data0) ) {
       int eventIndex = mActiveNotesMap.value(data0);
@@ -44,7 +49,7 @@ void QmlMidiTrack::addMidiEvent(quint32 time, quint8 statusByte, quint8 data0, q
       }
     else qDebug() << "hanging note off" << data0;
     }
-  else if( cmd == 1 ) {
+  else if( cmd == 0x10 ) {
     //Note on
     QmlMidiEvent ev;
     ev.mTime = time;
@@ -63,14 +68,25 @@ void QmlMidiTrack::addMidiEvent(quint32 time, quint8 statusByte, quint8 data0, q
     mMidiList.append( ev );
     }
   else {
-    //All others commands
-    QmlMidiEvent ev;
-    ev.mTime = time;
-    ev.mType = cmd;
-    ev.mData0 = data0;
-    ev.mData1 = data1;
-    ev.mLenght = 0;
-    mMidiList.append( ev );
+    if( cmd == 0x30 && data0 == 0 )
+      //Bank MSB
+      mVoiceId.mBankMsb = data1 & 0x7f;
+    else if( cmd == 0x30 && data0 == 0x20 )
+      //Bank LSB
+      mVoiceId.mBankLsb = data1 & 0x7f;
+    else if( cmd == 0x40 )
+      //Program
+      mVoiceId.mProgramm = data0;
+    else {
+      //All others commands
+      QmlMidiEvent ev;
+      ev.mTime = time;
+      ev.mType = cmd;
+      ev.mData0 = data0;
+      ev.mData1 = data1;
+      ev.mLenght = 0;
+      mMidiList.append( ev );
+      }
     }
   }
 
