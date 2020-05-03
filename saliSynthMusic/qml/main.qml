@@ -54,6 +54,12 @@ Window {
       "channelVoiceId"
     ] }
 
+  //Qml midi file track list
+  property var qmlMidiTrackList : [qmlMidiTrack0Model, qmlMidiTrack1Model, qmlMidiTrack2Model, qmlMidiTrack3Model,
+                                   qmlMidiTrack4Model, qmlMidiTrack5Model, qmlMidiTrack6Model, qmlMidiTrack7Model,
+                                   qmlMidiTrack8Model, qmlMidiTrack9Model, qmlMidiTrack10Model, qmlMidiTrack11Model,
+                                   qmlMidiTrack12Model, qmlMidiTrack13Model, qmlMidiTrack14Model, qmlMidiTrack15Model ];
+
 
   Binding { target: synth;       property: "voiceList";     value: voiceList }
   Binding { target: synth;       property: "channelList";   value: channelList }

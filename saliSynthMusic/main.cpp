@@ -145,6 +145,10 @@ int main(int argc, char *argv[])
   engine.rootContext()->setContextProperty( "qmlMidiFile", midiProcessor->qmlMidiFile() );
   engine.rootContext()->setContextProperty( "qmlMidiFileTrackModel", midiProcessor->qmlMidiFile()->qmlMidiTrackModel() );
 
+  //Inject all midi tracks to visual subsystem
+  for( int i = 0; i < 16; i++ )
+    engine.rootContext()->setContextProperty( QString("qmlMidiTrack%1Model").arg(i), midiProcessor->qmlMidiFile()->qmlMidiTrack(i) );
+
   //=============================================================================
   //        MIDI file setup
 

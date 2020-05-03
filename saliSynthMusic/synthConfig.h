@@ -86,12 +86,13 @@
               v33 Append automatic average exclusion volume ajust
                   Append time moment of play property
               v34 Append time tracking functionality preliminary
+              v35 Append all track display model with automatic color selection
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 34
+#define VERSION 35
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

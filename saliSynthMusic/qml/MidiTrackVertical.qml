@@ -3,6 +3,7 @@ import QtQuick.Controls 2.5
 import SvQml 1.0
 
 Item {
+  id: midiVerticalViewer
   anchors.fill: parent
 
   property real factor : 0.5
@@ -28,42 +29,58 @@ Item {
       height: qmlMidiFile.fileLenght * factor + midiScroll.height
       width: parent.width
 
-      //At first - white keys
+      //For each existing tracks draw notes
       Repeater {
-        model: qmlMidiFile.qmlMidiTrack(1)
+        model: qmlMidiFileTrackModel
 
-        Rectangle {
-          visible: mefType == 0x10 && !qmlKeyboard.keyIsBlack( mefNote );
-          x: qmlKeyboard.whiteKeyWidth * qmlKeyboard.keyIndex( mefNote );
-          width: qmlKeyboard.whiteKeyWidth
-          y: (qmlMidiFile.fileLenght - mefTime - mefLenght) * factor + midiScroll.height
-          height: mefLenght * factor
+        //This item is one track
+        Item {
+          id: trackArea
+          anchors.fill: midiArea
+          visible: trackVisible
 
-          color: "green"
-          border.color: "black"
-          border.width: 1
+          property int midiVisualIndex: index              //Index of track in visual list
+          property int midiTrackIndex: Number(trackIndex)  //Index of QmlMidiTrack in the qmlMidiTrackList
+          property string midiTrackColor: trackColor
+
+          //At first - white keys
+          Repeater {
+            model: qmlMidiTrackList[trackArea.midiTrackIndex]
+
+            Rectangle {
+              visible: mefType == 0x10 && !qmlKeyboard.keyIsBlack( mefNote );
+              x: qmlKeyboard.whiteKeyWidth * qmlKeyboard.keyIndex( mefNote );
+              width: qmlKeyboard.whiteKeyWidth
+              y: (qmlMidiFile.fileLenght - mefTime - mefLenght) * factor + midiScroll.height
+              height: mefLenght * factor
+
+              color: trackArea.midiTrackColor
+              border.color: "black"
+              border.width: 1
+            }
+
+          }
+
+          //At second - black keys
+          Repeater {
+            model: qmlMidiTrackList[trackArea.midiTrackIndex]
+
+            Rectangle {
+              visible: mefType == 0x10 && qmlKeyboard.keyIsBlack( mefNote );
+              x: (qmlKeyboard.whiteKeyWidth + width) / 2 + qmlKeyboard.whiteKeyWidth * qmlKeyboard.keyIndex( mefNote );
+              width: qmlKeyboard.whiteKeyWidth / 2 + 2
+              y: (qmlMidiFile.fileLenght - mefTime - mefLenght) * factor + midiScroll.height
+              height: mefLenght * factor
+
+              color: trackArea.midiTrackColor
+              border.color: "black"
+              border.width: 1
+            }
+
+          }
+
         }
-
       }
-
-      //At second - black keys
-      Repeater {
-        model: qmlMidiFile.qmlMidiTrack(1)
-
-        Rectangle {
-          visible: mefType == 0x10 && qmlKeyboard.keyIsBlack( mefNote );
-          x: (qmlKeyboard.whiteKeyWidth + width) / 2 + qmlKeyboard.whiteKeyWidth * qmlKeyboard.keyIndex( mefNote );
-          width: qmlKeyboard.whiteKeyWidth / 2 + 2
-          y: (qmlMidiFile.fileLenght - mefTime - mefLenght) * factor + midiScroll.height
-          height: mefLenght * factor
-
-          color: "green"
-          border.color: "black"
-          border.width: 1
-        }
-
-      }
-
     }
   }
 
