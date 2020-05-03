@@ -23,11 +23,9 @@ Rectangle {
   property bool keyboardRight
 
   property int widthNpp: 50
-  property int widthId: 70
+  property int widthId: 80
   property int widthIcon: 64
   property int widthTitle: 150
-  property int widthPreset: 150
-  property int widthFontName: 250
 
   property int currentRow : 0
   property int currentMode : 0
@@ -82,7 +80,7 @@ Rectangle {
     anchors.leftMargin: 5
     anchors.right: parent.right
     anchors.rightMargin: 5
-    height: 64
+    height: 25
 
     spacing: 2
     //Programm number
@@ -128,7 +126,7 @@ Rectangle {
 //  "voiceProgram",             //Voice bank midi program
 //  "voiceId"                   //Voice id is concatenation of [bank msb][bank lsb][program]
   //Table contents
-  ListView {
+  SvScrollView {
     anchors.top: idTitle.bottom
     anchors.topMargin: 5
     anchors.left: parent.left
@@ -140,67 +138,73 @@ Rectangle {
 
     clip: true
 
-    model: voiceList
+    ListView {
+      anchors.fill: parent
 
-    delegate: Item {
-      width: parent.width
-      height: 30
-      Rectangle {
-        anchors.fill: parent
-        visible: index === currentRow
-        color: Qt.lighter( "green" )
-      }
-      Row {
-        spacing: 2
-        anchors.verticalCenter: parent.verticalCenter
-        //Voice serial number
-        SvFieldText {
-          text: index + 1
-          width: widthNpp
-          editable: false
-          onLeftButton: setCurrentRow(index);
+      model: voiceList
+
+      delegate: Item {
+        width: parent.width
+        height: 30
+        Rectangle {
+          anchors.fill: parent
+          visible: index === currentRow
+          color: Qt.lighter( "green" )
         }
-        //Voice icon
-        Image {
-          width: widthIcon
-          height: 32
-          source: voiceIconName
-          MouseArea {
-            anchors.fill: parent
-            acceptedButtons: Qt.LeftButton | Qt.RightButton
-            onClicked: setCurrentRow(index);
+        Row {
+          spacing: 2
+          anchors.verticalCenter: parent.verticalCenter
+          //Voice serial number
+          SvFieldText {
+            text: index + 1
+            width: widthNpp
+            editable: false
+            onLeftButton: setCurrentRow(index);
           }
-        }
-        //Bank MSB
-        SvFieldText {
-          text: voiceBankMsb
-          width: widthId
-          editable: false
-          onLeftButton: setCurrentRow(index);
-        }
-        //Bank LSB
-        SvFieldText {
-          text: voiceBankLsb
-          width: widthId
-          editable: false
-          onLeftButton: setCurrentRow(index);
-        }
-        //Midi programm
-        SvFieldText {
-          text: voiceProgram
-          width: widthId
-          editable: false
-          onLeftButton: setCurrentRow(index);
-        }
-        //Programm title
-        SvFieldText {
-          text: voiceName
-          width: widthTitle
-          editable: false
-          onLeftButton: setCurrentRow(index);
+          //Voice icon
+          Image {
+            width: widthIcon
+            height: 32
+            source: voiceIconName
+            MouseArea {
+              anchors.fill: parent
+              acceptedButtons: Qt.LeftButton | Qt.RightButton
+              onClicked: setCurrentRow(index);
+            }
+          }
+          //Bank MSB
+          SvFieldText {
+            text: voiceBankMsb
+            width: widthId
+            editable: false
+            onLeftButton: setCurrentRow(index);
+          }
+          //Bank LSB
+          SvFieldText {
+            text: voiceBankLsb
+            width: widthId
+            editable: false
+            onLeftButton: setCurrentRow(index);
+          }
+          //Midi programm
+          SvFieldText {
+            text: voiceProgram
+            width: widthId
+            editable: false
+            onLeftButton: setCurrentRow(index);
+          }
+          //Programm title
+          SvFieldText {
+            text: voiceName
+            width: widthTitle
+            editable: false
+            onLeftButton: setCurrentRow(index);
+          }
         }
       }
     }
+
+
   }
 
 

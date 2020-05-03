@@ -8,7 +8,9 @@ enum QmlMidiEventField {
   mefType,
   mefNote,
   mefLenght,
-  mefText
+  mefText,
+  mefX,
+  wefWidth
 };
 
 
@@ -247,5 +249,7 @@ QHash<int, QByteArray> QmlMidiTrack::roleNames() const
   roles.insert( mefNote,   "mefNote" );
   roles.insert( mefLenght, "mefLenght" );
   roles.insert( mefText,   "mefText" );
+  roles.insert( mefX,      "mefX" );
+  roles.insert( wefWidth,  "mefX" );
   return roles;
   }

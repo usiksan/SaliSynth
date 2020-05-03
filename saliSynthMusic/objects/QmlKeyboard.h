@@ -73,7 +73,7 @@ class QmlKeyboard : public QAbstractListModel
     qint8   leftCode() const { return mKeyList.at(0).mCode; }
 
     int     delimiterCode() const { return mDelimiter; }
-    int     delimiter() const { return mKeyMap.contains(mDelimiter) ? mKeyList.at(mKeyMap.value(mDelimiter)).mIndex : 0; }
+    int     delimiter() const { return keyIndex(mDelimiter); }
     void    setDelimiter( int delim );
 
     int     whiteKeyWidth() const { return mWhiteKeyWidth; }
@@ -91,6 +91,9 @@ class QmlKeyboard : public QAbstractListModel
 
     SvQmlJsonFile *settings() const { return mSettings; }
     void           setSettings( SvQmlJsonFile *settings );
+
+    Q_INVOKABLE bool keyIsBlack( int keyCode ) const { return mKeyMap.contains(keyCode) ? mKeyList.at( mKeyMap.value(keyCode) ).mIsBlack : false; }
+    Q_INVOKABLE int  keyIndex( int keyCode ) const { return mKeyMap.contains(keyCode) ? mKeyList.at( mKeyMap.value(keyCode) ).mIndex : 0; }
 
     // QAbstractItemModel interface
   public:

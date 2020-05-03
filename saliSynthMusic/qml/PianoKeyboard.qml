@@ -107,7 +107,7 @@ Item {
     }
   }
 
-  //Ряд белых клавиш
+  //White keys row [Ряд белых клавиш]
   Repeater {
     model: qmlKeyboard
 
@@ -156,7 +156,7 @@ Item {
 
   }
 
-  //Ряд черных клавиш
+  //Black keys row [Ряд черных клавиш]
   Repeater {
     model: qmlKeyboard
 

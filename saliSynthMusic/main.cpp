@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
   qmlRegisterType<SvQmlJsonString>          ("SvQml", 1, 0, "SvQmlJsonString" );
   qmlRegisterType<SvQmlJsonHistory>         ("SvQml", 1, 0, "SvQmlJsonHistory" );
   qmlRegisterType<SvQmlJsonModel>           ("SvQml", 1, 0, "SvQmlJsonModel" );
+  qmlRegisterType<QmlMidiTrack>             ("SvQml", 1, 0, "QmlMidiTrack" );
 
 
   QQmlApplicationEngine engine;

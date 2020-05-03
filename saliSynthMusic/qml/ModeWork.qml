@@ -88,7 +88,20 @@ Item {
       Binding { target: qmlMidiFile; property: "tickStep"; value: spinTempo.value }
     }
 
+
+    //Change view
+    ToolButton {
+      icon.source: "qrc:/img/play-music.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Midi track view")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: midiViewMode = (midiViewMode + 1) & 1
+    }
   }
+
+  property int midiViewMode : 0
 
   //Work area
   Item {
@@ -100,6 +113,12 @@ Item {
 
     MidiFileSetup {
       id: midiFileSetup
+      visible: midiViewMode === 0
+    }
+
+    MidiTrackVertical {
+      id: midiViewVertical
+      visible: midiViewMode === 1
     }
   }
 

@@ -15,7 +15,7 @@ import QtQuick.Controls.Styles 1.3
 ScrollView {
 
   style: ScrollViewStyle {
-    scrollBarBackground: Item{ width: 10 }
+    scrollBarBackground: Item{ width: 15 }
     incrementControl: Item {width: 10; height: 10}
     decrementControl: Item {width: 10; height: 10}
     corner: null

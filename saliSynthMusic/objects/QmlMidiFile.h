@@ -38,8 +38,10 @@ class QmlMidiFile : public QObject
     QTimer          mTimer;
     qint32          mTickCount;
     qint32          mTickStep;
+    quint32         mFileLenght;
 
     Q_PROPERTY(int tickStep READ tickStep WRITE setTickStep NOTIFY tickStepChanged)
+    Q_PROPERTY(int fileLenght READ fileLenght WRITE setFileLenght NOTIFY fileLenghtChanged)
   public:
     QmlMidiFile( QObject *parent = nullptr );
 
@@ -48,11 +50,16 @@ class QmlMidiFile : public QObject
     int  tickStep() const { return mTickStep; }
     void setTickStep( int stp );
 
+    int  fileLenght() const { return mFileLenght; }
+    void setFileLenght( int len ) { mFileLenght = len; emit fileLenghtChanged(); }
+
     Q_INVOKABLE QmlMidiTrack *qmlMidiTrack( int track ) { return mQmlTrack + (track & 0xf); }
 
     Q_INVOKABLE SvQmlJsonModel *qmlMidiTrackModel() { return &mQmlTrackModel; }
   signals:
     void tickStepChanged();
+
+    void fileLenghtChanged();
 
     void midiEvent( quint8 cmd, quint8 data0, quint8 data1 );
 

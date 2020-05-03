@@ -120,5 +120,7 @@
         <file>img/instrumentChurchOrgan.png</file>
         <file>img/instrumentHarmonica.png</file>
         <file>img/instrumentReedOrgan.png</file>
+        <file>qml/MidiTrackVertical.qml</file>
+        <file>img/play-music.png</file>
     </qresource>
 </RCC>

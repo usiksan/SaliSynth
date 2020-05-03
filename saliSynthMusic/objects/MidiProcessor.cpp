@@ -173,7 +173,7 @@ void MidiProcessor::keyboardLeftSimpleChordGenerator(quint8 cmd, qint8 data0, qu
     for( int i = 0; i < 3; i++ )
       if( mLeftChord[i] == 0 ) {
         mLeftChord[i] = data0;
-        mLeftChordTimer = 3;
+        mLeftChordTimer = 5;
         break;
         }
     }

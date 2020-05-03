@@ -82,12 +82,13 @@
                   Append empty icon
                   Append close icon selector button
               v31 Append volume regulation per channel when midi play
+              v32 Begin display midi tracks. Make up vertical preliminary visualization
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 30
+#define VERSION 32
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

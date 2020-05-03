@@ -59,6 +59,8 @@ bool QmlMidiFile::read(QString fname)
   for( int i = 0; i < 16; i++ )
     mQmlTrack[i].beginReadTrack();
 
+  setFileLenght(0);
+
   //Repeated tracks
   int trackIndex = 0;
   while( !reader.isEnd() ) {
@@ -429,6 +431,10 @@ void QmlMidiFile::readMtrk(IffReader &reader)
 
   mQmlTrack[channelIndex].setTrackName( trackName );
   mQmlTrack[channelIndex].setInstrumentName( instrumentName );
+
+  //Update file time lenght
+  if( time > mFileLenght )
+    setFileLenght(time);
   }
 
 
