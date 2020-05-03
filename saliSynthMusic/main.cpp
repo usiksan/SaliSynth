@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
   //Start midi keyboard
   QThread *midiThread = new QThread();
   MidiInput *midiInput = new MidiInput( midiThread );
-  //midiInput->connect( midiInput, &MidiInput::midi, synth, &SfSynth::midi );
+  //Keyboard reports about their connection and disconnection
   midiInput->connect( midiInput, &MidiInput::connectionChanged, synth, &SfSynth::midiConnection );
 
 
@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
 
 //  MidiFile midi;
   //midi.read( "/home/salilab/midi/white_dove.mid" );
-  midiProcessor->qmlMidiFile()->read("/home/salilab/midi/nem.mid");
+  //midiProcessor->qmlMidiFile()->read("/home/salilab/midi/nem.mid");
 
   return app.exec();
   }

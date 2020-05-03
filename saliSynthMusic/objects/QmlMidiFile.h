@@ -40,12 +40,16 @@ class QmlMidiFile : public QObject
     qint32          mTickStep;
     quint32         mFileLenght;
 
+    Q_PROPERTY(int tickCount READ tickCount WRITE setTickCount NOTIFY tickCountChanged)
     Q_PROPERTY(int tickStep READ tickStep WRITE setTickStep NOTIFY tickStepChanged)
     Q_PROPERTY(int fileLenght READ fileLenght WRITE setFileLenght NOTIFY fileLenghtChanged)
   public:
     QmlMidiFile( QObject *parent = nullptr );
 
     void configRead( QString fname );
+
+    int  tickCount() const { return mTickCount >> 4; }
+    void setTickCount( int tc );
 
     int  tickStep() const { return mTickStep; }
     void setTickStep( int stp );
@@ -57,6 +61,8 @@ class QmlMidiFile : public QObject
 
     Q_INVOKABLE SvQmlJsonModel *qmlMidiTrackModel() { return &mQmlTrackModel; }
   signals:
+    void tickCountChanged();
+
     void tickStepChanged();
 
     void fileLenghtChanged();
@@ -67,8 +73,6 @@ class QmlMidiFile : public QObject
 
   public slots:
     void tick();
-
-    void seek( quint32 time );
 
     void play();
 

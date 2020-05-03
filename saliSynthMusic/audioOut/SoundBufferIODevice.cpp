@@ -63,9 +63,13 @@ qint64 SoundBufferIODevice::readData(char *data, qint64 maxlen)
 //  if( fillBuffer > 14 && (audioBufferSize - audio->bytesFree()) >= SAMPLES_PER_20MS )
 //    return 0;
 
-  if( fillBuffer++ < 40 ) {
-    qDebug()  << "maxlen" << maxlen << "bytes free" << audio->bytesFree() << "timer" << mTimer.restart();
-    }
+//  if( fillBuffer++ < 40 ) {
+//    qDebug()  << "maxlen" << maxlen << "bytes free" << audio->bytesFree() << "timer" << mTimer.restart();
+//    }
+
+  //With this we fight with average
+  //When average occur we decrement this and all sound samples downscales to 1/16 part
+  static int sampleScaler = 16;
 
 
   qint16 *outSamples = static_cast<qint16*>( static_cast<void*>(data) );
@@ -77,8 +81,10 @@ qint64 SoundBufferIODevice::readData(char *data, qint64 maxlen)
     for( auto ptr : mActiveNotes )
       sample += ptr->sample();
 
+    //Scale
+    sample = sample * sampleScaler >> 4;
     //Average sample
-    if( sample > 32767 ) { qDebug() << "top average" << sample; sample = 32767; }
+    if( sample > 32767 ) {  sampleScaler--; qDebug() << "top average" << sample << sampleScaler; sample = 32767; }
     if( sample < -32768 ) sample = -32768;
 
     //Store sample to output buffer

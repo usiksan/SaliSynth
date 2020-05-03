@@ -135,6 +135,18 @@ void QmlMidiFile::configRead(QString fname)
 
 
 
+
+void QmlMidiFile::setTickCount(int tc)
+  {
+  mTickCount = tc << 4;
+  for( int i = 0; i < 16; i++ )
+    mQmlTrack[i].seek( tc );
+  emit tickCountChanged();
+  }
+
+
+
+
 void QmlMidiFile::setTickStep(int stp)
   {
   mTickStep = stp;
@@ -185,20 +197,17 @@ void QmlMidiFile::tick()
         int volume = mQmlTrackModel.asInt( i, TRACK_VOLUME );
         mQmlTrack[trackIndex].tick( mTickCount >> 4, nextTime >> 4, soundOn, volume );
         }
+
+      //Update current tick count
+      mTickCount = nextTime;
+      //Signal that tick count changed
+      //On this signal visual elements display actual playing position
+      emit tickCountChanged();
       }
-
-    //Update current tick count
-    mTickCount = nextTime;
+    else
+      //Update current tick count
+      mTickCount = nextTime;
     }
-  }
-
-
-
-void QmlMidiFile::seek(quint32 time)
-  {
-  mTickCount = time << 4;
-  for( int i = 0; i < 16; i++ )
-    mQmlTrack[i].seek( time );
   }
 
 
@@ -213,7 +222,7 @@ void QmlMidiFile::play()
     emit voiceSetup( mQmlTrack[trackIndex].channel(), mQmlTrackModel.asInt( i, TRACK_ID ) );
     }
 
-  seek(0);
+  setTickCount(0);
   }
 
 
