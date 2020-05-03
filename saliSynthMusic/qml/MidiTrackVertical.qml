@@ -7,7 +7,13 @@ Item {
 
   property real factor : 0.5
 
+  property int tickCount : qmlMidiFile.tickCount
+  onTickCountChanged: {
+    midiScroll.flickableItem.contentY = (qmlMidiFile.fileLenght - tickCount) * factor
+  }
+
   SvScrollView {
+    id: midiScroll
     anchors.top: parent.top
     anchors.topMargin: 5
     anchors.left: parent.left
@@ -19,7 +25,7 @@ Item {
 
     Item {
       id: midiArea
-      height: qmlMidiFile.fileLenght * factor
+      height: qmlMidiFile.fileLenght * factor + midiScroll.height
       width: parent.width
 
       //At first - white keys
@@ -30,7 +36,7 @@ Item {
           visible: mefType == 0x10 && !qmlKeyboard.keyIsBlack( mefNote );
           x: qmlKeyboard.whiteKeyWidth * qmlKeyboard.keyIndex( mefNote );
           width: qmlKeyboard.whiteKeyWidth
-          y: (qmlMidiFile.fileLenght - mefTime - mefLenght) * factor
+          y: (qmlMidiFile.fileLenght - mefTime - mefLenght) * factor + midiScroll.height
           height: mefLenght * factor
 
           color: "green"
@@ -48,7 +54,7 @@ Item {
           visible: mefType == 0x10 && qmlKeyboard.keyIsBlack( mefNote );
           x: (qmlKeyboard.whiteKeyWidth + width) / 2 + qmlKeyboard.whiteKeyWidth * qmlKeyboard.keyIndex( mefNote );
           width: qmlKeyboard.whiteKeyWidth / 2 + 2
-          y: (qmlMidiFile.fileLenght - mefTime - mefLenght) * factor
+          y: (qmlMidiFile.fileLenght - mefTime - mefLenght) * factor + midiScroll.height
           height: mefLenght * factor
 
           color: "green"
@@ -60,5 +66,9 @@ Item {
 
     }
   }
+
+//  SvText {
+//    text: "position x:" + midiScroll.flickableItem.contentX + "  y:" + midiScroll.flickableItem.contentY
+//  }
 
 }

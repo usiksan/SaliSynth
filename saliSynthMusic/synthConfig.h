@@ -83,12 +83,15 @@
                   Append close icon selector button
               v31 Append volume regulation per channel when midi play
               v32 Begin display midi tracks. Make up vertical preliminary visualization
+              v33 Append automatic average exclusion volume ajust
+                  Append time moment of play property
+              v34 Append time tracking functionality preliminary
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 32
+#define VERSION 34
 
 //Polyphony count
 #define POLYPHONY_COUNT 128
