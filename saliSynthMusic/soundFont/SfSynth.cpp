@@ -85,7 +85,7 @@ QString SfSynth::soundFontPath() const
 
 QString SfSynth::midiPath() const
   {
-  return SvQmlUtils::getHomePath() + "saliSynthMusic/midi/";
+  return SvQmlUtils::getHomePath() + "midi/";
   }
 
 

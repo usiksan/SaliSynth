@@ -49,7 +49,7 @@ Item {
           height: 28
           anchors.top: parent.top
           anchors.topMargin: 3
-          anchors.right: parent.right
+          anchors.right: volumeSlider.left
           anchors.rightMargin: 3
           padding: 0
           contentItem: Image {
@@ -91,10 +91,25 @@ Item {
           onApply: trackName = str;
         }
 
-//        SvText {
-//          anchors.bottom: parent.bottom
-//          text: "id: " + trackId + "index:" + trackIndex
-//        }
+
+        //Track volume regulator
+        Slider {
+          id: volumeSlider
+          anchors.top: parent.top
+          //anchors.topMargin: 33
+          anchors.right: parent.right
+          anchors.rightMargin: 3
+          anchors.bottom: parent.bottom
+          orientation: Qt.Vertical
+          ToolTip.text: qsTr("Track volume")
+          ToolTip.visible: hovered
+          ToolTip.delay: 300
+          from: 0
+          to: 127
+          value: Number( trackVolume )
+          onMoved: trackVolume = value.toFixed();
+        }
+
       }
     }
   }

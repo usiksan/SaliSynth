@@ -18,6 +18,8 @@ QmlMidiTrack::QmlMidiTrack()
 
   }
 
+
+
 void QmlMidiTrack::beginReadTrack()
   {
   setTrackName( QString{} );
@@ -28,7 +30,12 @@ void QmlMidiTrack::beginReadTrack()
   mMidiList.clear();
   mTextList.clear();
 
+  //With this first we change current volume level
+  mVolume = -1;
   }
+
+
+
 
 void QmlMidiTrack::endReadTrack()
   {
@@ -139,12 +146,21 @@ void QmlMidiTrack::stop()
     emit midiEvent( 0x10 | mChannel, mMidiList.at( mActiveNoteList.at(i) ).mData0, 0 );
   //... and clear active note list
   mActiveNoteList.clear();
+  //With this first we change current volume level
+  mVolume = -1;
   }
 
 
 
-void QmlMidiTrack::tick(int prevTime, int nextTime, bool soundOn)
+void QmlMidiTrack::tick(int prevTime, int nextTime, bool soundOn, int volume)
   {
+  //Check volume change
+  if( volume != mVolume ) {
+    //Volume changed, send new volume
+    mVolume = volume & 0x7f;
+    emit midiEvent( 0xb0 | mChannel, 0x7, mVolume );
+    }
+
   //Test open notes
   for( int i = mActiveNoteList.count() - 1; i >= 0; i-- ) {
     int eventIndex = mActiveNoteList.at(i);
@@ -174,6 +190,7 @@ void QmlMidiTrack::tick(int prevTime, int nextTime, bool soundOn)
       }
     mEventIndex++;
     }
+
   }
 
 

@@ -8,6 +8,7 @@
    Instrument icon selector
 */
 import QtQuick 2.8
+import QtQuick.Controls 2.5
 
 ModeBase {
   id: instrumentIconSelector
@@ -39,12 +40,19 @@ ModeBase {
 
     Item {
       id: wrapper
-      width: 64
-      height: 64
+      width: 120
+      height: 80
 
       Image {
-        anchors.centerIn: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
         source: iconSrc
+      }
+
+      SvText {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        text: iconTitle
       }
 
       //Current icon marker
@@ -77,13 +85,28 @@ ModeBase {
       id: view
       anchors.fill: parent
       anchors.margins: 10
-      cellWidth: 64
-      cellHeight: 64
+      cellWidth: 122
+      cellHeight: 82
       model: iconListModel
       delegate: iconDelegate
       focus: true
       clip: true
     }
   }
+
+  //Close selector
+  ToolButton {
+    anchors.top: parent.top
+    anchors.right: parent.right
+    anchors.margins: 5
+    icon.source: "qrc:/img/close.png"
+    icon.color: "transparent"
+    ToolTip.text: qsTr("Close instrument icon selector without any changes")
+    ToolTip.visible: hovered
+    ToolTip.delay: 300
+
+    onClicked: instrumentIconSelector.visible = false
+  }
+
 
 }

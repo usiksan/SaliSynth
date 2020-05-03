@@ -76,12 +76,18 @@
               v27 Append plaing tempo changing and store it to the config
                   Try parse track names from markers
               v28 Enhanse release note phase with short release time
+              v29 Append a lot of instrument icon
+              v30 Append a lot of instrument icon
+                  Append title to icon in instrument icon selector
+                  Append empty icon
+                  Append close icon selector button
+              v31 Append volume regulation per channel when midi play
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 28
+#define VERSION 30
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

@@ -47,10 +47,11 @@ class QmlMidiTrack : public QAbstractListModel
 
     QmlMidiEventList mMidiList;
     QStringList      mTextList;
-    QMap<quint8,int> mActiveNotesMap;
-    QList<int>       mActiveNoteList;
-    qint32           mEventIndex;
-    quint8           mChannel;
+    QMap<quint8,int> mActiveNotesMap; //! Active note map used in read process to collect note on and note off midi commands
+    QList<int>       mActiveNoteList; //! Active note list to detect on-off notes
+    qint32           mEventIndex;     //! Next event to play
+    quint8           mChannel;        //! Channel on which track is plaied
+    int              mVolume;         //! Current track volume
 
     Q_PROPERTY(QString trackName READ trackName WRITE setTrackName NOTIFY trackNameChanged)
     Q_PROPERTY(QString instrumentName READ instrumentName WRITE setInstrumentName NOTIFY instrumentNameChanged)
@@ -86,7 +87,7 @@ class QmlMidiTrack : public QAbstractListModel
 
     void    stop();
 
-    void    tick( int prevTime, int nextTime, bool soundOn );
+    void    tick( int prevTime, int nextTime, bool soundOn, int volume );
 
   signals:
     void trackNameChanged();

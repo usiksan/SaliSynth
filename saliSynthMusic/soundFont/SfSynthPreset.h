@@ -40,6 +40,12 @@ class SfSynthPreset
 
     void         clone(const SfSynthPreset *src );
 
+  private:
+    //!
+    //! \brief setVolume Setup master volume for all notes of preset
+    //! \param volume    Volume value which need to be installed
+    //!
+    void         setVolume( int volume );
   };
 
 

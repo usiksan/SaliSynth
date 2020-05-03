@@ -23,6 +23,7 @@
 #define TRACK_INDEX  QStringLiteral("trackIndex")
 #define TRACK_ON     QStringLiteral("trackOn")
 #define TRACK_REMARK QStringLiteral("trackRemark")
+#define TRACK_VOLUME QStringLiteral("trackVolume")
 
 QmlMidiFile::QmlMidiFile(QObject *parent) :
   QObject(parent),
@@ -30,16 +31,11 @@ QmlMidiFile::QmlMidiFile(QObject *parent) :
   mTickCount(-1),
   mTickStep(16)
   {
-  mQmlTrackModel.setFields( { TRACK_ID, TRACK_NAME, TRACK_INDEX, TRACK_ON, TRACK_REMARK } );
+  mQmlTrackModel.setFields( { TRACK_ID, TRACK_NAME, TRACK_INDEX, TRACK_ON, TRACK_REMARK, TRACK_VOLUME } );
   connect( &mQmlTrackModel, &SvQmlJsonModel::afterModelChanged, this, [this] () { mConfigDirty = true; } );
 
   for( int i = 0; i < 16; i++ )
     connect( mQmlTrack + i, &QmlMidiTrack::midiEvent, this, &QmlMidiFile::midiEvent );
-
-//  mQmlTrackModel.clear();
-//  mQmlTrackModel.addRecord();
-//  mQmlTrackModel.setInt( 0, TRACK_ID, 0 );
-//  mQmlTrackModel.setString( 0, TRACK_NAME, "Track test name" );
 
   connect( &mTimer, &QTimer::timeout, this, &QmlMidiFile::tick );
   mTimer.start( 20 );
@@ -93,6 +89,7 @@ bool QmlMidiFile::read(QString fname)
       mQmlTrackModel.setInt( r, TRACK_INDEX, i );
       mQmlTrackModel.setInt( r, TRACK_ON, 1 );
       mQmlTrackModel.setString( r, TRACK_REMARK, mQmlTrack[i].mRemark );
+      mQmlTrackModel.setInt( r, TRACK_VOLUME, 127 );
       }
     if( channel >= 16 ) break;
     }
@@ -116,7 +113,7 @@ void QmlMidiFile::configRead(QString fname)
     mConfigFile.append( QChar('/') );
   mConfigFile += info.completeBaseName() + QString(".cfg");
 
-  qDebug() << "midi config" << mConfigFile;
+  //qDebug() << "midi config" << mConfigFile;
 
   mConfigDirty = true;
 
@@ -124,7 +121,7 @@ void QmlMidiFile::configRead(QString fname)
   if( QFile::exists(mConfigFile) ) {
     QFile file(mConfigFile);
     if( file.open(QIODevice::ReadOnly) ) {
-      qDebug() << "midi config read" << mConfigFile;
+      //qDebug() << "midi config read" << mConfigFile;
       QJsonObject obj = QJsonDocument::fromJson(file.readAll()).object();
       mTickStep = obj.value( QStringLiteral("tickStep") ).toInt();
       mQmlTrackModel.setArray( obj.value( QStringLiteral("tracks") ).toArray() );
@@ -164,17 +161,31 @@ void QmlMidiFile::configWrite()
 
 
 
+//!
+//! \brief QmlMidiFile::tick With this function we generates midi sequence to play midi file
+//!
 void QmlMidiFile::tick()
   {
   if( mTickCount >= 0 ) {
+    //We need send event beatween startTime and lastTime
+    // startTime is mTickCount, and lastTime - is nextTime
+    //At first we calculate nextTime
     int nextTime = mTickCount + mTickStep;
+
+    //Anything need to be done when signed parts of time are different
+    // signed parts not includes low 4 bits
     if( (nextTime & 0xfffffff0) != (mTickCount & 0xfffffff0) ) {
+
+      //For each of tracks we execute tick with current times and track params
       for( int i = 0; i < mQmlTrackModel.count(); i++ ) {
         int trackIndex = mQmlTrackModel.asInt( i, TRACK_INDEX );
         bool soundOn = mQmlTrackModel.asInt( i, TRACK_ON );
-        mQmlTrack[trackIndex].tick( mTickCount >> 4, nextTime >> 4, soundOn );
+        int volume = mQmlTrackModel.asInt( i, TRACK_VOLUME );
+        mQmlTrack[trackIndex].tick( mTickCount >> 4, nextTime >> 4, soundOn, volume );
         }
       }
+
+    //Update current tick count
     mTickCount = nextTime;
     }
   }

@@ -46,6 +46,7 @@ void SfSynthPreset::midi(SfSynth *synth, quint8 cmd, quint8 data0, quint8 data1)
       break;
     case 3 :
       //Control change (controller number) (controller value)
+      if( data0 == 7 ) setVolume( data1 );
       break;
     case 4 :
       //Programm change (programm number)
@@ -58,8 +59,8 @@ void SfSynthPreset::midi(SfSynth *synth, quint8 cmd, quint8 data0, quint8 data1)
       //Pitch wheel change (lsb) (msb)
       break;
     }
-  if( cmd != 7 )
-    qDebug() << "cmd " << cmd << data0 << data1;
+//  if( cmd != 7 )
+//    qDebug() << "cmd " << cmd << data0 << data1;
   }
 
 
@@ -132,6 +133,18 @@ void SfSynthPreset::clone(const SfSynthPreset *src)
     }
   mSoundFontPtr = src->mSoundFontPtr;
   mVoiceId = src->mVoiceId;
+  }
+
+
+
+//!
+//! \brief setVolume Setup master volume for all notes of preset
+//! \param volume    Volume value which need to be installed
+//!
+void SfSynthPreset::setVolume(int volume)
+  {
+  for( int i = 0; i < 128; i++ )
+    mNotes[i].setVolume( volume );
   }
 
 

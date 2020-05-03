@@ -61,6 +61,9 @@ class SfSynthTrack
     quint8        mMinVelocity;        //Velocity range for which this track actived
     quint8        mMaxVelocity;
   public:
+
+    int           mMasterVolume;
+
     SfSynthTrack();
 
     void setup(const qint16 *samples, int sampleEnd, int sampleLoopStart, int sampleLoopEnd, bool exitLoop, int sampleStep, int volumeInitial,

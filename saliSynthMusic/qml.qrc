@@ -104,5 +104,21 @@
         <file>img/sound.png</file>
         <file>img/soundOff.png</file>
         <file>img/stop.png</file>
+        <file>img/instrumentCelesta.png</file>
+        <file>img/instrumentDrawbarOrgan.png</file>
+        <file>img/instrumentDulcimer.png</file>
+        <file>img/instrumentGlockenspiel.png</file>
+        <file>img/instrumentMarimba.png</file>
+        <file>img/instrumentMusicBox.png</file>
+        <file>img/instrumentPipeOrgan.png</file>
+        <file>img/instrumentTubularBells.png</file>
+        <file>img/instrumentVibraphone.png</file>
+        <file>img/instrumentXylophone.png</file>
+        <file>img/instrumentRockOrgan.png</file>
+        <file>img/instrumentAcousticBass.png</file>
+        <file>img/instrumentBassGuitar.png</file>
+        <file>img/instrumentChurchOrgan.png</file>
+        <file>img/instrumentHarmonica.png</file>
+        <file>img/instrumentReedOrgan.png</file>
     </qresource>
 </RCC>

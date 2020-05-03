@@ -40,7 +40,8 @@ SfSynthTrack::SfSynthTrack() :
   mVolHoldEnvelope(0),    //Hold time. Volume hold peak level
   mVolDecayEnvelope(0),   //Time for volume linearly ramps toward the sustain level
   mVolReleaseEnvelope(0), //Time
-  mVolSustainLevel(0)    //This is the decrease in level, expressed in centibels, to which the Volume Envelope value ramps during the decay phase.
+  mVolSustainLevel(0),    //This is the decrease in level, expressed in centibels, to which the Volume Envelope value ramps during the decay phase.
+  mMasterVolume(128)
   {
   if( !mAttenuator[0] ) {
     //Fill attenuator table
@@ -57,6 +58,9 @@ void SfSynthTrack::setup(const qint16 *samples, int sampleEnd, int sampleLoopSta
                          int volumeInitial, int volDelayEnvelope, int volAttackEnvelope, int volHoldEnvelope, int volDecayEnvelope,
                          int volReleaseEnvelope, int volSustainLevel, int velRange )
   {
+  if( volDelayEnvelope < 0 || volAttackEnvelope < 0 || volHoldEnvelope < 0 || volDecayEnvelope < 0 || volReleaseEnvelope < 0 ) {
+    qDebug() << "fail delay" << volDelayEnvelope << volAttackEnvelope << volHoldEnvelope << volDecayEnvelope << volReleaseEnvelope;
+    }
   mSamples = samples;     //Samples vector
   mSampleEnd = sampleEnd;
   mSampleLoopStart = sampleLoopStart;
@@ -156,14 +160,18 @@ int SfSynthTrack::sample(bool &stopped)
     return nextSample() * ( mVolume * mAttenuator[mVolSustainLevel] >> 15 ) >> 15;
 
   if( mVolumePhase == vpRelease ) {
-    if( mVolReleaseEnvelope < 64 )
-      mAttenuation += mAttenuationStep;
-    else if( (mVolumeTick & 0x3f) == 0 )
-      mAttenuation += mAttenuationStep;
+    mAttenuation += mAttenuationStep;
+//    if( mVolReleaseEnvelope < 64 )
+//      mAttenuation += mAttenuationStep;
+//    else if( (mVolumeTick & 0x3f) == 0 )
+//      mAttenuation += mAttenuationStep;
+
     if( mAttenuation > (1000 << 15) ) mAttenuation = (1000 << 15);
     if( mVolumeTick >= mVolReleaseEnvelope )
       mVolumePhase = vpStop;
-    return nextSample() * ( mVolume * mAttenuator[(mAttenuation >> 15) & 0x3ff] >> 15 ) >> 15;
+    int sm = nextSample() * ( mVolume * mAttenuator[(mAttenuation >> 15) & 0x3ff] >> 15 ) >> 15;
+    //qDebug() << "sample" << sm;
+    return sm;// nextSample() * ( mVolume * mAttenuator[(mAttenuation >> 15) & 0x3ff] >> 15 ) >> 15;
     }
 
   return 0;
@@ -199,11 +207,12 @@ void SfSynthTrack::noteOff(quint8 pressure)
       if( mAttenuation > (1000 << 15) ) mAttenuation = (1000 << 15);
       if( mVolReleaseEnvelope == 0 )
         mAttenuationStep = ((1000 << 15) - mAttenuation);
-      else if( mVolReleaseEnvelope < 64 )
-        mAttenuationStep = ((1000 << 15) - mAttenuation) / mVolReleaseEnvelope;
       else
-        mAttenuationStep = ((1000 << 15) - mAttenuation) / (mVolReleaseEnvelope >> 6);
-      //qDebug() << "start release phase" << mAttenuation << mAttenuationStep << mVolReleaseEnvelope;
+        mAttenuationStep = ((1000 << 15) - mAttenuation) / mVolReleaseEnvelope;
+//      else if( mVolReleaseEnvelope < 64 )
+//      else
+//        mAttenuationStep = ((1000 << 15) - mAttenuation) / (mVolReleaseEnvelope >> 6);
+//      qDebug() << "start release phase" << mAttenuation << mAttenuationStep << mVolReleaseEnvelope;
       mVolumeTick = 0;
       mVolumePhase = vpRelease;
       break;
@@ -251,5 +260,5 @@ int SfSynthTrack::nextSample()
       }
     }
 
-  return curSample >> 3;
+  return curSample * mMasterVolume >> 8;
   }

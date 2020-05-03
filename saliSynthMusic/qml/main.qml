@@ -39,6 +39,7 @@ Window {
       "voiceSoundFontFile",       //Sound font file name
       "voiceSoundFontPreset",     //Preset in sound font file
       "voiceSoundFontPresetName", //Preset name in sound font file
+      "voiceVolume",              //Default voice volume to perform normalization
 
       //The voice that the preset is associated with
       "voiceName",                //Arbitrary voice name
