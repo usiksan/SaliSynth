@@ -87,12 +87,16 @@
                   Append time moment of play property
               v34 Append time tracking functionality preliminary
               v35 Append all track display model with automatic color selection
+              v36 Append track visibility functionality
+              v37 Resolve problem with shift to one octave down all drum kits on Yamaha
+                  We correct midi track with msb=127 and lsb=0 by shift to one octave up
+                  to locate to standard drum kits
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 35
+#define VERSION 37
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

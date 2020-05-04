@@ -73,7 +73,7 @@ MidiProcessor::MidiProcessor(QThread *th, QObject *parent) :
   connect( this, &MidiProcessor::keyIndicate, mQmlKeyboard, &QmlKeyboard::indicate );
 
   mQmlMidiFile = new QmlMidiFile();
-  connect( mQmlMidiFile, &QmlMidiFile::midiEvent, this, &MidiProcessor::midiSignal );
+  connect( mQmlMidiFile, &QmlMidiFile::midiEvent, this, &MidiProcessor::midiFile );
   connect( mQmlMidiFile, &QmlMidiFile::voiceSetup, this, &MidiProcessor::voiceSetup );
 
   mQmlStyleFile = new QmlStyleFile();
@@ -116,10 +116,8 @@ void MidiProcessor::midiKeyboard(quint8 cmd, quint8 data0, quint8 data1)
 
 void MidiProcessor::midiFile(quint8 cmd, quint8 data0, quint8 data1)
   {
-  if( cmd & 0x40 )
-    emit midiSignal( cmd, 0, 0 );
-  else
-    emit midiSignal( cmd, data0, data1 );
+  //qDebug() << "midi file cmd" << cmd << data0 << data1;
+  emit midiSignal( cmd, data0, data1 );
   }
 
 

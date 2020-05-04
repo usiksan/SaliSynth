@@ -35,7 +35,7 @@ Item {
       ToolTip.visible: hovered
       ToolTip.delay: 300
 
-      onClicked: fileDialogBox.openLoad( qsTr("Open midi file"), synth.midiPath(), ["*.mid","*.kar"], function (fname) {
+      onClicked: fileDialogBox.openLoad( qsTr("Open midi file"), synth.midiPath(), ["*.mid","*.kar","*.sty"], function (fname) {
         qmlMidiFile.read( fname );
         //Setup tempo as in midi file
         spinTempo.value = qmlMidiFile.tickStep;

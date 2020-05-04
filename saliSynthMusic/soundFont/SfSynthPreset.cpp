@@ -31,6 +31,7 @@ SfSynthPreset::SfSynthPreset()
 void SfSynthPreset::midi(SfSynth *synth, quint8 cmd, quint8 data0, quint8 data1)
   {
   cmd = ((cmd >> 4) & 0x7);
+//  qDebug() << "syth preset cmd " << cmd << data0 << data1;
   switch( cmd ) {
     case 0 :
       //Note off [note pressure]

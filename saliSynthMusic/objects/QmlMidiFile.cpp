@@ -44,7 +44,7 @@ QmlMidiFile::QmlMidiFile(QObject *parent) :
   connect( &mQmlTrackModel, &SvQmlJsonModel::afterModelChanged, this, [this] () { mConfigDirty = true; } );
 
   for( int i = 0; i < 16; i++ )
-    connect( mQmlTrack + i, &QmlMidiTrack::midiEvent, this, &QmlMidiFile::midiEvent );
+    connect( &(mQmlTrack[i]), &QmlMidiTrack::midiEvent, this, &QmlMidiFile::midiEvent );
 
   connect( &mTimer, &QTimer::timeout, this, &QmlMidiFile::tick );
   mTimer.start( 20 );
@@ -89,6 +89,7 @@ bool QmlMidiFile::read(QString fname)
     mQmlTrack[i].endReadTrack();
     if( mQmlTrack[i].isActive() ) {
 
+      //qDebug() << "Track" << i << " mapped to" << channel;
       //Setup channel for track
       mQmlTrack[i].setChannel( channel++ );
 

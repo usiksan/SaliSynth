@@ -37,7 +37,7 @@ Item {
         Item {
           id: trackArea
           anchors.fill: midiArea
-          visible: trackVisible
+          visible: trackVisible != 0
 
           property int midiVisualIndex: index              //Index of track in visual list
           property int midiTrackIndex: Number(trackIndex)  //Index of QmlMidiTrack in the qmlMidiTrackList

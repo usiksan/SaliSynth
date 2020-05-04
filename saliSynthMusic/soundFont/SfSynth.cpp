@@ -130,6 +130,7 @@ void SfSynth::midiSlot(quint8 cmd, quint8 data0, quint8 data1)
   {
   if( mVoiceList == nullptr ) return;
   int channel = cmd & 0xf;
+  //qDebug() << "On channel" << channel << "midi cmd" << cmd << data0 << data1;
   if( (cmd & 0x70) == 0x40 )
     //Change programm
     setProgramm( channel, data0 );
@@ -220,6 +221,7 @@ void SfSynth::channelSetVoiceRow(int channel, int voiceRow)
     else if( channel == 1 ) emit leftVoiceChanged();
     else if( channel == 2 ) emit rightSlaveVoiceChanged();
 
+    //qDebug() << "Voice setup on channel" << channel << voiceId;
     //Update visual channel list
     mChannelList->setInt( channel, QStringLiteral("channelVoiceId"), voiceId );
     }

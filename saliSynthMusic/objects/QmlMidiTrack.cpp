@@ -31,6 +31,7 @@ void QmlMidiTrack::beginReadTrack()
   beginResetModel();
   mMidiList.clear();
   mTextList.clear();
+  mVoiceId.mVoiceId = 0;
 
   //With this first we change current volume level
   mVolume = -1;
@@ -67,6 +68,12 @@ void QmlMidiTrack::addMidiEvent(quint32 time, quint8 statusByte, quint8 data0, q
     ev.mData0 = data0;
     ev.mData1 = data1;
     ev.mLenght = 0;
+
+    if( mVoiceId.mBankMsb == 127 && mVoiceId.mBankLsb == 0 )
+      //This is yamaha drum which shifted down on 1 octave
+      //Why this done - I d'nt know
+      ev.mData0 += 12;
+
     if( mActiveNotesMap.contains(data0) ) {
       //Note on when it already on
       //Close previous note
@@ -84,9 +91,11 @@ void QmlMidiTrack::addMidiEvent(quint32 time, quint8 statusByte, quint8 data0, q
     else if( cmd == 0x30 && data0 == 0x20 )
       //Bank LSB
       mVoiceId.mBankLsb = data1 & 0x7f;
-    else if( cmd == 0x40 )
+    else if( cmd == 0x40 ) {
       //Program
       mVoiceId.mProgramm = data0;
+      qDebug() << "track msb" << mVoiceId.mBankMsb << mVoiceId.mBankLsb << mVoiceId.mProgramm;
+      }
     else {
       //All others commands
       QmlMidiEvent ev;
@@ -178,16 +187,19 @@ void QmlMidiTrack::tick(int prevTime, int nextTime, bool soundOn, int volume)
   while( mEventIndex < mMidiList.count() && mMidiList.at(mEventIndex).isStartInside( prevTime, nextTime ) ) {
     //This event may be executed
     if( soundOn ) {
+      //qDebug() << "Channel midi" << mChannel << mEventIndex << mMidiList.at(mEventIndex).isNote();
       if( mMidiList.at(mEventIndex).isNote() ) {
         //This is note. Start it
+        //qDebug() << "Channel midi note" << mChannel << mEventIndex << mMidiList.at( mEventIndex ).mData0 << mMidiList.at( mEventIndex ).mData1;
         emit midiEvent( 0x10 | mChannel, mMidiList.at( mEventIndex ).mData0, mMidiList.at( mEventIndex ).mData1 );
         //... and append note to the active note list
         mActiveNoteList.append(mEventIndex);
         }
       else {
         //Simple send command
-        if( mMidiList.at(mEventIndex).isMidi() )
-          emit midiEvent( mMidiList.at( mEventIndex ).mType | mChannel, mMidiList.at( mEventIndex ).mData0, mMidiList.at( mEventIndex ).mData1 );
+        //TODO midi command other than note
+//        if( mMidiList.at(mEventIndex).isMidi() )
+//          emit midiEvent( mMidiList.at( mEventIndex ).mType | mChannel, mMidiList.at( mEventIndex ).mData0, mMidiList.at( mEventIndex ).mData1 );
         }
       }
     mEventIndex++;

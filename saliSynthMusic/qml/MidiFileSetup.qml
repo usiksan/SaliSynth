@@ -45,6 +45,7 @@ Item {
 
         //On-off track sound
         Button {
+          id: onOffButton
           width: 28
           height: 28
           anchors.top: parent.top
@@ -64,6 +65,30 @@ Item {
 
           onClicked: trackOn = trackOn != 0 ? 0 : 1;
         }
+
+        //Track visible button
+        Button {
+          id: trackVisibleButton
+          width: 28
+          height: 28
+          anchors.top: parent.top
+          anchors.topMargin: 3
+          anchors.right: onOffButton.left
+          anchors.rightMargin: 3
+          padding: 0
+          contentItem: Image {
+            width: 24
+            height: 24
+            source: trackVisible != 0 ? "qrc:/img/sound.png" : "qrc:/img/soundOff.png"
+            fillMode: Image.PreserveAspectFit
+          }
+          ToolTip.text: qsTr("Visible track. Press to switch")
+          ToolTip.visible: hovered
+          ToolTip.delay: 300
+
+          onClicked: trackVisible = trackVisible != 0 ? 0 : 1;
+        }
+
 
 
         //Track remark
