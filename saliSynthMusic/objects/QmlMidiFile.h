@@ -18,27 +18,34 @@
 #include <QAbstractListModel>
 #include <QTimer>
 
+struct QmlMidiMarker {
+    QString mMarker;
+    qint32  mTime;
+  };
+
+using QmlMidiMarkerList = QList<QmlMidiMarker>;
 
 class QmlMidiFile : public QObject
   {
     Q_OBJECT
 
   protected:
-    quint16         mFormat;      //Midi file format (0 or 1)
-    quint16         mTrackNumber;
-    quint16         mDivision;
-    quint32         mTempo;
+    quint16           mFormat;       //! Midi file format (0 or 1)
+    quint16           mTrackNumber;  //! Track count
+    quint16           mDivision;
+    quint32           mTempo;
 
-    QmlMidiTrack    mQmlTrack[16];  //Track in midi file with visual representation
-    SvQmlJsonModel  mQmlTrackModel; //! Model represents visual info about midi file tracks
+    QmlMidiTrack      mQmlTrack[16];  //! Track in midi file with visual representation
+    SvQmlJsonModel    mQmlTrackModel; //! Model represents visual info about midi file tracks
+    QmlMidiMarkerList mMarkerList;    //! List of marker with time position
 
-    QString         mConfigFile;
-    bool            mConfigDirty;
+    QString           mConfigFile;
+    bool              mConfigDirty;
 
-    QTimer          mTimer;
-    qint32          mTickCount;
-    qint32          mTickStep;
-    quint32         mFileLenght;
+    QTimer            mTimer;         //! Timer for playback
+    qint32            mTickCount;     //! Current time tick value
+    qint32            mTickStep;      //! Current time tick step for playback
+    quint32           mFileLenght;    //! File lenght in time tick
 
     Q_PROPERTY(int tickCount READ tickCount WRITE setTickCount NOTIFY tickCountChanged)
     Q_PROPERTY(int tickStep READ tickStep WRITE setTickStep NOTIFY tickStepChanged)
@@ -72,7 +79,7 @@ class QmlMidiFile : public QObject
     void voiceSetup( quint8 channel, int voiceId );
 
   public slots:
-    void tick();
+    virtual void tick();
 
     void play();
 
@@ -87,6 +94,7 @@ class QmlMidiFile : public QObject
     void         readMtrk( IffReader &reader );
     virtual void readExtension( IffReader &reader );
     quint32      variableLenValue( IffReader &reader );
+    virtual void postRead();
 
   };
 

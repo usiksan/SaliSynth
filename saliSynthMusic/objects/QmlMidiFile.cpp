@@ -70,6 +70,8 @@ bool QmlMidiFile::read(QString fname)
 
   setFileLenght(0);
 
+  mMarkerList.clear();
+
   //Repeated tracks
   int trackIndex = 0;
   while( !reader.isEnd() ) {
@@ -110,6 +112,9 @@ bool QmlMidiFile::read(QString fname)
 
   //Read config file if present
   configRead( fname );
+
+  //Execute post read
+  postRead();
 
   return true;
   }
@@ -333,22 +338,26 @@ void QmlMidiFile::readMtrk(IffReader &reader)
 
       else if( metaEvent == 6 ) {
         //Marker
-        marker = QString::fromLatin1( ar );
-        if( marker.length() > 3 ) {
-          if( marker.at(0).isDigit() ) {
-            if( marker.at(1) == QChar(' ') ) {
-              int track = marker.mid( 0, 1 ).toInt() - 1;
-              if( track >= 0 )
-                mQmlTrack[track].mRemark = marker.mid( 2 );
-              }
-            else if( marker.at(1).isDigit() && marker.at(2) == QChar(' ') ) {
-              int track = marker.mid( 0, 2 ).toInt() - 1;
-              if( track >= 0 )
-                mQmlTrack[track].mRemark = marker.mid( 3 );
-              }
-            }
-          }
-        qDebug() << "marker" << marker;
+        QmlMidiMarker marker;
+        marker.mMarker = QString::fromLatin1( ar );
+        marker.mTime   = time;
+        //Append marker to list
+        mMarkerList.append( marker );
+//        if( marker.length() > 3 ) {
+//          if( marker.at(0).isDigit() ) {
+//            if( marker.at(1) == QChar(' ') ) {
+//              int track = marker.mid( 0, 1 ).toInt() - 1;
+//              if( track >= 0 )
+//                mQmlTrack[track].mRemark = marker.mid( 2 );
+//              }
+//            else if( marker.at(1).isDigit() && marker.at(2) == QChar(' ') ) {
+//              int track = marker.mid( 0, 2 ).toInt() - 1;
+//              if( track >= 0 )
+//                mQmlTrack[track].mRemark = marker.mid( 3 );
+//              }
+//            }
+//          }
+        qDebug() << "marker" << marker.mMarker << marker.mTime;
         }
 
       else if( metaEvent == 7 ) {
@@ -487,5 +496,13 @@ quint32 QmlMidiFile::variableLenValue(IffReader &reader)
   while( ch & 0x80 );
 
   return value;
+  }
+
+
+
+
+void QmlMidiFile::postRead()
+  {
+
   }
 

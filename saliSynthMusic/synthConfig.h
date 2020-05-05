@@ -91,12 +91,13 @@
               v37 Resolve problem with shift to one octave down all drum kits on Yamaha
                   We correct midi track with msb=127 and lsb=0 by shift to one octave up
                   to locate to standard drum kits
+   05.05.2020 v38 Begin styled autoacompaniment integration
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 37
+#define VERSION 38
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

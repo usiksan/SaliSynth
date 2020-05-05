@@ -8,6 +8,60 @@ QmlStyleFile::QmlStyleFile(QObject *parent) :
 
   }
 
+int QmlStyleFile::parts() const
+  {
+  int mask = 0;
+  switch( mPart ) {
+    case 0 :
+      if( mMarkerSet.contains( QStringLiteral("Intro A") ) ) mask |= spIntroA;
+      if( mMarkerSet.contains( QStringLiteral("Intro B") ) ) mask |= spIntroB;
+      if( mMarkerSet.contains( QStringLiteral("Intro C") ) ) mask |= spIntroC;
+      if( mMarkerSet.contains( QStringLiteral("Intro D") ) ) mask |= spIntroD;
+      break;
+
+    case spMainA :
+      if( mMarkerSet.contains( QStringLiteral("Fill In AA")) ) mask |= spMainA;
+      if( mMarkerSet.contains( QStringLiteral("Fill In AB")) ) mask |= spMainB;
+      if( mMarkerSet.contains( QStringLiteral("Fill In AC")) ) mask |= spMainC;
+      if( mMarkerSet.contains( QStringLiteral("Fill In AD")) ) mask |= spMainD;
+      if( mMarkerSet.contains( QStringLiteral("Ending A")) )   mask |= spEndingA;
+      break;
+
+    case spMainB :
+      if( mMarkerSet.contains( QStringLiteral("Fill In BA")) ) mask |= spMainA;
+      if( mMarkerSet.contains( QStringLiteral("Fill In BB")) ) mask |= spMainB;
+      if( mMarkerSet.contains( QStringLiteral("Fill In BC")) ) mask |= spMainC;
+      if( mMarkerSet.contains( QStringLiteral("Fill In BD")) ) mask |= spMainD;
+      if( mMarkerSet.contains( QStringLiteral("Ending B")) )   mask |= spEndingB;
+      break;
+
+    case spMainC :
+      if( mMarkerSet.contains( QStringLiteral("Fill In CA")) ) mask |= spMainA;
+      if( mMarkerSet.contains( QStringLiteral("Fill In CB")) ) mask |= spMainB;
+      if( mMarkerSet.contains( QStringLiteral("Fill In CC")) ) mask |= spMainC;
+      if( mMarkerSet.contains( QStringLiteral("Fill In CD")) ) mask |= spMainD;
+      if( mMarkerSet.contains( QStringLiteral("Ending C")) )   mask |= spEndingC;
+      break;
+
+    case spMainD :
+      if( mMarkerSet.contains( QStringLiteral("Fill In DA")) ) mask |= spMainA;
+      if( mMarkerSet.contains( QStringLiteral("Fill In DB")) ) mask |= spMainB;
+      if( mMarkerSet.contains( QStringLiteral("Fill In DC")) ) mask |= spMainC;
+      if( mMarkerSet.contains( QStringLiteral("Fill In DD")) ) mask |= spMainD;
+      if( mMarkerSet.contains( QStringLiteral("Ending D")) )   mask |= spEndingD;
+      break;
+    }
+
+  return mask;
+  }
+
+
+
+void QmlStyleFile::playPart(int part)
+  {
+
+  }
+
 
 void QmlStyleFile::readExtension(IffReader &reader)
   {
@@ -26,6 +80,8 @@ void QmlStyleFile::readExtension(IffReader &reader)
 
 void QmlStyleFile::readCASM(IffReader &reader)
   {
+  mGroupList.clear();
+
   while( !reader.isEnd() ) {
     IffReader track = reader.getChunk();
     qDebug() << "CASM reader chunk" << track.name();
@@ -40,16 +96,20 @@ void QmlStyleFile::readCASM(IffReader &reader)
 
 void QmlStyleFile::readCSEG(IffReader &reader)
   {
+  StyleGroup group;
   while( !reader.isEnd() ) {
     IffReader track = reader.getChunk();
     qDebug() << "CSEG reader chunk" << track.name();
     if( track.compareChunkName("Sdec") ) {
-      readSdec( track );
+      readSdec( track, group );
       }
     else if( track.compareChunkName("Ctab") ) {
-      readCtab( track );
+      readCtab( track, group );
       }
     }
+
+  //Append group to the list
+  mGroupList.append( group );
   }
 
 
@@ -71,70 +131,88 @@ void QmlStyleFile::readMH_MHhd(IffReader &reader)
 
 
 
-void QmlStyleFile::readSdec(IffReader &reader)
+void QmlStyleFile::readSdec( IffReader &reader, StyleGroup &group )
   {
-  //String
+  //Read string with segments list
   char str[1024];
   auto len = qMin(reader.chunkLenght(),1023u);
   reader.readChars( str, len );
   str[len] = 0;
-  qDebug() << "Sdec line" << str;
+
+  //Split string to string list with segments list names
+  QStringList list = QString::fromLatin1(str).split( QChar(',') );
+
+  //All names from segments list insert to the set of markers
+  for( auto s : list )
+    group.mMarkerSet.insert(s);
+
+  qDebug() << "Sdec line" << str << group.mMarkerSet;
   }
 
 
 
-void QmlStyleFile::readCtab(IffReader &reader)
+
+void QmlStyleFile::readCtab( IffReader &reader, StyleGroup &group )
   {
-  int srcChannel = reader.getUint8();
-  qDebug() << "source channel" << srcChannel;
+  StyleTrack t;
+  t.mSrcChannel = reader.getUint8();
+  qDebug() << "source channel" << t.mSrcChannel;
 
-  char name[9];
-  reader.readChars( name, 8 );
-  name[8] = 0;
-  qDebug() << "name" << name;
+  reader.readChars( t.mName, 8 );
+  t.mName[8] = 0;
+  qDebug() << "name" << t.mName;
 
-  int dstChannel = reader.getUint8();
-  qDebug() << "dest" << dstChannel;
+  t.mDstChannel = reader.getUint8();
+  qDebug() << "dest" << t.mDstChannel;
 
-  int editable = reader.getUint8();
-  qDebug() << "editable" << editable;
+  t.mEditable = reader.getUint8();
+  qDebug() << "editable" << t.mEditable;
 
-  int noteMuteMask = reader.getUint16be();
-  qDebug() << "note mute mask" << noteMuteMask;
+  t.mNoteMuteMask = reader.getUint16be();
+  qDebug() << "note mute mask" << t.mNoteMuteMask;
 
-  int chordMute0 = reader.getUint8();
-  qDebug() << "chord mute 0" << chordMute0;
+  t.mChordMute = reader.getUint8();
 
-  quint32 chordMute1 = reader.getUint32be();
-  qDebug() << "chord mute 1" << chordMute1;
+  t.mChordMute <<= 32;
+  t.mChordMute |= reader.getUint32be();
+  qDebug() << "chord mute full" << t.mChordMute;
 
-  int sourceChord = reader.getUint8();
-  qDebug() << "source chord" << sourceChord;
+  t.mSourceChord = reader.getUint8();
+  qDebug() << "source chord" << t.mSourceChord;
 
-  int sourceChordType = reader.getUint8();
-  qDebug() << "source chord type" << sourceChordType;
+  t.mSourceChordType = reader.getUint8();
+  qDebug() << "source chord type" << t.mSourceChordType;
 
-  int noteTranspositionRules = reader.getUint8();
-  qDebug() << "note transposition rules" << noteTranspositionRules;
+  t.mNoteTranspositionRules = reader.getUint8();
+  qDebug() << "note transposition rules" << t.mNoteTranspositionRules;
 
-  int noteTranspositionTable = reader.getUint8();
-  qDebug() << "note transposition table" << noteTranspositionTable;
+  t.mNoteTranspositionTable = reader.getUint8();
+  qDebug() << "note transposition table" << t.mNoteTranspositionTable;
 
-  int highKey = reader.getUint8();
-  qDebug() << "high key" << highKey;
+  t.mHighKey = reader.getUint8();
+  qDebug() << "high key" << t.mHighKey;
 
-  int noteLowLimit = reader.getUint8();
-  qDebug() << "note low limit" << noteLowLimit;
+  t.mNoteLowLimit = reader.getUint8();
+  qDebug() << "note low limit" << t.mNoteLowLimit;
 
-  int noteHighLimit = reader.getUint8();
-  qDebug() << "note high limit" << noteHighLimit;
+  t.mNoteHighLimit = reader.getUint8();
+  qDebug() << "note high limit" << t.mNoteHighLimit;
 
-  int retriggerRule = reader.getUint8();
-  qDebug() << "retrigger rule" << retriggerRule;
+  t.mTriggerRule = reader.getUint8();
+  qDebug() << "retrigger rule" << t.mTriggerRule;
 
   int specialFeatures = reader.getUint8();
   qDebug() << "special features" << specialFeatures;
 
+  group.mTrackList.append( t );
   }
 
 
+
+
+void QmlStyleFile::postRead()
+  {
+  for( const auto marker : mMarkerList )
+    mMarkerSet.insert( marker.mMarker );
+  emit partsChanged();
+  }
