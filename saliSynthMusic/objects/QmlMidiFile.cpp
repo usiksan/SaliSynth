@@ -18,14 +18,6 @@
 #include <QFileInfo>
 #include <QDebug>
 
-#define TRACK_ID      QStringLiteral("trackId")
-#define TRACK_NAME    QStringLiteral("trackName")
-#define TRACK_INDEX   QStringLiteral("trackIndex")
-#define TRACK_ON      QStringLiteral("trackOn")
-#define TRACK_REMARK  QStringLiteral("trackRemark")
-#define TRACK_VOLUME  QStringLiteral("trackVolume")
-#define TRACK_VISIBLE QStringLiteral("trackVisible")
-#define TRACK_COLOR   QStringLiteral("trackColor")
 
 static const char (*trackColors[12]) = { "#267F00", "#273EE8", "#8522E4", "#F01D83",
                                          "#11F371", "#4A8BE7", "#CB24ED", "#F41E46",
@@ -131,6 +123,9 @@ void QmlMidiFile::configRead(QString fname)
   if( !mConfigFile.endsWith(QChar('/')) )
     mConfigFile.append( QChar('/') );
   mConfigFile += info.completeBaseName() + QString(".cfg");
+
+  mMidiName = info.completeBaseName();
+  emit midiNameChanged();
 
   //qDebug() << "midi config" << mConfigFile;
 

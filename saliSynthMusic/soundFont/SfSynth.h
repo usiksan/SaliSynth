@@ -71,6 +71,8 @@ class SfSynth : public QObject
 
     Q_INVOKABLE QString     midiPath() const;
 
+    Q_INVOKABLE QString     stylePath() const;
+
     Q_INVOKABLE QString     channelVoiceName( int channel ) const { return mChannels[channel].voiceName(); }
 
     Q_INVOKABLE int         channelVoiceId( int channel ) const { return mChannels[channel].voiceId(); }

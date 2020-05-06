@@ -59,8 +59,182 @@ int QmlStyleFile::parts() const
 
 void QmlStyleFile::playPart(int part)
   {
+  switch( part ) {
+    case spIntroA :
+      addPart( QStringLiteral("Intro A"), false );
+      addPart( QStringLiteral("Main A"), true );
+      mPart = spMainA;
+      break;
+    case spMainA :
+      switch( mPart ) {
+        case spMainA :
+          addPart( QStringLiteral("Fill In AA"), false );
+          break;
+        case spMainB :
+          addPart( QStringLiteral("Fill In BA"), false );
+          break;
+        case spMainC :
+          addPart( QStringLiteral("Fill In CA"), false );
+          break;
+        case spMainD :
+          addPart( QStringLiteral("Fill In DA"), false );
+          break;
+        }
+      addPart( QStringLiteral("Main A"), true );
+      mPart = spMainA;
+      break;
+    case spEndingA :
+      addPart( QStringLiteral("Ending A"), false );
+      mPart = 0;
+      break;
 
+    case spIntroB :
+      addPart( QStringLiteral("Intro B"), false );
+      addPart( QStringLiteral("Main B"), true );
+      mPart = spMainB;
+      break;
+    case spMainB :
+      switch( mPart ) {
+        case spMainA :
+          addPart( QStringLiteral("Fill In AB"), false );
+          break;
+        case spMainB :
+          addPart( QStringLiteral("Fill In BB"), false );
+          break;
+        case spMainC :
+          addPart( QStringLiteral("Fill In CB"), false );
+          break;
+        case spMainD :
+          addPart( QStringLiteral("Fill In DB"), false );
+          break;
+        }
+      addPart( QStringLiteral("Main B"), true );
+      mPart = spMainB;
+      break;
+    case spEndingB :
+      addPart( QStringLiteral("Ending B"), false );
+      mPart = 0;
+      break;
+
+    case spIntroC :
+      addPart( QStringLiteral("Intro C"), false );
+      addPart( QStringLiteral("Main C"), true );
+      mPart = spMainC;
+      break;
+    case spMainC :
+      switch( mPart ) {
+        case spMainA :
+          addPart( QStringLiteral("Fill In AC"), false );
+          break;
+        case spMainB :
+          addPart( QStringLiteral("Fill In BC"), false );
+          break;
+        case spMainC :
+          addPart( QStringLiteral("Fill In CC"), false );
+          break;
+        case spMainD :
+          addPart( QStringLiteral("Fill In DC"), false );
+          break;
+        }
+      addPart( QStringLiteral("Main C"), true );
+      mPart = spMainC;
+      break;
+    case spEndingC :
+      addPart( QStringLiteral("Ending C"), false );
+      mPart = 0;
+      break;
+
+    case spIntroD :
+      addPart( QStringLiteral("Intro D"), false );
+      addPart( QStringLiteral("Main D"), true );
+      mPart = spMainD;
+      break;
+    case spMainD :
+      switch( mPart ) {
+        case spMainA :
+          addPart( QStringLiteral("Fill In AD"), false );
+          break;
+        case spMainB :
+          addPart( QStringLiteral("Fill In BD"), false );
+          break;
+        case spMainC :
+          addPart( QStringLiteral("Fill In CD"), false );
+          break;
+        case spMainD :
+          addPart( QStringLiteral("Fill In DD"), false );
+          break;
+        }
+      addPart( QStringLiteral("Main D"), true );
+      mPart = spMainD;
+      break;
+    case spEndingD :
+      addPart( QStringLiteral("Ending D"), false );
+      mPart = 0;
+      break;
+    }
+  emit partsChanged();
   }
+
+
+
+
+void QmlStyleFile::tick()
+  {
+  if( mTickCount >= 0 ) {
+    //We need send event beatween startTime and lastTime
+    // startTime is mTickCount, and lastTime - is nextTime
+    //At first we calculate nextTime
+    int nextTime = mTickCount + mTickStep;
+
+    if( (nextTime >> 4) > mLoop.head().mTimeStop )
+      nextTime = mLoop.head().mTimeStop << 4;
+
+    //Anything need to be done when signed parts of time are different
+    // signed parts not includes low 4 bits
+    if( (nextTime & 0xfffffff0) != (mTickCount & 0xfffffff0) ) {
+
+      //For each of tracks we execute tick with current times and track params
+      for( int i = 0; i < mQmlTrackModel.count(); i++ ) {
+        int trackIndex = mQmlTrackModel.asInt( i, TRACK_INDEX );
+        bool soundOn = mQmlTrackModel.asInt( i, TRACK_ON );
+        int volume = mQmlTrackModel.asInt( i, TRACK_VOLUME );
+        mQmlTrack[trackIndex].tick( mTickCount >> 4, nextTime >> 4, soundOn, volume );
+        }
+
+      //Update current tick count
+      mTickCount = nextTime;
+
+      if( tickCount() >= mLoop.head().mTimeStop ) {
+        //This is last time, wrap if loop
+        if( mLoop.count() > 1 ) {
+          //Jump to next part
+          mLoop.dequeue();
+          setTickCount( mLoop.head().mTimeStart );
+          }
+        else if( mLoop.head().mLoop ) {
+          //Wrap fragment
+          setTickCount( mLoop.head().mTimeStart );
+          }
+        else {
+          mTickCount = -1;
+          mLoop.dequeue();
+          }
+        }
+      //Signal that tick count changed
+      //On this signal visual elements display actual playing position
+      emit tickCountChanged();
+      }
+    else
+      //Update current tick count
+      mTickCount = nextTime;
+    }
+  else if( mLoop.count() ) {
+    setTickCount( mLoop.head().mTimeStart );
+    }
+  }
+
+
+
 
 
 void QmlStyleFile::readExtension(IffReader &reader)
@@ -214,5 +388,31 @@ void QmlStyleFile::postRead()
   {
   for( const auto marker : mMarkerList )
     mMarkerSet.insert( marker.mMarker );
+  mPart = 0;
   emit partsChanged();
   }
+
+
+
+
+void QmlStyleFile::addPart(const QString part, bool loop)
+  {
+  int i = 0;
+  for( i = 0; i < mMarkerList.count(); i++ )
+    if( mMarkerList.at(i).mMarker == part ) {
+      //Marker found
+      StyleLoop styleLoop;
+      styleLoop.mTimeStart = mMarkerList.at(i).mTime;
+      if( i + 1 < mMarkerList.count() )
+        styleLoop.mTimeStop = mMarkerList.at(i + 1).mTime;
+      else
+        styleLoop.mTimeStop = mFileLenght;
+      styleLoop.mLoop = loop;
+      mLoop.enqueue( styleLoop );
+      return;
+      }
+  }
+
+
+
+

@@ -18,9 +18,9 @@ Item {
     anchors.top: parent.top
     anchors.topMargin: 5
     anchors.left: parent.left
-    anchors.leftMargin: 5
+//    anchors.leftMargin: 5
     anchors.right: parent.right
-    anchors.rightMargin: 5
+//    anchors.rightMargin: 5
     anchors.bottom: parent.bottom
     anchors.bottomMargin: 0
 

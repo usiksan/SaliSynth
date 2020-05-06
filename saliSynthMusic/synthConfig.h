@@ -92,6 +92,8 @@
                   We correct midi track with msb=127 and lsb=0 by shift to one octave up
                   to locate to standard drum kits
    05.05.2020 v38 Begin styled autoacompaniment integration
+   06.05.2020 v39 Append visual direction for style play
+                  Append fragment looping and queuing, add jump beetween parts
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H

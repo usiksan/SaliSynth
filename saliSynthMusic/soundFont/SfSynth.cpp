@@ -90,6 +90,13 @@ QString SfSynth::midiPath() const
 
 
 
+QString SfSynth::stylePath() const
+  {
+  return SvQmlUtils::getHomePath() + "saliSynthMusic/styles/";
+  }
+
+
+
 
 bool SfSynth::containsVoice(int bankMsb, int bankLsb, int midiProgram)
   {

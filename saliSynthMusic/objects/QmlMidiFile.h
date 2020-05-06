@@ -18,6 +18,16 @@
 #include <QAbstractListModel>
 #include <QTimer>
 
+#define TRACK_ID      QStringLiteral("trackId")
+#define TRACK_NAME    QStringLiteral("trackName")
+#define TRACK_INDEX   QStringLiteral("trackIndex")
+#define TRACK_ON      QStringLiteral("trackOn")
+#define TRACK_REMARK  QStringLiteral("trackRemark")
+#define TRACK_VOLUME  QStringLiteral("trackVolume")
+#define TRACK_VISIBLE QStringLiteral("trackVisible")
+#define TRACK_COLOR   QStringLiteral("trackColor")
+
+
 struct QmlMidiMarker {
     QString mMarker;
     qint32  mTime;
@@ -39,6 +49,7 @@ class QmlMidiFile : public QObject
     SvQmlJsonModel    mQmlTrackModel; //! Model represents visual info about midi file tracks
     QmlMidiMarkerList mMarkerList;    //! List of marker with time position
 
+    QString           mMidiName;      //! Midi file name without path
     QString           mConfigFile;
     bool              mConfigDirty;
 
@@ -50,6 +61,7 @@ class QmlMidiFile : public QObject
     Q_PROPERTY(int tickCount READ tickCount WRITE setTickCount NOTIFY tickCountChanged)
     Q_PROPERTY(int tickStep READ tickStep WRITE setTickStep NOTIFY tickStepChanged)
     Q_PROPERTY(int fileLenght READ fileLenght WRITE setFileLenght NOTIFY fileLenghtChanged)
+    Q_PROPERTY(QString midiName READ midiName NOTIFY midiNameChanged)
   public:
     QmlMidiFile( QObject *parent = nullptr );
 
@@ -64,6 +76,8 @@ class QmlMidiFile : public QObject
     int  fileLenght() const { return mFileLenght; }
     void setFileLenght( int len ) { mFileLenght = len; emit fileLenghtChanged(); }
 
+    QString midiName() const { return mMidiName; }
+
     Q_INVOKABLE QmlMidiTrack *qmlMidiTrack( int track ) { return mQmlTrack + (track & 0xf); }
 
     Q_INVOKABLE SvQmlJsonModel *qmlMidiTrackModel() { return &mQmlTrackModel; }
@@ -73,6 +87,8 @@ class QmlMidiFile : public QObject
     void tickStepChanged();
 
     void fileLenghtChanged();
+
+    void midiNameChanged();
 
     void midiEvent( quint8 cmd, quint8 data0, quint8 data1 );
 

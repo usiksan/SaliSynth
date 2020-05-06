@@ -122,5 +122,7 @@
         <file>img/instrumentReedOrgan.png</file>
         <file>qml/MidiTrackVertical.qml</file>
         <file>img/play-music.png</file>
+        <file>qml/WorkKey.qml</file>
+        <file>qml/WorkAcompaniment.qml</file>
     </qresource>
 </RCC>

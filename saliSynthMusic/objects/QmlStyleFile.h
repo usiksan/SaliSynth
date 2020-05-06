@@ -3,6 +3,8 @@
 
 #include "QmlMidiFile.h"
 
+#include <QQueue>
+
 struct StyleTrack {
     quint8 mSrcChannel;
     char   mName[9];
@@ -26,10 +28,25 @@ struct StyleGroup {
   };
 
 
+struct StyleLoop {
+    qint32 mTimeStart;
+    qint32 mTimeStop;
+    bool   mLoop;
+  };
+
 class QmlStyleFile : public QmlMidiFile
   {
     Q_OBJECT
 
+    QList<StyleGroup> mGroupList; //! List of segments group
+    QSet<QString>     mMarkerSet;
+    int               mPart;
+
+    QQueue<StyleLoop> mLoop;
+
+    Q_PROPERTY(int parts READ parts NOTIFY partsChanged)
+
+  public:
     enum StylePart {
       spIntroA  = 0x0001,
       spMainA   = 0x0002,
@@ -45,11 +62,6 @@ class QmlStyleFile : public QmlMidiFile
       spEndingD = 0x4000
       };
 
-    QList<StyleGroup> mGroupList; //! List of segments group
-    QSet<QString>     mMarkerSet;
-    int               mPart;
-
-    Q_PROPERTY(int parts READ parts NOTIFY partsChanged)
     Q_ENUM(StylePart)
   public:
     QmlStyleFile( QObject *parent = nullptr );
@@ -61,6 +73,9 @@ class QmlStyleFile : public QmlMidiFile
 
   public slots:
     void playPart( int part );
+
+    virtual void tick() override;
+
 //    //!
 //    //! \brief intro Play "Intro" and then "Main"
 //    //! \param name  Main section name
@@ -93,6 +108,8 @@ class QmlStyleFile : public QmlMidiFile
     // QmlMidiFile interface
   private:
     virtual void postRead() override;
+
+    void         addPart( const QString part, bool loop );
   };
 
 #endif // QMLSTYLEFILE_H
