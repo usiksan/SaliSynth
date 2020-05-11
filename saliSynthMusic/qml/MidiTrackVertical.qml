@@ -1,3 +1,12 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   Display track notes as vertical rectangles
+*/
 import QtQuick 2.0
 import QtQuick.Controls 2.5
 import SvQml 1.0
@@ -8,6 +17,7 @@ Item {
 
   property real factor : 0.5
 
+  //With this we support current play point display
   property int tickCount : qmlMidiFile.tickCount
   onTickCountChanged: {
     midiScroll.flickableItem.contentY = (qmlMidiFile.fileLenght - tickCount) * factor
@@ -18,9 +28,7 @@ Item {
     anchors.top: parent.top
     anchors.topMargin: 5
     anchors.left: parent.left
-//    anchors.leftMargin: 5
     anchors.right: parent.right
-//    anchors.rightMargin: 5
     anchors.bottom: parent.bottom
     anchors.bottomMargin: 0
 

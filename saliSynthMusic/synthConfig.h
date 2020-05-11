@@ -98,12 +98,15 @@
                   In central part of acompaniment - midi setup with individual track accessing
                   Append style save posibilities
                   Append accord to autoacompaniment transfer
+              v41 Append remarks to a lot of files
+              v42 Append tool tips to style parts
+                  Append lamp icon to midi track info
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 38
+#define VERSION 42
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

@@ -65,7 +65,7 @@ Rectangle {
   MouseArea {
     anchors.fill: parent
     enabled: enable
-    onPressed: {
+    onClicked: {
       pressAnim.start();
       click();
     }

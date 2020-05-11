@@ -1,3 +1,12 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   Display accompaniment mode
+*/
 import QtQuick 2.5
 import QtQuick.Controls 2.5
 
@@ -59,7 +68,7 @@ Item {
       ToolTip.visible: hovered
       ToolTip.delay: 300
 
-      onClicked: qmlMidiFile.stop()
+      onClicked: qmlStyleFile.stop()
     }
 
 
@@ -94,7 +103,7 @@ Item {
       anchors.bottom: partRow.top
       trackModel: qmlStyleFileTrackModel
 
-      voiceInfoHeight: utils.getFMin( height / 3 - 3, 100 );
+      voiceInfoHeight: utils.getFMin( height / 3 - 4, 100 );
     }
 
     Row {
@@ -104,58 +113,70 @@ Item {
       anchors.right: parent.right
 
       PartButton {
-        text: qsTr("IntroA")
+        text: qsTr("Intro A")
         mask: 0x0001
+        toolTipText: qsTr("Start play Intro A")
       }
       PartButton {
-        text: qsTr("IntroB")
+        text: qsTr("Intro B")
         mask: 0x0010
+        toolTipText: qsTr("Start play Intro B")
       }
       PartButton {
-        text: qsTr("IntroC")
+        text: qsTr("Intro C")
         mask: 0x0100
+        toolTipText: qsTr("Start play Intro C")
       }
       PartButton {
-        text: qsTr("IntroD")
+        text: qsTr("Intro D")
         mask: 0x1000
+        toolTipText: qsTr("Start play Intro D")
       }
 
       PartButton {
-        text: qsTr("MainA")
+        text: qsTr("Main A")
         mask: 0x0002
         isMain: true
+        toolTipText: qsTr("Select as current or play Main A or play Fill in A")
       }
       PartButton {
-        text: qsTr("MainB")
+        text: qsTr("Main B")
         mask: 0x0020
         isMain: true
+        toolTipText: qsTr("Select as current or play Main B or play Fill in B")
       }
       PartButton {
-        text: qsTr("MainC")
+        text: qsTr("Main C")
         mask: 0x0200
         isMain: true
+        toolTipText: qsTr("Select as current or play Main C or play Fill in C")
       }
       PartButton {
-        text: qsTr("MainD")
+        text: qsTr("Main D")
         mask: 0x2000
         isMain: true
+        toolTipText: qsTr("Select as current or play Main D or play Fill in D")
       }
 
       PartButton {
-        text: qsTr("EndA")
+        text: qsTr("End A")
         mask: 0x0004
+        toolTipText: qsTr("Play End A and stop")
       }
       PartButton {
         text: qsTr("EndB")
         mask: 0x0040
+        toolTipText: qsTr("Play End B and stop")
       }
       PartButton {
-        text: qsTr("EndC")
+        text: qsTr("End C")
         mask: 0x0400
+        toolTipText: qsTr("Play End C and stop")
       }
       PartButton {
-        text: qsTr("EndD")
+        text: qsTr("End D")
         mask: 0x4000
+        toolTipText: qsTr("Play End D and stop")
       }
 
 

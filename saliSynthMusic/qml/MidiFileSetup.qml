@@ -1,11 +1,21 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   Display midi per track information. Allow to tune individual tracks
+   Each track displays as single rectangle. Info extrackted from trackModel with qmlMidiFileTrackModel as default model
+*/
 import QtQuick 2.0
 import QtQuick.Controls 2.5
 
 Item {
   id: midiConfig
   anchors.fill: parent
-  property int voiceInfoHeight : 100
-  property alias trackModel : trackRepeater.model
+  property int   voiceInfoHeight : 100             //Default track rectangle height
+  property alias trackModel : trackRepeater.model  //Access to the track model
 
   //Display midi track info
   Flow {
@@ -83,7 +93,7 @@ Item {
           contentItem: Image {
             width: 24
             height: 24
-            source: trackVisible != 0 ? "qrc:/img/sound.png" : "qrc:/img/soundOff.png"
+            source: trackVisible != 0 ? "qrc:/img/lampGreen.png" : "qrc:/img/lampOff.png"
             fillMode: Image.PreserveAspectFit
           }
           ToolTip.text: qsTr("Visible track. Press to switch")
