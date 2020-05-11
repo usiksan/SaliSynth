@@ -33,6 +33,10 @@ void QmlMidiTrack::beginReadTrack()
   mTextList.clear();
   mVoiceId.mVoiceId = 0;
 
+  mPrevTime = 0;
+  mPrevStatusByte = mPrevData0 = mPrevData1 = 0;
+
+
   //With this first we change current volume level
   mVolume = -1;
   }
@@ -50,6 +54,15 @@ void QmlMidiTrack::endReadTrack()
 
 void QmlMidiTrack::addMidiEvent(quint32 time, quint8 statusByte, quint8 data0, quint8 data1)
   {
+  //Sometime happens absolutly same event
+  //We must remove them
+  if( mPrevTime == time && mPrevStatusByte == statusByte && mPrevData0 == data0 && mPrevData1 == data1 )
+    return;
+  mPrevTime = time;
+  mPrevStatusByte = statusByte;
+  mPrevData0 = data0;
+  mPrevData1 = data1;
+
   quint8 cmd = statusByte & 0x70;
   if( cmd == 0 || (cmd == 0x10 && data1 == 0) ) {
     //Note off
@@ -68,6 +81,8 @@ void QmlMidiTrack::addMidiEvent(quint32 time, quint8 statusByte, quint8 data0, q
     ev.mData0 = data0;
     ev.mData1 = data1;
     ev.mLenght = 0;
+
+    qDebug() << "addMidiEvent" << time << statusByte << data0 << data1;
 
     if( mVoiceId.mBankMsb == 127 && mVoiceId.mBankLsb == 0 )
       //This is yamaha drum which shifted down on 1 octave
@@ -190,8 +205,8 @@ void QmlMidiTrack::tick(int prevTime, int nextTime, bool soundOn, int volume, qi
       //qDebug() << "Channel midi" << mChannel << mEventIndex << mMidiList.at(mEventIndex).isNote();
       if( mMidiList.at(mEventIndex).isNote() ) {
         //This is note. Start it
-        //qDebug() << "Channel midi note" << mChannel << mEventIndex << mMidiList.at( mEventIndex ).mData0 << mMidiList.at( mEventIndex ).mData1;
         mMidiList[ mEventIndex ].shift( shift );
+        //qDebug() << "Channel midi note" << mChannel << mEventIndex << mMidiList.at( mEventIndex ).mShiftedData0 << mMidiList.at( mEventIndex ).mData1;
         emit midiEvent( 0x10 | mChannel, mMidiList.at( mEventIndex ).mShiftedData0, mMidiList.at( mEventIndex ).mData1 );
         //... and append note to the active note list
         mActiveNoteList.append(mEventIndex);

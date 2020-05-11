@@ -56,6 +56,11 @@ class QmlMidiTrack : public QAbstractListModel
     quint8           mChannel;        //! Channel on which track is plaied
     int              mVolume;         //! Current track volume
 
+    quint32          mPrevTime;
+    quint8           mPrevStatusByte;
+    quint8           mPrevData0;
+    quint8           mPrevData1;
+
     Q_PROPERTY(QString trackName READ trackName WRITE setTrackName NOTIFY trackNameChanged)
     Q_PROPERTY(QString instrumentName READ instrumentName WRITE setInstrumentName NOTIFY instrumentNameChanged)
   public:

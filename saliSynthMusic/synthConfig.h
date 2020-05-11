@@ -104,6 +104,8 @@
               v43 Error: style not stopped while queue not empty.
                   Refactoring stop function to clear queue and then stop.
               v44 Append "pause" functionality
+              v45 Sometime happens absolutly same event when read midi file. We must remove them
+
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
