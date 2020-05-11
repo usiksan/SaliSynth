@@ -64,7 +64,7 @@ Item {
     ToolButton {
       icon.source: "qrc:/img/stop.png"
       icon.color: "transparent"
-      ToolTip.text: qsTr("Stop midi file play")
+      ToolTip.text: qsTr("Stop style file play")
       ToolTip.visible: hovered
       ToolTip.delay: 300
 
@@ -111,6 +111,7 @@ Item {
       anchors.bottom: parent.bottom
       anchors.left: parent.left
       anchors.right: parent.right
+      spacing: 1
 
       PartButton {
         text: qsTr("Intro A")
@@ -164,7 +165,7 @@ Item {
         toolTipText: qsTr("Play End A and stop")
       }
       PartButton {
-        text: qsTr("EndB")
+        text: qsTr("End B")
         mask: 0x0040
         toolTipText: qsTr("Play End B and stop")
       }

@@ -204,6 +204,16 @@ void QmlStyleFile::tick()
 
 
 
+void QmlStyleFile::stop()
+  {
+  //Clear style queue
+  mLoop.clear();
+  QmlMidiFile::stop();
+  }
+
+
+
+
 void QmlStyleFile::chord(quint8 note, quint8 chordType)
   {
   mNote = note;

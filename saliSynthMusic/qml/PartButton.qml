@@ -11,14 +11,14 @@ import QtQuick 2.5
 import QtQuick.Controls 2.5
 
 Button {
-  property int   mask                       //Part mask
-  property bool  isMain      : false        //Indicator for main part
-  property alias toolTipText : ToolTip.text //Tool tip text for the button
+  property int    mask                //Part mask
+  property bool   isMain      : false //Indicator for main part
+  property string toolTipText         //Tool tip text for the button
 
   width: qmlKeyboard.keyboardWidth / 12 - 1
   enabled: qmlStyleFile.parts & mask
   onClicked: qmlStyleFile.playPart(mask)
-
+  ToolTip.text: toolTipText
   ToolTip.visible: hovered
   ToolTip.delay: 300
 

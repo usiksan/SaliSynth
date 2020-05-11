@@ -99,7 +99,7 @@ class QmlMidiFile : public QObject
 
     void play();
 
-    void stop();
+    virtual void stop();
 
     bool read( QString fname );
 

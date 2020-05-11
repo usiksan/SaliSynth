@@ -93,6 +93,8 @@ class QmlStyleFile : public QmlMidiFile
 
     virtual void tick() override;
 
+    virtual void stop() override;
+
     void         chord( quint8 note, quint8 chordType );
 
     // QmlMidiFile interface

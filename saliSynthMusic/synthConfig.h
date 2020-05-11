@@ -101,12 +101,14 @@
               v41 Append remarks to a lot of files
               v42 Append tool tips to style parts
                   Append lamp icon to midi track info
+              v43 Error: style not stopped while queue not empty.
+                  Refactoring stop function to clear queue and then stop.
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 42
+#define VERSION 43
 
 //Polyphony count
 #define POLYPHONY_COUNT 128
