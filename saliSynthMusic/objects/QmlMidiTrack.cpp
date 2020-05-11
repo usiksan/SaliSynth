@@ -154,7 +154,7 @@ void QmlMidiTrack::stop()
   //We stops all active notes
   for( int i = mActiveNoteList.count() - 1; i >= 0; i-- )
     //Stop note
-    emit midiEvent( 0x10 | mChannel, mMidiList.at( mActiveNoteList.at(i) ).mData0, 0 );
+    emit midiEvent( 0x10 | mChannel, mMidiList.at( mActiveNoteList.at(i) ).mShiftedData0, 0 );
   //... and clear active note list
   mActiveNoteList.clear();
   //With this first we change current volume level

@@ -103,12 +103,13 @@
                   Append lamp icon to midi track info
               v43 Error: style not stopped while queue not empty.
                   Refactoring stop function to clear queue and then stop.
+              v44 Append "pause" functionality
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 43
+#define VERSION 44
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

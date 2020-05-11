@@ -81,6 +81,17 @@ Item {
       onClicked: qmlMidiFile.play()
     }
 
+    //Pause music
+    ToolButton {
+      icon.source: "qrc:/img/pause.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Midi file play")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: qmlMidiFile.pause()
+    }
+
     //Tempo
     SpinBox {
       id: spinTempo

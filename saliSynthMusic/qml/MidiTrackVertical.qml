@@ -15,7 +15,7 @@ Item {
   id: midiVerticalViewer
   anchors.fill: parent
 
-  property real factor : 0.5
+  property real factor : 0.1
 
   //With this we support current play point display
   property int tickCount : qmlMidiFile.tickCount
@@ -65,6 +65,7 @@ Item {
               color: trackArea.midiTrackColor
               border.color: "black"
               border.width: 1
+              radius: 3
             }
 
           }
@@ -83,6 +84,7 @@ Item {
               color: trackArea.midiTrackColor
               border.color: "black"
               border.width: 1
+              radius: 3
             }
 
           }

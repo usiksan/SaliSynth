@@ -57,6 +57,7 @@ class QmlMidiFile : public QObject
     qint32            mTickCount;     //! Current time tick value
     qint32            mTickStep;      //! Current time tick step for playback
     quint32           mFileLenght;    //! File lenght in time tick
+    bool              mPause;         //! Pause when playing
 
     Q_PROPERTY(int tickCount READ tickCount WRITE setTickCount NOTIFY tickCountChanged)
     Q_PROPERTY(int tickStep READ tickStep WRITE setTickStep NOTIFY tickStepChanged)
@@ -95,22 +96,41 @@ class QmlMidiFile : public QObject
     void voiceSetup( quint8 channel, int voiceId );
 
   public slots:
+    //!
+    //! \brief tick Elementary tick. On this tick player build notes
+    //!
     virtual void tick();
 
-    void play();
+    //!
+    //! \brief play Begin to play
+    //!
+    void         play();
 
+    //!
+    //! \brief pause Pause playing
+    //!
+    void         pause();
+
+    //!
+    //! \brief stop Stop play
+    //!
     virtual void stop();
 
     bool read( QString fname );
 
     void configWrite();
 
-  private:
+  protected:
     bool         readMthd( IffReader &reader );
     void         readMtrk( IffReader &reader );
     virtual void readExtension( IffReader &reader );
     quint32      variableLenValue( IffReader &reader );
     virtual void postRead();
+
+    //!
+    //! \brief stopAllNotes Stop all playing notes
+    //!
+    void         stopAllNotes();
 
   };
 

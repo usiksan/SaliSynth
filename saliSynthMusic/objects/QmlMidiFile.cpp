@@ -29,15 +29,19 @@ QmlMidiFile::QmlMidiFile(QObject *parent) :
   QObject(parent),
   mConfigDirty(false),
   mTickCount(-1),
-  mTickStep(16)
+  mTickStep(16),
+  mPause(false)
   {
+  //Fill fields of track model
   mQmlTrackModel.setFields( { TRACK_ID, TRACK_NAME, TRACK_INDEX, TRACK_ON, TRACK_REMARK, TRACK_VOLUME,
                               TRACK_VISIBLE, TRACK_COLOR } );
   connect( &mQmlTrackModel, &SvQmlJsonModel::afterModelChanged, this, [this] () { mConfigDirty = true; } );
 
+  //Midi event from all tracks we send to midi event signal of QmlMidiFile
   for( int i = 0; i < 16; i++ )
     connect( &(mQmlTrack[i]), &QmlMidiTrack::midiEvent, this, &QmlMidiFile::midiEvent );
 
+  //Timer for periodic tick generation
   connect( &mTimer, &QTimer::timeout, this, &QmlMidiFile::tick );
   mTimer.start( 20 );
   }
@@ -130,6 +134,8 @@ void QmlMidiFile::configRead(QString fname)
   //qDebug() << "midi config" << mConfigFile;
 
   mConfigDirty = true;
+  mPause = false;
+  mTickCount = -1;
 
   //Test if config file exist
   if( QFile::exists(mConfigFile) ) {
@@ -192,7 +198,7 @@ void QmlMidiFile::configWrite()
 //!
 void QmlMidiFile::tick()
   {
-  if( mTickCount >= 0 ) {
+  if( mTickCount >= 0 && !mPause ) {
     //We need send event beatween startTime and lastTime
     // startTime is mTickCount, and lastTime - is nextTime
     //At first we calculate nextTime
@@ -228,24 +234,49 @@ void QmlMidiFile::tick()
 
 void QmlMidiFile::play()
   {
-  //Setup all voices
-  for( int i = 0; i < mQmlTrackModel.count(); i++ ) {
-    int trackIndex = mQmlTrackModel.asInt( i, TRACK_INDEX );
-    emit voiceSetup( mQmlTrack[trackIndex].channel(), mQmlTrackModel.asInt( i, TRACK_ID ) );
-    }
+  if( mPause )
+    //Was a pause
+    mPause = false;
+  else {
+    //Mid was stopped
+    //Setup all voices
+    for( int i = 0; i < mQmlTrackModel.count(); i++ ) {
+      int trackIndex = mQmlTrackModel.asInt( i, TRACK_INDEX );
+      emit voiceSetup( mQmlTrack[trackIndex].channel(), mQmlTrackModel.asInt( i, TRACK_ID ) );
+      }
 
-  setTickCount(0);
+    setTickCount(0);
+    }
   }
 
 
 
+
+//!
+//! \brief pause Pause playing
+//!
+void QmlMidiFile::pause()
+  {
+  //Stop all playing notes
+  stopAllNotes();
+  //... and set pause mode
+  mPause = true;
+  }
+
+
+
+
+//!
+//! \brief stop Stop play
+//!
 void QmlMidiFile::stop()
   {
-  //End all continuously notes
-  for( int i = 0; i < mQmlTrackModel.count(); i++ )
-    mQmlTrack[mQmlTrackModel.asInt( i, TRACK_INDEX )].stop();
+  //Stop all playing notes
+  stopAllNotes();
 
+  //And reset tick count, which stops playing
   mTickCount = -1;
+  mPause = false;
   }
 
 
@@ -498,6 +529,19 @@ quint32 QmlMidiFile::variableLenValue(IffReader &reader)
 
 void QmlMidiFile::postRead()
   {
+  //Do nothing
+  }
 
+
+
+
+//!
+//! \brief stopAllNotes Stop all playing notes
+//!
+void QmlMidiFile::stopAllNotes()
+  {
+  //End all continuously notes
+  for( int i = 0; i < mQmlTrackModel.count(); i++ )
+    mQmlTrack[mQmlTrackModel.asInt( i, TRACK_INDEX )].stop();
   }
 

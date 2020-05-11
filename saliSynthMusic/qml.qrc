@@ -127,5 +127,6 @@
         <file>qml/PartButton.qml</file>
         <file>img/lampGreen.png</file>
         <file>img/lampOff.png</file>
+        <file>img/pause.png</file>
     </qresource>
 </RCC>
