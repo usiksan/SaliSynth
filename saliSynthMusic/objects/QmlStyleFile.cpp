@@ -3,7 +3,9 @@
 #include <QDebug>
 
 QmlStyleFile::QmlStyleFile(QObject *parent) :
-  QmlMidiFile(parent)
+  QmlMidiFile(parent),
+  mCurPart(0),
+  mMainPart(0)
   {
 
   }
@@ -11,47 +13,22 @@ QmlStyleFile::QmlStyleFile(QObject *parent) :
 int QmlStyleFile::parts() const
   {
   int mask = 0;
-  switch( mPart ) {
-    case 0 :
-      if( mMarkerSet.contains( QStringLiteral("Intro A") ) ) mask |= spIntroA;
-      if( mMarkerSet.contains( QStringLiteral("Intro B") ) ) mask |= spIntroB;
-      if( mMarkerSet.contains( QStringLiteral("Intro C") ) ) mask |= spIntroC;
-      if( mMarkerSet.contains( QStringLiteral("Intro D") ) ) mask |= spIntroD;
-      break;
-
-    case spMainA :
-      if( mMarkerSet.contains( QStringLiteral("Fill In AA")) ) mask |= spMainA;
-      if( mMarkerSet.contains( QStringLiteral("Fill In AB")) ) mask |= spMainB;
-      if( mMarkerSet.contains( QStringLiteral("Fill In AC")) ) mask |= spMainC;
-      if( mMarkerSet.contains( QStringLiteral("Fill In AD")) ) mask |= spMainD;
-      if( mMarkerSet.contains( QStringLiteral("Ending A")) )   mask |= spEndingA;
-      break;
-
-    case spMainB :
-      if( mMarkerSet.contains( QStringLiteral("Fill In BA")) ) mask |= spMainA;
-      if( mMarkerSet.contains( QStringLiteral("Fill In BB")) ) mask |= spMainB;
-      if( mMarkerSet.contains( QStringLiteral("Fill In BC")) ) mask |= spMainC;
-      if( mMarkerSet.contains( QStringLiteral("Fill In BD")) ) mask |= spMainD;
-      if( mMarkerSet.contains( QStringLiteral("Ending B")) )   mask |= spEndingB;
-      break;
-
-    case spMainC :
-      if( mMarkerSet.contains( QStringLiteral("Fill In CA")) ) mask |= spMainA;
-      if( mMarkerSet.contains( QStringLiteral("Fill In CB")) ) mask |= spMainB;
-      if( mMarkerSet.contains( QStringLiteral("Fill In CC")) ) mask |= spMainC;
-      if( mMarkerSet.contains( QStringLiteral("Fill In CD")) ) mask |= spMainD;
-      if( mMarkerSet.contains( QStringLiteral("Ending C")) )   mask |= spEndingC;
-      break;
-
-    case spMainD :
-      if( mMarkerSet.contains( QStringLiteral("Fill In DA")) ) mask |= spMainA;
-      if( mMarkerSet.contains( QStringLiteral("Fill In DB")) ) mask |= spMainB;
-      if( mMarkerSet.contains( QStringLiteral("Fill In DC")) ) mask |= spMainC;
-      if( mMarkerSet.contains( QStringLiteral("Fill In DD")) ) mask |= spMainD;
-      if( mMarkerSet.contains( QStringLiteral("Ending D")) )   mask |= spEndingD;
-      break;
-    }
-
+  if( mMarkerSet.contains( QStringLiteral("Intro A") ) ) mask |= spIntroA;
+  if( mMarkerSet.contains( QStringLiteral("Intro B") ) ) mask |= spIntroB;
+  if( mMarkerSet.contains( QStringLiteral("Intro C") ) ) mask |= spIntroC;
+  if( mMarkerSet.contains( QStringLiteral("Intro D") ) ) mask |= spIntroD;
+  if( mMarkerSet.contains( QStringLiteral("Main A")) )   mask |= spMainA;
+  if( mMarkerSet.contains( QStringLiteral("Main B")) )   mask |= spMainB;
+  if( mMarkerSet.contains( QStringLiteral("Main C")) )   mask |= spMainC;
+  if( mMarkerSet.contains( QStringLiteral("Main D")) )   mask |= spMainD;
+  if( mMarkerSet.contains( QStringLiteral("Fill In AA")) ) mask |= spFillA;
+  if( mMarkerSet.contains( QStringLiteral("Ending A")) )   mask |= spEndingA;
+  if( mMarkerSet.contains( QStringLiteral("Fill In BB")) ) mask |= spFillB;
+  if( mMarkerSet.contains( QStringLiteral("Ending B")) )   mask |= spEndingB;
+  if( mMarkerSet.contains( QStringLiteral("Fill In CC")) ) mask |= spFillC;
+  if( mMarkerSet.contains( QStringLiteral("Ending C")) )   mask |= spEndingC;
+  if( mMarkerSet.contains( QStringLiteral("Fill In DD")) ) mask |= spFillD;
+  if( mMarkerSet.contains( QStringLiteral("Ending D")) )   mask |= spEndingD;
   return mask;
   }
 
@@ -59,121 +36,97 @@ int QmlStyleFile::parts() const
 
 void QmlStyleFile::playPart(int part)
   {
-  switch( part ) {
-    case spIntroA :
-      addPart( QStringLiteral("Intro A"), false );
-      addPart( QStringLiteral("Main A"), true );
-      mPart = spMainA;
-      break;
-    case spMainA :
-      switch( mPart ) {
-        case spMainA :
-          addPart( QStringLiteral("Fill In AA"), false );
-          break;
-        case spMainB :
-          addPart( QStringLiteral("Fill In BA"), false );
-          break;
-        case spMainC :
-          addPart( QStringLiteral("Fill In CA"), false );
-          break;
-        case spMainD :
-          addPart( QStringLiteral("Fill In DA"), false );
-          break;
-        }
-      addPart( QStringLiteral("Main A"), true );
-      mPart = spMainA;
-      break;
-    case spEndingA :
-      addPart( QStringLiteral("Ending A"), false );
-      mPart = 0;
-      break;
+  if( mCurPart == 0 ) {
+    //Setup all voices
+    for( int i = 0; i < mQmlTrackModel.count(); i++ ) {
+      int trackIndex = mQmlTrackModel.asInt( i, TRACK_INDEX );
+      emit voiceSetup( mQmlTrack[trackIndex].channel(), mQmlTrackModel.asInt( i, TRACK_ID ) );
+      }
 
-    case spIntroB :
-      addPart( QStringLiteral("Intro B"), false );
-      addPart( QStringLiteral("Main B"), true );
-      mPart = spMainB;
-      break;
-    case spMainB :
-      switch( mPart ) {
-        case spMainA :
-          addPart( QStringLiteral("Fill In AB"), false );
-          break;
-        case spMainB :
-          addPart( QStringLiteral("Fill In BB"), false );
-          break;
-        case spMainC :
-          addPart( QStringLiteral("Fill In CB"), false );
-          break;
-        case spMainD :
-          addPart( QStringLiteral("Fill In DB"), false );
-          break;
-        }
-      addPart( QStringLiteral("Main B"), true );
-      mPart = spMainB;
-      break;
-    case spEndingB :
-      addPart( QStringLiteral("Ending B"), false );
-      mPart = 0;
-      break;
+    //Play desired intro
+    switch( part ) {
+      case spIntroA :
+        addPart( part, QStringLiteral("Intro A"), false );
+        addMainPart( mMainPart );
+        break;
+      case spIntroB :
+        addPart( part, QStringLiteral("Intro B"), false );
+        addMainPart( mMainPart );
+        break;
+      case spIntroC :
+        addPart( part, QStringLiteral("Intro C"), false );
+        addMainPart( mMainPart );
+        break;
+      case spIntroD :
+        addPart( part, QStringLiteral("Intro D"), false );
+        addMainPart( mMainPart );
+        break;
 
-    case spIntroC :
-      addPart( QStringLiteral("Intro C"), false );
-      addPart( QStringLiteral("Main C"), true );
-      mPart = spMainC;
-      break;
-    case spMainC :
-      switch( mPart ) {
-        case spMainA :
-          addPart( QStringLiteral("Fill In AC"), false );
-          break;
-        case spMainB :
-          addPart( QStringLiteral("Fill In BC"), false );
-          break;
-        case spMainC :
-          addPart( QStringLiteral("Fill In CC"), false );
-          break;
-        case spMainD :
-          addPart( QStringLiteral("Fill In DC"), false );
-          break;
-        }
-      addPart( QStringLiteral("Main C"), true );
-      mPart = spMainC;
-      break;
-    case spEndingC :
-      addPart( QStringLiteral("Ending C"), false );
-      mPart = 0;
-      break;
-
-    case spIntroD :
-      addPart( QStringLiteral("Intro D"), false );
-      addPart( QStringLiteral("Main D"), true );
-      mPart = spMainD;
-      break;
-    case spMainD :
-      switch( mPart ) {
-        case spMainA :
-          addPart( QStringLiteral("Fill In AD"), false );
-          break;
-        case spMainB :
-          addPart( QStringLiteral("Fill In BD"), false );
-          break;
-        case spMainC :
-          addPart( QStringLiteral("Fill In CD"), false );
-          break;
-        case spMainD :
-          addPart( QStringLiteral("Fill In DD"), false );
-          break;
-        }
-      addPart( QStringLiteral("Main D"), true );
-      mPart = spMainD;
-      break;
-    case spEndingD :
-      addPart( QStringLiteral("Ending D"), false );
-      mPart = 0;
-      break;
+      case spMainA :
+      case spMainB :
+      case spMainC :
+      case spMainD :
+        //Simple switch main part
+        mMainPart = part;
+        emit mainPartChanged();
+        break;
+      }
     }
-  emit partsChanged();
+  else {
+    //When playing any part
+    switch( part ) {
+      case spMainA :
+        if( mMainPart == spMainA )
+          addPart( spFillA, QStringLiteral("Fill in AA"), false );
+        addMainPart( mMainPart = part );
+        emit mainPartChanged();
+        break;
+
+      case spMainB :
+        if( mMainPart == spMainB )
+          addPart( spFillB, QStringLiteral("Fill in BB"), false );
+        addMainPart( mMainPart = part );
+        emit mainPartChanged();
+        break;
+
+      case spMainC :
+        if( mMainPart == spMainC )
+          addPart( spFillC, QStringLiteral("Fill in CC"), false );
+        addMainPart( mMainPart = part );
+        emit mainPartChanged();
+        break;
+
+      case spMainD :
+        if( mMainPart == spMainD )
+          addPart( spFillD, QStringLiteral("Fill in DD"), false );
+        addMainPart( mMainPart = part );
+        emit mainPartChanged();
+        break;
+
+      case spEndingA :
+        if( mCurPart & (spMainA | spMainB | spMainC | spMainD) )
+          addPart( part, QStringLiteral("Ending A"), false );
+        break;
+
+      case spEndingB :
+        if( mCurPart & (spMainA | spMainB | spMainC | spMainD) )
+          addPart( part, QStringLiteral("Ending B"), false );
+        break;
+
+      case spEndingC :
+        if( mCurPart & (spMainA | spMainB | spMainC | spMainD) )
+          addPart( part, QStringLiteral("Ending C"), false );
+        break;
+
+      case spEndingD :
+        if( mCurPart & (spMainA | spMainB | spMainC | spMainD) )
+          addPart( part, QStringLiteral("Ending D"), false );
+        break;
+      }
+    }
   }
+
+
 
 
 
@@ -198,7 +151,14 @@ void QmlStyleFile::tick()
         int trackIndex = mQmlTrackModel.asInt( i, TRACK_INDEX );
         bool soundOn = mQmlTrackModel.asInt( i, TRACK_ON );
         int volume = mQmlTrackModel.asInt( i, TRACK_VOLUME );
-        mQmlTrack[trackIndex].tick( mTickCount >> 4, nextTime >> 4, soundOn, volume );
+        //Style track
+        qint8 shift(0);
+        if( mLoop.head().mGroup != nullptr && i < mLoop.head().mGroup->mTrackList.count() ) {
+          const StyleTrack &st( mLoop.head().mGroup->mTrackList.at(i) );
+          if( st.mNoteTranspositionTable )
+            shift = mNote - st.mSourceChord;
+          }
+        mQmlTrack[trackIndex].tick( mTickCount >> 4, nextTime >> 4, soundOn, volume, shift );
         }
 
       //Update current tick count
@@ -210,6 +170,8 @@ void QmlStyleFile::tick()
           //Jump to next part
           mLoop.dequeue();
           setTickCount( mLoop.head().mTimeStart );
+          mCurPart = mLoop.head().mPartMask;
+          emit curPartChanged();
           }
         else if( mLoop.head().mLoop ) {
           //Wrap fragment
@@ -218,6 +180,8 @@ void QmlStyleFile::tick()
         else {
           mTickCount = -1;
           mLoop.dequeue();
+          mCurPart = 0;
+          emit curPartChanged();
           }
         }
       //Signal that tick count changed
@@ -230,7 +194,20 @@ void QmlStyleFile::tick()
     }
   else if( mLoop.count() ) {
     setTickCount( mLoop.head().mTimeStart );
+    mCurPart = mLoop.head().mPartMask;
+    emit curPartChanged();
+    mNote = 0;
+    mChordType = 0;
     }
+  }
+
+
+
+
+void QmlStyleFile::chord(quint8 note, quint8 chordType)
+  {
+  mNote = note;
+  mChordType = chordType;
   }
 
 
@@ -388,14 +365,17 @@ void QmlStyleFile::postRead()
   {
   for( const auto marker : mMarkerList )
     mMarkerSet.insert( marker.mMarker );
-  mPart = 0;
+  mCurPart = 0;
+  mMainPart = spMainA;
+  emit curPartChanged();
+  emit mainPartChanged();
   emit partsChanged();
   }
 
 
 
 
-void QmlStyleFile::addPart(const QString part, bool loop)
+void QmlStyleFile::addPart( int partMask, const QString part, bool loop)
   {
   int i = 0;
   for( i = 0; i < mMarkerList.count(); i++ )
@@ -407,10 +387,51 @@ void QmlStyleFile::addPart(const QString part, bool loop)
         styleLoop.mTimeStop = mMarkerList.at(i + 1).mTime;
       else
         styleLoop.mTimeStop = mFileLenght;
+
+      //Setup style looping
       styleLoop.mLoop = loop;
+
+      //Setup style part mask
+      styleLoop.mPartMask = partMask;
+
+      //Find group for this part
+      styleLoop.mGroup = nullptr; //Group not foune yet
+      for( auto &g : mGroupList )
+        if( g.mMarkerSet.contains(part) ) {
+          //Group found
+          styleLoop.mGroup = &g;
+          break;
+          }
+
+      //Append to loop queue
       mLoop.enqueue( styleLoop );
       return;
       }
+  }
+
+
+
+void QmlStyleFile::addMainPart(int mainPart)
+  {
+  switch( mainPart ) {
+    case spMainA :
+      addPart( mainPart, QStringLiteral("Main A"), true );
+      mMainPart = mainPart;
+      break;
+    case spMainB :
+      addPart( mainPart, QStringLiteral("Main B"), true );
+      mMainPart = mainPart;
+      break;
+    case spMainC :
+      addPart( mainPart, QStringLiteral("Main C"), true );
+      mMainPart = mainPart;
+      break;
+    case spMainD :
+      addPart( mainPart, QStringLiteral("Main D"), true );
+      mMainPart = mainPart;
+      break;
+    }
+  emit mainPartChanged();
   }
 
 

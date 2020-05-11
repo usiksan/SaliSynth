@@ -22,6 +22,9 @@ struct QmlMidiEvent {
     qint16 mType;
     quint8 mData0;
     quint8 mData1;
+    quint8 mShiftedData0;
+
+    void shift( qint8 shiftValue ) { mShiftedData0 = mData0 + shiftValue; }
 
     bool isNote() const { return mType == 0x10; }
 
@@ -87,7 +90,7 @@ class QmlMidiTrack : public QAbstractListModel
 
     void    stop();
 
-    void    tick( int prevTime, int nextTime, bool soundOn, int volume );
+    void    tick(int prevTime, int nextTime, bool soundOn, int volume , qint8 shift = 0);
 
   signals:
     void trackNameChanged();

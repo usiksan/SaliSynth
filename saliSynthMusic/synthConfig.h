@@ -94,6 +94,10 @@
    05.05.2020 v38 Begin styled autoacompaniment integration
    06.05.2020 v39 Append visual direction for style play
                   Append fragment looping and queuing, add jump beetween parts
+   11.05.2020 v40 Refactoring style part buttons. At now they on bottom row
+                  In central part of acompaniment - midi setup with individual track accessing
+                  Append style save posibilities
+                  Append accord to autoacompaniment transfer
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H

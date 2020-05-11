@@ -124,5 +124,6 @@
         <file>img/play-music.png</file>
         <file>qml/WorkKey.qml</file>
         <file>qml/WorkAcompaniment.qml</file>
+        <file>qml/PartButton.qml</file>
     </qresource>
 </RCC>

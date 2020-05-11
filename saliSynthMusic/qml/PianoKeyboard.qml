@@ -30,7 +30,7 @@ Item {
     SvText {
       anchors.centerIn: parent
       text: (qmlKeyboard.leftMode & 1 ? qsTr("[Chord mode]") : qsTr("[Key mode]") ) +
-            (qmlKeyboard.leftMode & 2 ? qsTr("Accomp style:\n")  : qsTr("Voice:\n") + synth.leftVoice)
+            (qmlKeyboard.leftMode & 2 ? qsTr("Accomp style:\n") + qmlStyleFile.midiName  : qsTr("Voice:\n") + synth.leftVoice)
     }
 
     //Select voice for this part

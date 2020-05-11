@@ -5,19 +5,6 @@
 
 
 
-enum Notes {
-  noteA,
-  noteAd,
-  noteB,
-  noteC,
-  noteCd,
-  noteD,
-  noteDd,
-  noteE,
-  noteF,
-  noteFd,
-  noteG,
-  noteGd };
 
 static inline bool isBlackNote( quint8 note ) { return note == noteAd || note == noteCd || note == noteDd || note == noteFd || note == noteGd; }
 
@@ -38,21 +25,42 @@ const quint8 noteMap[128] = {
   noteC, noteCd, noteD, noteDd, noteE, noteF, noteFd, noteG                                //127
 };
 
-enum Chords {
-  chordMajor,
-  chordMinor,
-  chord7,
-  chordm7,
-  chordM7,
-  chordLast
-  };
 
-const quint8 chordMap[chordLast][4] = {
-  { 0, 4, 7, 0 }, //chordMajor
-  { 0, 3, 7, 0 }, //chordMinor
-  { 0, 4, 7, 10 }, //chord7
-  { 0, 3, 7, 10 }, //chordm7
-  { 0, 4, 7, 11 }  //chordM7
+const quint8 chordMap[chordCancel][5] = {
+  { 0, 4, 7, 0, 0 }, //chordMaj
+  { 0, 4, 7, 9, 0 }, //chordMaj6
+  { 0, 4, 7,11, 0 }, //chordMaj7
+  { 0, 4, 6, 7,11 }, //chordMaj7sharp11
+  { 0, 2, 4, 7, 0 }, //chordMaj_9_
+  { 0, 2, 4, 7,11 }, //chordMaj7_9_
+  { 0, 2, 4, 7, 9 }, //chordMaj6_9_
+  { 0, 4, 8, 0, 0 }, //chordAug
+  { 0, 3, 7, 0, 0 }, //chordMin
+  { 0, 3, 7, 9, 0 }, //chordMin6
+  { 0, 3, 7,10, 0 }, //chordMin7
+  { 0, 3, 6,10, 0 }, //chordMin7b5
+  { 0, 2, 3, 7, 0 }, //chordMin_9_
+  { 0, 2, 3, 7,10 }, //chordMin7_9_
+  { 0, 3, 5, 7,10 }, //chordMin7_11_
+  { 0, 3, 7,11, 0 }, //chordMinMaj7
+  { 0, 2, 3, 7,11 }, //chordMinMaj7_9_
+  { 0, 3, 6, 0, 0 }, //chordDim
+  { 0, 3, 6, 9, 0 }, //chordDim7
+  { 0, 4, 7,10, 0 }, //chord7th
+  { 0, 5, 7,10, 0 }, //chord7sus4
+  { 0, 4, 6,10, 0 }, //chord7b5
+  { 0, 2, 4, 7,10 }, //chord7_9_
+  { 0, 4, 6, 7,10 }, //chord7sharp11
+  { 0, 4, 7, 9,10 }, //chord7_13_
+  { 0, 1, 4, 7,10 }, //chord7_b9_
+  { 0, 4, 7, 8,10 }, //chord7_b13_
+  { 0, 3, 4, 7,10 }, //chord7_sharp9_
+  { 0, 4, 8,11, 0 }, //chordMaj7aug
+  { 0, 4, 8,10, 0 }, //chord7aug
+  { 0, 0, 0, 0, 0 }, //chord1plus8
+  { 0, 7, 0, 0, 0 }, //chord1plus5
+  { 0, 5, 7, 0, 0 }, //chordSus4
+  { 0, 2, 7, 0, 0 }  //chord1plus2plus5
 };
 
 
@@ -79,6 +87,7 @@ MidiProcessor::MidiProcessor(QThread *th, QObject *parent) :
   mQmlStyleFile = new QmlStyleFile();
   connect( mQmlStyleFile, &QmlStyleFile::midiEvent, this, &MidiProcessor::midiFile );
   connect( mQmlStyleFile, &QmlStyleFile::voiceSetup, this, &MidiProcessor::voiceSetup );
+  connect( this, &MidiProcessor::midiChord, mQmlStyleFile, &QmlStyleFile::chord );
 
   moveToThread( th );
   connect( th, &QThread::started, this, &MidiProcessor::onStart );
@@ -168,8 +177,8 @@ void MidiProcessor::keyboardLeftSimpleChordGenerator(quint8 cmd, qint8 data0, qu
   {
   if( data1 && (cmd & 0x10) == 0x10 ) {
     //Press key
-    mLeftChord[4] = data1;
-    for( int i = 0; i < 3; i++ )
+    mLeftChord[5] = data1;
+    for( int i = 0; i < 5; i++ )
       if( mLeftChord[i] == 0 ) {
         mLeftChord[i] = data0;
         mLeftChordTimer = 5;
@@ -178,12 +187,22 @@ void MidiProcessor::keyboardLeftSimpleChordGenerator(quint8 cmd, qint8 data0, qu
     }
   else if( mLeftChord[0] || (cmd & 0x10) == 0 ) {
     //Release key
-    for( int i = 0; i < 4; i++ ) {
-      if( mLeftChord[i] ) {
-        emit midiSignal( 0x11, mLeftChord[i], 0 );
-        emit keyIndicate( mLeftChord[i], false, 0x4 );
+    if( mQmlKeyboard->leftMode() & 2 ) {
+      for( int i = 0; i < 5; i++ ) {
+        if( mLeftChord[i] )
+          emit keyIndicate( mLeftChord[i], false, 0x4 );
+        mLeftChord[i] = 0;
         }
-      mLeftChord[i] = 0;
+      }
+    else {
+      //Voice mode
+      for( int i = 0; i < 5; i++ ) {
+        if( mLeftChord[i] ) {
+          emit midiSignal( 0x11, mLeftChord[i], 0 );
+          emit keyIndicate( mLeftChord[i], false, 0x4 );
+          }
+        mLeftChord[i] = 0;
+        }
       }
     }
   }
@@ -204,25 +223,41 @@ void MidiProcessor::keyboardLeftChordDetector()
       if( mLeftChord[1] < mLeftChord[2] ) qSwap( mLeftChord[1], mLeftChord[2] );
       if( mLeftChord[0] < mLeftChord[1] ) qSwap( mLeftChord[0], mLeftChord[1] );
 
-      if( mLeftChord[1] == 0 )          chordType = chordMajor;
+      if( mLeftChord[1] == 0 )          chordType = chordMaj;
       else {
-        if( isBlackKey(mLeftChord[1]) ) chordType = chordMinor;
-        else                            chordType = chord7;
+        if( isBlackKey(mLeftChord[1]) ) chordType = chordMin;
+        else                            chordType = chord7th;
 
-        if( mLeftChord[2] )             chordType = chordm7;
+        if( mLeftChord[2] )             chordType = chordMin7;
         }
 
-      //Send detected chord
-      for( int i = 0; i < 4; i++ )
-        if( i == 0 || chordMap[chordType][i] ) {
-          mLeftChord[i] = chordMap[chordType][i] + mLeftChord[0];
-          keyboardLeftOutput( 0x11, mLeftChord[i], mLeftChord[4] );
-          emit keyIndicate( mLeftChord[i], true, 0x4 );
-          }
-        else mLeftChord[i] = 0;
+      if( mQmlKeyboard->leftMode() & 2 ) {
+        //Acompaniment mode
+        emit midiChord( noteMap[ mLeftChord[0] ], chordType );
+        //Indicate detected chord
+        for( int i = 0; i < 5; i++ )
+          if( i == 0 || chordMap[chordType][i] ) {
+            mLeftChord[i] = chordMap[chordType][i] + mLeftChord[0];
+            emit keyIndicate( mLeftChord[i], true, 0x4 );
+            }
+          else mLeftChord[i] = 0;
+        }
+      else {
+        //Voice mode
+        //Send detected chord
+        for( int i = 0; i < 5; i++ )
+          if( i == 0 || chordMap[chordType][i] ) {
+            mLeftChord[i] = chordMap[chordType][i] + mLeftChord[0];
+            keyboardLeftOutput( 0x11, mLeftChord[i], mLeftChord[5] );
+            emit keyIndicate( mLeftChord[i], true, 0x4 );
+            }
+          else mLeftChord[i] = 0;
+        }
       }
     }
   }
+
+
 
 
 void MidiProcessor::keyboardRight(quint8 cmd, quint8 data0, quint8 data1)

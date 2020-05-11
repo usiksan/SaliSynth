@@ -2,7 +2,10 @@ import QtQuick 2.0
 import QtQuick.Controls 2.5
 
 Item {
+  id: midiConfig
   anchors.fill: parent
+  property int voiceInfoHeight : 100
+  property alias trackModel : trackRepeater.model
 
   //Display midi track info
   Flow {
@@ -10,11 +13,12 @@ Item {
     spacing: 5
 
     Repeater {
+      id: trackRepeater
       model: qmlMidiFileTrackModel
 
       Rectangle {
         width: 190
-        height: 100
+        height: midiConfig.voiceInfoHeight
         border.color: "green"
         border.width: 2
 
@@ -143,7 +147,7 @@ Item {
   //we display this text
   SvText {
     anchors.centerIn: parent
-    visible: qmlMidiFileTrackModel.count == 0
+    visible: trackModel.count === 0
     text: qsTr("No midi file loaded")
   }
 }

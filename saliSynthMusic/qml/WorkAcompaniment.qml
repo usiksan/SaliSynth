@@ -39,6 +39,17 @@ Item {
       } );
     }
 
+    //Midi config file save
+    ToolButton {
+      icon.source: "qrc:/img/fileSave.png"
+      icon.color: "transparent"
+      ToolTip.text: qsTr("Style config file save")
+      ToolTip.visible: hovered
+      ToolTip.delay: 300
+
+      onClicked: qmlStyleFile.configWrite()
+    }
+
 
     //Stop music
     ToolButton {
@@ -76,78 +87,78 @@ Item {
     anchors.bottom: parent.bottom
     clip: true
 
-    Grid {
-      anchors.centerIn: parent
+    MidiFileSetup {
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.right: parent.right
+      anchors.bottom: partRow.top
+      trackModel: qmlStyleFileTrackModel
 
-      columns: 3
-      spacing: 5
-      //Part A
-      Button {
-        text: qsTr("Intro A")
-        enabled: qmlStyleFile.parts & 0x0001
-        onClicked: qmlStyleFile.playPart(0x0001)
-      }
-      Button {
-        text: qsTr("Main A")
-        enabled: qmlStyleFile.parts & 0x0002
-        onClicked: qmlStyleFile.playPart(0x0002)
-      }
-      Button {
-        text: qsTr("Ending A")
-        enabled: qmlStyleFile.parts & 0x0004
-        onClicked: qmlStyleFile.playPart(0x0004)
-      }
+      voiceInfoHeight: utils.getFMin( height / 3 - 3, 100 );
+    }
 
-      //Part B
-      Button {
-        text: qsTr("Intro B")
-        enabled: qmlStyleFile.parts & 0x0010
-        onClicked: qmlStyleFile.playPart(0x0010)
+    Row {
+      id: partRow
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+
+      PartButton {
+        text: qsTr("IntroA")
+        mask: 0x0001
       }
-      Button {
-        text: qsTr("Main B")
-        enabled: qmlStyleFile.parts & 0x0020
-        onClicked: qmlStyleFile.playPart(0x0020)
+      PartButton {
+        text: qsTr("IntroB")
+        mask: 0x0010
       }
-      Button {
-        text: qsTr("Ending B")
-        enabled: qmlStyleFile.parts & 0x0040
-        onClicked: qmlStyleFile.playPart(0x0040)
+      PartButton {
+        text: qsTr("IntroC")
+        mask: 0x0100
+      }
+      PartButton {
+        text: qsTr("IntroD")
+        mask: 0x1000
       }
 
-      //Part C
-      Button {
-        text: qsTr("Intro C")
-        enabled: qmlStyleFile.parts & 0x0100
-        onClicked: qmlStyleFile.playPart(0x0100)
+      PartButton {
+        text: qsTr("MainA")
+        mask: 0x0002
+        isMain: true
       }
-      Button {
-        text: qsTr("Main C")
-        enabled: qmlStyleFile.parts & 0x0200
-        onClicked: qmlStyleFile.playPart(0x0200)
+      PartButton {
+        text: qsTr("MainB")
+        mask: 0x0020
+        isMain: true
       }
-      Button {
-        text: qsTr("Ending C")
-        enabled: qmlStyleFile.parts & 0x0400
-        onClicked: qmlStyleFile.playPart(0x0400)
+      PartButton {
+        text: qsTr("MainC")
+        mask: 0x0200
+        isMain: true
+      }
+      PartButton {
+        text: qsTr("MainD")
+        mask: 0x2000
+        isMain: true
       }
 
-      //Part D
-      Button {
-        text: qsTr("Intro D")
-        enabled: qmlStyleFile.parts & 0x1000
-        onClicked: qmlStyleFile.playPart(0x1000)
+      PartButton {
+        text: qsTr("EndA")
+        mask: 0x0004
       }
-      Button {
-        text: qsTr("Main D")
-        enabled: qmlStyleFile.parts & 0x2000
-        onClicked: qmlStyleFile.playPart(0x2000)
+      PartButton {
+        text: qsTr("EndB")
+        mask: 0x0040
       }
-      Button {
-        text: qsTr("Ending D")
-        enabled: qmlStyleFile.parts & 0x4000
-        onClicked: qmlStyleFile.playPart(0x4000)
+      PartButton {
+        text: qsTr("EndC")
+        mask: 0x0400
       }
+      PartButton {
+        text: qsTr("EndD")
+        mask: 0x4000
+      }
+
+
     }
   }
 }

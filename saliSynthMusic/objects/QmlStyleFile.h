@@ -6,10 +6,10 @@
 #include <QQueue>
 
 struct StyleTrack {
-    quint8 mSrcChannel;
-    char   mName[9];
-    quint8 mDstChannel;
-    quint8 mEditable;
+    quint8  mSrcChannel;
+    char    mName[9];
+    quint8  mDstChannel;
+    quint8  mEditable;
     quint16 mNoteMuteMask;
     quint64 mChordMute;
     quint8  mSourceChord;
@@ -29,9 +29,11 @@ struct StyleGroup {
 
 
 struct StyleLoop {
-    qint32 mTimeStart;
-    qint32 mTimeStop;
-    bool   mLoop;
+    qint32      mTimeStart;
+    qint32      mTimeStop;
+    int         mPartMask;
+    bool        mLoop;
+    StyleGroup *mGroup;
   };
 
 class QmlStyleFile : public QmlMidiFile
@@ -40,26 +42,35 @@ class QmlStyleFile : public QmlMidiFile
 
     QList<StyleGroup> mGroupList; //! List of segments group
     QSet<QString>     mMarkerSet;
-    int               mPart;
+    int               mCurPart;   //! Current style part
+    int               mMainPart;  //! Active main part
 
     QQueue<StyleLoop> mLoop;
+    quint8            mNote;
+    quint8            mChordType;
 
     Q_PROPERTY(int parts READ parts NOTIFY partsChanged)
+    Q_PROPERTY(int curPart READ curPart NOTIFY curPartChanged)
+    Q_PROPERTY(int mainPart READ mainPart NOTIFY mainPartChanged)
 
   public:
     enum StylePart {
       spIntroA  = 0x0001,
       spMainA   = 0x0002,
       spEndingA = 0x0004,
+      spFillA   = 0x0008,
       spIntroB  = 0x0010,
       spMainB   = 0x0020,
       spEndingB = 0x0040,
+      spFillB   = 0x0080,
       spIntroC  = 0x0100,
       spMainC   = 0x0200,
       spEndingC = 0x0400,
+      spFillC   = 0x0800,
       spIntroD  = 0x1000,
       spMainD   = 0x2000,
-      spEndingD = 0x4000
+      spEndingD = 0x4000,
+      spFillD   = 0x8000
       };
 
     Q_ENUM(StylePart)
@@ -68,30 +79,21 @@ class QmlStyleFile : public QmlMidiFile
 
     int parts() const;
 
+    int  curPart() const { return mCurPart; }
+
+    int  mainPart() const { return mMainPart; }
+
   signals:
     void partsChanged();
+    void curPartChanged();
+    void mainPartChanged();
 
   public slots:
     void playPart( int part );
 
     virtual void tick() override;
 
-//    //!
-//    //! \brief intro Play "Intro" and then "Main"
-//    //! \param name  Main section name
-//    //!
-//    void intro( const QString name );
-
-//    //!
-//    //! \brief finish After "Main" play "Ending"
-//    //!
-//    void finish();
-
-//    //!
-//    //! \brief section Play "Main" then "Fill In" then "Main"
-//    //! \param name    Last Main section name
-//    //!
-//    void section( const QString name );
+    void         chord( quint8 note, quint8 chordType );
 
     // QmlMidiFile interface
   private:
@@ -109,7 +111,9 @@ class QmlStyleFile : public QmlMidiFile
   private:
     virtual void postRead() override;
 
-    void         addPart( const QString part, bool loop );
+    void         addPart(int partMask, const QString part, bool loop );
+
+    void         addMainPart( int mainPart );
   };
 
 #endif // QMLSTYLEFILE_H

@@ -163,7 +163,7 @@ void QmlMidiTrack::stop()
 
 
 
-void QmlMidiTrack::tick(int prevTime, int nextTime, bool soundOn, int volume)
+void QmlMidiTrack::tick(int prevTime, int nextTime, bool soundOn, int volume, qint8 shift )
   {
   //Check volume change
   if( volume != mVolume ) {
@@ -177,7 +177,7 @@ void QmlMidiTrack::tick(int prevTime, int nextTime, bool soundOn, int volume)
     int eventIndex = mActiveNoteList.at(i);
     if( mMidiList.at( eventIndex ).isStopInside(nextTime) ) {
       //This note is ended
-      emit midiEvent( 0x10 | mChannel, mMidiList.at( eventIndex ).mData0, 0 );
+      emit midiEvent( 0x10 | mChannel, mMidiList.at( eventIndex ).mShiftedData0, 0 );
       //Remove note from active list
       mActiveNoteList.removeAt(i);
       }
@@ -191,7 +191,8 @@ void QmlMidiTrack::tick(int prevTime, int nextTime, bool soundOn, int volume)
       if( mMidiList.at(mEventIndex).isNote() ) {
         //This is note. Start it
         //qDebug() << "Channel midi note" << mChannel << mEventIndex << mMidiList.at( mEventIndex ).mData0 << mMidiList.at( mEventIndex ).mData1;
-        emit midiEvent( 0x10 | mChannel, mMidiList.at( mEventIndex ).mData0, mMidiList.at( mEventIndex ).mData1 );
+        mMidiList[ mEventIndex ].shift( shift );
+        emit midiEvent( 0x10 | mChannel, mMidiList.at( mEventIndex ).mShiftedData0, mMidiList.at( mEventIndex ).mData1 );
         //... and append note to the active note list
         mActiveNoteList.append(mEventIndex);
         }
