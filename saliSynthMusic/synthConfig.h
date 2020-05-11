@@ -105,13 +105,14 @@
                   Refactoring stop function to clear queue and then stop.
               v44 Append "pause" functionality
               v45 Sometime happens absolutly same event when read midi file. We must remove them
+              v46 Append colored rectangle for track info. Color is the same as track visualise
 
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 44
+#define VERSION 46
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

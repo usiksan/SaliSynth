@@ -29,8 +29,9 @@ Item {
       Rectangle {
         width: 190
         height: midiConfig.voiceInfoHeight
-        border.color: "green"
-        border.width: 2
+        property string midiTrackColor: trackColor
+        border.color: midiTrackColor
+        border.width: 3
 
         //Voice icon
         Button {
