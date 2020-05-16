@@ -1,3 +1,12 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+*/
+#include "synthConfig.h"
 #include "SfSynth.h"
 #include "SvQml/SvDir.h"
 #include "SvQml/SvQmlUtils.h"
@@ -80,19 +89,35 @@ QStringList SfSynth::presetList(int voiceRow)
 
 QString SfSynth::soundFontPath() const
   {
+#ifdef IS_DEBUG
   return SvQmlUtils::getHomePath() + "saliSynthMusic/soundFonts/";
+#else
+  return SvQmlUtils::getApplicationPath() + "soundFonts/";
+#endif
   }
+
+
+
+
 
 QString SfSynth::midiPath() const
   {
+#ifdef IS_DEBUG
   return SvQmlUtils::getHomePath() + "midi/";
+#else
+  return SvQmlUtils::getApplicationPath() + "midi/";
+#endif
   }
 
 
 
 QString SfSynth::stylePath() const
   {
+#ifdef IS_DEBUG
   return SvQmlUtils::getHomePath() + "saliSynthMusic/styles/";
+#else
+  return SvQmlUtils::getApplicationPath() + "styles/";
+#endif
   }
 
 

@@ -128,5 +128,17 @@
         <file>img/lampGreen.png</file>
         <file>img/lampOff.png</file>
         <file>img/pause.png</file>
+        <file>qml/SvToolButton.qml</file>
+        <file>img/instrumentBandoneon.png</file>
+        <file>img/instrumentViolin.png</file>
+        <file>img/instrumentViola.png</file>
+        <file>img/instrumentCello.png</file>
+        <file>img/instrumentContrabass.png</file>
+        <file>img/instrumentTremolo.png</file>
+        <file>img/instrumentPizzicato.png</file>
+        <file>img/instrumentTimpani.png</file>
+        <file>img/instrumentHarp.png</file>
+        <file>img/instrumentStringEnsemble.png</file>
+        <file>img/instrumentBrassTrumpet.png</file>
     </qresource>
 </RCC>

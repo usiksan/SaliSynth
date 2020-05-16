@@ -23,23 +23,17 @@ Item {
     spacing: 5
 
     //Settings
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/settings.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Settings")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: currentMode = 1
     }
 
     //Midi file open
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/fileOpen.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Style file open")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: fileDialogBox.openLoad( qsTr("Open style file"), synth.stylePath(), ["*.sty"], function (fname) {
         qmlStyleFile.read( fname );
@@ -49,24 +43,18 @@ Item {
     }
 
     //Midi config file save
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/fileSave.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Style config file save")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: qmlStyleFile.configWrite()
     }
 
 
     //Stop music
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/stop.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Stop style file play")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: qmlStyleFile.stop()
     }
@@ -102,8 +90,9 @@ Item {
       anchors.right: parent.right
       anchors.bottom: partRow.top
       trackModel: qmlStyleFileTrackModel
+      ifNoTrackFound:  qsTr("No style file loaded")
 
-      voiceInfoHeight: utils.getFMin( height / 3 - 4, 100 );
+      voiceInfoHeight: utils.getFMin( height / 3 - 8, 100 );
     }
 
     Row {

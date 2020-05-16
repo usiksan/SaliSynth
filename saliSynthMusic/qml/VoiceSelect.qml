@@ -148,8 +148,11 @@ Rectangle {
         height: 30
         Rectangle {
           anchors.fill: parent
+          anchors.margins: -2
           visible: index === currentRow
-          color: Qt.lighter( "green" )
+          color: "transparent"
+          border.color: Qt.lighter( "green" )
+          border.width: 2
         }
         Row {
           spacing: 2

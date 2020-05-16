@@ -7,6 +7,7 @@ CONFIG += c++17
 # deprecated API to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
+
 # You can also make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
@@ -24,10 +25,6 @@ SOURCES += \
         SvQml/SvQmlJsonValue.cpp \
         SvQml/SvQmlUtils.cpp \
         audioOut/SoundBufferIODevice.cpp \
-        audioOut/SoundMidiChannel.cpp \
-        audioOut/SoundMidiOut.cpp \
-        audioOut/SoundPolyphonyChannel.cpp \
-        audioOut/SoundPolyphonyManager.cpp \
         iff/IffReader.cpp \
         main.cpp \
         midiInput/MidiInput.cpp \
@@ -67,10 +64,6 @@ HEADERS += \
   SvQml/SvQmlJsonValue.h \
   SvQml/SvQmlUtils.h \
   audioOut/SoundBufferIODevice.h \
-  audioOut/SoundMidiChannel.h \
-  audioOut/SoundMidiOut.h \
-  audioOut/SoundPolyphonyChannel.h \
-  audioOut/SoundPolyphonyManager.h \
   iff/IffReader.h \
   midiInput/MidiInput.h \
   objects/MidiProcessor.h \

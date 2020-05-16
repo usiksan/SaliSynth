@@ -5,7 +5,7 @@
  Web
    SaliLab.com
  Description
-   IFF files reader
+   IFF files reader. Represents one chunk in file.
 */
 #ifndef IFFREADER_H
 #define IFFREADER_H
@@ -50,6 +50,15 @@ class IffReader
 
     bool        readChunk( const char *name, std::function<bool( IffReader &reader )> fun1 );
 
+    //=====================================================================
+    // Read primitives
+
+    //!
+    //! \brief readChars Reads exact counts of bytes into buffer
+    //! \param dst       Buffer where will be placed readed bytes
+    //! \param len       Count of readed bytes
+    //! \return          true if bytes readed successfully
+    //!
     bool        readChars( char *dst, int len );
 
     quint8      peekUint8();

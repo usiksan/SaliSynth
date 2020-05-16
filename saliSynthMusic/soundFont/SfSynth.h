@@ -1,3 +1,12 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   SoundFont based soft sinthesizer
+*/
 #ifndef SFSYNTH_H
 #define SFSYNTH_H
 
@@ -17,21 +26,17 @@ class SfSynth : public QObject
     QMap<QString,SoundFontWeakPtr> mSoundFontMap;  //! Used sound font map
     QCache<int,SfSynthPreset>      mPresetCache;   //! Cached presets
 
-    SvQmlJsonModel                *mVoiceList;
-    SvQmlJsonModel                *mChannelList;
-    bool                           mMidiConnected;
+    SvQmlJsonModel                *mVoiceList;     //! Model of registered voice list. Each voice mapped to bank and programm
+    SvQmlJsonModel                *mChannelList;   //! Model of channels
+    bool                           mMidiConnected; //! Flag for indicate midi keyboard connection
 
     Q_PROPERTY(SvQmlJsonModel* voiceList READ voiceList WRITE setVoiceList NOTIFY voiceListChanged)
     Q_PROPERTY(SvQmlJsonModel* channelList READ channelList WRITE setChannelList NOTIFY channelListChanged)
     Q_PROPERTY(bool midiConnected READ getMidiConnected NOTIFY midiConnectedChanged )
 
     Q_PROPERTY(QString leftVoice READ leftVoice NOTIFY leftVoiceChanged)
-//    Q_PROPERTY(QString leftStyle READ leftStyle WRITE setLeftStyle NOTIFY leftStyleChanged)
     Q_PROPERTY(QString rightMainVoice READ rightMainVoice NOTIFY rightMainVoiceChanged)
     Q_PROPERTY(QString rightSlaveVoice READ rightSlaveVoice NOTIFY rightSlaveVoiceChanged)
-//    Q_PROPERTY(QString leftVoiceId READ leftVoiceId NOTIFY leftVoiceIdChanged)
-//    Q_PROPERTY(QString rightMainVoiceId READ rightMainVoiceId NOTIFY rightMainVoiceIdChanged)
-//    Q_PROPERTY(QString rightSlaveVoiceId READ rightSlaveVoiceId NOTIFY rightSlaveVoiceIdChanged)
   public:
     explicit SfSynth(QObject *parent = nullptr);
 

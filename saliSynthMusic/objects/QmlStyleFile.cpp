@@ -1,3 +1,12 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   Style. Style is midi file with CASM extension. This style supports Yamaha style files
+*/
 #include "QmlStyleFile.h"
 
 #include <QDebug>

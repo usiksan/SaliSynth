@@ -106,16 +106,17 @@
               v44 Append "pause" functionality
               v45 Sometime happens absolutly same event when read midi file. We must remove them
               v46 Append colored rectangle for track info. Color is the same as track visualise
-              v47 Change delimiter picture
+   16.05.2020 v47 Change delimiter picture
                   Append delimiter tooltip
                   When start append intro screen while sound font loading
+   17.05.2020 v48 Remove some unused files and classes
 
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 47
+#define VERSION 48
 
 //Polyphony count
 #define POLYPHONY_COUNT 128
@@ -123,5 +124,9 @@
 #define SAMPLES_PER_SECOND 48000
 
 #define SAMPLES_PER_20MS   (SAMPLES_PER_SECOND / 50)
+
+//Debug configuration
+//With this we use fixed paths
+#define IS_DEBUG
 
 #endif // SYNTHCONFIG_H

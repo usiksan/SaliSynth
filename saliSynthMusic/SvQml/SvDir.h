@@ -1,5 +1,5 @@
 /*
-Project "Electronic schematic and pcb CAD"
+Project "Интерфейс специальных инструментов с QML"
 
 Author
   Sibilev Alexander S.
@@ -9,7 +9,7 @@ Web
   www.saliLab.ru
 
 Description
-  Directory representation
+  Директория
 */
 #ifndef SVDIR_H
 #define SVDIR_H

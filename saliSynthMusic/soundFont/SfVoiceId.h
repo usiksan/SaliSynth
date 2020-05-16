@@ -1,3 +1,12 @@
+/*
+ Project "SaliSynth - music synth for linux (raspberry) with midi keyboard support"
+ Author:
+   Sibilev A.S.
+ Web
+   SaliLab.com
+ Description
+   SfVoiceId structure which unites bank and programm numbers to the whole ident
+*/
 #ifndef SFVOICEID_H
 #define SFVOICEID_H
 

@@ -5,11 +5,14 @@
  Web
    SaliLab.com
  Description
+   Sound buffer device - interface device with sound card of computer.
+   Main idea: sound synthesizes by notes. Simultaneously supported a lot of notes.
+   Each of note synthesizes sound separately and SoundBufferIODevice mixes them into
+   single stream. When we need to play some note we append it SoundBufferIODevice
+   notes play list. When note end playing we remove it from notes play list.
 */
 #include "SoundBufferIODevice.h"
-#include "SoundPolyphonyManager.h"
 #include <QDebug>
-#include <QThread>
 #include <QAudioOutput>
 
 extern QAudioOutput *audio;
@@ -19,12 +22,15 @@ static int audioBufferSize;
 SoundBufferIODevice::SoundBufferIODevice() :
   QIODevice()
   {
-  mTimer.start();
   }
 
 
 
 
+//!
+//! \brief addNote Append note to notes play list
+//! \param notePtr Note to append
+//!
 void SoundBufferIODevice::addNote(SfSynthNotePtr notePtr)
   {
   if( !mActiveNotes.contains(notePtr) )
@@ -57,15 +63,7 @@ qint64 SoundBufferIODevice::bytesAvailable() const
 
 qint64 SoundBufferIODevice::readData(char *data, qint64 maxlen)
   {
-//  if( audioBufferSize == 0 )
-//    audioBufferSize = audio->bufferSize();
-
-//  if( fillBuffer > 14 && (audioBufferSize - audio->bytesFree()) >= SAMPLES_PER_20MS )
-//    return 0;
-
-//  if( fillBuffer++ < 40 ) {
-//    qDebug()  << "maxlen" << maxlen << "bytes free" << audio->bytesFree() << "timer" << mTimer.restart();
-//    }
+  Q_UNUSED(maxlen)
 
   //With this we fight with average
   //When average occur we decrement this and all sound samples downscales to 1/16 part

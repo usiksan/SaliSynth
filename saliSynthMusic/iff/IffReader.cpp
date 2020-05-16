@@ -89,6 +89,12 @@ bool IffReader::readChunk(const char *name, std::function<bool (IffReader &)> fu
 
 
 
+//!
+//! \brief readChars Reads exact counts of bytes into buffer
+//! \param dst       Buffer where will be placed readed bytes
+//! \param len       Count of readed bytes
+//! \return          true if bytes readed successfully
+//!
 bool IffReader::readChars(char *dst, int len)
   {
   return mFile->read( dst, len ) == len;

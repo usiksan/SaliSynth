@@ -23,23 +23,17 @@ Item {
     spacing: 5
 
     //Settings
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/settings.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Settings")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: currentMode = 1
     }
 
     //Midi file open
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/fileOpen.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Midi file open")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: fileDialogBox.openLoad( qsTr("Open midi file"), synth.midiPath(), ["*.mid","*.kar","*.sty"], function (fname) {
         qmlMidiFile.read( fname );
@@ -49,45 +43,33 @@ Item {
     }
 
     //Midi config file save
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/fileSave.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Midi config file save")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: qmlMidiFile.configWrite()
     }
 
     //Stop music
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/stop.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Stop midi file play")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: qmlMidiFile.stop()
     }
 
     //Play music
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/play.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Midi file play")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: qmlMidiFile.play()
     }
 
     //Pause music
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/pause.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Midi file play")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: qmlMidiFile.pause()
     }
@@ -107,12 +89,9 @@ Item {
 
 
     //Change view
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/play-music.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Midi track view")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: midiViewMode = (midiViewMode + 1) & 1
     }
@@ -131,6 +110,7 @@ Item {
     MidiFileSetup {
       id: midiFileSetup
       visible: midiViewMode === 0
+      ifNoTrackFound:  qsTr("No midi file loaded")
     }
 
     MidiTrackVertical {
