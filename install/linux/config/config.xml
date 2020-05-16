@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>SaliSynth</Name>
+    <Version>0.47.0</Version>
+    <Title>MIDI keyboard soft synthesizer SaliSynth</Title>
+    <Publisher>SaliLAB</Publisher>
+    <StartMenuDir>SaliSynth</StartMenuDir>
+    <TargetDir>@HomeDir@/SaliLAB/SaliSynth</TargetDir>
+</Installer>
