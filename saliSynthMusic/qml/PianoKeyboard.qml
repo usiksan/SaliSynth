@@ -96,14 +96,23 @@ Item {
     }
   }
 
+  //Left-right keyboard delimiter
   Image {
     source: "qrc:/img/delimiter.png"
     anchors.horizontalCenter: leftSide.right
     anchors.verticalCenter: leftSide.verticalCenter
 
     MouseArea {
+      id: delimiter
+      hoverEnabled: true
       anchors.fill: parent
       onClicked: qmlKeyboard.delimiter = -1;
+    }
+
+    ToolTip {
+      visible: delimiter.containsMouse
+      delay: 200
+      text: qsTr("Delimiter. Press to change delimiter position")
     }
   }
 

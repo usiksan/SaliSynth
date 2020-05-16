@@ -60,15 +60,27 @@ Window {
                                    qmlMidiTrack8Model, qmlMidiTrack9Model, qmlMidiTrack10Model, qmlMidiTrack11Model,
                                    qmlMidiTrack12Model, qmlMidiTrack13Model, qmlMidiTrack14Model, qmlMidiTrack15Model ];
 
+  //With this timer we delay sound fount loading,
+  //so interface freezed on intro but not empty or half empty
+  Timer {
+    interval: 500
+    running: true;
+    repeat: false;
+    onTriggered: {
+      synth.voiceList = voiceList;
+      synth.channelList = channelList;
+      currentMode = 2;
+    }
+  }
 
-  Binding { target: synth;       property: "voiceList";     value: voiceList }
-  Binding { target: synth;       property: "channelList";   value: channelList }
+//  Binding { target: synth;       property: "voiceList";     value: voiceList }
+//  Binding { target: synth;       property: "channelList";   value: channelList }
   Binding { target: qmlKeyboard; property: "keyboardWidth"; value: width }
   Binding { target: qmlKeyboard; property: "settings";      value: settings }
 
 
   //Current mode
-  property int currentMode : 2
+  property int currentMode : 0
   ModeIntro { visible: currentMode === 0 }
   ModeSetup { visible: currentMode === 1 }
   ModeWork  { visible: currentMode === 2 }
