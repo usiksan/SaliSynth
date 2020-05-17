@@ -112,13 +112,14 @@
    17.05.2020 v48 Remove some unused files and classes
               v0.49  Change versioning to major-minor rules
                      Append bpm calculation
+              v0.50  SpinBox decorated
 
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION "0.49"
+#define VERSION "0.50"
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

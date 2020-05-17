@@ -17,6 +17,8 @@ Item {
   property string ifNoTrackFound
   property int   voiceInfoHeight : 100             //Default track rectangle height
   property alias trackModel : trackRepeater.model  //Access to the track model
+  property bool  enableUserPlay : false
+  property int   userPlayTrack : -1
 
   //Display midi track info
   Flow {
@@ -124,6 +126,47 @@ Item {
 
           onClicked: trackVisible = trackVisible != 0 ? 0 : 1;
         }
+
+        //User play selector
+        Button {
+          id: userPlaySelector
+          width: 28
+          height: 28
+          anchors.top: onOffButton.bottom
+          anchors.topMargin: 3
+          anchors.right: onOffButton.right
+          anchors.rightMargin: 0
+          padding: 0
+          contentItem: Image {
+            width: 24
+            height: 24
+            source: "qrc:/img/voice.png"
+            fillMode: Image.PreserveAspectFit
+          }
+          background: Rectangle {
+            width: 28
+            height: 28
+            color: "transparent"
+            border.color: "green"
+            border.width: userPlayTrack == index ? 2 : 0
+          }
+          ToolTip.text: qsTr("Play track by yourself. Press to switch")
+          ToolTip.visible: hovered
+          ToolTip.delay: 300
+
+          onClicked: {
+            if( userPlayTrack === index ) {
+              userPlayTrack = -1;
+              trackOn = 1;
+            }
+            else {
+              userPlayTrack = index;
+              trackOn = 0;
+              synth.channelSetVoiceId( 0, trackId );
+            }
+          }
+        }
+
 
 
 

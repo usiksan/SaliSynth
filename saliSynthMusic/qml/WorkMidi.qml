@@ -19,7 +19,7 @@ Item {
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
-    height: 45
+    height: 35
     spacing: 5
 
     //Settings
@@ -39,6 +39,8 @@ Item {
         qmlMidiFile.read( fname );
         //Setup tempo as in midi file
         spinTempo.value = qmlMidiFile.tempo;
+        //By default no playing track by user
+        midiFileSetup.userPlayTrack = -1;
       } );
     }
 
@@ -75,14 +77,14 @@ Item {
     }
 
     //Tempo
-    SpinBox {
+    SvSpinBox {
       id: spinTempo
       from: 1
       to: 512
       value: 16
       ToolTip.text: qsTr("Midi play tempo")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
+      anchors.top: parent.top
+      anchors.topMargin: 2
 
       Binding { target: qmlMidiFile; property: "tempo"; value: spinTempo.value }
     }
@@ -111,6 +113,7 @@ Item {
       id: midiFileSetup
       visible: midiViewMode === 0
       ifNoTrackFound:  qsTr("No midi file loaded")
+      enableUserPlay: true
     }
 
     MidiTrackVertical {

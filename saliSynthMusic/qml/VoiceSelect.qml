@@ -146,14 +146,6 @@ Rectangle {
       delegate: Item {
         width: parent.width
         height: 30
-        Rectangle {
-          anchors.fill: parent
-          anchors.margins: -2
-          visible: index === currentRow
-          color: "transparent"
-          border.color: Qt.lighter( "green" )
-          border.width: 2
-        }
         Row {
           spacing: 2
           anchors.verticalCenter: parent.verticalCenter
@@ -163,24 +155,32 @@ Rectangle {
             width: widthNpp
             editable: false
             onLeftButton: setCurrentRow(index);
+            anchors.verticalCenter: parent.verticalCenter
           }
           //Voice icon
-          Image {
+          Rectangle {
             width: widthIcon
             height: 32
-            source: voiceIconName
+            color: "white"
+            Image {
+              source: voiceIconName
+              anchors.fill: parent
+              fillMode: Image.PreserveAspectFit
+            }
             MouseArea {
               anchors.fill: parent
               acceptedButtons: Qt.LeftButton | Qt.RightButton
               onClicked: setCurrentRow(index);
             }
           }
+
           //Bank MSB
           SvFieldText {
             text: voiceBankMsb
             width: widthId
             editable: false
             onLeftButton: setCurrentRow(index);
+            anchors.verticalCenter: parent.verticalCenter
           }
           //Bank LSB
           SvFieldText {
@@ -188,6 +188,7 @@ Rectangle {
             width: widthId
             editable: false
             onLeftButton: setCurrentRow(index);
+            anchors.verticalCenter: parent.verticalCenter
           }
           //Midi programm
           SvFieldText {
@@ -195,6 +196,7 @@ Rectangle {
             width: widthId
             editable: false
             onLeftButton: setCurrentRow(index);
+            anchors.verticalCenter: parent.verticalCenter
           }
           //Programm title
           SvFieldText {
@@ -202,7 +204,16 @@ Rectangle {
             width: widthTitle
             editable: false
             onLeftButton: setCurrentRow(index);
+            anchors.verticalCenter: parent.verticalCenter
           }
+        }
+        //Selecting rectangle
+        Rectangle {
+          anchors.fill: parent
+          visible: index === currentRow
+          color: "transparent"
+          border.color: Qt.lighter( "green" )
+          border.width: 2
         }
       }
     }
@@ -229,6 +240,11 @@ Rectangle {
       ToolTip.text: qsTr("Accompaniment mode")
       ToolTip.visible: hovered
       ToolTip.delay: 300
+      background: Rectangle {
+        color: "transparent"
+        border.color: "green"
+        border.width: currentMode & 2 ? 2 : 0
+      }
 
       onClicked: currentMode |= 2;
     }
@@ -241,6 +257,11 @@ Rectangle {
       ToolTip.text: qsTr("Voice mode")
       ToolTip.visible: hovered
       ToolTip.delay: 300
+      background: Rectangle {
+        color: "transparent"
+        border.color: "green"
+        border.width: currentMode & 2 ? 0 : 2
+      }
 
       onClicked: currentMode &= ~2;
     }
@@ -255,6 +276,11 @@ Rectangle {
       ToolTip.text: qsTr("Chord mode")
       ToolTip.visible: hovered
       ToolTip.delay: 300
+      background: Rectangle {
+        color: "transparent"
+        border.color: "green"
+        border.width: currentMode & 1 ? 2 : 0
+      }
 
       onClicked: currentMode |= 1;
     }
@@ -267,6 +293,11 @@ Rectangle {
       ToolTip.text: qsTr("Simple key mode")
       ToolTip.visible: hovered
       ToolTip.delay: 300
+      background: Rectangle {
+        color: "transparent"
+        border.color: "green"
+        border.width: currentMode & 1 ? 0 : 2
+      }
 
       onClicked: currentMode &= ~1;
     }
@@ -282,6 +313,11 @@ Rectangle {
       ToolTip.text: qsTr("Double voice mode")
       ToolTip.visible: hovered
       ToolTip.delay: 300
+      background: Rectangle {
+        color: "transparent"
+        border.color: "green"
+        border.width: currentMode & 2 ? 2 : 0
+      }
 
       onClicked: currentMode |= 2;
     }
@@ -294,18 +330,20 @@ Rectangle {
       ToolTip.text: qsTr("Single voice mode")
       ToolTip.visible: hovered
       ToolTip.delay: 300
+      background: Rectangle {
+        color: "transparent"
+        border.color: "green"
+        border.width: currentMode & 2 ? 0 : 2
+      }
 
       onClicked: currentMode &= ~2;
     }
 
 
     //Apply current selected voice
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/yes.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Apply current selected voice")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: {
         if( voiceApplyFunction !== null )
@@ -315,14 +353,15 @@ Rectangle {
     }
 
     //Close selector
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/close.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Close voice selector without any changes")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
-      onClicked: voiceSelector.visible = false
+      onClicked: {
+        //Clear apply function
+        voiceApplyFunction = null;
+        voiceSelector.visible = false;
+      }
     }
 
   }

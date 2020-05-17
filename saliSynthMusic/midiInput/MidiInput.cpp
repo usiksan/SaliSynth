@@ -67,7 +67,7 @@ void MidiInput::onTimer()
           }
         else if( mDataIndex == 1 ) {
           emit midiSignal( mControl, mData0, buf[i] & 0x7f );
-          qDebug() << "normal midi" << mControl << mData0 << static_cast<int>(buf[i] & 0x7f);
+          //qDebug() << "normal midi" << mControl << mData0 << static_cast<int>(buf[i] & 0x7f);
           mDataIndex = -1;
           }
         }

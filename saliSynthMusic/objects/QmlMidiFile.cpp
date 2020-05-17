@@ -181,14 +181,14 @@ int QmlMidiFile::tempo() const
   quint64 usPerQuarter = mDivision;
   usPerQuarter *= TICK_PERIOD_US * 16;
   usPerQuarter /= mTickStep;
-  return 60000000 / usPerQuarter;
+  return 60'000'000 / usPerQuarter;
   }
 
 
 
 void QmlMidiFile::setTempo(int aTempo)
   {
-  quint64 usPerQuarter = 60000000 / aTempo;
+  quint64 usPerQuarter = 60'000'000 / aTempo;
   quint64 temp = mDivision;
   temp *= TICK_PERIOD_US * 16;
   mTickStep = temp / usPerQuarter;

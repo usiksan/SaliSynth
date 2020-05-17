@@ -61,14 +61,14 @@ Item {
 
 
     //Tempo
-    SpinBox {
+    SvSpinBox {
       id: spinTempo
       from: 1
       to: 512
       value: 16
       ToolTip.text: qsTr("Style play tempo")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
+      anchors.top: parent.top
+      anchors.topMargin: 2
 
       Binding { target: qmlStyleFile; property: "tempo"; value: spinTempo.value }
     }

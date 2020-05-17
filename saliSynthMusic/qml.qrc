@@ -140,5 +140,6 @@
         <file>img/instrumentHarp.png</file>
         <file>img/instrumentStringEnsemble.png</file>
         <file>img/instrumentBrassTrumpet.png</file>
+        <file>qml/SvSpinBox.qml</file>
     </qresource>
 </RCC>

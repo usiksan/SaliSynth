@@ -48,6 +48,5 @@ Item {
   VoiceSelect {
     id: voiceSelector
     anchors.fill: parent
-    anchors.bottomMargin: pianoKeyboard.height
   }
 }
