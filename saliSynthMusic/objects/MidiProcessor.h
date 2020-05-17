@@ -123,6 +123,8 @@ class MidiProcessor: public QObject
   public slots:
     void onStart();
 
+    void midiQmlKeyboard( quint8 cmd, quint8 data0, quint8 data1 );
+
     void midiKeyboard( quint8 cmd, quint8 data0, quint8 data1 );
 
     void midiFile( quint8 cmd, quint8 data0, quint8 data1 );

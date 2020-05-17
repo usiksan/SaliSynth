@@ -253,7 +253,7 @@ void SfSynth::channelSetVoiceRow(int channel, int voiceRow)
     else if( channel == 1 ) emit leftVoiceChanged();
     else if( channel == 2 ) emit rightSlaveVoiceChanged();
 
-    //qDebug() << "Voice setup on channel" << channel << voiceId;
+    qDebug() << "Voice setup on channel" << channel << voiceId;
     //Update visual channel list
     mChannelList->setInt( channel, QStringLiteral("channelVoiceId"), voiceId );
     }

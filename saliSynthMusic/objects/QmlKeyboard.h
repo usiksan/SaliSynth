@@ -56,6 +56,9 @@ class QmlKeyboard : public QAbstractListModel
     int              mKeyboardWidth;
     int              mLeftMode;
     int              mRightMode;
+    int              mLeftVolume;
+    int              mRightMainVolume;
+    int              mRightOverlayVolume;
     int              mLeftOffset;
     int              mRightOffset;
     SvQmlJsonFile   *mSettings;
@@ -65,6 +68,9 @@ class QmlKeyboard : public QAbstractListModel
     Q_PROPERTY(int keyboardWidth READ keyboardWidth WRITE setKeyboardWidth NOTIFY keyboardWidthChanged)
     Q_PROPERTY(int leftMode READ leftMode WRITE setLeftMode NOTIFY leftModeChanged)
     Q_PROPERTY(int rightMode READ rightMode WRITE setRightMode NOTIFY rightModeChanged)
+    Q_PROPERTY(int leftVolume READ leftVolume WRITE setLeftVolume NOTIFY leftVolumeChanged)
+    Q_PROPERTY(int rightMainVolume READ rightMainVolume WRITE setRightMainVolume NOTIFY rightMainVolumeChanged)
+    Q_PROPERTY(int rightOverlayVolume READ rightOverlayVolume WRITE setRightOverlayVolume NOTIFY rightOverlayVolumeChanged)
     Q_PROPERTY(SvQmlJsonFile* settings READ settings WRITE setSettings NOTIFY settingsChanged)
 
   public:
@@ -89,6 +95,17 @@ class QmlKeyboard : public QAbstractListModel
     int            rightMode() const { return mRightMode; }
     void           setRightMode( int mode );
 
+    //Left part of keyboard voice volume
+    int            leftVolume() const { return mLeftVolume; }
+    void           setLeftVolume( int vol );
+
+    int            rightMainVolume() const { return mRightMainVolume; }
+    void           setRightMainVolume( int vol );
+
+    int            rightOverlayVolume() const { return mRightOverlayVolume; }
+    void           setRightOverlayVolume( int vol );
+
+
     SvQmlJsonFile *settings() const { return mSettings; }
     void           setSettings( SvQmlJsonFile *settings );
 
@@ -110,6 +127,10 @@ class QmlKeyboard : public QAbstractListModel
     void leftModeChanged();
     void rightModeChanged();
     void settingsChanged();
+    void leftVolumeChanged();
+    void rightMainVolumeChanged();
+    void rightOverlayVolumeChanged();
+
 
     void keyEvent( quint8 cmd, quint8 data0, quint8 data1 );
   public slots:

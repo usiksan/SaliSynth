@@ -77,7 +77,7 @@ MidiProcessor::MidiProcessor(QThread *th, QObject *parent) :
 
   mQmlKeyboard = new QmlKeyboard();
   mQmlKeyboard->build( 61 );
-  connect( mQmlKeyboard, &QmlKeyboard::keyEvent, this, &MidiProcessor::midiKeyboard );
+  connect( mQmlKeyboard, &QmlKeyboard::keyEvent, this, &MidiProcessor::midiQmlKeyboard );
   connect( this, &MidiProcessor::keyIndicate, mQmlKeyboard, &QmlKeyboard::indicate );
 
   mQmlMidiFile = new QmlMidiFile();
@@ -103,6 +103,16 @@ void MidiProcessor::onStart()
   tm->setInterval(10);
   connect( tm, &QTimer::timeout, this, &MidiProcessor::onTimer );
   tm->start();
+  }
+
+
+
+void MidiProcessor::midiQmlKeyboard(quint8 cmd, quint8 data0, quint8 data1)
+  {
+  if( (cmd & 0xf0) == 0xb0 && data0 == 7 )
+    emit midiSignal( cmd, data0, data1 );
+  else
+    midiKeyboard( cmd, data0, data1 );
   }
 
 
@@ -142,11 +152,6 @@ void MidiProcessor::onTimer()
 
 void MidiProcessor::keyboardLeft(quint8 cmd, quint8 data0, quint8 data1)
   {
-  static bool init = false;
-  if( !init ) {
-    init = true;
-    emit midiSignal( 0x41, 0, 0 );
-    }
   if( mQmlKeyboard->leftMode() & 1 )
     //Simple chord generator
     keyboardLeftSimpleChordGenerator( cmd, data0, data1 );

@@ -15,7 +15,12 @@ ListModel {
   ListElement { iconSrc: "qrc:/img/instrumentAcousticBass.png"; iconTitle: qsTr("Acoustic Bass") }
   ListElement { iconSrc: "qrc:/img/instrumentBandoneon.png"; iconTitle: qsTr("Bandoneon organ") }
   ListElement { iconSrc: "qrc:/img/instrumentBassGuitar.png"; iconTitle: qsTr("Bass Guitar") }
+  ListElement { iconSrc: "qrc:/img/instrumentBrassHornFrench.png"; iconTitle: qsTr("Brass Horn French") }
+  ListElement { iconSrc: "qrc:/img/instrumentBrassSection.png"; iconTitle: qsTr("Brass Section") }
   ListElement { iconSrc: "qrc:/img/instrumentBrassTrumpet.png"; iconTitle: qsTr("Brass Trumpet") }
+  ListElement { iconSrc: "qrc:/img/instrumentBrassTrumpetMt.png"; iconTitle: qsTr("Brass Trumpet Mt") }
+  ListElement { iconSrc: "qrc:/img/instrumentBrassTrombone.png"; iconTitle: qsTr("Brass Trombone") }
+  ListElement { iconSrc: "qrc:/img/instrumentBrassTuba.png"; iconTitle: qsTr("Brass Tuba") }
   ListElement { iconSrc: "qrc:/img/instrumentCelesta.png"; iconTitle: qsTr("Celesta") }
   ListElement { iconSrc: "qrc:/img/instrumentCello.png"; iconTitle: qsTr("Cello") }
   ListElement { iconSrc: "qrc:/img/instrumentContrabass.png"; iconTitle: qsTr("Contrabass") }
@@ -37,7 +42,14 @@ ListModel {
   ListElement { iconSrc: "qrc:/img/instrumentPiano.png"; iconTitle: qsTr("Piano") }
   ListElement { iconSrc: "qrc:/img/instrumentPipeOrgan.png"; iconTitle: qsTr("Pipe Organ") }
   ListElement { iconSrc: "qrc:/img/instrumentPizzicato.png"; iconTitle: qsTr("Pizzicato") }
+  ListElement { iconSrc: "qrc:/img/instrumentReedBassoon.png"; iconTitle: qsTr("Reed Bassoon") }
+  ListElement { iconSrc: "qrc:/img/instrumentReedHornEnglish.png"; iconTitle: qsTr("Reed Horn English") }
+  ListElement { iconSrc: "qrc:/img/instrumentReedOboe.png"; iconTitle: qsTr("Reed Oboe") }
   ListElement { iconSrc: "qrc:/img/instrumentReedOrgan.png"; iconTitle: qsTr("Reed Organ") }
+  ListElement { iconSrc: "qrc:/img/instrumentReedSaxAlto.png"; iconTitle: qsTr("Reed Sax Alto") }
+  ListElement { iconSrc: "qrc:/img/instrumentReedSaxBaritone.png"; iconTitle: qsTr("Reed Sax Baritone") }
+  ListElement { iconSrc: "qrc:/img/instrumentReedSaxSoprano.png"; iconTitle: qsTr("Reed Sax Soprano") }
+  ListElement { iconSrc: "qrc:/img/instrumentReedSaxTenor.png"; iconTitle: qsTr("Reed Sax Tenor") }
 
   ListElement { iconSrc: "qrc:/img/instrumentRockOrgan.png"; iconTitle: qsTr("Rock Organ") }
   ListElement { iconSrc: "qrc:/img/instrumentStringEnsemble.png"; iconTitle: qsTr("String ensemble") }

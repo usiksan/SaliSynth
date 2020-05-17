@@ -24,7 +24,6 @@ SvTabViewItem {
 
   function setCurrentRow( row ) {
     currentRow = row;
-    synth.setProgramm( 0, row );
   }
 
 

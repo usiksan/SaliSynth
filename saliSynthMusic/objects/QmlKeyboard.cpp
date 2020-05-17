@@ -11,6 +11,9 @@ QmlKeyboard::QmlKeyboard(QObject *parent) :
   mDelimiter(48),
   mLeftMode(1),
   mRightMode(0),
+  mLeftVolume(127),
+  mRightMainVolume(127),
+  mRightOverlayVolume(127),
   mSettings(nullptr)
   {
 
@@ -63,6 +66,43 @@ void QmlKeyboard::setRightMode(int mode)
 
 
 
+void QmlKeyboard::setLeftVolume(int vol)
+  {
+  mLeftVolume = qBound( 0, vol, 127 );
+  emit leftVolumeChanged();
+  if( mSettings )
+    mSettings->setInt( QStringLiteral("left volume"), mLeftVolume );
+  emit keyEvent( 0xb0 | 0x1, 0x7, mLeftVolume );
+  }
+
+
+
+
+void QmlKeyboard::setRightMainVolume(int vol)
+  {
+  mRightMainVolume = qBound( 0, vol, 127 );
+  emit leftVolumeChanged();
+  if( mSettings )
+    mSettings->setInt( QStringLiteral("right main volume"), mRightMainVolume );
+  emit keyEvent( 0xb0 | 0x0, 0x7, mRightMainVolume );
+  }
+
+
+
+
+
+void QmlKeyboard::setRightOverlayVolume(int vol)
+  {
+  mRightOverlayVolume = qBound( 0, vol, 127 );
+  emit leftVolumeChanged();
+  if( mSettings )
+    mSettings->setInt( QStringLiteral("right overlay volume"), mRightOverlayVolume );
+  emit keyEvent( 0xb0 | 0x2, 0x7, mRightOverlayVolume );
+  }
+
+
+
+
 void QmlKeyboard::setSettings(SvQmlJsonFile *settings)
   {
   //Read settings
@@ -73,6 +113,10 @@ void QmlKeyboard::setSettings(SvQmlJsonFile *settings)
   setLeftMode( settings->asIntDefault( QStringLiteral("left mode"), 1 ) );
 
   setRightMode( settings->asIntDefault( QStringLiteral("right mode"), 0 ) );
+
+  setLeftVolume( settings->asIntDefault( QStringLiteral("left volume"), 127) );
+  setRightMainVolume( settings->asIntDefault( QStringLiteral("right main volume"), 127) );
+  setRightOverlayVolume( settings->asIntDefault( QStringLiteral("right overlay volume"), 127) );
 
   mSettings = settings;
   }

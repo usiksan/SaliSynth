@@ -141,5 +141,18 @@
         <file>img/instrumentStringEnsemble.png</file>
         <file>img/instrumentBrassTrumpet.png</file>
         <file>qml/SvSpinBox.qml</file>
+        <file>img/instrumentBrassTrombone.png</file>
+        <file>img/instrumentBrassTuba.png</file>
+        <file>img/instrumentBrassTrumpetMt.png</file>
+        <file>img/instrumentBrassHornFrench.png</file>
+        <file>img/instrumentBrassSection.png</file>
+        <file>img/instrumentReedSaxSoprano.png</file>
+        <file>img/instrumentReedSaxAlto.png</file>
+        <file>img/instrumentReedSaxTenor.png</file>
+        <file>img/instrumentReedSaxBaritone.png</file>
+        <file>img/instrumentReedOboe.png</file>
+        <file>img/instrumentReedHornEnglish.png</file>
+        <file>img/instrumentReedBassoon.png</file>
+        <file>qml/VolumeRegulator.qml</file>
     </qresource>
 </RCC>

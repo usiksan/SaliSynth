@@ -113,13 +113,15 @@
               v0.49  Change versioning to major-minor rules
                      Append bpm calculation
               v0.50  SpinBox decorated
+              v0.51  Append some instruments
+              v0.52  Append keyboard voice volume regulation
 
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION "0.50"
+#define VERSION "0.52"
 
 //Polyphony count
 #define POLYPHONY_COUNT 128
