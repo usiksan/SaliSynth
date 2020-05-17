@@ -110,13 +110,15 @@
                   Append delimiter tooltip
                   When start append intro screen while sound font loading
    17.05.2020 v48 Remove some unused files and classes
+              v0.49  Change versioning to major-minor rules
+                     Append bpm calculation
 
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION 48
+#define VERSION "0.49"
 
 //Polyphony count
 #define POLYPHONY_COUNT 128
@@ -124,6 +126,9 @@
 #define SAMPLES_PER_SECOND 48000
 
 #define SAMPLES_PER_20MS   (SAMPLES_PER_SECOND / 50)
+
+#define TICK_PERIOD_MS        20
+#define TICK_PERIOD_US     (TICK_PERIOD_MS * 1000)
 
 //Debug configuration
 //With this we use fixed paths

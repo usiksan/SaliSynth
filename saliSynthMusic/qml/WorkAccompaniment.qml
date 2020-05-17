@@ -38,7 +38,7 @@ Item {
       onClicked: fileDialogBox.openLoad( qsTr("Open style file"), synth.stylePath(), ["*.sty"], function (fname) {
         qmlStyleFile.read( fname );
         //Setup tempo as in style file
-        spinTempo.value = qmlStyleFile.tickStep;
+        spinTempo.value = qmlStyleFile.tempo;
       } );
     }
 
@@ -70,7 +70,7 @@ Item {
       ToolTip.visible: hovered
       ToolTip.delay: 300
 
-      Binding { target: qmlStyleFile; property: "tickStep"; value: spinTempo.value }
+      Binding { target: qmlStyleFile; property: "tempo"; value: spinTempo.value }
     }
   }
 

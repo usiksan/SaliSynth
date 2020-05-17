@@ -6,6 +6,10 @@
    SaliLab.com
  Description
    MIDI file
+
+   Playback tempo: main timer is 20ms, with this period changes mTickCount by mTickStep.
+   Each step 20/16ms.
+   bpm - beats per minute
 */
 #ifndef QMLMIDIFILE_H
 #define QMLMIDIFILE_H
@@ -44,6 +48,10 @@ class QmlMidiFile : public QObject
     quint16           mTrackNumber;  //! Track count
     quint16           mDivision;
     quint32           mTempo;
+    quint32           mPortion;       //! Musical size mPortion/mFraction
+    quint32           mFraction;      //! Musical size mPortion/mFraction
+    quint32           mMetronom;      //! Metronom period
+    quint32           m32PerQuarter;  //! Count of 1/32 per quarter
 
     QmlMidiTrack      mQmlTrack[16];  //! Track in midi file with visual representation
     SvQmlJsonModel    mQmlTrackModel; //! Model represents visual info about midi file tracks
@@ -60,7 +68,7 @@ class QmlMidiFile : public QObject
     bool              mPause;         //! Pause when playing
 
     Q_PROPERTY(int tickCount READ tickCount WRITE setTickCount NOTIFY tickCountChanged)
-    Q_PROPERTY(int tickStep READ tickStep WRITE setTickStep NOTIFY tickStepChanged)
+    Q_PROPERTY(int tempo READ tempo WRITE setTempo NOTIFY tempoChanged)
     Q_PROPERTY(int fileLenght READ fileLenght WRITE setFileLenght NOTIFY fileLenghtChanged)
     Q_PROPERTY(QString midiName READ midiName NOTIFY midiNameChanged)
   public:
@@ -71,8 +79,8 @@ class QmlMidiFile : public QObject
     int  tickCount() const { return mTickCount >> 4; }
     void setTickCount( int tc );
 
-    int  tickStep() const { return mTickStep; }
-    void setTickStep( int stp );
+    int  tempo() const;
+    void setTempo( int aTempo );
 
     int  fileLenght() const { return mFileLenght; }
     void setFileLenght( int len ) { mFileLenght = len; emit fileLenghtChanged(); }
@@ -85,7 +93,7 @@ class QmlMidiFile : public QObject
   signals:
     void tickCountChanged();
 
-    void tickStepChanged();
+    void tempoChanged();
 
     void fileLenghtChanged();
 

@@ -38,7 +38,7 @@ Item {
       onClicked: fileDialogBox.openLoad( qsTr("Open midi file"), synth.midiPath(), ["*.mid","*.kar","*.sty"], function (fname) {
         qmlMidiFile.read( fname );
         //Setup tempo as in midi file
-        spinTempo.value = qmlMidiFile.tickStep;
+        spinTempo.value = qmlMidiFile.tempo;
       } );
     }
 
@@ -84,7 +84,7 @@ Item {
       ToolTip.visible: hovered
       ToolTip.delay: 300
 
-      Binding { target: qmlMidiFile; property: "tickStep"; value: spinTempo.value }
+      Binding { target: qmlMidiFile; property: "tempo"; value: spinTempo.value }
     }
 
 

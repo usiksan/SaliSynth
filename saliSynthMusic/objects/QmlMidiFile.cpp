@@ -10,6 +10,7 @@
    login: usiksan
    Password: auz9P7sLG8Cj44q
 */
+#include "synthConfig.h"
 #include "QmlMidiFile.h"
 
 #include <QJsonDocument>
@@ -43,7 +44,7 @@ QmlMidiFile::QmlMidiFile(QObject *parent) :
 
   //Timer for periodic tick generation
   connect( &mTimer, &QTimer::timeout, this, &QmlMidiFile::tick );
-  mTimer.start( 20 );
+  mTimer.start( TICK_PERIOD_MS );
   }
 
 
@@ -137,6 +138,11 @@ void QmlMidiFile::configRead(QString fname)
   mPause = false;
   mTickCount = -1;
 
+  //Calculate mTickStep on default tempo
+  auto usPerTick = mTempo / mDivision;
+  //Our tick = 20000us
+  mTickStep = TICK_PERIOD_US * 16 / usPerTick;
+
   //Test if config file exist
   if( QFile::exists(mConfigFile) ) {
     QFile file(mConfigFile);
@@ -148,6 +154,7 @@ void QmlMidiFile::configRead(QString fname)
       mConfigDirty = false;
       }
     }
+  emit tempoChanged();
   }
 
 
@@ -165,11 +172,31 @@ void QmlMidiFile::setTickCount(int tc)
 
 
 
-void QmlMidiFile::setTickStep(int stp)
+int QmlMidiFile::tempo() const
   {
-  mTickStep = stp;
-  emit tickStepChanged();
+  //mTickStep - tick count of TICK_PERIOD_US / 16
+  //usPerTick = TICK_PERIOD_US / (mTickStep / 16) = TICK_PERIOD_US * 16 / mTickStep
+  //mDivision - tick per quarter
+  //usPerQuarter = mDivision * usPerTick = mDivision * TICK_PERIOD_US * 16 / mTickStep
+  quint64 usPerQuarter = mDivision;
+  usPerQuarter *= TICK_PERIOD_US * 16;
+  usPerQuarter /= mTickStep;
+  return 60000000 / usPerQuarter;
   }
+
+
+
+void QmlMidiFile::setTempo(int aTempo)
+  {
+  quint64 usPerQuarter = 60000000 / aTempo;
+  quint64 temp = mDivision;
+  temp *= TICK_PERIOD_US * 16;
+  mTickStep = temp / usPerQuarter;
+  emit tempoChanged();
+  }
+
+
+
 
 
 
@@ -290,7 +317,9 @@ bool QmlMidiFile::readMthd(IffReader &reader)
   mTrackNumber = reader.getUint16be();
   mDivision    = reader.getUint16be();
 
-  qDebug() << mFormat << mTrackNumber << mDivision;
+  mTempo = mPortion = mFraction = mMetronom = m32PerQuarter = 0;
+
+  qDebug() << mFormat << mTrackNumber << "ticks per quarter" << mDivision;
   return true;
   }
 
@@ -417,6 +446,7 @@ void QmlMidiFile::readMtrk(IffReader &reader)
                    (static_cast<unsigned>(ar[0] & 0xff) << 16) |
                    (static_cast<unsigned>(ar[1] & 0xff) << 8) |
                    static_cast<unsigned>(ar[2] & 0xff) );
+        qDebug() << "tempo" << mTempo;
         }
 
       else if( metaEvent == 0x54 ) {
@@ -426,7 +456,14 @@ void QmlMidiFile::readMtrk(IffReader &reader)
 
       else if( metaEvent == 0x58 ) {
         //Time signature
-
+        mPortion = ar[0];
+        mFraction = ar[1];
+        mMetronom = ar[2];
+        m32PerQuarter = ar[3];
+        qDebug() << "portion" << mPortion;
+        qDebug() << "fraction" << mFraction;
+        qDebug() << "metronom" << mMetronom;
+        qDebug() << "count 1/32" << m32PerQuarter;
         }
 
       else if( metaEvent == 0x59 ) {
