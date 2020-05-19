@@ -154,5 +154,7 @@
         <file>img/instrumentReedHornEnglish.png</file>
         <file>img/instrumentReedBassoon.png</file>
         <file>qml/VolumeRegulator.qml</file>
+        <file>img/FirstRecord.png</file>
+        <file>img/LastRecor.png</file>
     </qresource>
 </RCC>

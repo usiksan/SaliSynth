@@ -67,6 +67,10 @@ class QmlMidiFile : public QObject
     quint32           mFileLenght;    //! File lenght in time tick
     bool              mPause;         //! Pause when playing
 
+    QString           mOriginalFile;  //! Readed file name
+    QStringList       mFileList;      //! When read with read function we collect all files from file directory
+                                      //! and can load them by readPrev and readNext functions
+
     Q_PROPERTY(int tickCount READ tickCount WRITE setTickCount NOTIFY tickCountChanged)
     Q_PROPERTY(int tempo READ tempo WRITE setTempo NOTIFY tempoChanged)
     Q_PROPERTY(int fileLenght READ fileLenght WRITE setFileLenght NOTIFY fileLenghtChanged)
@@ -124,9 +128,17 @@ class QmlMidiFile : public QObject
     //!
     virtual void stop();
 
-    bool read( QString fname );
+    //!
+    //! \brief read  Read midi file and build its structure in this object
+    //! \param fname File name for reading
+    //! \return      true if reading successfully
+    //!
+    bool         read( QString fname );
 
-    void configWrite();
+    void         readPrev();
+    void         readNext();
+
+    void         configWrite();
 
   protected:
     bool         readMthd( IffReader &reader );

@@ -42,6 +42,27 @@ Item {
       } );
     }
 
+    SvToolButton {
+      icon.source: "qrc:/img/FirstRecord.png"
+      ToolTip.text: qsTr("Previous Style open")
+      onClicked: {
+        qmlStyleFile.readPrev();
+        //Setup tempo as in style file
+        spinTempo.value = qmlStyleFile.tempo;
+      }
+    }
+
+    SvToolButton {
+      icon.source: "qrc:/img/LastRecor.png"
+      ToolTip.text: qsTr("Next Style open")
+      onClicked: {
+        qmlStyleFile.readNext();
+        //Setup tempo as in style file
+        spinTempo.value = qmlStyleFile.tempo;
+      }
+    }
+
+
     //Midi config file save
     SvToolButton {
       icon.source: "qrc:/img/fileSave.png"

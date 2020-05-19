@@ -12,11 +12,13 @@
 */
 #include "synthConfig.h"
 #include "QmlMidiFile.h"
+#include "SvQml/SvDir.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QFileInfo>
+#include <QDir>
 #include <QDebug>
 
 
@@ -53,6 +55,8 @@ QmlMidiFile::QmlMidiFile(QObject *parent) :
 
 bool QmlMidiFile::read(QString fname)
   {
+  mOriginalFile = fname;
+
   IffReader reader(fname, false);
   if( !reader.isValid() )
     return false;
@@ -113,7 +117,46 @@ bool QmlMidiFile::read(QString fname)
   //Execute post read
   postRead();
 
+  //At and we collect all files from fname directory
+  QFileInfo info(fname);
+  QDir dir( SvDir(info.absolutePath()).slashedPath() );
+  QFileInfoList list = dir.entryInfoList( { QString("*.%1").arg(info.suffix()) }, QDir::Files );
+  mFileList.clear();
+  for( auto const &inf : list )
+    if( inf.isFile() )
+      mFileList.append( inf.filePath() );
+  //qDebug() << "file list" << mFileList;
   return true;
+  }
+
+
+
+
+
+
+void QmlMidiFile::readPrev()
+  {
+  //Stop play
+  stop();
+
+  //Find original file name in file list
+  int i = mFileList.indexOf( mOriginalFile );
+  //If found we read previous file
+  if( i > 0 ) read( mFileList.at(i - 1) );
+  }
+
+
+
+
+void QmlMidiFile::readNext()
+  {
+  //Stop play
+  stop();
+
+  //Find original file name in file list
+  int i = mFileList.indexOf( mOriginalFile );
+  //If found we read next file
+  if( i >= 0 && i < (mFileList.count() - 1) ) read( mFileList.at(i + 1) );
   }
 
 
