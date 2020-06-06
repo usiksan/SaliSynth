@@ -143,6 +143,7 @@ Item {
 
     MidiFileSetup {
       id: midiFileSetup
+      anchors.fill: parent
       visible: midiViewMode === 0
       ifNoTrackFound:  qsTr("No midi file loaded")
       enableUserPlay: true

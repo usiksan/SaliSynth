@@ -162,8 +162,8 @@ void QmlStyleFile::tick()
         int volume = mQmlTrackModel.asInt( i, TRACK_VOLUME );
         //Style track
         qint8 shift(0);
-        if( mLoop.head().mGroup != nullptr && i < mLoop.head().mGroup->mTrackList.count() ) {
-          const StyleTrack &st( mLoop.head().mGroup->mTrackList.at(i) );
+        if( mLoop.head().mGroup != nullptr && mLoop.head().mGroup->mTrackMap.contains(trackIndex) ) {
+          const StyleTrack &st( mLoop.head().mGroup->mTrackMap.value(trackIndex) );
           if( st.mNoteTranspositionTable )
             shift = mNote - st.mSourceChord;
           }
@@ -374,7 +374,7 @@ void QmlStyleFile::readCtab( IffReader &reader, StyleGroup &group )
   int specialFeatures = reader.getUint8();
   qDebug() << "special features" << specialFeatures;
 
-  group.mTrackList.append( t );
+  group.mTrackMap.insert( t.mSrcChannel, t );
   }
 
 

@@ -166,7 +166,7 @@ SvModalItem {
               }
               else {
                 okFunction(filePath)
-                fileDialog.visible = false
+                dialogClose();
               }
             }
             onClicked: {

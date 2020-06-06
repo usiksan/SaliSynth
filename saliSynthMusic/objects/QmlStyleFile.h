@@ -32,8 +32,8 @@ struct StyleTrack {
   };
 
 struct StyleGroup {
-    QSet<QString>     mMarkerSet;  //! Set of markers for which segments this group
-    QList<StyleTrack> mTrackList;  //! Track info list for segments of group
+    QSet<QString>           mMarkerSet;  //! Set of markers for which segments this group
+    QMap<quint8,StyleTrack> mTrackMap;   //! Track info map for segments of group
   };
 
 

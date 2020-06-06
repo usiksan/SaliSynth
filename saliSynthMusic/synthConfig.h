@@ -133,12 +133,14 @@
               v0.57  Suppress tool tip show when open dialog appears
                      Change color selection box from rectangle to button, so add tooltip to it
               v0.58  Change track list of midi to ListView for scrollable
+              v0.59  Fix: track tab in style reorrange to the map for binding tab track source with track index
+              v0.60  Fix: when track read end we close all opened notes
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION "0.58"
+#define VERSION "0.60"
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

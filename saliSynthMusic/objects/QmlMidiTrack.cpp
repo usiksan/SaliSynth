@@ -46,6 +46,12 @@ void QmlMidiTrack::beginReadTrack()
 
 void QmlMidiTrack::endReadTrack()
   {
+  //Clear all flying notes
+  for( auto eventIndex : mActiveNotesMap )
+    mMidiList[eventIndex].mLenght = mPrevTime - mMidiList[eventIndex].mTime;
+  //...and remove all notes from map
+  mActiveNotesMap.clear();
+
   endResetModel();
 //  for( auto const &ev : mMidiList )
 //    qDebug() << "endReadTrack" << ev.mTime << ev.mType << ev.mData0 << ev.mData1 << ev.mLenght;
@@ -86,10 +92,10 @@ void QmlMidiTrack::addMidiEvent(quint32 time, quint8 statusByte, quint8 data0, q
     ev.mLenght = 0;
 
 
-    if( mVoiceId.mBankMsb == 127 && mVoiceId.mBankLsb == 0 )
-      //This is yamaha drum which shifted down on 1 octave
-      //Why this done - I d'nt know
-      ev.mData0 += 12;
+//    if( mVoiceId.mBankMsb == 127 && mVoiceId.mBankLsb == 0 )
+//      //This is yamaha drum which shifted down on 1 octave
+//      //Why this done - I d'nt know
+//      ev.mData0 += 12;
 
     if( mActiveNotesMap.contains(data0) ) {
       //Note on when it already on
