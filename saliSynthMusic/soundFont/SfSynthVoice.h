@@ -5,11 +5,11 @@
  Web
    SaliLab.com
  Description
-   Single preset for synth. Preset is single or set of instruments acts as the whole.
-   Preset sounds when you press a key (midi event from keyboard or midi file or accompaniment)
+   Single voice for synth. Voice is single or set of instruments acts as the whole.
+   Voice sounds when you press a key (midi event from keyboard or midi file or accompaniment)
 */
-#ifndef SFSYNTHPRESET_H
-#define SFSYNTHPRESET_H
+#ifndef SFSYNTHVOICE_H
+#define SFSYNTHVOICE_H
 
 #include "SfSynthNote.h"
 #include "SoundFont.h"
@@ -18,14 +18,14 @@
 
 class SfSynth;
 
-class SfSynthPreset
+class SfSynthVoice
   {
     QString      mVoiceName;    //! Voice name
     SfSynthNote  mNotes[128];   //! Builded notes for preset
     SoundFontPtr mSoundFontPtr; //! Sound font synth base on
     int          mVoiceId;      //! Id of current voice
   public:
-    explicit SfSynthPreset();
+    explicit SfSynthVoice();
 
     QString      voiceName() const { return mVoiceName; }
 
@@ -38,7 +38,7 @@ class SfSynthPreset
 
     void         build( int voiceId, const QString voiceName, SoundFontPtr soundFont, int preset );
 
-    void         clone(const SfSynthPreset *src );
+    void         clone(const SfSynthVoice *src );
 
   private:
     //!
@@ -49,4 +49,4 @@ class SfSynthPreset
   };
 
 
-#endif // SFSYNTHPRESET_H
+#endif // SFSYNTHVOICE_H

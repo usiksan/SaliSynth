@@ -25,7 +25,8 @@ SfSynth::SfSynth(QObject *parent) :
   QObject(parent),
   mVoiceList(nullptr),
   mChannelList(nullptr),
-  mMidiConnected(false)
+  mMidiConnected(false),
+  mMetronomeMute(true)
   {
   }
 
@@ -61,6 +62,26 @@ void SfSynth::setChannelList(SvQmlJsonModel *md)
     for( quint8 i = 0; i < 16; i++ )
       channelSetVoiceId( i, mChannelList->asInt( i, QStringLiteral("channelVoiceId") ) );
     }
+  }
+
+
+
+
+
+
+void SfSynth::setMetronomVolume(int volume)
+  {
+  mMetronome.setVolume(volume);
+  emit metronomVolumeChanged();
+  }
+
+
+
+
+void SfSynth::setMetronomMute(bool mute)
+  {
+  mMetronomeMute = mute;
+  emit metronomMuteChanged();
   }
 
 
@@ -138,12 +159,22 @@ int SfSynth::voiceRow(int bankMsb, int bankLsb, int midiProgram)
 
 
 
-int SfSynth::voiceRowById(int voiceId)
+int SfSynth::voiceRowById(int voiceId) const
   {
   for( int i = 0; i < mVoiceList->count(); i++ )
     if( mVoiceList->asInt( i, QStringLiteral("voiceId")) == voiceId )
       return i;
   return -1;
+  }
+
+
+
+
+QString SfSynth::voiceName(int voiceId) const
+  {
+  int row = voiceRowById( voiceId );
+  if( row < 0 ) return QString{};
+  return mVoiceList->asString( row, QStringLiteral("voiceName") );
   }
 
 
@@ -177,6 +208,19 @@ void SfSynth::midiSlot(quint8 cmd, quint8 data0, quint8 data1)
   else
     //Common midi
     mChannels[channel].midi( this, cmd, data0, data1 );
+  }
+
+
+
+
+
+void SfSynth::metronome()
+  {
+  if( !mMetronomeMute ) {
+    //qDebug() << "synth metronome";
+    mMetronome.noteOn(127);
+    emitNoteOn( &mMetronome );
+    }
   }
 
 
@@ -239,7 +283,7 @@ void SfSynth::channelSetVoiceRow(int channel, int voiceRow)
     //Check if there voice in cache
     if( !mPresetCache.contains(voiceId) ) {
       //No voice in cache, create
-      SfSynthPreset *presetPtr = new SfSynthPreset();
+      SfSynthVoice *presetPtr = new SfSynthVoice();
       presetPtr->build( voiceId, mVoiceList->asString( voiceRow, QStringLiteral("voiceName")),
                         soundFont(mVoiceList->asString( voiceRow, QStringLiteral("voiceSoundFontFile"))),
                         mVoiceList->asInt( voiceRow, QStringLiteral("voiceSoundFontPreset")) );
@@ -266,6 +310,18 @@ void SfSynth::voiceAdd()
   {
   int row = mVoiceList->count();
   mVoiceList->addRecord();
+  mVoiceList->setInt( row, QStringLiteral("voiceBankMsb"), 128 );
+  mVoiceList->setInt( row, QStringLiteral("voiceBankLsb"), 128 );
+  mVoiceList->setInt( row, QStringLiteral("voiceProgram"), 128 );
+  mVoiceList->setInt( row, QStringLiteral("voiceId"), -1 );
+  }
+
+
+
+
+void SfSynth::voiceInsert(int row)
+  {
+  mVoiceList->insertRecord( row );
   mVoiceList->setInt( row, QStringLiteral("voiceBankMsb"), 128 );
   mVoiceList->setInt( row, QStringLiteral("voiceBankLsb"), 128 );
   mVoiceList->setInt( row, QStringLiteral("voiceProgram"), 128 );
@@ -381,6 +437,7 @@ void SfSynth::applyPresetFromFont(int voiceRow, SoundFontPtr soundFontPtr, int p
 
 SoundFontPtr SfSynth::soundFont(const QString fontName)
   {
+  //qDebug() << "need font" << fontName;
   if( mSoundFontMap.contains(fontName) ) {
     if( !mSoundFontMap.value(fontName).isNull() )
       return mSoundFontMap.value(fontName).toStrongRef();
@@ -388,8 +445,12 @@ SoundFontPtr SfSynth::soundFont(const QString fontName)
     }
   //Sound font not yet loaded
   //We creating sound font
-  SoundFontPtr soundFontPtr( new SoundFont );
+  //Static shared pointer needed that do not happens deleting sound font when it yet not used
+  //but tuning by user and perhaps will needed in the future
+  static SoundFontPtr soundFontPtr;
+  soundFontPtr.reset( new SoundFont );
   //...load it
+  //qDebug() << "load font" << fontName;
   soundFontPtr->read( soundFontPath() + fontName + ".sf2" );
   //...and append to map
   mSoundFontMap.insert( fontName, soundFontPtr );

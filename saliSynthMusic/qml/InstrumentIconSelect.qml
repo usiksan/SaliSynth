@@ -80,17 +80,19 @@ ModeBase {
 
   SvScrollView {
     anchors.fill: parent
+    anchors.bottomMargin: 20
 
     GridView {
       id: view
       anchors.fill: parent
-      anchors.margins: 10
+//      anchors.margins: 20
+//      anchors.bottomMargin: 40
       cellWidth: 122
       cellHeight: 82
       model: iconListModel
       delegate: iconDelegate
       focus: true
-      clip: true
+      //clip: true
     }
   }
 

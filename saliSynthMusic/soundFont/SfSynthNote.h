@@ -16,15 +16,16 @@
 #include "SfSynthTrack.h"
 #include "SoundFont.h"
 
-class SfSynthPreset;
+class SfSynthVoice;
 
 //Note consist of one or more tracks
 //Preset or program is 128 or less notes
 class SfSynthNote
   {
-    SfSynthTrackVector mTracks;  //Track of which consist a note
-    int                mNote;    //Note index
-    bool               mStopped; //Flag, true when no note sounds
+  protected:
+    SfSynthTrackVector mTracks;  //! Tracks of which consist a note
+    int                mNote;    //! Note index
+    bool               mStopped; //! Flag, true when no note sounds
   public:
     SfSynthNote();
 
@@ -67,6 +68,8 @@ class SfSynthNote
     //! \param volume    Volume value which need to be installed
     //!
     void setVolume( int volume );
+
+    int  getVolume() const { return mTracks.count() ? mTracks.first().mMasterVolume : 127; }
   };
 
 #endif // SFSYNTHNOTE_H

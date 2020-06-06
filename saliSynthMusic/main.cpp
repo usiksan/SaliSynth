@@ -13,7 +13,7 @@
 #include "midiInput/MidiInput.h"
 
 #include "soundFont/SoundFont.h"
-#include "soundFont/SfSynthPreset.h"
+#include "soundFont/SfSynthVoice.h"
 #include "soundFont/SfSynth.h"
 
 #include "objects/MidiProcessor.h"
@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
   qmlRegisterType<SvQmlJsonHistory>         ("SvQml", 1, 0, "SvQmlJsonHistory" );
   qmlRegisterType<SvQmlJsonModel>           ("SvQml", 1, 0, "SvQmlJsonModel" );
   qmlRegisterType<QmlMidiTrack>             ("SvQml", 1, 0, "QmlMidiTrack" );
+  qmlRegisterType<QmlKeyboard>              ("SvQml", 1, 0, "QmlKeyboard" );
 
 
   QQmlApplicationEngine engine;
@@ -138,6 +139,7 @@ int main(int argc, char *argv[])
   //From midi processor output connect to synthesator input
   midiProcessor->connect( midiProcessor, &MidiProcessor::midiSignal, synth, &SfSynth::midiSlot );
   midiProcessor->connect( midiProcessor, &MidiProcessor::voiceSetup, synth, &SfSynth::channelSetVoiceId );
+  midiProcessor->connect( midiProcessor->qmlMidiFile(), &QmlMidiFile::metronome, synth, &SfSynth::metronome );
 
   //Inject midi processor to visual subsystem
   //engine.rootContext()->setContextProperty( "midiProcessor", midiProcessor );
@@ -168,10 +170,6 @@ int main(int argc, char *argv[])
       QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
   engine.load(url);
-
-//  MidiFile midi;
-  //midi.read( "/home/salilab/midi/white_dove.mid" );
-  //midiProcessor->qmlMidiFile()->read("/home/salilab/midi/nem.mid");
 
   return app.exec();
   }

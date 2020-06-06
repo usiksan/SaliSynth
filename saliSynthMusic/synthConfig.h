@@ -116,13 +116,18 @@
               v0.51  Append some instruments
               v0.52  Append keyboard voice volume regulation
    19.05.2020 v0.53  Append prev and next style reading
-
+   24.05.2020 v0.54  Rename synth preset to synth voice
+                     Create metronom sound based on SfSynthNote
+                     Append metronom to synth
+                     Append constant to keyboard modes
+                     Replace simple digits with named constant for keyboard modes
+   06.06.2020 v0.55  Append metronome
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION "0.53"
+#define VERSION "0.55"
 
 //Polyphony count
 #define POLYPHONY_COUNT 128

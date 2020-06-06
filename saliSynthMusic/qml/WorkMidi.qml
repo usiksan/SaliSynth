@@ -44,6 +44,27 @@ Item {
       } );
     }
 
+
+    SvToolButton {
+      icon.source: "qrc:/img/FirstRecord.png"
+      ToolTip.text: qsTr("Previous midi open")
+      onClicked: {
+        qmlMidiFile.readPrev();
+        //Setup tempo as in style file
+        spinTempo.value = qmlMidiFile.tempo;
+      }
+    }
+
+    SvToolButton {
+      icon.source: "qrc:/img/LastRecor.png"
+      ToolTip.text: qsTr("Next midi open")
+      onClicked: {
+        qmlMidiFile.readNext();
+        //Setup tempo as in style file
+        spinTempo.value = qmlMidiFile.tempo;
+      }
+    }
+
     //Midi config file save
     SvToolButton {
       icon.source: "qrc:/img/fileSave.png"
@@ -89,6 +110,15 @@ Item {
       Binding { target: qmlMidiFile; property: "tempo"; value: spinTempo.value }
     }
 
+    //Metronome button
+    SvCheckToolButton {
+      icon.source: "qrc:/img/metronome.png"
+      ToolTip.text: qsTr("Metronome on-off")
+      checkSet: !synth.metronomMute
+
+      onClicked: synth.metronomMute = !synth.metronomMute
+    }
+
 
     //Change view
     SvToolButton {
@@ -97,6 +127,8 @@ Item {
 
       onClicked: midiViewMode = (midiViewMode + 1) & 1
     }
+
+
   }
 
   property int midiViewMode : 0

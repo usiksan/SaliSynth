@@ -35,6 +35,7 @@ Window {
   //Cell of voice consist from bank (MSB and LSB) and program number inside bank
   SvQmlJsonModel { id: voiceList; file: settings; jsonName: "voiceList"; fields: [
       //Preset from sound font
+      "voiceIndex",               //visual voice index
       "voiceIconName",            //visual icon name for instrument
       "voiceSoundFontFile",       //Sound font file name
       "voiceSoundFontPreset",     //Preset in sound font file

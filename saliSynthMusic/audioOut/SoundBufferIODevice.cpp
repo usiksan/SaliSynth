@@ -61,6 +61,12 @@ qint64 SoundBufferIODevice::bytesAvailable() const
 
 
 
+//!
+//! \brief readData Callback function, with this sound card queries next portion af data to play
+//! \param data     Pointer to buffer where data must be placed
+//! \param maxlen   size of buffer
+//! \return         real size of placed data
+//!
 qint64 SoundBufferIODevice::readData(char *data, qint64 maxlen)
   {
   Q_UNUSED(maxlen)

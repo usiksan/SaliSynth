@@ -98,7 +98,7 @@ SvTabViewItem {
 //  "voiceBankLsb",             //Voice bank LSB
 //  "voiceProgram",             //Voice bank midi program
   //Table contents
-  ListView {
+  SvScrollView {
     anchors.top: idTitle.bottom
     anchors.topMargin: 5
     anchors.left: parent.left
@@ -110,114 +110,166 @@ SvTabViewItem {
 
     clip: true
 
-    model: voiceList
+    ListView {
+      anchors.fill: parent
 
-    delegate: Item {
-      width: parent.width
-      height: 24
-      Rectangle {
-        anchors.fill: parent
-        anchors.topMargin: -3
-        visible: index === currentRow
-        color: Qt.lighter( "green" )
-      }
-      Row {
-        spacing: 2
-        anchors.verticalCenter: parent.verticalCenter
+      clip: true
 
-        //Voice number
-        SvFieldText {
-          text: index + 1
-          width: widthNpp
-          editable: false
-          onLeftButton: setCurrentRow(index);
+      model: voiceList
+
+      //Delegate to show single voice
+      //with it we show also voice part title
+      //When field voiceBankMsb contains "130" we show part title otherwise - show voice
+      delegate: Item {
+        id: rowDelegate
+        property bool isCurrent : index === currentRow
+        width: parent.width
+        height: isCurrent ? 30 : 24
+//        Rectangle {
+//          anchors.fill: parent
+//          anchors.topMargin: -3
+//          visible: rowDelegate.isCurrent
+//          color: Qt.lighter( "green" )
+//        }
+
+        //Part title
+        Item {
+          visible: voiceBankMsb === "130"
+          anchors.fill: parent
+
+          //Voice number
+          SvFieldText {
+            anchors.verticalCenter: parent.verticalCenter
+            text: index + 1
+            width: widthNpp
+            horizontalAlignment: Text.AlignHCenter
+            editable: false
+            onLeftButton: setCurrentRow(index);
+          }
+
+          SvFieldText {
+            anchors.centerIn: parent
+            text: voiceName
+            editable: true
+            onLeftButton: setCurrentRow(index);
+            onApply: voiceName = str;
+          }
+
         }
 
-        //Voice icon
-        Image {
-          width: widthIcon
-          height: 24
-          source: voiceIconName
-          fillMode: Image.PreserveAspectFit
-          MouseArea {
-            anchors.fill: parent
-            acceptedButtons: Qt.LeftButton | Qt.RightButton
-            onClicked: {
+        //Voice
+        Row {
+          visible: voiceBankMsb !== "130"
+          spacing: 2
+          anchors.verticalCenter: parent.verticalCenter
+
+          //Voice number
+          SvFieldText {
+            text: index + 1
+            width: widthNpp
+            horizontalAlignment: Text.AlignHCenter
+            editable: false
+            onLeftButton: setCurrentRow(index);
+          }
+
+          //Voice icon
+          Image {
+            width: widthIcon
+            height: 24
+            source: voiceIconName
+            fillMode: Image.PreserveAspectFit
+            MouseArea {
+              anchors.fill: parent
+              acceptedButtons: Qt.LeftButton | Qt.RightButton
+              onClicked: {
+                setCurrentRow(index);
+                instrumentIconSelector.instrumentIconSelect( voiceIconName, function (str) { voiceIconName = str; } )
+              }
+            }
+          }
+
+          //Bank MSB
+          SvFieldText {
+            text: voiceBankMsb
+            width: widthNpp
+            editable: true
+            onLeftButton: setCurrentRow(index);
+            onApply: {
+              if( !synth.voiceSettings( index, str, voiceBankLsb, voiceProgram ) )
+                messageBox.error( qsTr("Duplicate voice, enter another bank msb value"), null )
+            }
+          }
+
+          //Bank LSB
+          SvFieldText {
+            text: voiceBankLsb
+            width: widthNpp
+            editable: true
+            onLeftButton: setCurrentRow(index);
+            onApply: {
+              if( !synth.voiceSettings( index, voiceBankMsb, str, voiceProgram ) )
+                messageBox.error( qsTr("Duplicate voice, enter another bank lsb value"), null )
+            }
+          }
+
+          //Midi programm
+          SvFieldText {
+            text: voiceProgram
+            width: widthNpp
+            editable: true
+            onLeftButton: setCurrentRow(index);
+            onApply: {
+              if( !synth.voiceSettings( index, voiceBankMsb, voiceBankLsb, str ) )
+                messageBox.error( qsTr("Duplicate voice, enter another programm value"), null )
+            }
+          }
+
+          //Voice name
+          SvFieldText {
+            text: voiceName
+            width: widthTitle
+            editable: true
+            onLeftButton: setCurrentRow(index);
+            onApply: voiceName = str;
+          }
+
+          //Preset name
+          SvFieldText {
+            text: voiceSoundFontPresetName
+            width: widthPreset
+            editable: false
+            onLeftButton: {
               setCurrentRow(index);
-              instrumentIconSelector.instrumentIconSelect( voiceIconName, function (str) { voiceIconName = str; } )
+              presetListSelector.presetSelect( index, voiceSoundFontPreset );
+            }
+          }
+
+          //Sound font file
+          SvFieldText {
+            text: voiceSoundFontFile
+            width: widthFontName
+            editable: false
+            onLeftButton: {
+              setCurrentRow(index);
+              soundFontSelector.selectFont(voiceSoundFontFile)
             }
           }
         }
 
-        //Bank MSB
-        SvFieldText {
-          text: voiceBankMsb
-          width: widthNpp
-          editable: true
-          onLeftButton: setCurrentRow(index);
-          onApply: {
-            if( !synth.voiceSettings( index, str, voiceBankLsb, voiceProgram ) )
-              messageBox.error( qsTr("Duplicate voice, enter another bank msb value"), null )
-          }
+        //Selecting rectangle
+        Rectangle {
+          anchors.fill: parent
+          visible: rowDelegate.isCurrent
+          color: "transparent"
+          border.color: Qt.lighter( "green" )
+          border.width: 2
         }
 
-        //Bank LSB
-        SvFieldText {
-          text: voiceBankLsb
-          width: widthNpp
-          editable: true
-          onLeftButton: setCurrentRow(index);
-          onApply: {
-            if( !synth.voiceSettings( index, voiceBankMsb, str, voiceProgram ) )
-              messageBox.error( qsTr("Duplicate voice, enter another bank lsb value"), null )
-          }
-        }
-
-        //Midi programm
-        SvFieldText {
-          text: voiceProgram
-          width: widthNpp
-          editable: true
-          onLeftButton: setCurrentRow(index);
-          onApply: {
-            if( !synth.voiceSettings( index, voiceBankMsb, voiceBankLsb, str ) )
-              messageBox.error( qsTr("Duplicate voice, enter another programm value"), null )
-          }
-        }
-
-        //Voice name
-        SvFieldText {
-          text: voiceName
-          width: widthTitle
-          editable: true
-          onLeftButton: setCurrentRow(index);
-          onApply: voiceName = str;
-        }
-
-        //Preset name
-        SvFieldText {
-          text: voiceSoundFontPresetName
-          width: widthPreset
-          editable: false
-          onLeftButton: {
-            setCurrentRow(index);
-            presetListSelector.presetSelect( index, voiceSoundFontPreset );
-          }
-        }
-
-        //Sound font file
-        SvFieldText {
-          text: voiceSoundFontFile
-          width: widthFontName
-          editable: false
-          onLeftButton: {
-            setCurrentRow(index);
-            soundFontSelector.selectFont(voiceSoundFontFile)
-          }
-        }
       }
     }
+
   }
+
 
   //Local menu
   Row {
@@ -227,45 +279,41 @@ SvTabViewItem {
     spacing: 5
 
     //Append new record
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/plus_red.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Add new record to the voice list")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: synth.voiceAdd();
     }
 
+    //Insert new record
+    SvToolButton {
+      icon.source: "qrc:/img/table_row_new.png"
+      ToolTip.text: qsTr("Insert new record to current position of the voice list")
+
+      onClicked: synth.voiceInsert(currentRow)
+    }
+
     //Duplicate current record
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/copy.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Duplicate current record")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: synth.voiceDuplicate(currentRow);
     }
 
     //Continuously extract all presets
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/extract.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Continuously extract all presets")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: synth.voiceFontExtractAll(currentRow);
     }
 
     //Delete current record
-    ToolButton {
+    SvToolButton {
       icon.source: "qrc:/img/delete_red.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Remove current record from voice list")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
 
       onClicked: voiceList.removeRecord( currentRow );
     }

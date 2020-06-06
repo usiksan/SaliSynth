@@ -47,6 +47,8 @@ void QmlMidiTrack::beginReadTrack()
 void QmlMidiTrack::endReadTrack()
   {
   endResetModel();
+//  for( auto const &ev : mMidiList )
+//    qDebug() << "endReadTrack" << ev.mTime << ev.mType << ev.mData0 << ev.mData1 << ev.mLenght;
   }
 
 
@@ -54,6 +56,7 @@ void QmlMidiTrack::endReadTrack()
 
 void QmlMidiTrack::addMidiEvent(quint32 time, quint8 statusByte, quint8 data0, quint8 data1)
   {
+//  qDebug() << "addMidiEvent" << time << statusByte << data0 << data1;
   //Sometime happens absolutly same event
   //We must remove them
   if( mPrevTime == time && mPrevStatusByte == statusByte && mPrevData0 == data0 && mPrevData1 == data1 )
@@ -82,7 +85,6 @@ void QmlMidiTrack::addMidiEvent(quint32 time, quint8 statusByte, quint8 data0, q
     ev.mData1 = data1;
     ev.mLenght = 0;
 
-    qDebug() << "addMidiEvent" << time << statusByte << data0 << data1;
 
     if( mVoiceId.mBankMsb == 127 && mVoiceId.mBankLsb == 0 )
       //This is yamaha drum which shifted down on 1 octave
@@ -100,16 +102,20 @@ void QmlMidiTrack::addMidiEvent(quint32 time, quint8 statusByte, quint8 data0, q
     mMidiList.append( ev );
     }
   else {
-    if( cmd == 0x30 && data0 == 0 )
+    if( cmd == 0x30 && data0 == 0 ) {
       //Bank MSB
       mVoiceId.mBankMsb = data1 & 0x7f;
-    else if( cmd == 0x30 && data0 == 0x20 )
+      qDebug() << "track msb" << mVoiceId.mBankMsb << mVoiceId.mBankLsb << mVoiceId.mProgramm;
+      }
+    else if( cmd == 0x30 && data0 == 0x20 ) {
       //Bank LSB
       mVoiceId.mBankLsb = data1 & 0x7f;
+      qDebug() << "track lsb" << mVoiceId.mBankMsb << mVoiceId.mBankLsb << mVoiceId.mProgramm;
+      }
     else if( cmd == 0x40 ) {
       //Program
       mVoiceId.mProgramm = data0;
-      qDebug() << "track msb" << mVoiceId.mBankMsb << mVoiceId.mBankLsb << mVoiceId.mProgramm;
+      qDebug() << "track prog" << mVoiceId.mBankMsb << mVoiceId.mBankLsb << mVoiceId.mProgramm;
       }
     else {
       //All others commands

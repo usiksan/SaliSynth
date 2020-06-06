@@ -11,7 +11,8 @@
 #define SFSYNTH_H
 
 #include "SoundFont.h"
-#include "SfSynthPreset.h"
+#include "SfSynthVoice.h"
+#include "SfSynthMetronom.h"
 #include "SvQml/SvQmlJsonModel.h"
 
 #include <QObject>
@@ -22,13 +23,16 @@ class SfSynth : public QObject
   {
     Q_OBJECT
 
-    SfSynthPreset                  mChannels[16];  //! Preset of channel
-    QMap<QString,SoundFontWeakPtr> mSoundFontMap;  //! Used sound font map
-    QCache<int,SfSynthPreset>      mPresetCache;   //! Cached presets
+    SfSynthVoice                   mChannels[16];   //! Preset of channel
+    QMap<QString,SoundFontWeakPtr> mSoundFontMap;   //! Used sound font map
+    QCache<int,SfSynthVoice>       mPresetCache;    //! Cached presets
 
-    SvQmlJsonModel                *mVoiceList;     //! Model of registered voice list. Each voice mapped to bank and programm
-    SvQmlJsonModel                *mChannelList;   //! Model of channels
-    bool                           mMidiConnected; //! Flag for indicate midi keyboard connection
+    SvQmlJsonModel                *mVoiceList;      //! Model of registered voice list. Each voice mapped to bank and programm
+    SvQmlJsonModel                *mChannelList;    //! Model of channels
+    bool                           mMidiConnected;  //! Flag for indicate midi keyboard connection
+
+    SfSynthMetronom                mMetronome;       //! Metronom note
+    bool                           mMetronomeMute;   //! Metronom mute
 
     Q_PROPERTY(SvQmlJsonModel* voiceList READ voiceList WRITE setVoiceList NOTIFY voiceListChanged)
     Q_PROPERTY(SvQmlJsonModel* channelList READ channelList WRITE setChannelList NOTIFY channelListChanged)
@@ -37,6 +41,9 @@ class SfSynth : public QObject
     Q_PROPERTY(QString leftVoice READ leftVoice NOTIFY leftVoiceChanged)
     Q_PROPERTY(QString rightMainVoice READ rightMainVoice NOTIFY rightMainVoiceChanged)
     Q_PROPERTY(QString rightSlaveVoice READ rightSlaveVoice NOTIFY rightSlaveVoiceChanged)
+
+    Q_PROPERTY(int metronomVolume READ metronomVolume WRITE setMetronomVolume NOTIFY metronomVolumeChanged)
+    Q_PROPERTY(bool metronomMute READ metronomMute WRITE setMetronomMute NOTIFY metronomMuteChanged)
   public:
     explicit SfSynth(QObject *parent = nullptr);
 
@@ -69,6 +76,15 @@ class SfSynth : public QObject
 //    int             rightSlaveVoiceId() const { return mChannels[2].voiceId(); }
 //    void            setRightSlaveVoice( const QString voice ) { mRightSlaveVoice = voice; emit rightSlaveVoiceChanged(); }
 
+    //Metronom volume access
+    int             metronomVolume() const { return mMetronome.getVolume(); }
+    void            setMetronomVolume( int volume );
+
+
+    //Metronom mute access
+    bool            metronomMute() const { return mMetronomeMute; }
+    void            setMetronomMute( bool mute );
+
 
     Q_INVOKABLE QStringList presetList(int voiceRow );
 
@@ -86,7 +102,9 @@ class SfSynth : public QObject
 
     Q_INVOKABLE int         voiceRow( int bankMsb, int bankLsb, int midiProgram );
 
-    Q_INVOKABLE int         voiceRowById( int voiceId );
+    Q_INVOKABLE int         voiceRowById( int voiceId ) const;
+
+    Q_INVOKABLE QString     voiceName( int voiceId ) const;
 
     void                    emitNoteOn( SfSynthNote *note );
   signals:
@@ -107,8 +125,13 @@ class SfSynth : public QObject
     void rightMainVoiceIdChanged();
     void rightSlaveVoiceIdChanged();
 
+    void metronomVolumeChanged();
+    void metronomMuteChanged();
+
   public slots:
     void midiSlot( quint8 cmd, quint8 data0, quint8 data1 );
+
+    void metronome();
 
     void setProgramm( int channel, int programm );
 
@@ -123,6 +146,8 @@ class SfSynth : public QObject
     void channelSetVoiceRow( int channel, int voiceRow );
 
     void voiceAdd();
+
+    void voiceInsert( int row );
 
     void voiceDuplicate( int voiceRow );
 

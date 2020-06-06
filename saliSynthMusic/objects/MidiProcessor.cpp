@@ -145,14 +145,14 @@ void MidiProcessor::midiFile(quint8 cmd, quint8 data0, quint8 data1)
 
 void MidiProcessor::onTimer()
   {
-  if( mQmlKeyboard->leftMode() & 1 ) keyboardLeftChordDetector();
+  if( (mQmlKeyboard->leftMode() & QmlKeyboard::KmChordMask) == QmlKeyboard::KmChordActive ) keyboardLeftChordDetector();
   }
 
 
 
 void MidiProcessor::keyboardLeft(quint8 cmd, quint8 data0, quint8 data1)
   {
-  if( mQmlKeyboard->leftMode() & 1 )
+  if( (mQmlKeyboard->leftMode() & QmlKeyboard::KmChordMask) == QmlKeyboard::KmChordActive )
     //Simple chord generator
     keyboardLeftSimpleChordGenerator( cmd, data0, data1 );
   else
@@ -167,10 +167,7 @@ void MidiProcessor::keyboardLeft(quint8 cmd, quint8 data0, quint8 data1)
 
 void MidiProcessor::keyboardLeftOutput(quint8 cmd, quint8 data0, quint8 data1)
   {
-  if( mQmlKeyboard->leftMode() & 2 )
-    //Accompaniment
-    ;
-  else
+  if( (mQmlKeyboard->leftMode() & QmlKeyboard::KmLeftMask) != QmlKeyboard::KmLeftAccomp )
     //Simple play
     emit midiSignal( cmd, data0, data1 );
   }
@@ -192,7 +189,7 @@ void MidiProcessor::keyboardLeftSimpleChordGenerator(quint8 cmd, qint8 data0, qu
     }
   else if( mLeftChord[0] || (cmd & 0x10) == 0 ) {
     //Release key
-    if( mQmlKeyboard->leftMode() & 2 ) {
+    if( (mQmlKeyboard->leftMode() & QmlKeyboard::KmLeftMask) == QmlKeyboard::KmLeftAccomp ) {
       for( int i = 0; i < 5; i++ ) {
         if( mLeftChord[i] )
           emit keyIndicate( mLeftChord[i], false, 0x4 );
@@ -236,7 +233,7 @@ void MidiProcessor::keyboardLeftChordDetector()
         if( mLeftChord[2] )             chordType = chordMin7;
         }
 
-      if( mQmlKeyboard->leftMode() & 2 ) {
+      if( (mQmlKeyboard->leftMode() & QmlKeyboard::KmLeftMask) == QmlKeyboard::KmLeftAccomp ) {
         //Acompaniment mode
         emit midiChord( noteMap[ mLeftChord[0] ], chordType );
         //Indicate detected chord
@@ -268,7 +265,7 @@ void MidiProcessor::keyboardLeftChordDetector()
 void MidiProcessor::keyboardRight(quint8 cmd, quint8 data0, quint8 data1)
   {
   emit midiSignal( cmd, data0, data1 );
-  if( mQmlKeyboard->rightMode() & 2 )
+  if( (mQmlKeyboard->rightMode() & QmlKeyboard::KmRightMask) == QmlKeyboard::KmRightOverlay )
     //Duplicate voice on second channel
     emit midiSignal( (cmd & 0xf0) | 2, data0, data1 );
   }

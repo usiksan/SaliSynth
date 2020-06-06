@@ -71,6 +71,9 @@ class QmlMidiFile : public QObject
     QStringList       mFileList;      //! When read with read function we collect all files from file directory
                                       //! and can load them by readPrev and readNext functions
 
+    int               mMetronomePeriod;
+    int               mMetronomeCount;
+
     Q_PROPERTY(int tickCount READ tickCount WRITE setTickCount NOTIFY tickCountChanged)
     Q_PROPERTY(int tempo READ tempo WRITE setTempo NOTIFY tempoChanged)
     Q_PROPERTY(int fileLenght READ fileLenght WRITE setFileLenght NOTIFY fileLenghtChanged)
@@ -107,6 +110,8 @@ class QmlMidiFile : public QObject
 
     void voiceSetup( quint8 channel, int voiceId );
 
+    void metronome();
+
   public slots:
     //!
     //! \brief tick Elementary tick. On this tick player build notes
@@ -142,7 +147,7 @@ class QmlMidiFile : public QObject
 
   protected:
     bool         readMthd( IffReader &reader );
-    void         readMtrk( IffReader &reader );
+    void         readMtrk(int trackIndex, IffReader &reader );
     virtual void readExtension( IffReader &reader );
     quint32      variableLenValue( IffReader &reader );
     virtual void postRead();

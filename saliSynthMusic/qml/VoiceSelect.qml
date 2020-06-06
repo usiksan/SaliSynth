@@ -10,6 +10,7 @@
 */
 import QtQuick 2.8
 import QtQuick.Controls 2.5
+import SvQml 1.0
 
 Rectangle {
   id: voiceSelector
@@ -143,15 +144,33 @@ Rectangle {
       model: voiceList
 
       delegate: Item {
+        id: rowDelegate
+        property bool isCurrent : index === currentRow
+
         width: parent.width
-        height: 30
+        height: isCurrent ? 36 : 32
+
+        //Part title
+        Item {
+          visible: voiceBankMsb === "130"
+          anchors.fill: parent
+
+          SvFieldText {
+            anchors.centerIn: parent
+            text: voiceName
+          }
+        }
+
+        //Voice
         Row {
+          visible: voiceBankMsb !== "130"
           spacing: 2
           anchors.verticalCenter: parent.verticalCenter
           //Voice serial number
           SvFieldText {
             text: index + 1
             width: widthNpp
+            horizontalAlignment: Text.AlignHCenter
             editable: false
             onLeftButton: setCurrentRow(index);
             anchors.verticalCenter: parent.verticalCenter
@@ -209,7 +228,7 @@ Rectangle {
         //Selecting rectangle
         Rectangle {
           anchors.fill: parent
-          visible: index === currentRow
+          visible: rowDelegate.isCurrent
           color: "transparent"
           border.color: Qt.lighter( "green" )
           border.width: 2
@@ -230,112 +249,60 @@ Rectangle {
 
     //Left keyboard mode buttons
     //Selection acompaniment or simple voice mode
-    ToolButton {
+    SvCheckToolButton {
       visible: keyboardLeft
-      checkable: true
-      checked: currentMode & 2
+      checkSet: (currentMode & QmlKeyboard.KmLeftMask) == QmlKeyboard.KmLeftAccomp
       icon.source: "qrc:/img/acompaniment.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Accompaniment mode")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
-      background: Rectangle {
-        color: "transparent"
-        border.color: "green"
-        border.width: currentMode & 2 ? 2 : 0
-      }
 
-      onClicked: currentMode |= 2;
+      onClicked: currentMode = (currentMode & ~QmlKeyboard.KmLeftMask) | QmlKeyboard.KmLeftAccomp;
     }
-    ToolButton {
-      visible: keyboardLeft
-      checkable: true
-      checked: (currentMode & 2) == 0
-      icon.source: "qrc:/img/voice.png"
-      icon.color: "transparent"
-      ToolTip.text: qsTr("Voice mode")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
-      background: Rectangle {
-        color: "transparent"
-        border.color: "green"
-        border.width: currentMode & 2 ? 0 : 2
-      }
 
-      onClicked: currentMode &= ~2;
+    SvCheckToolButton {
+      visible: keyboardLeft
+      checkSet: (currentMode & QmlKeyboard.KmLeftMask) == QmlKeyboard.KmLeftVoice
+      icon.source: "qrc:/img/voice.png"
+      ToolTip.text: qsTr("Voice mode")
+
+      onClicked: currentMode = (currentMode & ~QmlKeyboard.KmLeftMask) | QmlKeyboard.KmLeftVoice;
     }
 
     //Selection simple key or chord mode
-    ToolButton {
+    SvCheckToolButton {
       visible: keyboardLeft
-      checkable: true
-      checked: currentMode & 1
+      checkSet: (currentMode & QmlKeyboard.KmChordMask) == QmlKeyboard.KmChordActive
       icon.source: "qrc:/img/chord.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Chord mode")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
-      background: Rectangle {
-        color: "transparent"
-        border.color: "green"
-        border.width: currentMode & 1 ? 2 : 0
-      }
 
-      onClicked: currentMode |= 1;
+      onClicked: currentMode = (currentMode & ~QmlKeyboard.KmChordMask) | QmlKeyboard.KmChordActive;
     }
-    ToolButton {
-      visible: keyboardLeft
-      checkable: true
-      checked: (currentMode & 1) == 0
-      icon.source: "qrc:/img/singleKey.png"
-      icon.color: "transparent"
-      ToolTip.text: qsTr("Simple key mode")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
-      background: Rectangle {
-        color: "transparent"
-        border.color: "green"
-        border.width: currentMode & 1 ? 0 : 2
-      }
 
-      onClicked: currentMode &= ~1;
+    SvCheckToolButton {
+      visible: keyboardLeft
+      checkSet: (currentMode & QmlKeyboard.KmChordMask) == QmlKeyboard.KmChordPassive
+      icon.source: "qrc:/img/singleKey.png"
+      ToolTip.text: qsTr("Simple key mode")
+
+      onClicked: currentMode = (currentMode & ~QmlKeyboard.KmChordMask) | QmlKeyboard.KmChordPassive;
     }
 
 
     //Right keyboard modes
-    ToolButton {
+    SvCheckToolButton {
       visible: keyboardRight
-      checkable: true
-      checked: currentMode & 2
+      checkSet: (currentMode & QmlKeyboard.KmRightMask) == QmlKeyboard.KmRightOverlay
       icon.source: "qrc:/img/doubleVoice.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Double voice mode")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
-      background: Rectangle {
-        color: "transparent"
-        border.color: "green"
-        border.width: currentMode & 2 ? 2 : 0
-      }
 
-      onClicked: currentMode |= 2;
+      onClicked: currentMode = (currentMode & ~QmlKeyboard.KmRightMask) | QmlKeyboard.KmRightOverlay;
     }
-    ToolButton {
+    SvCheckToolButton {
       visible: keyboardRight
-      checkable: true
-      checked: (currentMode & 2) == 0
+      checkSet: (currentMode & QmlKeyboard.KmRightMask) == QmlKeyboard.KmRightSingle
       icon.source: "qrc:/img/voice.png"
-      icon.color: "transparent"
       ToolTip.text: qsTr("Single voice mode")
-      ToolTip.visible: hovered
-      ToolTip.delay: 300
-      background: Rectangle {
-        color: "transparent"
-        border.color: "green"
-        border.width: currentMode & 2 ? 0 : 2
-      }
 
-      onClicked: currentMode &= ~2;
+      onClicked: currentMode = (currentMode & ~QmlKeyboard.KmRightMask) | QmlKeyboard.KmRightSingle;
     }
 
 

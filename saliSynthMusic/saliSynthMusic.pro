@@ -34,9 +34,10 @@ SOURCES += \
         objects/QmlMidiTrack.cpp \
         objects/QmlStyleFile.cpp \
         soundFont/SfSynth.cpp \
+        soundFont/SfSynthMetronom.cpp \
         soundFont/SfSynthNote.cpp \
-        soundFont/SfSynthPreset.cpp \
         soundFont/SfSynthTrack.cpp \
+        soundFont/SfSynthVoice.cpp \
         soundFont/SoundFont.cpp
 
 RESOURCES += qml.qrc
@@ -72,9 +73,10 @@ HEADERS += \
   objects/QmlMidiTrack.h \
   objects/QmlStyleFile.h \
   soundFont/SfSynth.h \
+  soundFont/SfSynthMetronom.h \
   soundFont/SfSynthNote.h \
-  soundFont/SfSynthPreset.h \
   soundFont/SfSynthTrack.h \
+  soundFont/SfSynthVoice.h \
   soundFont/SfVoiceId.h \
   soundFont/SoundFont.h \
   synthConfig.h

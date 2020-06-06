@@ -8,7 +8,7 @@
    Single preset for synth. Preset is single or set of instruments acts as the whole.
    Preset sounds when you press a key (midi event from keyboard or midi file or accompaniment)
 */
-#include "SfSynthPreset.h"
+#include "SfSynthVoice.h"
 #include "SfSynth.h"
 
 #include <math.h>
@@ -16,7 +16,7 @@
 
 
 
-SfSynthPreset::SfSynthPreset()
+SfSynthVoice::SfSynthVoice()
   {
   for( int i = 0; i < 128; i++ )
     mNotes[i].setNote(i);
@@ -28,7 +28,7 @@ SfSynthPreset::SfSynthPreset()
 
 
 //Action on midi event
-void SfSynthPreset::midi(SfSynth *synth, quint8 cmd, quint8 data0, quint8 data1)
+void SfSynthVoice::midi(SfSynth *synth, quint8 cmd, quint8 data0, quint8 data1)
   {
   cmd = ((cmd >> 4) & 0x7);
 //  qDebug() << "syth preset cmd " << cmd << data0 << data1;
@@ -79,7 +79,7 @@ inline int delay( quint16 time ) {
 
 
 
-void SfSynthPreset::build( int voiceId, const QString voiceName, SoundFontPtr soundFont, int preset )
+void SfSynthVoice::build( int voiceId, const QString voiceName, SoundFontPtr soundFont, int preset )
   {
   //Stop all notes
   for( int i = 0; i < 128; i++ )
@@ -125,7 +125,7 @@ void SfSynthPreset::build( int voiceId, const QString voiceName, SoundFontPtr so
 
 
 
-void SfSynthPreset::clone(const SfSynthPreset *src)
+void SfSynthVoice::clone(const SfSynthVoice *src)
   {
   mVoiceName = src->mVoiceName;
   for( int i = 0; i < 128; i++ ) {
@@ -142,7 +142,7 @@ void SfSynthPreset::clone(const SfSynthPreset *src)
 //! \brief setVolume Setup master volume for all notes of preset
 //! \param volume    Volume value which need to be installed
 //!
-void SfSynthPreset::setVolume(int volume)
+void SfSynthVoice::setVolume(int volume)
   {
   for( int i = 0; i < 128; i++ )
     mNotes[i].setVolume( volume );

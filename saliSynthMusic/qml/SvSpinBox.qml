@@ -5,6 +5,7 @@ SpinBox {
   id: control
   ToolTip.visible: hovered
   ToolTip.delay: 300
+  editable: true
 
   contentItem: TextInput {
     z: 2

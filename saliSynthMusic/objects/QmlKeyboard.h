@@ -74,40 +74,62 @@ class QmlKeyboard : public QAbstractListModel
     Q_PROPERTY(SvQmlJsonFile* settings READ settings WRITE setSettings NOTIFY settingsChanged)
 
   public:
+    enum QmlKeyboardMode {
+      //Chord detection
+      KmChordPassive = 0,
+      KmChordActive = 0x1,
+      KmChordMask = 0x1,
+
+      KmLeftMask = 0x6,
+      KmLeftVoice = 0,
+      KmLeftAccomp = 0x2,
+      KmLeftArpegio = 0x4,
+
+      KmRightMask = 0x2,
+      KmRightSingle = 0,
+      KmRightOverlay = 0x2,
+
+      KmRightArpegioMask = 0x30,
+      KmRightArpegioMain = 0x10,
+      KmRightArpegioOverlay = 0x20
+      };
+    Q_ENUM(QmlKeyboardMode)
+
+
     QmlKeyboard( QObject *parent = nullptr );
 
-    qint8   leftCode() const { return mKeyList.at(0).mCode; }
+    qint8            leftCode() const { return mKeyList.at(0).mCode; }
 
-    int     delimiterCode() const { return mDelimiter; }
-    int     delimiter() const { return keyIndex(mDelimiter); }
-    void    setDelimiter( int delim );
+    int              delimiterCode() const { return mDelimiter; }
+    int              delimiter() const { return keyIndex(mDelimiter); }
+    void             setDelimiter( int delim );
 
-    int     whiteKeyWidth() const { return mWhiteKeyWidth; }
+    int              whiteKeyWidth() const { return mWhiteKeyWidth; }
 
-    int     keyboardWidth() const { return mWhiteKeyWidth * mWhiteKeyCount; }
-    void    setKeyboardWidth( int w );
+    int              keyboardWidth() const { return mWhiteKeyWidth * mWhiteKeyCount; }
+    void             setKeyboardWidth( int w );
 
     //Left part of keyboard mode
-    int            leftMode() const { return mLeftMode; }
-    void           setLeftMode( int mode );
+    int              leftMode() const { return mLeftMode; }
+    void             setLeftMode( int mode );
 
     //Right part of keyboard mode
-    int            rightMode() const { return mRightMode; }
-    void           setRightMode( int mode );
+    int              rightMode() const { return mRightMode; }
+    void             setRightMode( int mode );
 
     //Left part of keyboard voice volume
-    int            leftVolume() const { return mLeftVolume; }
-    void           setLeftVolume( int vol );
+    int              leftVolume() const { return mLeftVolume; }
+    void             setLeftVolume( int vol );
 
-    int            rightMainVolume() const { return mRightMainVolume; }
-    void           setRightMainVolume( int vol );
+    int              rightMainVolume() const { return mRightMainVolume; }
+    void             setRightMainVolume( int vol );
 
-    int            rightOverlayVolume() const { return mRightOverlayVolume; }
-    void           setRightOverlayVolume( int vol );
+    int              rightOverlayVolume() const { return mRightOverlayVolume; }
+    void             setRightOverlayVolume( int vol );
 
 
-    SvQmlJsonFile *settings() const { return mSettings; }
-    void           setSettings( SvQmlJsonFile *settings );
+    SvQmlJsonFile   *settings() const { return mSettings; }
+    void             setSettings( SvQmlJsonFile *settings );
 
     Q_INVOKABLE bool keyIsBlack( int keyCode ) const { return mKeyMap.contains(keyCode) ? mKeyList.at( mKeyMap.value(keyCode) ).mIsBlack : false; }
     Q_INVOKABLE int  keyIndex( int keyCode ) const { return mKeyMap.contains(keyCode) ? mKeyList.at( mKeyMap.value(keyCode) ).mIndex : 0; }

@@ -79,7 +79,7 @@ bool QmlMidiFile::read(QString fname)
     IffReader track = reader.getChunk();
     qDebug() << "midi reader chunk" << track.name();
     if( track.compareChunkName("MTrk") ) {
-      readMtrk( track );
+      readMtrk( trackIndex, track );
       trackIndex++;
       }
     else readExtension( track );
@@ -89,6 +89,7 @@ bool QmlMidiFile::read(QString fname)
   quint8 channel = 4;
   mQmlTrackModel.clear();
   for( int i = 0; i < 16; i++ ) {
+    qDebug() << "endTrack" << i;
     mQmlTrack[i].endReadTrack();
     if( mQmlTrack[i].isActive() ) {
 
@@ -229,6 +230,8 @@ int QmlMidiFile::tempo() const
 
 
 
+
+
 void QmlMidiFile::setTempo(int aTempo)
   {
   quint64 usPerQuarter = 60'000'000 / aTempo;
@@ -236,6 +239,9 @@ void QmlMidiFile::setTempo(int aTempo)
   temp *= TICK_PERIOD_US * 16;
   mTickStep = temp / usPerQuarter;
   emit tempoChanged();
+
+  mMetronomePeriod = usPerQuarter / TICK_PERIOD_MS;
+  mMetronomeCount = 0;
   }
 
 
@@ -295,6 +301,14 @@ void QmlMidiFile::tick()
     else
       //Update current tick count
       mTickCount = nextTime;
+    }
+
+  //Metronome
+  mMetronomeCount += 1000;
+  if( mMetronomeCount >= mMetronomePeriod ) {
+    mMetronomeCount -= mMetronomePeriod;
+    //qDebug() << "metronome";
+    emit metronome();
     }
   }
 
@@ -372,7 +386,7 @@ bool QmlMidiFile::readMthd(IffReader &reader)
 
 
 
-void QmlMidiFile::readMtrk(IffReader &reader)
+void QmlMidiFile::readMtrk(int trackIndex, IffReader &reader)
   {
   quint32 time = 0;
   QString trackName;
@@ -383,6 +397,7 @@ void QmlMidiFile::readMtrk(IffReader &reader)
   QString marker;
   quint8  groupStatusByte = 0;
   int     channelIndex = 0;
+  bool    drumChannel = false;
   while( !reader.isEnd() ) {
     //Read midi event
 
@@ -441,20 +456,6 @@ void QmlMidiFile::readMtrk(IffReader &reader)
         marker.mTime   = time;
         //Append marker to list
         mMarkerList.append( marker );
-//        if( marker.length() > 3 ) {
-//          if( marker.at(0).isDigit() ) {
-//            if( marker.at(1) == QChar(' ') ) {
-//              int track = marker.mid( 0, 1 ).toInt() - 1;
-//              if( track >= 0 )
-//                mQmlTrack[track].mRemark = marker.mid( 2 );
-//              }
-//            else if( marker.at(1).isDigit() && marker.at(2) == QChar(' ') ) {
-//              int track = marker.mid( 0, 2 ).toInt() - 1;
-//              if( track >= 0 )
-//                mQmlTrack[track].mRemark = marker.mid( 3 );
-//              }
-//            }
-//          }
         qDebug() << "marker" << marker.mMarker << marker.mTime;
         }
 
@@ -561,12 +562,22 @@ void QmlMidiFile::readMtrk(IffReader &reader)
         }
 
       channelIndex = groupStatusByte & 0xf;
-      mQmlTrack[channelIndex].addMidiEvent( time, groupStatusByte, data0, data1 );
+      if( mFormat == 0 ) trackIndex = channelIndex;
+      if( channelIndex == 9 && !drumChannel ) {
+        //Traditional setup channel 9 (if count from 1 then 10) to standard drum kit
+        SfVoiceId id9;
+        id9.mBankMsb = 125;
+        id9.mBankLsb = 0;
+        id9.mProgramm = 0;
+        mQmlTrack[trackIndex].setVoiceId( id9.mVoiceId );
+        drumChannel = true;
+        }
+      mQmlTrack[trackIndex].addMidiEvent( time, groupStatusByte, data0, data1 );
       }
     }
 
-  mQmlTrack[channelIndex].setTrackName( trackName );
-  mQmlTrack[channelIndex].setInstrumentName( instrumentName );
+  mQmlTrack[trackIndex].setTrackName( trackName );
+  mQmlTrack[trackIndex].setInstrumentName( instrumentName );
 
   //Update file time lenght
   if( time > mFileLenght )

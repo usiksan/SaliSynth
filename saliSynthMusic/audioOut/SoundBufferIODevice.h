@@ -43,7 +43,12 @@ class SoundBufferIODevice : public QIODevice
     virtual qint64 bytesAvailable() const override;
 
   protected:
-    //With this sound card queries next portion af data to play
+    //!
+    //! \brief readData Callback function, with this sound card queries next portion af data to play
+    //! \param data     Pointer to buffer where data must be placed
+    //! \param maxlen   size of buffer
+    //! \return         real size of placed data
+    //!
     virtual qint64 readData(char *data, qint64 maxlen) override;
 
     //Not used

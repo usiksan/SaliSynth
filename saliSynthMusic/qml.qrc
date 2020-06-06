@@ -156,5 +156,9 @@
         <file>qml/VolumeRegulator.qml</file>
         <file>img/FirstRecord.png</file>
         <file>img/LastRecor.png</file>
+        <file>qml/SvCheckToolButton.qml</file>
+        <file>img/metronome.png</file>
+        <file>img/table_row_new.png</file>
+        <file>qml/SvImagedButton.qml</file>
     </qresource>
 </RCC>
