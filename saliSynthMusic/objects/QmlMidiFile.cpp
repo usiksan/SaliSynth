@@ -89,7 +89,7 @@ bool QmlMidiFile::read(QString fname)
   quint8 channel = 4;
   mQmlTrackModel.clear();
   for( int i = 0; i < 16; i++ ) {
-    qDebug() << "endTrack" << i;
+//    qDebug() << "endTrack" << i;
     mQmlTrack[i].endReadTrack();
     if( mQmlTrack[i].isActive() ) {
 

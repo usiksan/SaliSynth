@@ -18,8 +18,13 @@ SvModalItem {
   //Функция, которая будет выполнена при успешном выборе файла
   property var okFunction
 
+  property int prevMode
+
   //Функция открывает диалог для сохранения файлов
   function openSave( strTitle, strFolder, arrayFilter, ok ) {
+    prevMode             = currentMode;
+    currentMode          = -1;
+
     idTitle.text         = strTitle;
     files.folder         = "file://" + strFolder;
     files.nameFilters    = arrayFilter;
@@ -31,6 +36,9 @@ SvModalItem {
 
   //Функция открывает диалог для загрузки файлов
   function openLoad( strTitle, strFolder, arrayFilter, ok ) {
+    prevMode             = currentMode;
+    currentMode          = -1;
+
     idTitle.text         = strTitle;
     files.folder         = "file://" + strFolder;
     files.nameFilters    = arrayFilter;
@@ -38,6 +46,11 @@ SvModalItem {
     okFunction           = ok;
     openButton.text      = qsTr("Открыть");
     visible              = true;
+  }
+
+  function dialogClose() {
+    currentMode = prevMode;
+    visible     = false;
   }
 
 
@@ -202,15 +215,15 @@ SvModalItem {
       SvButtonWithText {
         id: openButton
         onClick: {
-          okFunction(currentFile.text)
-          fileDialog.visible = false
+          okFunction(currentFile.text);
+          dialogClose();
         }
       }
 
       //Кнопка Отмена
       SvButtonWithText {
         text: qsTr("Отмена")
-        onClick: fileDialog.visible = false
+        onClick: dialogClose();
       }
     }
 

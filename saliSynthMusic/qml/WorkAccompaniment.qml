@@ -112,8 +112,6 @@ Item {
       anchors.bottom: partRow.top
       trackModel: qmlStyleFileTrackModel
       ifNoTrackFound:  qsTr("No style file loaded")
-
-      voiceInfoHeight: utils.getFMin( height / 3 - 8, 100 );
     }
 
     Row {

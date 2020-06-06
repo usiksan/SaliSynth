@@ -122,12 +122,23 @@
                      Append constant to keyboard modes
                      Replace simple digits with named constant for keyboard modes
    06.06.2020 v0.55  Append metronome
+              v0.56  Change view of channel list for midi files and styles (by row)
+                     Append color dialog to track color selection
+                     Append drum substitute to channel 10 of midi
+                     In midi files happens duplicate channels on different tracks, so
+                       if format 0 then channel number is track number,
+                       otherwise tracks numbering independents.
+                     Append part title to voice list.
+                     Append insertion row possibility to the voice list.
+              v0.57  Suppress tool tip show when open dialog appears
+                     Change color selection box from rectangle to button, so add tooltip to it
+              v0.58  Change track list of midi to ListView for scrollable
 */
 #ifndef SYNTHCONFIG_H
 #define SYNTHCONFIG_H
 
 //Programm version
-#define VERSION "0.55"
+#define VERSION "0.58"
 
 //Polyphony count
 #define POLYPHONY_COUNT 128
