@@ -123,6 +123,8 @@ void MidiProcessor::midiKeyboard(quint8 cmd, quint8 data0, quint8 data1)
   quint8 key = ((cmd >> 4) & 0x7);
   if( key == 0 || key == 1 ) {
     //This event key press or key release
+//    if( cmd & 0x10 )
+//      qDebug() << "midi" << cmd << data0 << data1;
     //qDebug() << "delimiter code" << mQmlKeyboard->delimiterCode();
     if( data0 < mQmlKeyboard->delimiterCode() ) keyboardLeft( cmd, data0, data1 );
     else                                        keyboardRight( cmd, data0, data1 );
