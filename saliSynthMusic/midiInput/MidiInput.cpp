@@ -41,11 +41,33 @@ MidiInput::~MidiInput()
 
 void MidiInput::onTimer()
   {
-  char buf[30];
+  quint8 buf[30];
   ssize_t r;
   do {
     //Read buffer
     r = read( mMidiHandle, buf, 30 );
+
+    if( r == 1 ) {
+      if( buf[0] != 248 )
+        qDebug() << buf[0];
+      }
+    else if( r == 2 )
+      qDebug() << buf[0] << buf[1];
+    else if( r == 3 )
+      qDebug() << buf[0] << buf[1] << buf[2];
+    else if( r == 4 )
+      qDebug() << buf[0] << buf[1] << buf[2] << buf[3];
+    else if( r == 5 )
+      qDebug() << buf[0] << buf[1] << buf[2] << buf[3] << buf[4];
+    else if( r == 6 )
+      qDebug() << buf[0] << buf[1] << buf[2] << buf[3] << buf[4] << buf[5];
+    else {
+      for( int i = 0; i < r; i++ ) {
+        int k = static_cast<int>(buf[i] & 0xff);
+        if( k != 248 && k != 254 )
+          qDebug() << k;
+        }
+      }
 
     //Parse bytes
     for( int i = 0; i < r; ++i ) {

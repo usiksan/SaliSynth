@@ -120,6 +120,10 @@ void MidiProcessor::midiQmlKeyboard(quint8 cmd, quint8 data0, quint8 data1)
 
 void MidiProcessor::midiKeyboard(quint8 cmd, quint8 data0, quint8 data1)
   {
+  if( (cmd == 120 || cmd == 126) && data0 == 0 && data1 == 0 )
+    return;
+  qDebug() << "midi" << cmd << data0 << data1;
+  return;
   quint8 key = ((cmd >> 4) & 0x7);
   if( key == 0 || key == 1 ) {
     //This event key press or key release
